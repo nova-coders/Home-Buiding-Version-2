@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="publishingPackage">
+            <h2><span jhiTranslate="homeBuildingApp.publishingPackage.detail.title">Publishing Package</span> {{ publishingPackage.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.name">Name</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.price">Price</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.price }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.cantPropertySale">Cant Property Sale</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.cantPropertySale }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.cantPropertyRent">Cant Property Rent</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.cantPropertyRent }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.cantDays">Cant Days</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.cantDays }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.professional">Professional</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.professional }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.type">Type</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.type }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.publishingPackage.state">State</span></dt>
+                <dd>
+                    <span>{{ publishingPackage.state }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/publishing-package', publishingPackage.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

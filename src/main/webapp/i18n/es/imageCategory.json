@@ -1,0 +1,23 @@
+{
+  "homeBuildingApp": {
+    "imageCategory": {
+      "home": {
+        "title": "Image Categories",
+        "createLabel": "Crear nuevo Image Category",
+        "createOrEditLabel": "Crear o editar Image Category",
+        "notFound": "Ningún Image Categories encontrado"
+      },
+      "created": "Un nuevo Image Category ha sido creado con el identificador {{ param }}",
+      "updated": "Un Image Category ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Image Category ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Image Category {{ id }}?"
+      },
+      "detail": {
+        "title": "Image Category"
+      },
+      "name": "Name",
+      "propertyImage": "Property Image"
+    }
+  }
+}

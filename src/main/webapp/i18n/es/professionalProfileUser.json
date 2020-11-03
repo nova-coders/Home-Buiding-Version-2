@@ -1,0 +1,27 @@
+{
+  "homeBuildingApp": {
+    "professionalProfileUser": {
+      "home": {
+        "title": "Professional Profile Users",
+        "createLabel": "Crear nuevo Professional Profile User",
+        "createOrEditLabel": "Crear o editar Professional Profile User",
+        "notFound": "Ningún Professional Profile Users encontrado"
+      },
+      "created": "Un nuevo Professional Profile User ha sido creado con el identificador {{ param }}",
+      "updated": "Un Professional Profile User ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Professional Profile User ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Professional Profile User {{ id }}?"
+      },
+      "detail": {
+        "title": "Professional Profile User"
+      },
+      "profesionalType": "Profesional Type",
+      "pricePerHour": "Price Per Hour",
+      "description": "Description",
+      "creationDate": "Creation Date",
+      "state": "State",
+      "userAccount": "User Account"
+    }
+  }
+}

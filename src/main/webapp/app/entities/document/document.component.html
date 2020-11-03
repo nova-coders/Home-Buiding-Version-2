@@ -1,0 +1,87 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.document.home.title">Documents</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-document" [routerLink]="['/document/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.document.home.createLabel">
+            Create a new Document
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="documents?.length === 0">
+        <span jhiTranslate="homeBuildingApp.document.home.notFound">No documents found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="documents && documents.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.url">Url</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.sellerUserId">Seller User Id</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.buyerUserId">Buyer User Id</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.seller">Seller</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.buyer">Buyer</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.property">Property</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let document of documents ;trackBy: trackId">
+                    <td><a [routerLink]="['/document', document.id, 'view']">{{ document.id }}</a></td>
+                    <td>{{ document.url }}</td>
+                    <td>{{ document.sellerUserId }}</td>
+                    <td>{{ document.buyerUserId }}</td>
+                    <td>{{ document.state }}</td>
+                    <td>{{ document.creationDate | date:'medium' }}</td>
+                    <td>
+                        <div *ngIf="document.seller">
+                            <a [routerLink]="['/user-account', document.seller?.id, 'view']" >{{ document.seller?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="document.buyer">
+                            <a [routerLink]="['/user-account', document.buyer?.id, 'view']" >{{ document.buyer?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="document.property">
+                            <a [routerLink]="['/property', document.property?.id, 'view']" >{{ document.property?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/document', document.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/document', document.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(document)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

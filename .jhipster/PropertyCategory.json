@@ -1,0 +1,36 @@
+{
+  "name": "PropertyCategory",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "propertyType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "propertyCategory",
+      "relationshipName": "property"
+    }
+  ],
+  "changelogDate": "20201103042112",
+  "entityTableName": "property_category",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Property.
+    -->
+    <changeSet id="20201103042012-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="sale_id"
+                                 baseTableName="property"
+                                 constraintName="fk_property_sale_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sale"/>
+
+        <addForeignKeyConstraint baseColumnNames="rent_id"
+                                 baseTableName="property"
+                                 constraintName="fk_property_rent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rent"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_account_id"
+                                 baseTableName="property"
+                                 constraintName="fk_property_user_account_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"/>
+
+        <addForeignKeyConstraint baseColumnNames="money_type_id"
+                                 baseTableName="property"
+                                 constraintName="fk_property_money_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="money_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="canton_id"
+                                 baseTableName="property"
+                                 constraintName="fk_property_canton_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="canton"/>
+
+        <addForeignKeyConstraint baseColumnNames="property_category_id"
+                                 baseTableName="property"
+                                 constraintName="fk_property_property_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="property_category"/>
+
+    </changeSet>
+</databaseChangeLog>

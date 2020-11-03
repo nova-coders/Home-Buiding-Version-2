@@ -1,0 +1,26 @@
+{
+  "homeBuildingApp": {
+    "role": {
+      "home": {
+        "title": "Roles",
+        "createLabel": "Crear nuevo Role",
+        "createOrEditLabel": "Crear o editar Role",
+        "notFound": "Ningún Roles encontrado"
+      },
+      "created": "Un nuevo Role ha sido creado con el identificador {{ param }}",
+      "updated": "Un Role ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Role ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Role"
+      },
+      "name": "Name",
+      "description": "Description",
+      "state": "State",
+      "creationDate": "Creation Date",
+      "userAccount": "User Account"
+    }
+  }
+}

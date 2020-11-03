@@ -1,0 +1,11 @@
+id;date;commentary;amount;state
+1;2020-11-02T09:21:58;back-end;79300;false
+2;2020-11-02T06:35:13;Direct;11026;false
+3;2020-11-02T06:42:01;moderator leading-edge;85568;true
+4;2020-11-02T05:14:59;invoice;22652;false
+5;2020-11-02T15:00:15;deposit;9565;false
+6;2020-11-02T17:15:40;copy Principal;36010;false
+7;2020-11-02T09:00:20;mint green digital THX;82639;false
+8;2020-11-02T08:40:01;24/7 digital;15251;false
+9;2020-11-02T12:00:46;Incredible;1479;true
+10;2020-11-03T03:07:00;Freeway;466;true

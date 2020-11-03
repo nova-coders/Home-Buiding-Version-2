@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="sale">
+            <h2><span jhiTranslate="homeBuildingApp.sale.detail.title">Sale</span> {{ sale.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.sale.finalDate">Final Date</span></dt>
+                <dd>
+                    <span>{{ sale.finalDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.sale.cadastralPlan">Cadastral Plan</span></dt>
+                <dd>
+                    <span>{{ sale.cadastralPlan }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.sale.registryStudy">Registry Study</span></dt>
+                <dd>
+                    <span>{{ sale.registryStudy }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.sale.propertyId">Property Id</span></dt>
+                <dd>
+                    <span>{{ sale.propertyId }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/sale', sale.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

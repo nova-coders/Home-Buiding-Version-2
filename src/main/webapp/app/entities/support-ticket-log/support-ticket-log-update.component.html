@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-support-ticket-log-heading" jhiTranslate="homeBuildingApp.supportTicketLog.home.createOrEditLabel">Create or edit a Support Ticket Log</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicketLog.troubleshootingCommentary" for="field_troubleshootingCommentary">Troubleshooting Commentary</label>
+                    <input type="text" class="form-control" name="troubleshootingCommentary" id="field_troubleshootingCommentary"
+                           formControlName="troubleshootingCommentary"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicketLog.nextStepCommentary" for="field_nextStepCommentary">Next Step Commentary</label>
+                    <input type="text" class="form-control" name="nextStepCommentary" id="field_nextStepCommentary"
+                           formControlName="nextStepCommentary"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicketLog.creationDate" for="field_creationDate">Creation Date</label>
+                    <div class="d-flex">
+                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicketLog.supportTicket" for="field_supportTicket">Support Ticket</label>
+                    <select class="form-control" id="field_supportTicket" name="supportTicket" formControlName="supportTicket">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="supportTicketOption.id === editForm.get('supportTicket')!.value?.id ? editForm.get('supportTicket')!.value : supportTicketOption" *ngFor="let supportTicketOption of supporttickets; trackBy: trackById">{{ supportTicketOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

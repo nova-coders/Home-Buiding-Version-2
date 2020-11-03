@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="province">
+            <h2><span jhiTranslate="homeBuildingApp.province.detail.title">Province</span> {{ province.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.province.name">Name</span></dt>
+                <dd>
+                    <span>{{ province.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.province.latitude">Latitude</span></dt>
+                <dd>
+                    <span>{{ province.latitude }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.province.longitude">Longitude</span></dt>
+                <dd>
+                    <span>{{ province.longitude }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.province.state">State</span></dt>
+                <dd>
+                    <span>{{ province.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.province.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ province.creationDate }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/province', province.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

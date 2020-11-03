@@ -1,0 +1,95 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.userAccount.home.title">User Accounts</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-user-account" [routerLink]="['/user-account/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.userAccount.home.createLabel">
+            Create a new User Account
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="userAccounts?.length === 0">
+        <span jhiTranslate="homeBuildingApp.userAccount.home.notFound">No userAccounts found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="userAccounts && userAccounts.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.identification">Identification</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.birthdate">Birthdate</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.profilePicture">Profile Picture</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.signaturePicture">Signature Picture</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.signatureCode">Signature Code</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.user">User</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.professionalProfileUser">Professional Profile User</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.publishingPackage">Publishing Package</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.role">Role</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let userAccount of userAccounts ;trackBy: trackId">
+                    <td><a [routerLink]="['/user-account', userAccount.id, 'view']">{{ userAccount.id }}</a></td>
+                    <td>{{ userAccount.identification }}</td>
+                    <td>{{ userAccount.birthdate | date:'medium' }}</td>
+                    <td>{{ userAccount.profilePicture }}</td>
+                    <td>{{ userAccount.signaturePicture }}</td>
+                    <td>{{ userAccount.signatureCode }}</td>
+                    <td>{{ userAccount.state }}</td>
+                    <td>{{ userAccount.creationDate | date:'medium' }}</td>
+                    <td>
+                        {{ userAccount.user?.id }}
+                    </td>
+                    <td>
+                        <div *ngIf="userAccount.professionalProfileUser">
+                            <a [routerLink]="['/professional-profile-user', userAccount.professionalProfileUser?.id, 'view']" >{{ userAccount.professionalProfileUser?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="userAccount.publishingPackage">
+                            <a [routerLink]="['/publishing-package', userAccount.publishingPackage?.id, 'view']" >{{ userAccount.publishingPackage?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="userAccount.role">
+                            <a [routerLink]="['/role', userAccount.role?.id, 'view']" >{{ userAccount.role?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/user-account', userAccount.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/user-account', userAccount.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(userAccount)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

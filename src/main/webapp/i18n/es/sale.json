@@ -1,0 +1,27 @@
+{
+  "homeBuildingApp": {
+    "sale": {
+      "home": {
+        "title": "Sales",
+        "createLabel": "Crear nuevo Sale",
+        "createOrEditLabel": "Crear o editar Sale",
+        "notFound": "Ningún Sales encontrado"
+      },
+      "created": "Un nuevo Sale ha sido creado con el identificador {{ param }}",
+      "updated": "Un Sale ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Sale ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Sale {{ id }}?"
+      },
+      "detail": {
+        "title": "Sale"
+      },
+      "finalDate": "Final Date",
+      "cadastralPlan": "Cadastral Plan",
+      "registryStudy": "Registry Study",
+      "propertyId": "Property Id",
+      "offer": "Offer",
+      "property": "Property"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Score",
+  "fields": [
+    {
+      "fieldName": "rating",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "commentary",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "score",
+      "relationshipName": "userAccount",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "rent",
+      "otherEntityRelationshipName": "score",
+      "relationshipName": "rent",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103042312",
+  "entityTableName": "score",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

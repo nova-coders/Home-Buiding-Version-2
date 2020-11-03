@@ -1,0 +1,54 @@
+{
+  "name": "SupportTicket",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "message",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "supportTicketLog",
+      "otherEntityRelationshipName": "supportTicket",
+      "relationshipName": "supportTicketLog"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "ownedTickets",
+      "relationshipName": "client",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "clientTickets",
+      "relationshipName": "signOffUser",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103041512",
+  "entityTableName": "support_ticket",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

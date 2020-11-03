@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="userAccount">
+            <h2><span jhiTranslate="homeBuildingApp.userAccount.detail.title">User Account</span> {{ userAccount.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.identification">Identification</span></dt>
+                <dd>
+                    <span>{{ userAccount.identification }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.birthdate">Birthdate</span></dt>
+                <dd>
+                    <span>{{ userAccount.birthdate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.profilePicture">Profile Picture</span></dt>
+                <dd>
+                    <span>{{ userAccount.profilePicture }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.signaturePicture">Signature Picture</span></dt>
+                <dd>
+                    <span>{{ userAccount.signaturePicture }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.signatureCode">Signature Code</span></dt>
+                <dd>
+                    <span>{{ userAccount.signatureCode }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.state">State</span></dt>
+                <dd>
+                    <span>{{ userAccount.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ userAccount.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.user">User</span></dt>
+                <dd>
+                    {{ userAccount.user?.id }}
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.professionalProfileUser">Professional Profile User</span></dt>
+                <dd>
+                    <div *ngIf="userAccount.professionalProfileUser">
+                        <a [routerLink]="['/professional-profile-user', userAccount.professionalProfileUser?.id, 'view']">{{ userAccount.professionalProfileUser?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.publishingPackage">Publishing Package</span></dt>
+                <dd>
+                    <div *ngIf="userAccount.publishingPackage">
+                        <a [routerLink]="['/publishing-package', userAccount.publishingPackage?.id, 'view']">{{ userAccount.publishingPackage?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.role">Role</span></dt>
+                <dd>
+                    <div *ngIf="userAccount.role">
+                        <a [routerLink]="['/role', userAccount.role?.id, 'view']">{{ userAccount.role?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/user-account', userAccount.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

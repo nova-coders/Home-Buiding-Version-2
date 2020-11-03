@@ -1,0 +1,40 @@
+{
+  "name": "Role",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "role",
+      "relationshipName": "userAccount"
+    }
+  ],
+  "changelogDate": "20201103042912",
+  "entityTableName": "role",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

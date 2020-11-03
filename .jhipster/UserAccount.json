@@ -1,0 +1,118 @@
+{
+  "name": "UserAccount",
+  "fields": [
+    {
+      "fieldName": "identification",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "birthdate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "profilePicture",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "signaturePicture",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "signatureCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "professionalProfileUser",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "professionalProfileUser",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "property"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "offer",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "offer"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "score",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "score"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "supportTicket",
+      "otherEntityRelationshipName": "client",
+      "relationshipName": "ownedTickets"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "supportTicket",
+      "otherEntityRelationshipName": "signOffUser",
+      "relationshipName": "clientTickets"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "seller",
+      "relationshipName": "ownedDocuments"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "buyer",
+      "relationshipName": "purchasedDocuments"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "publishingPackage",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "publishingPackage",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "role",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "role",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103041312",
+  "entityTableName": "user_account",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="supportTicket">
+            <h2><span jhiTranslate="homeBuildingApp.supportTicket.detail.title">Support Ticket</span> {{ supportTicket.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.supportTicket.title">Title</span></dt>
+                <dd>
+                    <span>{{ supportTicket.title }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.supportTicket.message">Message</span></dt>
+                <dd>
+                    <span>{{ supportTicket.message }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.supportTicket.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ supportTicket.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.supportTicket.state">State</span></dt>
+                <dd>
+                    <span>{{ supportTicket.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.supportTicket.client">Client</span></dt>
+                <dd>
+                    <div *ngIf="supportTicket.client">
+                        <a [routerLink]="['/user-account', supportTicket.client?.id, 'view']">{{ supportTicket.client?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.supportTicket.signOffUser">Sign Off User</span></dt>
+                <dd>
+                    <div *ngIf="supportTicket.signOffUser">
+                        <a [routerLink]="['/user-account', supportTicket.signOffUser?.id, 'view']">{{ supportTicket.signOffUser?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/support-ticket', supportTicket.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+{
+  "name": "PropertyImage",
+  "fields": [
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "propertyImage",
+      "relationshipName": "property",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "imageCategory",
+      "otherEntityRelationshipName": "propertyImage",
+      "relationshipName": "imageCategory",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103042412",
+  "entityTableName": "property_image",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

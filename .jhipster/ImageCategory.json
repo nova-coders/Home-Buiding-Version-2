@@ -1,0 +1,28 @@
+{
+  "name": "ImageCategory",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "propertyImage",
+      "otherEntityRelationshipName": "imageCategory",
+      "relationshipName": "propertyImage"
+    }
+  ],
+  "changelogDate": "20201103042512",
+  "entityTableName": "image_category",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

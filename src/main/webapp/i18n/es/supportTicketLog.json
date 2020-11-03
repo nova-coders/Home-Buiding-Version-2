@@ -1,0 +1,25 @@
+{
+  "homeBuildingApp": {
+    "supportTicketLog": {
+      "home": {
+        "title": "Support Ticket Logs",
+        "createLabel": "Crear nuevo Support Ticket Log",
+        "createOrEditLabel": "Crear o editar Support Ticket Log",
+        "notFound": "Ningún Support Ticket Logs encontrado"
+      },
+      "created": "Un nuevo Support Ticket Log ha sido creado con el identificador {{ param }}",
+      "updated": "Un Support Ticket Log ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Support Ticket Log ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Support Ticket Log {{ id }}?"
+      },
+      "detail": {
+        "title": "Support Ticket Log"
+      },
+      "troubleshootingCommentary": "Troubleshooting Commentary",
+      "nextStepCommentary": "Next Step Commentary",
+      "creationDate": "Creation Date",
+      "supportTicket": "Support Ticket"
+    }
+  }
+}

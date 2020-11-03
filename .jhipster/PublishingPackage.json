@@ -1,0 +1,60 @@
+{
+  "name": "PublishingPackage",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "cantPropertySale",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cantPropertyRent",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cantDays",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "professional",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "publishingPackage",
+      "relationshipName": "userAccount"
+    }
+  ],
+  "changelogDate": "20201103042212",
+  "entityTableName": "publishing_package",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

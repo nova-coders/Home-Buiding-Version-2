@@ -1,0 +1,119 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.property.home.title">Properties</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-property" [routerLink]="['/property/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.property.home.createLabel">
+            Create a new Property
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="properties?.length === 0">
+        <span jhiTranslate="homeBuildingApp.property.home.notFound">No properties found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="properties && properties.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.title">Title</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.description">Description</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.price">Price</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.discount">Discount</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.landSquareMeters">Land Square Meters</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.areaSquareMeters">Area Square Meters</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.latitude">Latitude</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.longitude">Longitude</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.zoom">Zoom</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.addressText">Address Text</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.sale">Sale</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.rent">Rent</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.userAccount">User Account</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.moneyType">Money Type</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.canton">Canton</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.property.propertyCategory">Property Category</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let property of properties ;trackBy: trackId">
+                    <td><a [routerLink]="['/property', property.id, 'view']">{{ property.id }}</a></td>
+                    <td>{{ property.title }}</td>
+                    <td>{{ property.description }}</td>
+                    <td>{{ property.price }}</td>
+                    <td>{{ property.discount }}</td>
+                    <td>{{ property.landSquareMeters }}</td>
+                    <td>{{ property.areaSquareMeters }}</td>
+                    <td>{{ property.latitude }}</td>
+                    <td>{{ property.longitude }}</td>
+                    <td>{{ property.zoom }}</td>
+                    <td>{{ property.addressText }}</td>
+                    <td>{{ property.creationDate | date:'medium' }}</td>
+                    <td>{{ property.state }}</td>
+                    <td>
+                        <div *ngIf="property.sale">
+                            <a [routerLink]="['/sale', property.sale?.id, 'view']" >{{ property.sale?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="property.rent">
+                            <a [routerLink]="['/rent', property.rent?.id, 'view']" >{{ property.rent?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="property.userAccount">
+                            <a [routerLink]="['/user-account', property.userAccount?.id, 'view']" >{{ property.userAccount?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="property.moneyType">
+                            <a [routerLink]="['/money-type', property.moneyType?.id, 'view']" >{{ property.moneyType?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="property.canton">
+                            <a [routerLink]="['/canton', property.canton?.id, 'view']" >{{ property.canton?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="property.propertyCategory">
+                            <a [routerLink]="['/property-category', property.propertyCategory?.id, 'view']" >{{ property.propertyCategory?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/property', property.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/property', property.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(property)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

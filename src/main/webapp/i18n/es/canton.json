@@ -1,0 +1,26 @@
+{
+  "homeBuildingApp": {
+    "canton": {
+      "home": {
+        "title": "Cantons",
+        "createLabel": "Crear nuevo Canton",
+        "createOrEditLabel": "Crear o editar Canton",
+        "notFound": "Ningún Cantons encontrado"
+      },
+      "created": "Un nuevo Canton ha sido creado con el identificador {{ param }}",
+      "updated": "Un Canton ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Canton ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Canton {{ id }}?"
+      },
+      "detail": {
+        "title": "Canton"
+      },
+      "name": "Name",
+      "state": "State",
+      "creationDate": "Creation Date",
+      "property": "Property",
+      "province": "Province"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.propertyCategory.home.title">Property Categories</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-property-category" [routerLink]="['/property-category/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.propertyCategory.home.createLabel">
+            Create a new Property Category
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="propertyCategories?.length === 0">
+        <span jhiTranslate="homeBuildingApp.propertyCategory.home.notFound">No propertyCategories found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="propertyCategories && propertyCategories.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.propertyCategory.name">Name</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.propertyCategory.propertyType">Property Type</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.propertyCategory.state">State</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let propertyCategory of propertyCategories ;trackBy: trackId">
+                    <td><a [routerLink]="['/property-category', propertyCategory.id, 'view']">{{ propertyCategory.id }}</a></td>
+                    <td>{{ propertyCategory.name }}</td>
+                    <td>{{ propertyCategory.propertyType }}</td>
+                    <td>{{ propertyCategory.state }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/property-category', propertyCategory.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/property-category', propertyCategory.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(propertyCategory)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

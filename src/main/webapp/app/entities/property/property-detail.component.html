@@ -1,0 +1,110 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="property">
+            <h2><span jhiTranslate="homeBuildingApp.property.detail.title">Property</span> {{ property.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.property.title">Title</span></dt>
+                <dd>
+                    <span>{{ property.title }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.description">Description</span></dt>
+                <dd>
+                    <span>{{ property.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.price">Price</span></dt>
+                <dd>
+                    <span>{{ property.price }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.discount">Discount</span></dt>
+                <dd>
+                    <span>{{ property.discount }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.landSquareMeters">Land Square Meters</span></dt>
+                <dd>
+                    <span>{{ property.landSquareMeters }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.areaSquareMeters">Area Square Meters</span></dt>
+                <dd>
+                    <span>{{ property.areaSquareMeters }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.latitude">Latitude</span></dt>
+                <dd>
+                    <span>{{ property.latitude }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.longitude">Longitude</span></dt>
+                <dd>
+                    <span>{{ property.longitude }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.zoom">Zoom</span></dt>
+                <dd>
+                    <span>{{ property.zoom }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.addressText">Address Text</span></dt>
+                <dd>
+                    <span>{{ property.addressText }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ property.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.state">State</span></dt>
+                <dd>
+                    <span>{{ property.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.sale">Sale</span></dt>
+                <dd>
+                    <div *ngIf="property.sale">
+                        <a [routerLink]="['/sale', property.sale?.id, 'view']">{{ property.sale?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.rent">Rent</span></dt>
+                <dd>
+                    <div *ngIf="property.rent">
+                        <a [routerLink]="['/rent', property.rent?.id, 'view']">{{ property.rent?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.userAccount">User Account</span></dt>
+                <dd>
+                    <div *ngIf="property.userAccount">
+                        <a [routerLink]="['/user-account', property.userAccount?.id, 'view']">{{ property.userAccount?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.moneyType">Money Type</span></dt>
+                <dd>
+                    <div *ngIf="property.moneyType">
+                        <a [routerLink]="['/money-type', property.moneyType?.id, 'view']">{{ property.moneyType?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.canton">Canton</span></dt>
+                <dd>
+                    <div *ngIf="property.canton">
+                        <a [routerLink]="['/canton', property.canton?.id, 'view']">{{ property.canton?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.property.propertyCategory">Property Category</span></dt>
+                <dd>
+                    <div *ngIf="property.propertyCategory">
+                        <a [routerLink]="['/property-category', property.propertyCategory?.id, 'view']">{{ property.propertyCategory?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/property', property.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

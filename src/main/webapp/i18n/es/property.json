@@ -1,0 +1,41 @@
+{
+  "homeBuildingApp": {
+    "property": {
+      "home": {
+        "title": "Properties",
+        "createLabel": "Crear nuevo Property",
+        "createOrEditLabel": "Crear o editar Property",
+        "notFound": "Ningún Properties encontrado"
+      },
+      "created": "Un nuevo Property ha sido creado con el identificador {{ param }}",
+      "updated": "Un Property ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Property ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Property {{ id }}?"
+      },
+      "detail": {
+        "title": "Property"
+      },
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "discount": "Discount",
+      "landSquareMeters": "Land Square Meters",
+      "areaSquareMeters": "Area Square Meters",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "zoom": "Zoom",
+      "addressText": "Address Text",
+      "creationDate": "Creation Date",
+      "state": "State",
+      "sale": "Sale",
+      "rent": "Rent",
+      "propertyImage": "Property Image",
+      "document": "Document",
+      "userAccount": "User Account",
+      "moneyType": "Money Type",
+      "canton": "Canton",
+      "propertyCategory": "Property Category"
+    }
+  }
+}

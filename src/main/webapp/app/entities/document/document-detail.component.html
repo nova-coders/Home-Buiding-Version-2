@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="document">
+            <h2><span jhiTranslate="homeBuildingApp.document.detail.title">Document</span> {{ document.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.document.url">Url</span></dt>
+                <dd>
+                    <span>{{ document.url }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.sellerUserId">Seller User Id</span></dt>
+                <dd>
+                    <span>{{ document.sellerUserId }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.buyerUserId">Buyer User Id</span></dt>
+                <dd>
+                    <span>{{ document.buyerUserId }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.state">State</span></dt>
+                <dd>
+                    <span>{{ document.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ document.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.seller">Seller</span></dt>
+                <dd>
+                    <div *ngIf="document.seller">
+                        <a [routerLink]="['/user-account', document.seller?.id, 'view']">{{ document.seller?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.buyer">Buyer</span></dt>
+                <dd>
+                    <div *ngIf="document.buyer">
+                        <a [routerLink]="['/user-account', document.buyer?.id, 'view']">{{ document.buyer?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.document.property">Property</span></dt>
+                <dd>
+                    <div *ngIf="document.property">
+                        <a [routerLink]="['/property', document.property?.id, 'view']">{{ document.property?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/document', document.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

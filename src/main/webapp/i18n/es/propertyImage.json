@@ -1,0 +1,26 @@
+{
+  "homeBuildingApp": {
+    "propertyImage": {
+      "home": {
+        "title": "Property Images",
+        "createLabel": "Crear nuevo Property Image",
+        "createOrEditLabel": "Crear o editar Property Image",
+        "notFound": "Ningún Property Images encontrado"
+      },
+      "created": "Un nuevo Property Image ha sido creado con el identificador {{ param }}",
+      "updated": "Un Property Image ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Property Image ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Property Image {{ id }}?"
+      },
+      "detail": {
+        "title": "Property Image"
+      },
+      "url": "Url",
+      "creationDate": "Creation Date",
+      "state": "State",
+      "property": "Property",
+      "imageCategory": "Image Category"
+    }
+  }
+}

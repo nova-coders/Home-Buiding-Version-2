@@ -1,0 +1,71 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.supportTicketLog.home.title">Support Ticket Logs</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-support-ticket-log" [routerLink]="['/support-ticket-log/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.supportTicketLog.home.createLabel">
+            Create a new Support Ticket Log
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="supportTicketLogs?.length === 0">
+        <span jhiTranslate="homeBuildingApp.supportTicketLog.home.notFound">No supportTicketLogs found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="supportTicketLogs && supportTicketLogs.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.troubleshootingCommentary">Troubleshooting Commentary</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.nextStepCommentary">Next Step Commentary</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.supportTicket">Support Ticket</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let supportTicketLog of supportTicketLogs ;trackBy: trackId">
+                    <td><a [routerLink]="['/support-ticket-log', supportTicketLog.id, 'view']">{{ supportTicketLog.id }}</a></td>
+                    <td>{{ supportTicketLog.troubleshootingCommentary }}</td>
+                    <td>{{ supportTicketLog.nextStepCommentary }}</td>
+                    <td>{{ supportTicketLog.creationDate | date:'medium' }}</td>
+                    <td>
+                        <div *ngIf="supportTicketLog.supportTicket">
+                            <a [routerLink]="['/support-ticket', supportTicketLog.supportTicket?.id, 'view']" >{{ supportTicketLog.supportTicket?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/support-ticket-log', supportTicketLog.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/support-ticket-log', supportTicketLog.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(supportTicketLog)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

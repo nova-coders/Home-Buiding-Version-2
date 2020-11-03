@@ -1,0 +1,35 @@
+{
+  "name": "Rent",
+  "fields": [
+    {
+      "fieldName": "deposit",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "score",
+      "otherEntityRelationshipName": "rent",
+      "relationshipName": "score"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "rent",
+      "relationshipName": "property",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20201103042712",
+  "entityTableName": "rent",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

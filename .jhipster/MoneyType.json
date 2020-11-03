@@ -1,0 +1,36 @@
+{
+  "name": "MoneyType",
+  "fields": [
+    {
+      "fieldName": "icon",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "moneyType",
+      "relationshipName": "property"
+    }
+  ],
+  "changelogDate": "20201103041212",
+  "entityTableName": "money_type",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,67 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.role.home.title">Roles</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-role" [routerLink]="['/role/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.role.home.createLabel">
+            Create a new Role
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="roles?.length === 0">
+        <span jhiTranslate="homeBuildingApp.role.home.notFound">No roles found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="roles && roles.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.role.name">Name</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.role.description">Description</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.role.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.role.creationDate">Creation Date</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roles ;trackBy: trackId">
+                    <td><a [routerLink]="['/role', role.id, 'view']">{{ role.id }}</a></td>
+                    <td>{{ role.name }}</td>
+                    <td>{{ role.description }}</td>
+                    <td>{{ role.state }}</td>
+                    <td>{{ role.creationDate | date:'medium' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/role', role.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/role', role.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(role)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

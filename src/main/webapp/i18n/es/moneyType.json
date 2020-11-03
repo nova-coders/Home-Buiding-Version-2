@@ -1,0 +1,25 @@
+{
+  "homeBuildingApp": {
+    "moneyType": {
+      "home": {
+        "title": "Money Types",
+        "createLabel": "Crear nuevo Money Type",
+        "createOrEditLabel": "Crear o editar Money Type",
+        "notFound": "Ningún Money Types encontrado"
+      },
+      "created": "Un nuevo Money Type ha sido creado con el identificador {{ param }}",
+      "updated": "Un Money Type ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Money Type ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Money Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Money Type"
+      },
+      "icon": "Icon",
+      "name": "Name",
+      "state": "State",
+      "property": "Property"
+    }
+  }
+}

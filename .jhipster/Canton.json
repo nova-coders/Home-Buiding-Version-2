@@ -1,0 +1,43 @@
+{
+  "name": "Canton",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "canton",
+      "relationshipName": "property"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "province",
+      "otherEntityRelationshipName": "canton",
+      "relationshipName": "province",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103041712",
+  "entityTableName": "canton",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

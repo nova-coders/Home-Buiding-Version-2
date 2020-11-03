@@ -1,0 +1,59 @@
+{
+  "name": "Document",
+  "fields": [
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sellerUserId",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "buyerUserId",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "ownedDocuments",
+      "relationshipName": "seller",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "purchasedDocuments",
+      "relationshipName": "buyer",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "document",
+      "relationshipName": "property",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103041912",
+  "entityTableName": "document",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

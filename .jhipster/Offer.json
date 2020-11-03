@@ -1,0 +1,48 @@
+{
+  "name": "Offer",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "commentary",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "offer",
+      "relationshipName": "userAccount",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "sale",
+      "otherEntityRelationshipName": "offer",
+      "relationshipName": "sale",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103042812",
+  "entityTableName": "offer",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

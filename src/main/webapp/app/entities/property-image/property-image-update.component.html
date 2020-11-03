@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-property-image-heading" jhiTranslate="homeBuildingApp.propertyImage.home.createOrEditLabel">Create or edit a Property Image</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.propertyImage.url" for="field_url">Url</label>
+                    <input type="text" class="form-control" name="url" id="field_url"
+                           formControlName="url"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.propertyImage.creationDate" for="field_creationDate">Creation Date</label>
+                    <div class="d-flex">
+                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.propertyImage.state" for="field_state">State</label>
+                    <input type="checkbox" class="form-control" name="state" id="field_state"
+                           formControlName="state"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.propertyImage.property" for="field_property">Property</label>
+                    <select class="form-control" id="field_property" name="property" formControlName="property">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="propertyOption.id === editForm.get('property')!.value?.id ? editForm.get('property')!.value : propertyOption" *ngFor="let propertyOption of properties; trackBy: trackById">{{ propertyOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.propertyImage.imageCategory" for="field_imageCategory">Image Category</label>
+                    <select class="form-control" id="field_imageCategory" name="imageCategory" formControlName="imageCategory">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="imageCategoryOption.id === editForm.get('imageCategory')!.value?.id ? editForm.get('imageCategory')!.value : imageCategoryOption" *ngFor="let imageCategoryOption of imagecategories; trackBy: trackById">{{ imageCategoryOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

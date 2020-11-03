@@ -1,0 +1,79 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.supportTicket.home.title">Support Tickets</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-support-ticket" [routerLink]="['/support-ticket/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.supportTicket.home.createLabel">
+            Create a new Support Ticket
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="supportTickets?.length === 0">
+        <span jhiTranslate="homeBuildingApp.supportTicket.home.notFound">No supportTickets found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="supportTickets && supportTickets.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.title">Title</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.message">Message</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.client">Client</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.signOffUser">Sign Off User</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let supportTicket of supportTickets ;trackBy: trackId">
+                    <td><a [routerLink]="['/support-ticket', supportTicket.id, 'view']">{{ supportTicket.id }}</a></td>
+                    <td>{{ supportTicket.title }}</td>
+                    <td>{{ supportTicket.message }}</td>
+                    <td>{{ supportTicket.creationDate | date:'medium' }}</td>
+                    <td>{{ supportTicket.state }}</td>
+                    <td>
+                        <div *ngIf="supportTicket.client">
+                            <a [routerLink]="['/user-account', supportTicket.client?.id, 'view']" >{{ supportTicket.client?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="supportTicket.signOffUser">
+                            <a [routerLink]="['/user-account', supportTicket.signOffUser?.id, 'view']" >{{ supportTicket.signOffUser?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/support-ticket', supportTicket.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/support-ticket', supportTicket.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(supportTicket)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

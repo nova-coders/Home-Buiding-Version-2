@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="score">
+            <h2><span jhiTranslate="homeBuildingApp.score.detail.title">Score</span> {{ score.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.score.rating">Rating</span></dt>
+                <dd>
+                    <span>{{ score.rating }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.score.commentary">Commentary</span></dt>
+                <dd>
+                    <span>{{ score.commentary }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.score.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ score.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.score.state">State</span></dt>
+                <dd>
+                    <span>{{ score.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.score.userAccount">User Account</span></dt>
+                <dd>
+                    <div *ngIf="score.userAccount">
+                        <a [routerLink]="['/user-account', score.userAccount?.id, 'view']">{{ score.userAccount?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.score.rent">Rent</span></dt>
+                <dd>
+                    <div *ngIf="score.rent">
+                        <a [routerLink]="['/rent', score.rent?.id, 'view']">{{ score.rent?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/score', score.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

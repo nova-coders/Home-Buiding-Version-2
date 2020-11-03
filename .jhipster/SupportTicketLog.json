@@ -1,0 +1,37 @@
+{
+  "name": "SupportTicketLog",
+  "fields": [
+    {
+      "fieldName": "troubleshootingCommentary",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nextStepCommentary",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "supportTicket",
+      "otherEntityRelationshipName": "supportTicketLog",
+      "relationshipName": "supportTicket",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103041612",
+  "entityTableName": "support_ticket_log",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

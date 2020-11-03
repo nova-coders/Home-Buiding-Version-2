@@ -1,0 +1,47 @@
+{
+  "name": "Sale",
+  "fields": [
+    {
+      "fieldName": "finalDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "cadastralPlan",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "registryStudy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "propertyId",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "offer",
+      "otherEntityRelationshipName": "sale",
+      "relationshipName": "offer"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "property",
+      "otherEntityRelationshipName": "sale",
+      "relationshipName": "property",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20201103042612",
+  "entityTableName": "sale",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

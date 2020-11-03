@@ -1,0 +1,44 @@
+{
+  "name": "Province",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "canton",
+      "otherEntityRelationshipName": "province",
+      "relationshipName": "canton"
+    }
+  ],
+  "changelogDate": "20201103041812",
+  "entityTableName": "province",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

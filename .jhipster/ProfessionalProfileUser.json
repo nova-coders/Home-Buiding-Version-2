@@ -1,0 +1,45 @@
+{
+  "name": "ProfessionalProfileUser",
+  "fields": [
+    {
+      "fieldName": "profesionalType",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "pricePerHour",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "professionalProfileUser",
+      "relationshipName": "userAccount",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20201103041412",
+  "entityTableName": "professional_profile_user",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

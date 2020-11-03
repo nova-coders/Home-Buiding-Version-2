@@ -1,0 +1,122 @@
+{
+  "name": "Property",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "discount",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "landSquareMeters",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "areaSquareMeters",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "zoom",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "addressText",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "sale",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "sale",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "rent",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "rent",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "propertyImage",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "propertyImage"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "document"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "userAccount",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "moneyType",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "moneyType",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "canton",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "canton",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "propertyCategory",
+      "otherEntityRelationshipName": "property",
+      "relationshipName": "propertyCategory",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201103042012",
+  "entityTableName": "property",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

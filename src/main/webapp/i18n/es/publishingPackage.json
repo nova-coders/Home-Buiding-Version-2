@@ -1,0 +1,31 @@
+{
+  "homeBuildingApp": {
+    "publishingPackage": {
+      "home": {
+        "title": "Publishing Packages",
+        "createLabel": "Crear nuevo Publishing Package",
+        "createOrEditLabel": "Crear o editar Publishing Package",
+        "notFound": "Ningún Publishing Packages encontrado"
+      },
+      "created": "Un nuevo Publishing Package ha sido creado con el identificador {{ param }}",
+      "updated": "Un Publishing Package ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Publishing Package ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Publishing Package {{ id }}?"
+      },
+      "detail": {
+        "title": "Publishing Package"
+      },
+      "name": "Name",
+      "price": "Price",
+      "cantPropertySale": "Cant Property Sale",
+      "cantPropertyRent": "Cant Property Rent",
+      "cantDays": "Cant Days",
+      "professional": "Professional",
+      "creationDate": "Creation Date",
+      "type": "Type",
+      "state": "State",
+      "userAccount": "User Account"
+    }
+  }
+}

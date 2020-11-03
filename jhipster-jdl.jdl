@@ -1,0 +1,188 @@
+
+entity MoneyType {
+    Id Integer,
+    Icon String,
+    Name String,
+    State Boolean
+}
+
+entity UserAccount {
+  Id Integer,
+  Identification String,
+  Birthdate ZonedDateTime,
+  ProfilePicture String,
+  SignaturePicture String,
+  SignatureCode String,
+  State Boolean,
+  CreationDate ZonedDateTime
+}
+
+entity ProfessionalProfileUser {
+  Id Integer ,
+  ProfesionalType Integer,
+  PricePerHour Double,
+  Description String,
+  CreationDate ZonedDateTime,
+  State Boolean 
+}
+
+entity SupportTicket {
+  Id Integer ,
+  Title String ,
+  Message String ,
+  CreationDate ZonedDateTime,
+  State Boolean 
+}
+
+entity SupportTicketLog {
+  Id Integer,
+  TroubleshootingCommentary String,
+  NextStepCommentary String,
+  CreationDate ZonedDateTime
+}
+
+entity Canton {
+  Id Integer ,
+  Name String,
+  State Boolean ,
+  CreationDate ZonedDateTime
+}
+
+entity Province {
+  Id Integer ,
+  Name String,
+  Latitude Long,
+  Longitude Long,
+  State Boolean,
+  CreationDate ZonedDateTime
+}
+
+entity Document {
+  Id Integer ,
+  Url String,
+  SellerUserId Integer,
+  BuyerUserId Integer,
+  State Boolean,
+  CreationDate ZonedDateTime
+}
+
+entity Property {
+  Id Integer ,
+  Title String,
+  Description String,
+  Price Double,
+  Discount Integer,
+  LandSquareMeters Integer,
+  AreaSquareMeters Integer,
+  Latitude Long,
+  Longitude Long,
+  Zoom Long,
+  AddressText String,
+  CreationDate ZonedDateTime,
+  State Integer
+}
+
+entity PropertyCategory {
+  Id Integer,
+  Name String,
+  PropertyType String,
+  State Boolean 
+}
+
+entity PublishingPackage {
+  Id Integer,
+  Name String,
+  Price Double,
+  CantPropertySale Integer,
+  CantPropertyRent Integer,
+  CantDays Integer,
+  Professional Boolean,
+  CreationDate ZonedDateTime,
+  Type Integer,
+  State Boolean 
+}
+
+entity Score {
+  Id Integer ,
+  Rating Integer,
+  Commentary String,
+  CreationDate ZonedDateTime,
+  State Boolean 
+}
+
+entity PropertyImage {
+  Id Integer,
+  Url String,
+  CreationDate ZonedDateTime,
+  State Boolean 
+}
+
+entity ImageCategory {
+  Id Integer ,
+  Name String
+}
+
+entity Sale {
+  Id Integer,
+  FinalDate ZonedDateTime,
+  CadastralPlan String,
+  RegistryStudy String,
+  PropertyId Integer
+}
+
+entity Rent {
+  Id Integer,
+  Deposit Integer
+}
+
+entity Offer {
+  Id Integer,
+  Date ZonedDateTime,
+  Commentary String,
+  Amount Double,
+  State Boolean 
+}
+
+entity Role {
+  Id Integer,
+  Name String,
+  Description String,
+  State Boolean,
+  CreationDate ZonedDateTime
+}
+
+relationship OneToMany{
+	UserAccount to Property 
+    UserAccount to Offer
+    UserAccount to Score
+    UserAccount{ownedTickets} to SupportTicket{client}
+    UserAccount{clientTickets} to SupportTicket{signOffUser}
+    UserAccount{ownedDocuments} to Document{Seller}
+    UserAccount{purchasedDocuments} to Document{Buyer}
+    PublishingPackage to UserAccount
+    Role to UserAccount
+    
+	MoneyType to Property
+    Canton to Property   
+    PropertyCategory to Property
+    Property to PropertyImage
+    Property to Document
+    
+    ImageCategory to PropertyImage
+  
+    Sale to Offer
+    
+    Province to Canton
+    
+    Rent to Score
+    
+    SupportTicket to SupportTicketLog
+}
+
+relationship OneToOne{
+	Property to Sale
+    Property to Rent
+    UserAccount to User
+    UserAccount to ProfessionalProfileUser
+}
+

@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="propertyImage">
+            <h2><span jhiTranslate="homeBuildingApp.propertyImage.detail.title">Property Image</span> {{ propertyImage.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.propertyImage.url">Url</span></dt>
+                <dd>
+                    <span>{{ propertyImage.url }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.propertyImage.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ propertyImage.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.propertyImage.state">State</span></dt>
+                <dd>
+                    <span>{{ propertyImage.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.propertyImage.property">Property</span></dt>
+                <dd>
+                    <div *ngIf="propertyImage.property">
+                        <a [routerLink]="['/property', propertyImage.property?.id, 'view']">{{ propertyImage.property?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.propertyImage.imageCategory">Image Category</span></dt>
+                <dd>
+                    <div *ngIf="propertyImage.imageCategory">
+                        <a [routerLink]="['/image-category', propertyImage.imageCategory?.id, 'view']">{{ propertyImage.imageCategory?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/property-image', propertyImage.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

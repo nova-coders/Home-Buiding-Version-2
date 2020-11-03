@@ -1,0 +1,39 @@
+{
+  "homeBuildingApp": {
+    "userAccount": {
+      "home": {
+        "title": "User Accounts",
+        "createLabel": "Crear nuevo User Account",
+        "createOrEditLabel": "Crear o editar User Account",
+        "notFound": "Ningún User Accounts encontrado"
+      },
+      "created": "Un nuevo User Account ha sido creado con el identificador {{ param }}",
+      "updated": "Un User Account ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un User Account ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar User Account {{ id }}?"
+      },
+      "detail": {
+        "title": "User Account"
+      },
+      "identification": "Identification",
+      "birthdate": "Birthdate",
+      "profilePicture": "Profile Picture",
+      "signaturePicture": "Signature Picture",
+      "signatureCode": "Signature Code",
+      "state": "State",
+      "creationDate": "Creation Date",
+      "user": "User",
+      "professionalProfileUser": "Professional Profile User",
+      "property": "Property",
+      "offer": "Offer",
+      "score": "Score",
+      "ownedTickets": "Owned Tickets",
+      "clientTickets": "Client Tickets",
+      "ownedDocuments": "Owned Documents",
+      "purchasedDocuments": "Purchased Documents",
+      "publishingPackage": "Publishing Package",
+      "role": "Role"
+    }
+  }
+}

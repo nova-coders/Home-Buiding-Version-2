@@ -1,0 +1,25 @@
+{
+  "homeBuildingApp": {
+    "propertyCategory": {
+      "home": {
+        "title": "Property Categories",
+        "createLabel": "Crear nuevo Property Category",
+        "createOrEditLabel": "Crear o editar Property Category",
+        "notFound": "Ningún Property Categories encontrado"
+      },
+      "created": "Un nuevo Property Category ha sido creado con el identificador {{ param }}",
+      "updated": "Un Property Category ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Property Category ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Property Category {{ id }}?"
+      },
+      "detail": {
+        "title": "Property Category"
+      },
+      "name": "Name",
+      "propertyType": "Property Type",
+      "state": "State",
+      "property": "Property"
+    }
+  }
+}

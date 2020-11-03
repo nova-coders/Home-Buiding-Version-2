@@ -1,0 +1,147 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-property-heading" jhiTranslate="homeBuildingApp.property.home.createOrEditLabel">Create or edit a Property</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.title" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                           formControlName="title"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.price" for="field_price">Price</label>
+                    <input type="number" class="form-control" name="price" id="field_price"
+                           formControlName="price"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.discount" for="field_discount">Discount</label>
+                    <input type="number" class="form-control" name="discount" id="field_discount"
+                           formControlName="discount"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.landSquareMeters" for="field_landSquareMeters">Land Square Meters</label>
+                    <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters"
+                           formControlName="landSquareMeters"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.areaSquareMeters" for="field_areaSquareMeters">Area Square Meters</label>
+                    <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
+                           formControlName="areaSquareMeters"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.latitude" for="field_latitude">Latitude</label>
+                    <input type="number" class="form-control" name="latitude" id="field_latitude"
+                           formControlName="latitude"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.longitude" for="field_longitude">Longitude</label>
+                    <input type="number" class="form-control" name="longitude" id="field_longitude"
+                           formControlName="longitude"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.zoom" for="field_zoom">Zoom</label>
+                    <input type="number" class="form-control" name="zoom" id="field_zoom"
+                           formControlName="zoom"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.addressText" for="field_addressText">Address Text</label>
+                    <input type="text" class="form-control" name="addressText" id="field_addressText"
+                           formControlName="addressText"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.creationDate" for="field_creationDate">Creation Date</label>
+                    <div class="d-flex">
+                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.state" for="field_state">State</label>
+                    <input type="number" class="form-control" name="state" id="field_state"
+                           formControlName="state"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.sale" for="field_sale">Sale</label>
+                    <select class="form-control" id="field_sale" name="sale" formControlName="sale">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="saleOption.id === editForm.get('sale')!.value?.id ? editForm.get('sale')!.value : saleOption" *ngFor="let saleOption of sales; trackBy: trackById">{{ saleOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.rent" for="field_rent">Rent</label>
+                    <select class="form-control" id="field_rent" name="rent" formControlName="rent">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="rentOption.id === editForm.get('rent')!.value?.id ? editForm.get('rent')!.value : rentOption" *ngFor="let rentOption of rents; trackBy: trackById">{{ rentOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.userAccount" for="field_userAccount">User Account</label>
+                    <select class="form-control" id="field_userAccount" name="userAccount" formControlName="userAccount">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userAccountOption.id === editForm.get('userAccount')!.value?.id ? editForm.get('userAccount')!.value : userAccountOption" *ngFor="let userAccountOption of useraccounts; trackBy: trackById">{{ userAccountOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.moneyType" for="field_moneyType">Money Type</label>
+                    <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="moneyTypeOption.id === editForm.get('moneyType')!.value?.id ? editForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of moneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.canton" for="field_canton">Canton</label>
+                    <select class="form-control" id="field_canton" name="canton" formControlName="canton">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="cantonOption.id === editForm.get('canton')!.value?.id ? editForm.get('canton')!.value : cantonOption" *ngFor="let cantonOption of cantons; trackBy: trackById">{{ cantonOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.propertyCategory" for="field_propertyCategory">Property Category</label>
+                    <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="propertyCategoryOption.id === editForm.get('propertyCategory')!.value?.id ? editForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of propertycategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

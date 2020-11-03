@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity SupportTicket.
+    -->
+    <changeSet id="20201103041512-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="client_id"
+                                 baseTableName="support_ticket"
+                                 constraintName="fk_support_ticket_client_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"/>
+
+        <addForeignKeyConstraint baseColumnNames="sign_off_user_id"
+                                 baseTableName="support_ticket"
+                                 constraintName="fk_support_ticket_sign_off_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"/>
+
+    </changeSet>
+</databaseChangeLog>

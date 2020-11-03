@@ -1,0 +1,28 @@
+{
+  "homeBuildingApp": {
+    "supportTicket": {
+      "home": {
+        "title": "Support Tickets",
+        "createLabel": "Crear nuevo Support Ticket",
+        "createOrEditLabel": "Crear o editar Support Ticket",
+        "notFound": "Ningún Support Tickets encontrado"
+      },
+      "created": "Un nuevo Support Ticket ha sido creado con el identificador {{ param }}",
+      "updated": "Un Support Ticket ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Support Ticket ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Support Ticket {{ id }}?"
+      },
+      "detail": {
+        "title": "Support Ticket"
+      },
+      "title": "Title",
+      "message": "Message",
+      "creationDate": "Creation Date",
+      "state": "State",
+      "supportTicketLog": "Support Ticket Log",
+      "client": "Client",
+      "signOffUser": "Sign Off User"
+    }
+  }
+}
