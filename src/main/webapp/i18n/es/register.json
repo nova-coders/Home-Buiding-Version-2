@@ -1,8 +1,9 @@
 {
   "register": {
-    "title": "Registro",
+    "title": "Crear una cuenta",
     "form": {
-      "button": "Crear la cuenta"
+      "button": "Crear cuenta",
+      "card-title": "Datos personales"
     },
     "messages": {
       "validate": {

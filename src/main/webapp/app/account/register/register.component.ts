@@ -22,6 +22,8 @@ export class RegisterComponent implements AfterViewInit {
   success = false;
 
   registerForm = this.fb.group({
+    identificationType: ['', [Validators.required]],
+    identification: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
     login: [
       '',
       [
@@ -31,6 +33,9 @@ export class RegisterComponent implements AfterViewInit {
         Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
       ],
     ],
+    birthdate: ['', [Validators.required]],
+    lastname1: ['', [Validators.required]],
+    phone: ['', [Validators.required, Validators.pattern('(\\+506|00506|506)?[ -]*([0-9][ -]*){8}')]],
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
