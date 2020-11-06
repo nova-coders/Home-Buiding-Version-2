@@ -11,9 +11,10 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
+import { SignaturePadModule } from '@ng-plus/signature-pad';
 
 @NgModule({
-  imports: [HomeBuildingSharedModule, RouterModule.forChild(accountState)],
+  imports: [HomeBuildingSharedModule, RouterModule.forChild(accountState), SignaturePadModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,

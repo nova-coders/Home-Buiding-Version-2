@@ -82,7 +82,8 @@
         }
       },
       "error": {
-        "dontmatch": "¡La contraseña y la confirmación de contraseña no coinciden!"
+        "dontmatch": "¡La contraseña y la confirmación de contraseña no coinciden!",
+        "dontdrawsignature": "Se requiere de su firma digital para registrarse"
       },
       "validate": {
         "newpassword": {

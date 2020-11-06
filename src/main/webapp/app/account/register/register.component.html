@@ -22,6 +22,10 @@
             <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
                 The password and its confirmation do not match!
             </div>
+
+            <div class="alert alert-danger" *ngIf="errorSignatureNotSaved" jhiTranslate="global.messages.error.dontdrawsignature">
+                The signature is required
+            </div>
         </div>
     </div>
 
@@ -256,6 +260,14 @@
                                         </small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="signatureImageUrl">Firma</label>
+                                <ng-signature-pad id="signatureImageUrl" clearButtonText='Limpiar' doneButtonText='Guardar firma'
+                                                  [emitOnDragEnd]="true" (done)="saveImage($event)"></ng-signature-pad>
                             </div>
                         </div>
                     </div>
