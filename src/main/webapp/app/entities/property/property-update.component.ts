@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,8 +12,6 @@ import { IProperty, Property } from 'app/shared/model/property.model';
 import { PropertyService } from './property.service';
 import { ISale } from 'app/shared/model/sale.model';
 import { SaleService } from 'app/entities/sale/sale.service';
-import { IRent } from 'app/shared/model/rent.model';
-import { RentService } from 'app/entities/rent/rent.service';
 import { IUserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
 import { IMoneyType } from 'app/shared/model/money-type.model';
@@ -23,20 +21,23 @@ import { CantonService } from 'app/entities/canton/canton.service';
 import { IPropertyCategory } from 'app/shared/model/property-category.model';
 import { PropertyCategoryService } from 'app/entities/property-category/property-category.service';
 
-type SelectableEntity = ISale | IRent | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
+type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
   selector: 'jhi-property-update',
   templateUrl: './property-update.component.html',
 })
 export class PropertyUpdateComponent implements OnInit {
+  step: any = 1;
   isSaving = false;
   sales: ISale[] = [];
-  rents: IRent[] = [];
   useraccounts: IUserAccount[] = [];
   moneytypes: IMoneyType[] = [];
   cantons: ICanton[] = [];
   propertycategories: IPropertyCategory[] = [];
+  zoom = 8;
+  lat = 51.673858;
+  lng = 7.815982;
 
   editForm = this.fb.group({
     id: [],
@@ -63,7 +64,6 @@ export class PropertyUpdateComponent implements OnInit {
   constructor(
     protected propertyService: PropertyService,
     protected saleService: SaleService,
-    protected rentService: RentService,
     protected userAccountService: UserAccountService,
     protected moneyTypeService: MoneyTypeService,
     protected cantonService: CantonService,
@@ -72,6 +72,14 @@ export class PropertyUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
+  mapClicked($event: google.maps.MouseEvent): void {
+    this.lat = $event.latLng.lat();
+    this.lng = $event.latLng.lng();
+  }
+  markerDragEnd($event: google.maps.MouseEvent): void {
+    this.lat = $event.latLng.lat();
+    this.lng = $event.latLng.lng();
+  }
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ property }) => {
       if (!property.id) {
@@ -103,28 +111,6 @@ export class PropertyUpdateComponent implements OnInit {
           }
         });
 
-      this.rentService
-        .query({ filter: 'property-is-null' })
-        .pipe(
-          map((res: HttpResponse<IRent[]>) => {
-            return res.body || [];
-          })
-        )
-        .subscribe((resBody: IRent[]) => {
-          if (!property.rent || !property.rent.id) {
-            this.rents = resBody;
-          } else {
-            this.rentService
-              .find(property.rent.id)
-              .pipe(
-                map((subRes: HttpResponse<IRent>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
-              )
-              .subscribe((concatRes: IRent[]) => (this.rents = concatRes));
-          }
-        });
-
       this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.useraccounts = res.body || []));
 
       this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.moneytypes = res.body || []));
@@ -153,7 +139,6 @@ export class PropertyUpdateComponent implements OnInit {
       creationDate: property.creationDate ? property.creationDate.format(DATE_TIME_FORMAT) : null,
       state: property.state,
       sale: property.sale,
-      rent: property.rent,
       userAccount: property.userAccount,
       moneyType: property.moneyType,
       canton: property.canton,
@@ -166,6 +151,7 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   save(): void {
+    this.step = this.step + 1;
     this.isSaving = true;
     const property = this.createFromForm();
     if (property.id !== undefined) {
@@ -174,7 +160,9 @@ export class PropertyUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.propertyService.create(property));
     }
   }
-
+  previous(): void {
+    this.step = this.step - 1;
+  }
   private createFromForm(): IProperty {
     return {
       ...new Property(),

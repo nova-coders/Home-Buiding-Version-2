@@ -8,6 +8,7 @@
     "node_modules"
   ],
   "dependencies": {
+    "@agm/core": "^3.0.0-beta.0",
     "@angular/common": "10.0.0",
     "@angular/compiler": "10.0.0",
     "@angular/core": "10.0.0",
@@ -22,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "6.1.0",
     "@ngx-translate/core": "12.1.2",
     "@ngx-translate/http-loader": "5.0.0",
+    "@types/googlemaps": "^3.40.3",
     "bootstrap": "4.5.0",
     "bootswatch": "4.5.0",
     "moment": "2.27.0",
@@ -30,10 +32,10 @@
     "ngx-infinite-scroll": "9.0.0",
     "ngx-webstorage": "5.0.0",
     "rxjs": "6.5.5",
-    "swagger-ui-dist": "3.25.1",
     "sockjs-client": "1.4.0",
-    "webstomp-client": "1.2.6",
+    "swagger-ui-dist": "3.25.1",
     "tslib": "2.0.0",
+    "webstomp-client": "1.2.6",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
