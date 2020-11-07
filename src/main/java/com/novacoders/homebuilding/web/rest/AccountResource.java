@@ -143,6 +143,7 @@ public class AccountResource {
 
         User user = SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin).get();
+        user.setPassword(passwordChangeDto.getNewPassword());
         mailService.sendPasswordChangeMail(user);
     }
 
