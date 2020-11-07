@@ -61,22 +61,22 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
               description: 'Paquete publicitario para subastas y promoción de alquiler',
               amount: {
                 currency_code: 'USD',
-                value: '4.00',
+                value: '' + this.publishingPackageSelected?.price,
                 breakdown: {
                   item_total: {
                     currency_code: 'USD',
-                    value: '4.00 ',
+                    value: '' + this.publishingPackageSelected?.price,
                   },
                 },
               },
               items: [
                 {
-                  name: 'Con este paquete publicitario puede publicar propiedades durante ' + this.publishingPackageSelected?.cantDays,
+                  name: 'Paquete publicitario ' + this.publishingPackageSelected?.name,
                   quantity: '1',
                   category: 'DIGITAL_GOODS',
                   unit_amount: {
                     currency_code: 'USD',
-                    value: '4.00',
+                    value: '' + this.publishingPackageSelected?.price,
                   },
                 },
               ],
