@@ -14,9 +14,12 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
-
+/* eslint-disable */
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AgmCoreModule } from '@agm/core';
 @NgModule({
   imports: [
+    GooglePlaceModule,
     BrowserModule,
     HomeBuildingSharedModule,
     HomeBuildingCoreModule,
@@ -24,6 +27,10 @@ import { ErrorComponent } from './layouts/error/error.component';
     // jhipster-needle-angular-add-module JHipster will add new module here
     HomeBuildingEntityModule,
     HomeBuildingAppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoy',
+      libraries: ['places']
+    }),
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],

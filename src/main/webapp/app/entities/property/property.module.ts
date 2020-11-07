@@ -8,12 +8,15 @@ import { PropertyUpdateComponent } from './property-update.component';
 import { PropertyDeleteDialogComponent } from './property-delete-dialog.component';
 import { propertyRoute } from './property.route';
 import { AgmCoreModule } from '@agm/core';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 @NgModule({
   imports: [
     HomeBuildingSharedModule,
     RouterModule.forChild(propertyRoute),
+    GooglePlaceModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDw6tRPHNHrpOWsx9ZtYcThtd2ph1-dQ4E',
+      apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoy',
+      libraries: ['places']
     }),
   ],
   declarations: [PropertyComponent, PropertyDetailComponent, PropertyUpdateComponent, PropertyDeleteDialogComponent],

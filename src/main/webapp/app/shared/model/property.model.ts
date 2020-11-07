@@ -20,6 +20,7 @@ export interface IProperty {
   longitude?: number;
   zoom?: number;
   addressText?: string;
+  finalDate?: Moment;
   creationDate?: Moment;
   state?: number;
   sale?: ISale;
@@ -45,6 +46,7 @@ export class Property implements IProperty {
     public longitude?: number,
     public zoom?: number,
     public addressText?: string,
+    public finalDate?: Moment,
     public creationDate?: Moment,
     public state?: number,
     public sale?: ISale,

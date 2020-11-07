@@ -66,26 +66,24 @@
                      </div>
                 </div>
             </div>
-            <div *ngIf="step==1">
-                <h4>Imágenes del inmueble</h4>
+            <div *ngIf="step == 2">
+                <h4>Imágenes y localización del inmueble</h4>
                 <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                <agm-map style="height: 300px;"
-                    [latitude]="lat"
-                    [longitude]="lng"
-                    [zoom]="zoom"
-                    [disableDefaultUI]="false"
-                    (mapClick)="mapClicked($event)">
-
-                    <agm-marker (dragEnd)="markerDragEnd($event)">
-
-                        <agm-info-window>
-                            <strong>InfoWindow content</strong>
-                        </agm-info-window>
-
-                    </agm-marker>
-                </agm-map>
-
-            </div>
+                <div class="form-group">
+                    <label>Ingrese la dirección</label>
+                    <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" class="form-control"/>
+                    <agm-map style="height: 300px;"
+                        [latitude]="lat"
+                        [longitude]="lng"
+                        [zoom]="zoom" >
+                        <agm-marker
+                            [latitude]="lat"
+                            [longitude]="lng"
+                            [markerDraggable]="true"
+                            (dragEnd)="markerDragEnd($event)"></agm-marker>
+                    </agm-map>
+                </div>
+                </div>
 
 
             <jhi-alert-error></jhi-alert-error>
@@ -96,7 +94,7 @@
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
                 </button>
                 <button type="button" class="btn btn-primary" *ngIf="step != 1" (click)="previous()">Anterior</button>
-                <button type="button" class="btn btn-primary" *ngIf="step != 2" >Siguiente</button>
+                <button type="button" class="btn btn-primary" *ngIf="step != 2" (click)="next()">Siguiente</button>
 
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2 ">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span>Enviar</span>
