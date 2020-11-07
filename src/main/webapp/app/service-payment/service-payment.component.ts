@@ -39,6 +39,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   registerChangeInPublishingPackages(): void {
     this.eventSubscriber = this.eventManager.subscribe('publishingPackageListModification', () => this.loadAll());
   }
