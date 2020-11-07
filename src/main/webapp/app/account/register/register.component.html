@@ -26,6 +26,10 @@
             <div class="alert alert-danger" *ngIf="errorSignatureNotSaved" jhiTranslate="global.messages.error.dontdrawsignature">
                 The signature is required
             </div>
+
+            <div class="alert alert-danger" *ngIf="errorUserImage" jhiTranslate="global.messages.error.dontuploadimage">
+                The user image is required
+            </div>
         </div>
     </div>
 
@@ -37,6 +41,22 @@
                         <h2 class="card-title" jhiTranslate="register.form.card-title">Personal Data</h2>
                     </div>
                     <div class="card-body">
+                        <div class="row pb-3">
+                            <div class="col-12">
+                                <label>Imagen de su cuenta</label>
+                                <ngx-dropzone (change)="onSelectImage($event)" class="m-1" [multiple]="false" [accept]="'image/*'">
+                                    <ngx-dropzone-label>Suba una imagen de su perfil</ngx-dropzone-label>
+                                    <ngx-dropzone-image-preview
+                                        ngProjectAs="ngx-dropzone-preview"
+                                        *ngFor="let f of files"
+                                        [file]="f"
+                                        [removable]="true"
+                                        (removed)="onRemoveImage(f)">
+                                    </ngx-dropzone-image-preview>
+                                </ngx-dropzone>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -267,7 +287,7 @@
                             <div class="col-6">
                                 <label for="signatureImageUrl">Firma</label>
                                 <ng-signature-pad id="signatureImageUrl" clearButtonText='Limpiar' doneButtonText='Guardar firma'
-                                                  [emitOnDragEnd]="true" (done)="saveImage($event)"></ng-signature-pad>
+                                                  [emitOnDragEnd]="true" (done)="saveSignatureImage($event)"></ng-signature-pad>
                             </div>
                         </div>
                     </div>

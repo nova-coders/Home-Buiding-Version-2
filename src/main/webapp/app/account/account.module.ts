@@ -12,9 +12,10 @@ import { PasswordResetFinishComponent } from './password-reset/finish/password-r
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
 import { SignaturePadModule } from '@ng-plus/signature-pad';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
-  imports: [HomeBuildingSharedModule, RouterModule.forChild(accountState), SignaturePadModule],
+  imports: [HomeBuildingSharedModule, RouterModule.forChild(accountState), SignaturePadModule, NgxDropzoneModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,
