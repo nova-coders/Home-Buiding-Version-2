@@ -14,6 +14,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { ServicePaymentModule } from 'app/layouts/service-payment/service-payment.module';
 
 @NgModule({
   imports: [
@@ -24,8 +25,10 @@ import { ErrorComponent } from './layouts/error/error.component';
     // jhipster-needle-angular-add-module JHipster will add new module here
     HomeBuildingEntityModule,
     HomeBuildingAppRoutingModule,
+    ServicePaymentModule,
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
+  exports: [],
 })
 export class HomeBuildingAppModule {}

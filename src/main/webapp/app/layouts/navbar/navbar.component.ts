@@ -9,7 +9,6 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-
 @Component({
   selector: 'jhi-navbar',
   templateUrl: './navbar.component.html',
