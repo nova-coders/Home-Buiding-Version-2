@@ -7,8 +7,8 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
-        "moneyType": "Money Type",
-        "userAccount": "User Account",
+        "moneyType": "Tipo de moneda",
+        "userAccount": "Cuenta de usuario",
         "professionalProfileUser": "Professional Profile User",
         "supportTicket": "Support Ticket",
         "supportTicketLog": "Support Ticket Log",
@@ -61,7 +61,13 @@
       "confirmpassword.label": "Confirmación de la nueva contraseña",
       "confirmpassword.placeholder": "Confirmación de la nueva contraseña",
       "email.label": "Correo electrónico",
-      "email.placeholder": "Su correo electrónico"
+      "email.placeholder": "Su correo electrónico",
+      "identification-type.label": "Tipo de identificación",
+      "identification.label": "Número de identificación",
+      "birthdate.label": "Fecha de nacimiento",
+      "lastname1.label": "Primer apellido",
+      "lastname2.label": "Segundo apellido",
+      "phone.label": "Teléfono"
     },
     "messages": {
       "info": {
@@ -76,7 +82,9 @@
         }
       },
       "error": {
-        "dontmatch": "¡La contraseña y la confirmación de contraseña no coinciden!"
+        "dontmatch": "¡La contraseña y la confirmación de contraseña no coinciden!",
+        "dontdrawsignature": "Se requiere de su firma digital para registrarse",
+        "dontuploadimage": "Se requiere de su imagen de la cuenta para registrarse"
       },
       "validate": {
         "newpassword": {
