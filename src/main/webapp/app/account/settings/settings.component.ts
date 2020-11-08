@@ -8,14 +8,34 @@ import { LANGUAGES } from 'app/core/language/language.constants';
 import {LoginModalService} from "../../core/login/login-modal.service";
 import {RegisterService} from "../register/register.service";
 import {ImageService} from "../../global-services/image.service";
-import {UserAccount} from "../../shared/model/user-account.model";
+import {IUserAccount, UserAccount} from "../../shared/model/user-account.model";
 import {UserAccountService} from "../../entities/user-account/user-account.service";
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
+import {IUser, User} from "../../core/user/user.model";
+import {IProfessionalProfileUser} from "../../shared/model/professional-profile-user.model";
+import {IPublishingPackage} from "../../shared/model/publishing-package.model";
+import {IRole} from "../../shared/model/role.model";
+import {Observable} from "rxjs";
+import {HttpResponse} from "@angular/common/http";
+import * as moment from "moment";
+import {DATE_TIME_FORMAT} from "../../shared/constants/input.constants";
 
 @Component({
   selector: 'jhi-settings',
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit {
+
+  public completeName = '';
+
+  isSaving = false;
+  users: IUser[] = [];
+  professionalprofileusers: IProfessionalProfileUser[] = [];
+  publishingpackages: IPublishingPackage[] = [];
+  roles: IRole[] = [];
+
+
+  //Just in case
 
   signatureImageUrl: any;
   files: File[];
@@ -38,12 +58,22 @@ export class SettingsComponent implements OnInit {
   success = false;
   languages = LANGUAGES;
   settingsForm = this.fb.group({
+
+    id: [],
+    identification: [],
+    profilePicture: [],
+    signaturePicture: [],
+    signatureCode: [],
+    state: [],
+    creationDate: [],
+    user: [],
+    professionalProfileUser: [],
+    publishingPackage: [],
+    role: [],
     firstName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     lastName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     langKey: [undefined],
-
-    //Check later here.
     login: [
       '',
       [
@@ -54,9 +84,6 @@ export class SettingsComponent implements OnInit {
       ],
     ],
     birthdate: ['', [Validators.required]],
-    lastname1: ['', [Validators.required]],
-    lastname2: [],
-    phone: ['', [Validators.required, Validators.pattern('(\\+506|00506|506)?[ -]*([0-9][ -]*){8}')]]
     //Check here later
   });
 
@@ -67,24 +94,31 @@ export class SettingsComponent implements OnInit {
     private accountService: AccountService,
     private userAccountService: UserAccountService,
     private fb: FormBuilder,
-    private languageService: JhiLanguageService)
+    private languageService: JhiLanguageService,
+    private servicePaymentService: ServicePaymentService
+  )
   {
     this.signatureImageUrl = '';
     this.files = [];
     this.userImageUrl = '';
+    this.userAccount = new UserAccount();
+    this.userAccount.birthdate = moment();
   }
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account => {
-      if (account) {
+    this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
+      let userAccount: UserAccount;
+      userAccount = <UserAccount>puserAccount.body;
+      this.userAccount = userAccount;
+      if (userAccount) {
+        this.completeName = userAccount.user?.firstName + ' ' + userAccount.user?.lastName;
         this.settingsForm.patchValue({
-          firstName: account.firstName,
-          lastName: account.lastName,
-          email: account.email,
-          langKey: account.langKey
+          firstName: userAccount.user?.firstName,
+          lastName: userAccount.user?.lastName,
+          email: userAccount.user?.email,
+          langKey: userAccount.user?.langKey,
+          birthday: userAccount?.birthdate
         });
-        this.settingsForm.get(['firstName']);
-        alert(this.account.firstName + ' | ' + this.account.lastName);
       }
     });
   }
@@ -108,8 +142,65 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  update(): void{
-    console.log('This is the information on the form: ' + this.account);
+  update(): void {
+    this.isSaving = true;
+    const userAccount = this.createFromForm();
+    if (userAccount.id !== undefined) {
+      this.subscribeToSaveResponse(this.userAccountService.update(userAccount));
+    } else {
+      this.subscribeToSaveResponse(this.userAccountService.create(userAccount));
+    }
+  }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IUserAccount>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }
+
+  protected onSaveSuccess(): void {
+    this.isSaving = false;
+    this.previousState();
+  }
+
+  protected onSaveError(): void {
+    this.isSaving = false;
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+
+  private createFromForm(): IUserAccount {
+    let userAccountTemp: UserAccount = {
+      ...new UserAccount(),
+      id: this.settingsForm.get(['id'])!.value,
+      identification: this.settingsForm.get(['identification'])!.value,
+      birthdate: this.settingsForm.get(['birthdate'])!.value ? moment(this.settingsForm.get(['birthdate'])!.value, DATE_TIME_FORMAT) : undefined,
+      profilePicture: this.settingsForm.get(['profilePicture'])!.value,
+      signaturePicture: this.settingsForm.get(['signaturePicture'])!.value,
+      signatureCode: this.settingsForm.get(['signatureCode'])!.value,
+      state: this.settingsForm.get(['state'])!.value,
+      creationDate: this.settingsForm.get(['creationDate'])!.value
+        ? moment(this.settingsForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      user: this.settingsForm.get(['user'])!.value,
+      professionalProfileUser: this.settingsForm.get(['professionalProfileUser'])!.value,
+      publishingPackage: this.settingsForm.get(['publishingPackage'])!.value,
+      role: this.settingsForm.get(['role'])!.value,
+    };
+
+    let user: User = {
+      ...new User(),
+
+      firstName: this.settingsForm.get(['firstName'])!.value,
+      lastName:  this.settingsForm.get(['lastName'])!.value,
+      email:  this.settingsForm.get(['email'])!.value,
+      langKey: this.settingsForm.get(['langKey'])!.value,
+    }
+    userAccountTemp.user = user;
+    return userAccountTemp;
   }
 
   public saveSignatureImage(data: any): void {

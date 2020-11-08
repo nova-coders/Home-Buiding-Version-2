@@ -1,6 +1,6 @@
 {
   "settings": {
-    "title": "Informacion del usuario [<strong>{{username}}</strong>]",
+    "title": "Informacion del usuario <strong>{{login}}</strong>",
     "form": {
       "firstname": "Nombre",
       "firstname.placeholder": "Su nombre",

@@ -4,6 +4,7 @@ src/test/javascript/protractor.conf.js
 src/test/javascript/jest.conf.js
 src/main/webapp/app/
 webpack/
+src/main/webapp/app
 target/
 build/
 node/

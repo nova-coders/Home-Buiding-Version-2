@@ -34,10 +34,10 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form name="form" role="form" (ngSubmit)="update()" [formGroup]="settingsForm" *ngIf="!success">
+            <form name="form" role="form" (ngSubmit)="update" [formGroup]="settingsForm" *ngIf="!success">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title" jhiTranslate="settings.title">Personal Data</h2>
+                        <h2 class="card-title">Datos de la cuenta: {{completeName}}</h2>
                     </div>
                     <div class="card-body">
                         <div class="row pb-3">
@@ -59,41 +59,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="login" jhiTranslate="global.form.username.label">Username</label>
-                                    <input type="text" class="form-control" id="login" name="login" placeholder="{{ 'global.form.username.placeholder' | translate }}"
-                                           formControlName="login" #login>
-
-                                    <div *ngIf="settingsForm.get('login')!.invalid && (settingsForm.get('login')!.dirty || settingsForm.get('login')!.touched)">
-                                        <small class="form-text text-danger"
-                                               *ngIf="settingsForm.get('login')?.errors?.required"
-                                               jhiTranslate="register.messages.validate.login.required">
-                                            Your username is required.
-                                        </small>
-
-                                        <small class="form-text text-danger"
-                                               *ngIf="settingsForm.get('login')?.errors?.minlength"
-                                               jhiTranslate="register.messages.validate.login.minlength">
-                                            Your username is required to be at least 1 character.
-                                        </small>
-
-                                        <small class="form-text text-danger"
-                                               *ngIf="settingsForm.get('login')?.errors?.maxlength"
-                                               jhiTranslate="register.messages.validate.login.maxlength">
-                                            Your username cannot be longer than 50 characters.
-                                        </small>
-
-                                        <small class="form-text text-danger"
-                                               *ngIf="settingsForm.get('login')?.errors?.pattern"
-                                               jhiTranslate="register.messages.validate.login.pattern">
-                                            Your username can only contain letters and digits.
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label class="form-control-label" for="birthdate" jhiTranslate="global.form.birthdate.label">Birth date</label>
-                                    <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD"
+                                    <input [ngModel]="userAccount.birthdate | date:'yyyy-MM-dd'" type="date" class="form-control" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD"
                                            formControlName="birthdate" #birthdate>
                                 </div>
 
@@ -109,47 +76,37 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="lastname1" jhiTranslate="global.form.lastname1.label">Last name 1</label>
-                                    <input type="text" class="form-control" id="lastname1" name="lastname1"
-                                           formControlName="lastname1" #lastname1>
+                                    <label class="form-control-label" for="firstName">Nombre</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName"
+                                           formControlName="firstName" #firstName>
                                 </div>
 
-                                <div *ngIf="settingsForm.get('lastname1')!.invalid && (settingsForm.get('lastname1')!.dirty || settingsForm.get('lastname1')!.touched)">
+                                <div *ngIf="settingsForm.get('firstName')!.invalid && (settingsForm.get('firstName')!.dirty || settingsForm.get('firstName')!.touched)">
                                     <small class="form-text text-danger"
-                                           *ngIf="settingsForm.get('lastname1')?.errors?.required">
-                                        El primer apellido es requerido
+                                           *ngIf="settingsForm.get('firstName')?.errors?.required">
+                                        El nombre es requerido.
                                     </small>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="lastname2" jhiTranslate="global.form.lastname2.label">Last name 2</label>
-                                    <input type="text" class="form-control" id="lastname2" name="lastname2"
-                                           formControlName="lastname2" #lastname2>
+                                    <label class="form-control-label" for="lastName">Apellido</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName"
+                                           formControlName="lastName" #lastName>
                                 </div>
+
+                                <div *ngIf="settingsForm.get('lastName')!.invalid && (settingsForm.get('lastName')!.dirty || settingsForm.get('lastName')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('lastName')?.errors?.required">
+                                        El apellido es requerido.
+                                    </small>
+                                </div>
+
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="phone" jhiTranslate="global.form.phone.label">Phone</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="506 8888 8888"
-                                           formControlName="phone" #phone>
-
-                                    <div *ngIf="settingsForm.get('phone')!.invalid && (settingsForm.get('phone')!.dirty || settingsForm.get('phone')!.touched)">
-                                        <small class="form-text text-danger"
-                                               *ngIf="settingsForm.get('phone')?.errors?.required">
-                                            El tel&eacute;fono es requerido
-                                        </small>
-
-                                        <small class="form-text text-danger"
-                                               *ngIf="settingsForm.get('phone')?.errors?.pattern">
-                                            El tel&eacute;fono solo puede tener el siguiente formato (506 8888-8888)
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="email" jhiTranslate="global.form.email.label">Email</label>
