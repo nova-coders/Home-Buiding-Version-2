@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder } from '@angular/forms';
@@ -20,7 +20,7 @@ import { ICanton } from 'app/shared/model/canton.model';
 import { CantonService } from 'app/entities/canton/canton.service';
 import { IPropertyCategory } from 'app/shared/model/property-category.model';
 import { PropertyCategoryService } from 'app/entities/property-category/property-category.service';
-import {GooglePlaceDirective} from "ngx-google-places-autocomplete";
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
@@ -38,13 +38,13 @@ export class PropertyUpdateComponent implements OnInit {
   zoom = 8;
   lat: any;
   lng: any;
-  address: string;
+  address: string = '';
   private geoCoder: any;
-  @ViewChild("placesRef", {static: false}) placesRef: GooglePlaceDirective;
-  options = {
-    types : [],
-    componentRestrictions: { country: 'CR' }
-  }
+  @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
+  options: any = {
+    types: [],
+    componentRestrictions: { country: 'CR' },
+  };
 
   editForm = this.fb.group({
     id: [],
@@ -69,7 +69,6 @@ export class PropertyUpdateComponent implements OnInit {
     propertyCategory: [],
   });
 
-
   constructor(
     protected propertyService: PropertyService,
     protected saleService: SaleService,
@@ -79,20 +78,18 @@ export class PropertyUpdateComponent implements OnInit {
     protected propertyCategoryService: PropertyCategoryService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({property}) => {
+    this.activatedRoute.data.subscribe(({ property }) => {
       if (!property.id) {
-        const today = moment().startOf('day');
-        property.creationDate = today;
+        property.creationDate = moment().startOf('day');
       }
 
       this.updateForm(property);
 
       this.saleService
-        .query({filter: 'property-is-null'})
+        .query({ filter: 'property-is-null' })
         .pipe(
           map((res: HttpResponse<ISale[]>) => {
             return res.body || [];
@@ -129,15 +126,14 @@ export class PropertyUpdateComponent implements OnInit {
   public handleAddressChange(address: any): void {
     this.lat = address.geometry.location.lat();
     this.lng = address.geometry.location.lng();
-
   }
   public setCurrentLocation(): void {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(position => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
         this.zoom = 15;
-      })
+      });
     }
   }
   markerDragEnd($event: google.maps.MouseEvent): void {
@@ -147,7 +143,7 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   getAddress(): void {
-    this.geoCoder.geocode({ 'location': { lat: this.lat, lng: this.lng } }, (results: any, status: any) => {
+    this.geoCoder.geocode({ location: { lat: this.lat, lng: this.lng } }, (results: any, status: any) => {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 12;
@@ -158,11 +154,9 @@ export class PropertyUpdateComponent implements OnInit {
       } else {
         window.alert('Geocoder failed due to: ' + status);
       }
-
     });
   }
   updateForm(property: IProperty): void {
-
     this.editForm.patchValue({
       id: property.id,
       title: property.title,
@@ -222,9 +216,7 @@ export class PropertyUpdateComponent implements OnInit {
       longitude: this.editForm.get(['longitude'])!.value,
       zoom: this.editForm.get(['zoom'])!.value,
       addressText: this.editForm.get(['addressText'])!.value,
-      finalDate: this.editForm.get(['finalDate'])!.value
-        ? moment(this.editForm.get(['finalDate'])!.value, DATE_TIME_FORMAT)
-        : undefined,
+      finalDate: this.editForm.get(['finalDate'])!.value ? moment(this.editForm.get(['finalDate'])!.value, DATE_TIME_FORMAT) : undefined,
       state: this.editForm.get(['state'])!.value,
       sale: this.editForm.get(['sale'])!.value,
       rent: this.editForm.get(['rent'])!.value,
@@ -255,4 +247,3 @@ export class PropertyUpdateComponent implements OnInit {
     return item.id;
   }
 }
-
