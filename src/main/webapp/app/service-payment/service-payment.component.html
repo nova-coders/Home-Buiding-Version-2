@@ -1,0 +1,43 @@
+
+<div *ngIf="publishingPackages && publishingPackages.length > 0" class="row">
+    <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-3 col-lg-3 col-md-3 col-sm-12">
+        <div class="card text-center m-2 height-1">
+            <div class="card-header" >
+                Paquete de publicidad
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ publishingPackage.name }}</h5>
+                <p class="card-text height-2" >
+                    Con este paquete publicitario va poder publicar propiedades durante {{ publishingPackage.cantDays }} día y con
+                    capacidad en subidas de {{ publishingPackage.cantPropertySale }} en subasta y en alquiler de {{ publishingPackage.cantPropertyRent }}.
+                    <span *ngIf="publishingPackage.professional === true">
+                        <br>
+                        También podrá registrar sus servicios como preferenciales.
+                    </span>
+                    <br *ngIf="publishingPackage.professional === false">
+                </p>
+            </div>
+            <div class="card-footer text-muted faPager">
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="service"
+                           id="exampleRadios-{{i}}"
+                           checked
+                           [value]="i"
+                           (click)="setServiceIndex(i)">
+                    <label class="form-check-label font-italic font-size-1 btn btn-success btn-sm" for="exampleRadios-{{i}}">
+                        ${{publishingPackage.price}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-lg-4 col-ms-4"></div>
+    <div class="col-md-4 col-lg-4 col-ms-4">
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    </div>
+    <div class="col-md-4 col-lg-4 col-ms-4"></div>
+</div>
