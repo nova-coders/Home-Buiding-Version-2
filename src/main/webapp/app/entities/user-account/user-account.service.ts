@@ -6,7 +6,7 @@ import * as moment from 'moment';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
-import { IUserAccount } from 'app/shared/model/user-account.model';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 
 type EntityResponseType = HttpResponse<IUserAccount>;
 type EntityArrayResponseType = HttpResponse<IUserAccount[]>;
@@ -36,7 +36,9 @@ export class UserAccountService {
       .get<IUserAccount>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
-
+  findByUser(): Observable<UserAccount> {
+    return this.http.get<UserAccount>(`${SERVER_API_URL}/api/user-accounts-by-Login`);
+  }
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

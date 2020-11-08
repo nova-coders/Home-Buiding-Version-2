@@ -6,6 +6,9 @@ import { HttpResponse } from '@angular/common/http';
 import { PublishingPackageService } from '../entities/publishing-package/publishing-package.service';
 import { Account } from 'app/core/user/account.model';
 import { JhiEventManager } from 'ng-jhipster';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
+import { UserAccount } from 'app/shared/model/user-account.model';
+
 @Component({
   selector: 'jhi-service-payment',
   templateUrl: './service-payment.component.html',
@@ -19,12 +22,21 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   public eventSubscriber?: Subscription;
   public publishingPackages: IPublishingPackage[] | [] = [];
   public publishingPackageSelected?: IPublishingPackage;
-  constructor(protected publishingPackageService: PublishingPackageService, protected eventManager: JhiEventManager) {
+  public userAccount = new UserAccount();
+  constructor(
+    private servicePaymentService: ServicePaymentService,
+    protected publishingPackageService: PublishingPackageService,
+    protected eventManager: JhiEventManager
+  ) {
     this.publishingPackageSelected = {} as IPublishingPackage;
+    this.userAccount.publishingPackage = {} as UserAccount;
   }
   ngOnInit(): void {
     this.loadAll();
-    this.registerChangeInPublishingPackages();
+    this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
+      this.userAccount = userAccount.body;
+      console.log('cuenta usuario', this.userAccount);
+    });
   }
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
@@ -51,6 +63,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
     this.publishingPackageSelected = this.publishingPackages[index];
     this.initConfig();
   }
+  getUser() {}
   public initConfig(): void {
     this.payPalConfig = {
       clientId: 'AUhE1PVR_p5RwD-Rdvd9uD0zV_cSrJ6c933Hlmr3Dnls7KhpbS0Cfsn8uunzo_UIySZ5nv_HBCgbJqW2',
@@ -95,6 +108,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
       },
       onApprove: (data: any, actions: any): void => {
         this.showSuccess = true;
+        this.userAccount.publishingPackage = this.publishingPackageSelected;
         actions.order.get().then((details: any) => {});
       },
       onClientAuthorization: (data: any): void => {

@@ -210,7 +210,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
+            <li *ngIf="isAuthenticated() == true" class="nav-item">
                 <a class="nav-link" routerLink="/servicepayment">
                     <fa-icon icon="wrench"></fa-icon>
                     <span >Pagar servicio</span>
