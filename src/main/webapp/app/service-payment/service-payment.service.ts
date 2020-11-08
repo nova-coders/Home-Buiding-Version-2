@@ -16,4 +16,7 @@ export class ServicePaymentService {
   getUserAcoount(): Observable<any> {
     return this.http.get(`${this.resourceUrl}/payment-user-account`, { observe: 'response' });
   }
+  assignPackageToUser(packegeid: number, userid: number): Observable<any> {
+    return this.http.get(`${this.resourceUrl}/payment-user-account/${packegeid}/${userid}`);
+  }
 }
