@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
     lastName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     langKey: [undefined],
-    
+
     //Check later here.
     login: [
       '',
@@ -83,8 +83,8 @@ export class SettingsComponent implements OnInit {
           email: account.email,
           langKey: account.langKey
         });
-        this.account = account;
-        alert('this is the information got from the account Service | identity: ' + this.account);
+        this.settingsForm.get(['firstName']);
+        alert(this.account.firstName + ' | ' + this.account.lastName);
       }
     });
   }

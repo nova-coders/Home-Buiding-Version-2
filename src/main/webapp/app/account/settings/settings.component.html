@@ -1,21 +1,20 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
-            <h1 jhiTranslate="register.title">Registration</h1>
 
-            <div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
+            <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
                 <strong>Registration saved!</strong> Please check your email for confirmation.
             </div>
 
-            <div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">
+            <div class="alert alert-danger" *ngIf="error" jhiTranslate="settings.messages.error.fail">
                 <strong>Registration failed!</strong> Please try again later.
             </div>
 
-            <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">
+            <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="settings.messages.error.userexists">
                 <strong>Login name already registered!</strong> Please choose another one.
             </div>
 
-            <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="register.messages.error.emailexists">
+            <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="settings.messages.error.emailexists">
                 <strong>Email is already in use!</strong> Please choose another one.
             </div>
 
@@ -38,7 +37,7 @@
             <form name="form" role="form" (ngSubmit)="update()" [formGroup]="settingsForm" *ngIf="!success">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title" jhiTranslate="register.form.card-title">Personal Data</h2>
+                        <h2 class="card-title" jhiTranslate="settings.title">Personal Data</h2>
                     </div>
                     <div class="card-body">
                         <div class="row pb-3">
