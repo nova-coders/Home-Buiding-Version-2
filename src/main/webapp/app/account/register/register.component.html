@@ -2,40 +2,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
             <h1 jhiTranslate="register.title">Registration</h1>
-
-            <div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
-                <strong>Registration saved!</strong> Please check your email for confirmation.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">
-                <strong>Registration failed!</strong> Please try again later.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">
-                <strong>Login name already registered!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="register.messages.error.emailexists">
-                <strong>Email is already in use!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
-                The password and its confirmation do not match!
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorSignatureNotSaved" jhiTranslate="global.messages.error.dontdrawsignature">
-                The signature is required
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserImage" jhiTranslate="global.messages.error.dontuploadimage">
-                The user image is required
-            </div>
         </div>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
+            <form name="form" role="form" [formGroup]="registerForm" *ngIf="!success">
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title" jhiTranslate="register.form.card-title">Personal Data</h2>
@@ -288,16 +260,52 @@
                             <div class="col-6">
                                 <label for="signatureImageUrl">Firma</label>
                                 <ng-signature-pad id="signatureImageUrl" clearButtonText='Limpiar' doneButtonText='Guardar firma'
-                                                  (done)="saveSignatureImage($event)"></ng-signature-pad>
+                                                  (done)="saveSignatureImage($event)" (cleared)="clearSignatureImage()"></ng-signature-pad>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary" jhiTranslate="register.form.button">Register</button>
+                        <button type="submit" [disabled]="registerForm.invalid" (click)="register()" class="btn btn-primary" jhiTranslate="register.form.button">Register</button>
                         <a class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
+                <strong>Registration saved!</strong> Please check your email for confirmation.
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">
+                <strong>Registration failed!</strong> Please try again later.
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">
+                <strong>Login name already registered!</strong> Please choose another one.
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="register.messages.error.emailexists">
+                <strong>Email is already in use!</strong> Please choose another one.
+            </div>
+
+            <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
+                The password and its confirmation do not match!
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorSignatureNotSaved" jhiTranslate="global.messages.error.dontdrawsignature">
+                The signature is required
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorUserImage" jhiTranslate="global.messages.error.dontuploadimage">
+                The user image is required
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorYounger">
+                La fecha de nacimiento es incorrecta, tiene que ser mayor de 18 a&ntilde;os
+            </div>
         </div>
     </div>
 </div>

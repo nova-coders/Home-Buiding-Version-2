@@ -30,6 +30,7 @@ export class RegisterComponent implements AfterViewInit {
   errorSignatureNotSaved = false;
   errorUserImage = false;
   errorInUploadImage = false;
+  errorYounger = false;
 
   signatureImageUrl: any;
   files: File[];
@@ -83,48 +84,61 @@ export class RegisterComponent implements AfterViewInit {
     this.errorUserExists = false;
     this.errorSignatureNotSaved = false;
     this.errorUserImage = false;
+    this.errorYounger = false;
 
-    const password = this.registerForm.get(['password'])!.value;
-    if (password !== this.registerForm.get(['confirmPassword'])!.value) {
-      this.doNotMatch = true;
-    } else {
-      if (!this.files[0]) {
-        this.errorUserImage = true;
+    /* Validate the birth date */
+    if (this.validateBirthdate()) {
+      const password = this.registerForm.get(['password'])!.value;
+
+      /* Valid passwords match */
+      if (password !== this.registerForm.get(['confirmPassword'])!.value) {
+        this.doNotMatch = true;
       } else {
-        if (this.signatureImageUrl === '') {
-          this.errorSignatureNotSaved = true;
+        /* Valid that has an image */
+        if (!this.files[0]) {
+          this.errorUserImage = true;
         } else {
-          const fileData = this.files[0];
+          /* Valid that has a signature */
+          if (this.signatureImageUrl === '') {
+            this.errorSignatureNotSaved = true;
+          } else {
+            const fileData = this.files[0];
 
-          this.imageService.uploadImage(fileData).subscribe(
-            response => {
-              this.userImageUrl = response.url;
-              const login = this.registerForm.get(['login'])!.value;
-              const email = this.registerForm.get(['email'])!.value;
-              const firstName = this.registerForm.get(['lastname1'])!.value;
-              const lastName = this.registerForm.get(['lastname2'])!.value;
+            /* Upload the image in Cloudinary */
+            this.imageService.uploadImage(fileData).subscribe(
+              response => {
+                this.userImageUrl = response.url;
+                const login = this.registerForm.get(['login'])!.value;
+                const email = this.registerForm.get(['email'])!.value;
+                const firstName = this.registerForm.get(['lastname1'])!.value;
+                const lastName = this.registerForm.get(['lastname2'])!.value;
 
-              this.registerService
-                .save({ login, email, password, langKey: this.languageService.getCurrentLanguage(), firstName, lastName })
-                .subscribe(
-                  response => {
-                    let userCreated = response;
-                    let newUserAccount = this.createUserAccount();
-                    newUserAccount.user = userCreated;
-                    newUserAccount.signatureCode = <string>Md5.hashStr(JSON.stringify(newUserAccount));
+                /* Register a JHipster user */
+                this.registerService
+                  .save({ login, email, password, langKey: this.languageService.getCurrentLanguage(), firstName, lastName })
+                  .subscribe(
+                    response => {
+                      let userCreated = response;
+                      let newUserAccount = this.createUserAccount();
+                      newUserAccount.user = userCreated;
+                      newUserAccount.signatureCode = <string>Md5.hashStr(JSON.stringify(newUserAccount));
 
-                    this.userAccountService.create(newUserAccount).subscribe(
-                      () => (this.success = true),
-                      response => this.processError(response)
-                    );
-                  },
-                  response => this.processError(response)
-                );
-            },
-            response => this.processError(response)
-          );
+                      /* Register a user account */
+                      this.userAccountService.create(newUserAccount).subscribe(
+                        () => (this.success = true),
+                        response => this.processError(response)
+                      );
+                    },
+                    response => this.processError(response)
+                  );
+              },
+              response => this.processError(response)
+            );
+          }
         }
       }
+    } else {
+      this.errorYounger = true;
     }
   }
 
@@ -151,6 +165,10 @@ export class RegisterComponent implements AfterViewInit {
     };
   }
 
+  public clearSignatureImage(): void {
+    this.signatureImageUrl = '';
+  }
+
   public onSelectImage(event: any): void {
     if (this.files && this.files.length >= 1) {
       this.onRemoveImage(this.files[0]);
@@ -169,16 +187,6 @@ export class RegisterComponent implements AfterViewInit {
     });
   }
 
-  public uploadImage(): void {
-    const fileData = this.files[0];
-    this.imageService.uploadImage(fileData).subscribe(
-      response => {
-        this.userImageUrl = response.url;
-      },
-      () => (this.error = true)
-    );
-  }
-
   public createUserAccount(): UserAccount {
     return {
       ...new UserAccount(),
@@ -192,5 +200,10 @@ export class RegisterComponent implements AfterViewInit {
       phone: this.registerForm.get(['phone'])!.value,
       identificationType: this.registerForm.get(['identificationType'])!.value,
     };
+  }
+
+  public validateBirthdate(): boolean {
+    let birthdate = moment(this.registerForm.get(['birthdate'])!.value, DATE_TIME_FORMAT);
+    return new Date().getFullYear() - birthdate.year() >= 18;
   }
 }
