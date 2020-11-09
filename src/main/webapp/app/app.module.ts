@@ -16,6 +16,7 @@ import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { SeeAuctionComponent } from './see-auction/see-auction.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ActiveMenuDirective,
     FooterComponent,
     ServicePaymentComponent,
+    SeeAuctionComponent,
   ],
   bootstrap: [MainComponent],
 })

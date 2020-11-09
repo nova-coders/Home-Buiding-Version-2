@@ -7,6 +7,7 @@ import { Authority } from 'app/shared/constants/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ServicePaymentComponent } from 'app/service-payment/service-payment.component';
+import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -29,6 +30,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'servicepayment',
           component: ServicePaymentComponent,
+        },
+        {
+          path: 'see-auction/:id',
+          component: SeeAuctionComponent,
         },
         ...LAYOUT_ROUTES,
       ],
