@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
 import { User } from '../../core/user/user.model';
 import { UserAccountService } from '../../entities/user-account/user-account.service';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'jhi-register',
@@ -93,29 +94,35 @@ export class RegisterComponent implements AfterViewInit {
         if (this.signatureImageUrl === '') {
           this.errorSignatureNotSaved = true;
         } else {
-          this.uploadImage();
+          const fileData = this.files[0];
 
-          if (!this.error) {
-            const login = this.registerForm.get(['login'])!.value;
-            const email = this.registerForm.get(['email'])!.value;
-            const firstName = this.registerForm.get(['lastname1'])!.value;
-            const lastName = this.registerForm.get(['lastname2'])!.value;
-            this.registerService
-              .save({ login, email, password, langKey: this.languageService.getCurrentLanguage(), firstName, lastName })
-              .subscribe(
-                response => {
-                  let userCreated = response;
-                  let newUserAccount = this.createUserAccount();
-                  newUserAccount.user = userCreated;
+          this.imageService.uploadImage(fileData).subscribe(
+            response => {
+              this.userImageUrl = response.url;
+              const login = this.registerForm.get(['login'])!.value;
+              const email = this.registerForm.get(['email'])!.value;
+              const firstName = this.registerForm.get(['lastname1'])!.value;
+              const lastName = this.registerForm.get(['lastname2'])!.value;
 
-                  this.userAccountService.create(newUserAccount).subscribe(
-                    () => (this.success = true),
-                    response => this.processError(response)
-                  );
-                },
-                response => this.processError(response)
-              );
-          }
+              this.registerService
+                .save({ login, email, password, langKey: this.languageService.getCurrentLanguage(), firstName, lastName })
+                .subscribe(
+                  response => {
+                    let userCreated = response;
+                    let newUserAccount = this.createUserAccount();
+                    newUserAccount.user = userCreated;
+                    newUserAccount.signatureCode = <string>Md5.hashStr(JSON.stringify(newUserAccount));
+
+                    this.userAccountService.create(newUserAccount).subscribe(
+                      () => (this.success = true),
+                      response => this.processError(response)
+                    );
+                  },
+                  response => this.processError(response)
+                );
+            },
+            response => this.processError(response)
+          );
         }
       }
     }
@@ -181,7 +188,6 @@ export class RegisterComponent implements AfterViewInit {
         : undefined,
       profilePicture: this.userImageUrl,
       signaturePicture: this.signatureImageUrl,
-      signatureCode: '',
       state: true,
       phone: this.registerForm.get(['phone'])!.value,
       identificationType: this.registerForm.get(['identificationType'])!.value,
