@@ -41,6 +41,8 @@ export class UserAccountUpdateComponent implements OnInit {
     signatureCode: [],
     state: [],
     creationDate: [],
+    phone: [],
+    identificationType: [],
     user: [],
     professionalProfileUser: [],
     publishingPackage: [],
@@ -109,6 +111,8 @@ export class UserAccountUpdateComponent implements OnInit {
       signatureCode: userAccount.signatureCode,
       state: userAccount.state,
       creationDate: userAccount.creationDate ? userAccount.creationDate.format(DATE_TIME_FORMAT) : null,
+      phone: userAccount.phone,
+      identificationType: userAccount.identificationType,
       user: userAccount.user,
       professionalProfileUser: userAccount.professionalProfileUser,
       publishingPackage: userAccount.publishingPackage,
@@ -143,6 +147,8 @@ export class UserAccountUpdateComponent implements OnInit {
       creationDate: this.editForm.get(['creationDate'])!.value
         ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      phone: this.editForm.get(['phone'])!.value,
+      identificationType: this.editForm.get(['identificationType'])!.value,
       user: this.editForm.get(['user'])!.value,
       professionalProfileUser: this.editForm.get(['professionalProfileUser'])!.value,
       publishingPackage: this.editForm.get(['publishingPackage'])!.value,

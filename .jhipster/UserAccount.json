@@ -28,6 +28,15 @@
     {
       "fieldName": "creationDate",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "identificationType",
+      "fieldType": "IdentificationType",
+      "fieldValues": "Nacional,Extranjera"
     }
   ],
   "relationships": [

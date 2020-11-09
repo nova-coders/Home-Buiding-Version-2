@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
 import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
+import { IdentificationType } from 'app/shared/model/enumerations/identification-type.model';
 
 describe('Service Tests', () => {
   describe('UserAccount Service', () => {
@@ -24,7 +25,18 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new UserAccount(0, 'AAAAAAA', currentDate, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, currentDate);
+      elemDefault = new UserAccount(
+        0,
+        'AAAAAAA',
+        currentDate,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        false,
+        currentDate,
+        'AAAAAAA',
+        IdentificationType.Nacional
+      );
     });
 
     describe('Service methods', () => {
@@ -79,6 +91,8 @@ describe('Service Tests', () => {
             signatureCode: 'BBBBBB',
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
+            phone: 'BBBBBB',
+            identificationType: 'BBBBBB',
           },
           elemDefault
         );
@@ -108,6 +122,8 @@ describe('Service Tests', () => {
             signatureCode: 'BBBBBB',
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
+            phone: 'BBBBBB',
+            identificationType: 'BBBBBB',
           },
           elemDefault
         );

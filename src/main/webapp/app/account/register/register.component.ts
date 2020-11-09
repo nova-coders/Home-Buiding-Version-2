@@ -7,6 +7,11 @@ import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/con
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { RegisterService } from './register.service';
 import { ImageService } from '../../global-services/image.service';
+import { UserAccount } from '../../shared/model/user-account.model';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
+import { User } from '../../core/user/user.model';
+import { UserAccountService } from '../../entities/user-account/user-account.service';
 
 @Component({
   selector: 'jhi-register',
@@ -30,6 +35,7 @@ export class RegisterComponent implements AfterViewInit {
   userImageUrl: string;
 
   registerForm = this.fb.group({
+    image: ['', [Validators.required]],
     identificationType: ['', [Validators.required]],
     identification: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
     login: [
@@ -55,7 +61,8 @@ export class RegisterComponent implements AfterViewInit {
     private loginModalService: LoginModalService,
     private registerService: RegisterService,
     private fb: FormBuilder,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private userAccountService: UserAccountService
   ) {
     this.signatureImageUrl = '';
     this.files = [];
@@ -91,10 +98,23 @@ export class RegisterComponent implements AfterViewInit {
           if (!this.error) {
             const login = this.registerForm.get(['login'])!.value;
             const email = this.registerForm.get(['email'])!.value;
-            this.registerService.save({ login, email, password, langKey: this.languageService.getCurrentLanguage() }).subscribe(
-              () => (this.success = true),
-              response => this.processError(response)
-            );
+            const firstName = this.registerForm.get(['lastname1'])!.value;
+            const lastName = this.registerForm.get(['lastname2'])!.value;
+            this.registerService
+              .save({ login, email, password, langKey: this.languageService.getCurrentLanguage(), firstName, lastName })
+              .subscribe(
+                response => {
+                  let userCreated = response;
+                  let newUserAccount = this.createUserAccount();
+                  newUserAccount.user = userCreated;
+
+                  this.userAccountService.create(newUserAccount).subscribe(
+                    () => (this.success = true),
+                    response => this.processError(response)
+                  );
+                },
+                response => this.processError(response)
+              );
           }
         }
       }
@@ -130,10 +150,16 @@ export class RegisterComponent implements AfterViewInit {
     }
 
     this.files.push(...event.addedFiles);
+    this.registerForm.patchValue({
+      image: 'true',
+    });
   }
 
   public onRemoveImage(event: any): void {
     this.files.splice(this.files.indexOf(event), 1);
+    this.registerForm.patchValue({
+      image: '',
+    });
   }
 
   public uploadImage(): void {
@@ -142,9 +168,23 @@ export class RegisterComponent implements AfterViewInit {
       response => {
         this.userImageUrl = response.url;
       },
-      () => {
-        this.error = true;
-      }
+      () => (this.error = true)
     );
+  }
+
+  public createUserAccount(): UserAccount {
+    return {
+      ...new UserAccount(),
+      identification: this.registerForm.get(['identification'])!.value,
+      birthdate: this.registerForm.get(['birthdate'])!.value
+        ? moment(this.registerForm.get(['birthdate'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      profilePicture: this.userImageUrl,
+      signaturePicture: this.signatureImageUrl,
+      signatureCode: '',
+      state: true,
+      phone: this.registerForm.get(['phone'])!.value,
+      identificationType: this.registerForm.get(['identificationType'])!.value,
+    };
   }
 }

@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.novacoders.homebuilding.domain.enumeration.IdentificationType;
 /**
  * Integration tests for the {@link UserAccountResource} REST controller.
  */
@@ -55,6 +56,12 @@ public class UserAccountResourceIT {
     private static final ZonedDateTime DEFAULT_CREATION_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_CREATION_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final String DEFAULT_PHONE = "AAAAAAAAAA";
+    private static final String UPDATED_PHONE = "BBBBBBBBBB";
+
+    private static final IdentificationType DEFAULT_IDENTIFICATION_TYPE = IdentificationType.Nacional;
+    private static final IdentificationType UPDATED_IDENTIFICATION_TYPE = IdentificationType.Extranjera;
+
     @Autowired
     private UserAccountRepository userAccountRepository;
 
@@ -80,7 +87,9 @@ public class UserAccountResourceIT {
             .signaturePicture(DEFAULT_SIGNATURE_PICTURE)
             .signatureCode(DEFAULT_SIGNATURE_CODE)
             .state(DEFAULT_STATE)
-            .creationDate(DEFAULT_CREATION_DATE);
+            .creationDate(DEFAULT_CREATION_DATE)
+            .phone(DEFAULT_PHONE)
+            .identificationType(DEFAULT_IDENTIFICATION_TYPE);
         return userAccount;
     }
     /**
@@ -97,7 +106,9 @@ public class UserAccountResourceIT {
             .signaturePicture(UPDATED_SIGNATURE_PICTURE)
             .signatureCode(UPDATED_SIGNATURE_CODE)
             .state(UPDATED_STATE)
-            .creationDate(UPDATED_CREATION_DATE);
+            .creationDate(UPDATED_CREATION_DATE)
+            .phone(UPDATED_PHONE)
+            .identificationType(UPDATED_IDENTIFICATION_TYPE);
         return userAccount;
     }
 
@@ -127,6 +138,8 @@ public class UserAccountResourceIT {
         assertThat(testUserAccount.getSignatureCode()).isEqualTo(DEFAULT_SIGNATURE_CODE);
         assertThat(testUserAccount.isState()).isEqualTo(DEFAULT_STATE);
         assertThat(testUserAccount.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
+        assertThat(testUserAccount.getPhone()).isEqualTo(DEFAULT_PHONE);
+        assertThat(testUserAccount.getIdentificationType()).isEqualTo(DEFAULT_IDENTIFICATION_TYPE);
     }
 
     @Test
@@ -166,7 +179,9 @@ public class UserAccountResourceIT {
             .andExpect(jsonPath("$.[*].signaturePicture").value(hasItem(DEFAULT_SIGNATURE_PICTURE)))
             .andExpect(jsonPath("$.[*].signatureCode").value(hasItem(DEFAULT_SIGNATURE_CODE)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
-            .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
+            .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
+            .andExpect(jsonPath("$.[*].identificationType").value(hasItem(DEFAULT_IDENTIFICATION_TYPE.toString())));
     }
     
     @Test
@@ -186,7 +201,9 @@ public class UserAccountResourceIT {
             .andExpect(jsonPath("$.signaturePicture").value(DEFAULT_SIGNATURE_PICTURE))
             .andExpect(jsonPath("$.signatureCode").value(DEFAULT_SIGNATURE_CODE))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
-            .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
+            .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
+            .andExpect(jsonPath("$.identificationType").value(DEFAULT_IDENTIFICATION_TYPE.toString()));
     }
     @Test
     @Transactional
@@ -215,7 +232,9 @@ public class UserAccountResourceIT {
             .signaturePicture(UPDATED_SIGNATURE_PICTURE)
             .signatureCode(UPDATED_SIGNATURE_CODE)
             .state(UPDATED_STATE)
-            .creationDate(UPDATED_CREATION_DATE);
+            .creationDate(UPDATED_CREATION_DATE)
+            .phone(UPDATED_PHONE)
+            .identificationType(UPDATED_IDENTIFICATION_TYPE);
 
         restUserAccountMockMvc.perform(put("/api/user-accounts")
             .contentType(MediaType.APPLICATION_JSON)
@@ -233,6 +252,8 @@ public class UserAccountResourceIT {
         assertThat(testUserAccount.getSignatureCode()).isEqualTo(UPDATED_SIGNATURE_CODE);
         assertThat(testUserAccount.isState()).isEqualTo(UPDATED_STATE);
         assertThat(testUserAccount.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
+        assertThat(testUserAccount.getPhone()).isEqualTo(UPDATED_PHONE);
+        assertThat(testUserAccount.getIdentificationType()).isEqualTo(UPDATED_IDENTIFICATION_TYPE);
     }
 
     @Test
