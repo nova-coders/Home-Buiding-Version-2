@@ -106,6 +106,7 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //this.toogleNGX();
     this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
@@ -119,6 +120,7 @@ export class SettingsComponent implements OnInit {
           langKey: userAccount.user?.langKey,
           birthday: userAccount?.birthdate
         });
+        console.log(this.userAccount);
       }
     });
   }
@@ -145,6 +147,7 @@ export class SettingsComponent implements OnInit {
   update(): void {
     this.isSaving = true;
     const userAccount = this.createFromForm();
+    console.log(userAccount);
     if (userAccount.id !== undefined) {
       this.subscribeToSaveResponse(this.userAccountService.update(userAccount));
     } else {
@@ -234,6 +237,15 @@ export class SettingsComponent implements OnInit {
         this.error = true;
       }
     );
+  }
+
+  public toogleNGX(): void{
+    var x = document.getElementById("ngxPicture");
+    if (x!.style.display === "block") {
+      x!.style.display = "none";
+    } else {
+      x!.style.display = "block";
+    }
   }
 
 }
