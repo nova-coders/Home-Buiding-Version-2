@@ -13,6 +13,10 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface ServicePaymentRepository extends JpaRepository<UserAccount, Long> {
+
     @Query(value = "SELECT u FROM UserAccount u WHERE u.user.id = :userid")
     UserAccount findByUser(@Param("userid") long userid);
+
+
+
 }

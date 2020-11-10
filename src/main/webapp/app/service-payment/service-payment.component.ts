@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-import { IPublishingPackage } from 'app/shared/model/publishing-package.model';
+import { IPublishingPackage, PublishingPackage } from 'app/shared/model/publishing-package.model';
 import { Subscription } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { PublishingPackageService } from '../entities/publishing-package/publishing-package.service';
@@ -8,6 +8,7 @@ import { Account } from 'app/core/user/account.model';
 import { JhiEventManager } from 'ng-jhipster';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
+import { UserAccountService } from 'app/entities/user-account/user-account.service';
 
 @Component({
   selector: 'jhi-service-payment',
@@ -21,12 +22,13 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   public account: Account | null = null;
   public eventSubscriber?: Subscription;
   public publishingPackages: IPublishingPackage[] | [] = [];
-  public publishingPackageSelected?: IPublishingPackage;
+  public publishingPackageSelected?: IPublishingPackage | PublishingPackage = new PublishingPackage();
   public userAccount = new UserAccount();
   constructor(
     private servicePaymentService: ServicePaymentService,
     protected publishingPackageService: PublishingPackageService,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    private userAccountService: UserAccountService
   ) {
     this.publishingPackageSelected = {} as IPublishingPackage;
     this.userAccount.publishingPackage = {} as UserAccount;
@@ -35,7 +37,6 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
     this.loadAll();
     this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
       this.userAccount = userAccount.body;
-      console.log('cuenta usuario', this.userAccount);
     });
   }
   ngOnDestroy(): void {
@@ -108,8 +109,16 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
       },
       onApprove: (data: any, actions: any): void => {
         this.showSuccess = true;
-        this.userAccount.publishingPackage = this.publishingPackageSelected;
-        actions.order.get().then((details: any) => {});
+        actions.order.get().then((details: any) => {
+          if (details.status === 'APPROVED') {
+            this.userAccount.publishingPackage = this.publishingPackageSelected;
+            if (this.userAccount.publishingPackage?.id != null && this.userAccount.id != null) {
+              this.servicePaymentService
+                .assignPackageToUser(this.userAccount.publishingPackage.id, this.userAccount.id)
+                .subscribe((response: any) => {});
+            }
+          }
+        });
       },
       onClientAuthorization: (data: any): void => {
         this.showSuccess = true;

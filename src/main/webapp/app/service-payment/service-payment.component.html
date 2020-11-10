@@ -8,8 +8,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{ publishingPackage.name }}</h5>
                 <p class="card-text height-2" >
-                    Con este paquete publicitario puede publicar propiedades durante {{ publishingPackage.cantDays }} día y con
-                    capacidad en subidas de {{ publishingPackage.cantPropertySale }} en subasta y en alquiler de {{ publishingPackage.cantPropertyRent }} .
+                    Con este paquete publicitario va poder publicar propiedades durante {{ publishingPackage.cantDays }} día y con
+                    capacidad en subidas de {{ publishingPackage.cantPropertySale }} en subasta y en alquiler de {{ publishingPackage.cantPropertyRent }}.
+                    <span *ngIf="publishingPackage.professional === true">
+                        <br>
+                        También podrá registrar sus servicios como preferenciales.
+                    </span>
+                    <br *ngIf="publishingPackage.professional === false">
                 </p>
             </div>
             <div class="card-footer text-muted faPager">
@@ -21,7 +26,7 @@
                            checked
                            [value]="i"
                            (click)="setServiceIndex(i)">
-                    <label class="form-check-label font-italic font-size-1" for="exampleRadios-{{i}}">
+                    <label class="form-check-label font-italic font-size-1 btn btn-success btn-sm" for="exampleRadios-{{i}}">
                         ${{publishingPackage.price}}
                     </label>
                 </div>

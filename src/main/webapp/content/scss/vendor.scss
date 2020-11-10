@@ -8,7 +8,6 @@ eg $input-color: red;
 // Override Bootstrap variables
 @import 'bootstrap-variables';
 // Import Bootstrap source files from node_modules
-@import '~bootstrap/scss/bootstrap';
 @import '~bootswatch/dist/cosmo/bootswatch';
 
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */

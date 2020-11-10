@@ -23,6 +23,8 @@
       "signatureCode": "Signature Code",
       "state": "State",
       "creationDate": "Creation Date",
+      "phone": "Phone",
+      "identificationType": "Identification Type",
       "user": "User",
       "professionalProfileUser": "Professional Profile User",
       "property": "Property",
