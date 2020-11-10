@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -176,8 +177,8 @@ public class UserAccountResourceIT {
             .andExpect(jsonPath("$.[*].identification").value(hasItem(DEFAULT_IDENTIFICATION)))
             .andExpect(jsonPath("$.[*].birthdate").value(hasItem(sameInstant(DEFAULT_BIRTHDATE))))
             .andExpect(jsonPath("$.[*].profilePicture").value(hasItem(DEFAULT_PROFILE_PICTURE)))
-            .andExpect(jsonPath("$.[*].signaturePicture").value(hasItem(DEFAULT_SIGNATURE_PICTURE)))
-            .andExpect(jsonPath("$.[*].signatureCode").value(hasItem(DEFAULT_SIGNATURE_CODE)))
+            .andExpect(jsonPath("$.[*].signaturePicture").value(hasItem(DEFAULT_SIGNATURE_PICTURE.toString())))
+            .andExpect(jsonPath("$.[*].signatureCode").value(hasItem(DEFAULT_SIGNATURE_CODE.toString())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
@@ -198,8 +199,8 @@ public class UserAccountResourceIT {
             .andExpect(jsonPath("$.identification").value(DEFAULT_IDENTIFICATION))
             .andExpect(jsonPath("$.birthdate").value(sameInstant(DEFAULT_BIRTHDATE)))
             .andExpect(jsonPath("$.profilePicture").value(DEFAULT_PROFILE_PICTURE))
-            .andExpect(jsonPath("$.signaturePicture").value(DEFAULT_SIGNATURE_PICTURE))
-            .andExpect(jsonPath("$.signatureCode").value(DEFAULT_SIGNATURE_CODE))
+            .andExpect(jsonPath("$.signaturePicture").value(DEFAULT_SIGNATURE_PICTURE.toString()))
+            .andExpect(jsonPath("$.signatureCode").value(DEFAULT_SIGNATURE_CODE.toString()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))

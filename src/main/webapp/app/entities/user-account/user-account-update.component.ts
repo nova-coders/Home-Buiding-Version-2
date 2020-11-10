@@ -7,9 +7,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from './user-account.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { IProfessionalProfileUser } from 'app/shared/model/professional-profile-user.model';
@@ -50,6 +52,8 @@ export class UserAccountUpdateComponent implements OnInit {
   });
 
   constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
     protected userAccountService: UserAccountService,
     protected userService: UserService,
     protected professionalProfileUserService: ProfessionalProfileUserService,
@@ -117,6 +121,22 @@ export class UserAccountUpdateComponent implements OnInit {
       professionalProfileUser: userAccount.professionalProfileUser,
       publishingPackage: userAccount.publishingPackage,
       role: userAccount.role,
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  setFileData(event: any, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('homeBuildingApp.error', { ...err, key: 'error.file.' + err.key })
+      );
     });
   }
 

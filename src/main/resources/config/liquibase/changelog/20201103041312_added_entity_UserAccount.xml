@@ -25,10 +25,10 @@
             <column name="profile_picture" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="signature_picture" type="varchar(255)">
+            <column name="signature_picture" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            <column name="signature_code" type="varchar(255)">
+            <column name="signature_code" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="state" type="boolean">
@@ -83,8 +83,8 @@
             <column name="identification" type="string"/>
             <column name="birthdate" type="datetime"/>
             <column name="profile_picture" type="string"/>
-            <column name="signature_picture" type="string"/>
-            <column name="signature_code" type="string"/>
+            <column name="signature_picture" type="clob"/>
+            <column name="signature_code" type="clob"/>
             <column name="state" type="boolean"/>
             <column name="creation_date" type="datetime"/>
             <column name="phone" type="string"/>

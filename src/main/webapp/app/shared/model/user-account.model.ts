@@ -15,8 +15,8 @@ export interface IUserAccount {
   identification?: string;
   birthdate?: Moment;
   profilePicture?: string;
-  signaturePicture?: string;
-  signatureCode?: string;
+  signaturePicture?: any;
+  signatureCode?: any;
   state?: boolean;
   creationDate?: Moment;
   phone?: string;
@@ -40,8 +40,8 @@ export class UserAccount implements IUserAccount {
     public identification?: string,
     public birthdate?: Moment,
     public profilePicture?: string,
-    public signaturePicture?: string,
-    public signatureCode?: string,
+    public signaturePicture?: any,
+    public signatureCode?: any,
     public state?: boolean,
     public creationDate?: Moment,
     public phone?: string,

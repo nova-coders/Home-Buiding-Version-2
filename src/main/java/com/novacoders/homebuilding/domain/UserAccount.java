@@ -36,9 +36,11 @@ public class UserAccount implements Serializable {
     @Column(name = "profile_picture")
     private String profilePicture;
 
+    @Lob
     @Column(name = "signature_picture")
     private String signaturePicture;
 
+    @Lob
     @Column(name = "signature_code")
     private String signatureCode;
 

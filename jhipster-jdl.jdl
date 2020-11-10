@@ -14,8 +14,8 @@ entity UserAccount {
   Identification String,
   Birthdate ZonedDateTime,
   ProfilePicture String,
-  SignaturePicture String,
-  SignatureCode String,
+  SignaturePicture TextBlob,
+  SignatureCode TextBlob,
   State Boolean,
   CreationDate ZonedDateTime,
   Phone String
