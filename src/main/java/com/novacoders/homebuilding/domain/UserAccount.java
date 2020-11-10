@@ -11,6 +11,8 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.novacoders.homebuilding.domain.enumeration.IdentificationType;
+
 /**
  * A UserAccount.
  */
@@ -34,9 +36,11 @@ public class UserAccount implements Serializable {
     @Column(name = "profile_picture")
     private String profilePicture;
 
+    @Lob
     @Column(name = "signature_picture")
     private String signaturePicture;
 
+    @Lob
     @Column(name = "signature_code")
     private String signatureCode;
 
@@ -45,6 +49,13 @@ public class UserAccount implements Serializable {
 
     @Column(name = "creation_date")
     private ZonedDateTime creationDate;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "identification_type")
+    private IdentificationType identificationType;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -188,6 +199,32 @@ public class UserAccount implements Serializable {
 
     public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserAccount phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public IdentificationType getIdentificationType() {
+        return identificationType;
+    }
+
+    public UserAccount identificationType(IdentificationType identificationType) {
+        this.identificationType = identificationType;
+        return this;
+    }
+
+    public void setIdentificationType(IdentificationType identificationType) {
+        this.identificationType = identificationType;
     }
 
     public User getUser() {
@@ -446,6 +483,8 @@ public class UserAccount implements Serializable {
             ", signatureCode='" + getSignatureCode() + "'" +
             ", state='" + isState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
+            ", phone='" + getPhone() + "'" +
+            ", identificationType='" + getIdentificationType() + "'" +
             "}";
     }
 }
