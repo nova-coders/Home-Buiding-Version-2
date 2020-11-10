@@ -33,16 +33,9 @@ export class SettingsComponent implements OnInit {
   professionalprofileusers: IProfessionalProfileUser[] = [];
   publishingpackages: IPublishingPackage[] = [];
   roles: IRole[] = [];
-
-
-  //Just in case
-
   signatureImageUrl: any;
   files: File[];
   userImageUrl: string;
-
-//here
-
   doNotMatch = false;
   error = false;
   errorEmailExists = false;
@@ -50,9 +43,6 @@ export class SettingsComponent implements OnInit {
   errorSignatureNotSaved = false;
   errorUserImage = false;
   errorInUploadImage = false;
-
-  //here
-
   account!: Account;
   userAccount!: UserAccount;//This is a new instance
   success = false;
@@ -84,7 +74,23 @@ export class SettingsComponent implements OnInit {
       ],
     ],
     birthdate: ['', [Validators.required]],
-    //Check here later
+    clientTickets: [],
+    offers: [],
+    ownedDocuments: [],
+    ownedTickets: [],
+    properties: [],
+    purchasedDocuments: [],
+    scores: [],
+
+    activated: [],
+    authorities: [],
+    createdBy: [],
+    createdDate: [],
+    idUser: [],
+    lastModifiedBy: [],
+    lastModifiedDate: [],
+    loginForm: []
+
   });
 
   constructor(
@@ -106,7 +112,6 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.toogleNGX();
     this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
@@ -118,9 +123,38 @@ export class SettingsComponent implements OnInit {
           lastName: userAccount.user?.lastName,
           email: userAccount.user?.email,
           langKey: userAccount.user?.langKey,
-          birthday: userAccount?.birthdate
+          birthday: userAccount?.birthdate,
+          id: userAccount.id,
+          identification: userAccount.identification,
+          profilePicture: userAccount.profilePicture,
+          signaturePicture: userAccount.signaturePicture,
+          signatureCode: userAccount.signatureCode,
+          state: userAccount.state,
+          creationDate: userAccount.creationDate,
+          user: userAccount.user,
+          professionalProfileUser: userAccount.professionalProfileUser,
+          publishingPackage: userAccount.publishingPackage,
+          role: userAccount.role,
+
+          //This is the new ones
+          clientTickets: userAccount.clientTickets,
+          offers: userAccount.offers,
+          ownedDocuments: userAccount.ownedDocuments,
+          ownedTickets: userAccount.ownedTickets,
+          properties: userAccount.properties,
+          purchasedDocuments: userAccount.purchasedDocuments,
+          scores: userAccount.scores,
+
+          activated: userAccount.user!.activated,
+          authorities: userAccount.user!.authorities,
+          createdBy: userAccount.user!.createdBy,
+          createdDate: userAccount.user!.createdDate,
+          idUser: userAccount.user!.id,
+          lastModifiedBy: userAccount.user!.lastModifiedBy,
+          lastModifiedDate: userAccount.user!.lastModifiedDate,
+          loginForm: userAccount.user!.login
+
         });
-        console.log(this.userAccount);
       }
     });
   }
@@ -147,11 +181,15 @@ export class SettingsComponent implements OnInit {
   update(): void {
     this.isSaving = true;
     const userAccount = this.createFromForm();
-    console.log(userAccount);
-    if (userAccount.id !== undefined) {
-      this.subscribeToSaveResponse(this.userAccountService.update(userAccount));
+    console.log(<UserAccount>userAccount);
+    if (<UserAccount>userAccount.id !== undefined) {
+      console.log('This is the component, before update');
+      console.log(<UserAccount>userAccount);
+      this.subscribeToSaveResponse(this.userAccountService.update(<UserAccount>userAccount));
     } else {
-      this.subscribeToSaveResponse(this.userAccountService.create(userAccount));
+      console.log('This is the component, before create');
+      console.log(<UserAccount>userAccount);
+      this.subscribeToSaveResponse(this.userAccountService.create(<UserAccount>userAccount));
     }
   }
 
@@ -180,7 +218,9 @@ export class SettingsComponent implements OnInit {
       ...new UserAccount(),
       id: this.settingsForm.get(['id'])!.value,
       identification: this.settingsForm.get(['identification'])!.value,
-      birthdate: this.settingsForm.get(['birthdate'])!.value ? moment(this.settingsForm.get(['birthdate'])!.value, DATE_TIME_FORMAT) : undefined,
+      birthdate: this.settingsForm.get(['birthdate'])!.value
+        ? moment(this.settingsForm.get(['birthdate'])!.value, DATE_TIME_FORMAT)
+        : undefined,
       profilePicture: this.settingsForm.get(['profilePicture'])!.value,
       signaturePicture: this.settingsForm.get(['signaturePicture'])!.value,
       signatureCode: this.settingsForm.get(['signatureCode'])!.value,
@@ -192,15 +232,30 @@ export class SettingsComponent implements OnInit {
       professionalProfileUser: this.settingsForm.get(['professionalProfileUser'])!.value,
       publishingPackage: this.settingsForm.get(['publishingPackage'])!.value,
       role: this.settingsForm.get(['role'])!.value,
-    };
 
+      clientTickets: this.settingsForm.get(['clientTickets'])!.value,
+      offers: this.settingsForm.get(['offers'])!.value,
+      ownedDocuments: this.settingsForm.get(['ownedDocuments'])!.value,
+      ownedTickets: this.settingsForm.get(['ownedTickets'])!.value,
+      properties: this.settingsForm.get(['properties'])!.value,
+      purchasedDocuments: this.settingsForm.get(['purchasedDocuments'])!.value,
+      scores: this.settingsForm.get(['scores'])!.value,
+    };
     let user: User = {
       ...new User(),
-
       firstName: this.settingsForm.get(['firstName'])!.value,
       lastName:  this.settingsForm.get(['lastName'])!.value,
       email:  this.settingsForm.get(['email'])!.value,
       langKey: this.settingsForm.get(['langKey'])!.value,
+
+      activated: this.settingsForm.get(['activated'])!.value,
+      authorities:  this.settingsForm.get(['authorities'])!.value,
+      createdBy:  this.settingsForm.get(['createdBy'])!.value,
+      createdDate: this.settingsForm.get(['createdDate'])!.value,
+      id: this.settingsForm.get(['idUser'])!.value,
+      lastModifiedBy:  this.settingsForm.get(['lastModifiedBy'])!.value,
+      lastModifiedDate:  this.settingsForm.get(['lastModifiedDate'])!.value,
+      login: this.settingsForm.get(['loginForm'])!.value
     }
     userAccountTemp.user = user;
     return userAccountTemp;
