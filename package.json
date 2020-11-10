@@ -35,6 +35,7 @@
     "rxjs": "6.5.5",
     "sockjs-client": "1.4.0",
     "swagger-ui-dist": "3.25.1",
+    "ts-md5": "^1.2.7",
     "tslib": "2.0.0",
     "webstomp-client": "1.2.6",
     "zone.js": "0.10.3"
