@@ -19,6 +19,7 @@ import {Observable} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import * as moment from "moment";
 import {DATE_TIME_FORMAT} from "../../shared/constants/input.constants";
+import {UserAccountTwoServiceService} from "./user-account-two-service.service";
 
 @Component({
   selector: 'jhi-settings',
@@ -101,7 +102,8 @@ export class SettingsComponent implements OnInit {
     private userAccountService: UserAccountService,
     private fb: FormBuilder,
     private languageService: JhiLanguageService,
-    private servicePaymentService: ServicePaymentService
+    private servicePaymentService: ServicePaymentService,
+    private userAccountTwoService: UserAccountTwoServiceService
   )
   {
     this.signatureImageUrl = '';
@@ -181,15 +183,15 @@ export class SettingsComponent implements OnInit {
   update(): void {
     this.isSaving = true;
     const userAccount = this.createFromForm();
-    console.log(<UserAccount>userAccount);
     if (<UserAccount>userAccount.id !== undefined) {
       console.log('This is the component, before update');
       console.log(<UserAccount>userAccount);
-      this.subscribeToSaveResponse(this.userAccountService.update(<UserAccount>userAccount));
+      this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {
+        console.log('This is the response:=============================================');
+        console.log(data);
+      } );
     } else {
-      console.log('This is the component, before create');
-      console.log(<UserAccount>userAccount);
-      this.subscribeToSaveResponse(this.userAccountService.create(<UserAccount>userAccount));
+      console.log('The account can not be update cause it does not exists on the system');
     }
   }
 
