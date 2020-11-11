@@ -16,6 +16,7 @@ export class SeeAuctionComponent implements OnInit {
   public property: Property;
   public idProperty: number;
   public offers: Array<Offer> = [];
+  public startPage = 1;
   constructor(private route: ActivatedRoute, private propertyService: PropertyService, private seeAuctionService: SeeAuctionService) {
     this.property = new Property();
     this.idProperty = -1;

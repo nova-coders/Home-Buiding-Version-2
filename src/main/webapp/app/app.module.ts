@@ -18,6 +18,7 @@ import { ServicePaymentComponent } from './service-payment/service-payment.compo
 import { NgxPayPalModule } from 'ngx-paypal';
 import { SeeAuctionComponent } from './see-auction/see-auction.component';
 import { CardOfferComponent } from './see-auction/components/card-offer/card-offer.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { CardOfferComponent } from './see-auction/components/card-offer/card-off
     HomeBuildingEntityModule,
     HomeBuildingAppRoutingModule,
     NgxPayPalModule,
+    NgxPaginationModule,
   ],
   declarations: [
     MainComponent,
