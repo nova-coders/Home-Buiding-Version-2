@@ -26,12 +26,6 @@ public class Document implements Serializable {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "seller_user_id")
-    private Integer sellerUserId;
-
-    @Column(name = "buyer_user_id")
-    private Integer buyerUserId;
-
     @Column(name = "state")
     private Boolean state;
 
@@ -70,32 +64,6 @@ public class Document implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Integer getSellerUserId() {
-        return sellerUserId;
-    }
-
-    public Document sellerUserId(Integer sellerUserId) {
-        this.sellerUserId = sellerUserId;
-        return this;
-    }
-
-    public void setSellerUserId(Integer sellerUserId) {
-        this.sellerUserId = sellerUserId;
-    }
-
-    public Integer getBuyerUserId() {
-        return buyerUserId;
-    }
-
-    public Document buyerUserId(Integer buyerUserId) {
-        this.buyerUserId = buyerUserId;
-        return this;
-    }
-
-    public void setBuyerUserId(Integer buyerUserId) {
-        this.buyerUserId = buyerUserId;
     }
 
     public Boolean isState() {
@@ -186,8 +154,6 @@ public class Document implements Serializable {
         return "Document{" +
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
-            ", sellerUserId=" + getSellerUserId() +
-            ", buyerUserId=" + getBuyerUserId() +
             ", state='" + isState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
             "}";

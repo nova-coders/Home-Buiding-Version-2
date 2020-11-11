@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Document(0, 'AAAAAAA', 0, 0, false, currentDate);
+      elemDefault = new Document(0, 'AAAAAAA', false, currentDate);
     });
 
     describe('Service methods', () => {
@@ -70,8 +70,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             url: 'BBBBBB',
-            sellerUserId: 1,
-            buyerUserId: 1,
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -96,8 +94,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             url: 'BBBBBB',
-            sellerUserId: 1,
-            buyerUserId: 1,
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },

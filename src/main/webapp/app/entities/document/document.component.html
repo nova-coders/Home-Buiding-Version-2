@@ -24,8 +24,6 @@
                 <tr>
                     <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.url">Url</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.sellerUserId">Seller User Id</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.buyerUserId">Buyer User Id</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.state">State</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.creationDate">Creation Date</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.seller">Seller</span></th>
@@ -38,8 +36,6 @@
                 <tr *ngFor="let document of documents ;trackBy: trackId">
                     <td><a [routerLink]="['/document', document.id, 'view']">{{ document.id }}</a></td>
                     <td>{{ document.url }}</td>
-                    <td>{{ document.sellerUserId }}</td>
-                    <td>{{ document.buyerUserId }}</td>
                     <td>{{ document.state }}</td>
                     <td>{{ document.creationDate | date:'medium' }}</td>
                     <td>

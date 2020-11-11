@@ -65,8 +65,6 @@ entity Province {
 entity Document {
   Id Integer ,
   Url String,
-  SellerUserId Integer,
-  BuyerUserId Integer,
   State Boolean,
   CreationDate ZonedDateTime
 }

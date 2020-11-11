@@ -6,14 +6,6 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "sellerUserId",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "buyerUserId",
-      "fieldType": "Integer"
-    },
-    {
       "fieldName": "state",
       "fieldType": "Boolean"
     },

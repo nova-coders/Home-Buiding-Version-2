@@ -28,8 +28,6 @@ export class DocumentUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     url: [],
-    sellerUserId: [],
-    buyerUserId: [],
     state: [],
     creationDate: [],
     seller: [],
@@ -64,8 +62,6 @@ export class DocumentUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: document.id,
       url: document.url,
-      sellerUserId: document.sellerUserId,
-      buyerUserId: document.buyerUserId,
       state: document.state,
       creationDate: document.creationDate ? document.creationDate.format(DATE_TIME_FORMAT) : null,
       seller: document.seller,
@@ -93,8 +89,6 @@ export class DocumentUpdateComponent implements OnInit {
       ...new Document(),
       id: this.editForm.get(['id'])!.value,
       url: this.editForm.get(['url'])!.value,
-      sellerUserId: this.editForm.get(['sellerUserId'])!.value,
-      buyerUserId: this.editForm.get(['buyerUserId'])!.value,
       state: this.editForm.get(['state'])!.value,
       creationDate: this.editForm.get(['creationDate'])!.value
         ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)

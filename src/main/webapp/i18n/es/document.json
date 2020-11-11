@@ -17,8 +17,6 @@
         "title": "Document"
       },
       "url": "Url",
-      "sellerUserId": "Seller User Id",
-      "buyerUserId": "Buyer User Id",
       "state": "State",
       "creationDate": "Creation Date",
       "seller": "Seller",
