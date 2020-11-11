@@ -5,28 +5,28 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { LANGUAGES } from 'app/core/language/language.constants';
-import {LoginModalService} from "../../core/login/login-modal.service";
-import {RegisterService} from "../register/register.service";
-import {ImageService} from "../../global-services/image.service";
-import {IUserAccount, UserAccount} from "../../shared/model/user-account.model";
-import {UserAccountService} from "../../entities/user-account/user-account.service";
+import { LoginModalService } from '../../core/login/login-modal.service';
+import { RegisterService } from '../register/register.service';
+import { ImageService } from '../../global-services/image.service';
+import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
+import { UserAccountService } from '../../entities/user-account/user-account.service';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
-import {IUser, User} from "../../core/user/user.model";
-import {IProfessionalProfileUser} from "../../shared/model/professional-profile-user.model";
-import {IPublishingPackage} from "../../shared/model/publishing-package.model";
-import {IRole} from "../../shared/model/role.model";
-import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
-import * as moment from "moment";
-import {DATE_TIME_FORMAT} from "../../shared/constants/input.constants";
-import {UserAccountTwoServiceService} from "./user-account-two-service.service";
+import { IUser, User } from '../../core/user/user.model';
+import { IProfessionalProfileUser } from '../../shared/model/professional-profile-user.model';
+import { IPublishingPackage } from '../../shared/model/publishing-package.model';
+import { IRole } from '../../shared/model/role.model';
+import { Observable } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
+import { UserAccountTwoServiceService } from './user-account-two-service.service';
 
 @Component({
   selector: 'jhi-settings',
   templateUrl: './settings.component.html',
+  styleUrls: ['./settings.scss'],
 })
 export class SettingsComponent implements OnInit {
-
   public completeName = '';
 
   isSaving = false;
@@ -45,11 +45,10 @@ export class SettingsComponent implements OnInit {
   errorUserImage = false;
   errorInUploadImage = false;
   account!: Account;
-  userAccount!: UserAccount;//This is a new instance
+  userAccount!: UserAccount; //This is a new instance
   success = false;
   languages = LANGUAGES;
   settingsForm = this.fb.group({
-
     id: [],
     identification: [],
     profilePicture: [],
@@ -90,8 +89,7 @@ export class SettingsComponent implements OnInit {
     idUser: [],
     lastModifiedBy: [],
     lastModifiedDate: [],
-    loginForm: []
-
+    loginForm: [],
   });
 
   constructor(
@@ -104,8 +102,7 @@ export class SettingsComponent implements OnInit {
     private languageService: JhiLanguageService,
     private servicePaymentService: ServicePaymentService,
     private userAccountTwoService: UserAccountTwoServiceService
-  )
-  {
+  ) {
     this.signatureImageUrl = '';
     this.files = [];
     this.userImageUrl = '';
@@ -154,8 +151,7 @@ export class SettingsComponent implements OnInit {
           idUser: userAccount.user!.id,
           lastModifiedBy: userAccount.user!.lastModifiedBy,
           lastModifiedDate: userAccount.user!.lastModifiedDate,
-          loginForm: userAccount.user!.login
-
+          loginForm: userAccount.user!.login,
         });
       }
     });
@@ -182,14 +178,10 @@ export class SettingsComponent implements OnInit {
 
   update(): void {
     this.isSaving = true;
+    this.checkNewPicture();
     const userAccount = this.createFromForm();
     if (<UserAccount>userAccount.id !== undefined) {
-      console.log('This is the component, before update');
-      console.log(<UserAccount>userAccount);
-      this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {
-        console.log('This is the response:=============================================');
-        console.log(data);
-      } );
+      this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {});
     } else {
       console.log('The account can not be update cause it does not exists on the system');
     }
@@ -246,19 +238,19 @@ export class SettingsComponent implements OnInit {
     let user: User = {
       ...new User(),
       firstName: this.settingsForm.get(['firstName'])!.value,
-      lastName:  this.settingsForm.get(['lastName'])!.value,
-      email:  this.settingsForm.get(['email'])!.value,
+      lastName: this.settingsForm.get(['lastName'])!.value,
+      email: this.settingsForm.get(['email'])!.value,
       langKey: this.settingsForm.get(['langKey'])!.value,
 
       activated: this.settingsForm.get(['activated'])!.value,
-      authorities:  this.settingsForm.get(['authorities'])!.value,
-      createdBy:  this.settingsForm.get(['createdBy'])!.value,
+      authorities: this.settingsForm.get(['authorities'])!.value,
+      createdBy: this.settingsForm.get(['createdBy'])!.value,
       createdDate: this.settingsForm.get(['createdDate'])!.value,
       id: this.settingsForm.get(['idUser'])!.value,
-      lastModifiedBy:  this.settingsForm.get(['lastModifiedBy'])!.value,
-      lastModifiedDate:  this.settingsForm.get(['lastModifiedDate'])!.value,
-      login: this.settingsForm.get(['loginForm'])!.value
-    }
+      lastModifiedBy: this.settingsForm.get(['lastModifiedBy'])!.value,
+      lastModifiedDate: this.settingsForm.get(['lastModifiedDate'])!.value,
+      login: this.settingsForm.get(['loginForm'])!.value,
+    };
     userAccountTemp.user = user;
     return userAccountTemp;
   }
@@ -276,7 +268,6 @@ export class SettingsComponent implements OnInit {
     if (this.files && this.files.length >= 1) {
       this.onRemoveImage(this.files[0]);
     }
-
     this.files.push(...event.addedFiles);
   }
 
@@ -296,13 +287,36 @@ export class SettingsComponent implements OnInit {
     );
   }
 
-  public toogleNGX(): void{
-    var x = document.getElementById("ngxPicture");
-    if (x!.style.display === "block") {
-      x!.style.display = "none";
+  public toogleNGX(): void {
+    var x = document.getElementById('ngxPicture');
+    if (x!.style.display === 'block') {
+      x!.style.display = 'none';
     } else {
-      x!.style.display = "block";
+      x!.style.display = 'block';
     }
   }
 
+  public checkNewPicture(): void {
+    /* First validate there's new profile picture. */
+    if (!this.files[0]) {
+      this.errorUserImage = true;
+    } else {
+      console.log('Will update the profile picture.');
+      const fileData = this.files[0];
+      /* Upload the image in Cloudinary */
+      this.imageService.uploadImage(fileData).subscribe(response => {
+        this.userImageUrl = response.url;
+        this.settingsForm.patchValue({
+          profilePicture: this.userImageUrl,
+        });
+      });
+    }
+    /* Valid that there's a new signature */
+    if (this.signatureImageUrl === '') {
+      console.log('Here is setting the error');
+      this.errorSignatureNotSaved = true;
+    } else {
+      this.errorSignatureNotSaved = false;
+    }
+  }
 }

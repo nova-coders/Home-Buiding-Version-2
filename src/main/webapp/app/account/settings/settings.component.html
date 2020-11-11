@@ -22,7 +22,8 @@
                 The password and its confirmation do not match!
             </div>
 
-            <div class="alert alert-danger" *ngIf="errorSignatureNotSaved" jhiTranslate="global.messages.error.dontdrawsignature">
+            <div class="alert alert-danger" *ngIf="errorSignatureNotSaved"
+                 jhiTranslate="global.messages.error.dontdrawsignature">
                 The signature is required
             </div>
 
@@ -36,30 +37,26 @@
         <div class="col-md-8">
             <form name="form" role="form" (ngSubmit)="update()" [formGroup]="settingsForm" *ngIf="!success">
                 <div class="card">
+
                     <div class="card-header">
                         <h2 class="card-title">Datos de la cuenta: {{completeName}}</h2>
                     </div>
+
                     <div class="card-body">
 
-
-
-
-                        <!--START-->
-                        <div class="view overlay zoom">
-                            <img src="{{userAccount.profilePicture}}" alt="Profile picture" class="img-fluid rounded border-0" (click)="toogleNGX()">
-                            <div class="mask flex-center">
-                                <p class="white-text">Cambiar</p>
+                        <div class="container col-6 mb-3 p-0" (click)="toogleNGX()">
+                            <img src="{{userAccount.profilePicture}}" alt="Foto de Perfil" class="image img-fluid rounded ">
+                            <div class="overlay rounded">
+                                <div class="text">Cambiar imagen</div>
                             </div>
                         </div>
 
-                        <!--END-->
-
-
                         <div style="display: none" class="row pb-3" id="ngxPicture">
                             <div class="col-12">
-                                <label>Imagen de su cuenta</label>
-                                <ngx-dropzone (change)="onSelectImage($event)" class="m-1" [multiple]="false" [accept]="'image/*'">
-                                    <ngx-dropzone-label>Suba una imagen de su perfil</ngx-dropzone-label>
+                                <label>Foto de perfil</label>
+                                <ngx-dropzone (change)="onSelectImage($event)" class="m-1" [multiple]="false"
+                                              [accept]="'image/*'">
+                                    <ngx-dropzone-label>Suba la nueva foto de perfil</ngx-dropzone-label>
                                     <ngx-dropzone-image-preview
                                         ngProjectAs="ngx-dropzone-preview"
                                         *ngFor="let f of files"
@@ -74,61 +71,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="birthdate" jhiTranslate="global.form.birthdate.label">Birth date</label>
-                                    <input [ngModel]="userAccount.birthdate | date:'yyyy-MM-dd'" type="date" class="form-control" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD"
+                                    <label class="form-control-label" for="birthdate"
+                                           jhiTranslate="global.form.birthdate.label">Birth date</label>
+                                    <input [ngModel]="userAccount.birthdate | date:'yyyy-MM-dd'" type="date"
+                                           class="form-control" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD"
                                            formControlName="birthdate" #birthdate>
                                 </div>
 
-                                <div *ngIf="settingsForm.get('birthdate')!.invalid && (settingsForm.get('birthdate')!.dirty || settingsForm.get('birthdate')!.touched)">
+                                <div
+                                    *ngIf="settingsForm.get('birthdate')!.invalid && (settingsForm.get('birthdate')!.dirty || settingsForm.get('birthdate')!.touched)">
                                     <small class="form-text text-danger"
                                            *ngIf="settingsForm.get('birthdate')?.errors?.required">
                                         La fecha de nacimiento es requerido
                                     </small>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="firstName">Nombre</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName"
-                                           formControlName="firstName" #firstName>
-                                </div>
-
-                                <div *ngIf="settingsForm.get('firstName')!.invalid && (settingsForm.get('firstName')!.dirty || settingsForm.get('firstName')!.touched)">
-                                    <small class="form-text text-danger"
-                                           *ngIf="settingsForm.get('firstName')?.errors?.required">
-                                        El nombre es requerido.
-                                    </small>
-                                </div>
-                            </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="lastName">Apellido</label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName"
-                                           formControlName="lastName" #lastName>
-                                </div>
-
-                                <div *ngIf="settingsForm.get('lastName')!.invalid && (settingsForm.get('lastName')!.dirty || settingsForm.get('lastName')!.touched)">
-                                    <small class="form-text text-danger"
-                                           *ngIf="settingsForm.get('lastName')?.errors?.required">
-                                        El apellido es requerido.
-                                    </small>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="email" jhiTranslate="global.form.email.label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="{{ 'global.form.email.placeholder' | translate }}"
+                                    <label class="form-control-label" for="email"
+                                           jhiTranslate="global.form.email.label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                           placeholder="{{ 'global.form.email.placeholder' | translate }}"
                                            formControlName="email">
 
-                                    <div *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
+                                    <div
+                                        *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
                                         <small class="form-text text-danger"
                                                *ngIf="settingsForm.get('email')?.errors?.required"
                                                jhiTranslate="global.messages.validate.email.required">
@@ -155,20 +123,62 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="firstName">Nombre</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName"
+                                           formControlName="firstName" #firstName>
+                                </div>
+
+                                <div
+                                    *ngIf="settingsForm.get('firstName')!.invalid && (settingsForm.get('firstName')!.dirty || settingsForm.get('firstName')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('firstName')?.errors?.required">
+                                        El nombre es requerido.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="lastName">Apellido</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName"
+                                           formControlName="lastName" #lastName>
+                                </div>
+
+                                <div
+                                    *ngIf="settingsForm.get('lastName')!.invalid && (settingsForm.get('lastName')!.dirty || settingsForm.get('lastName')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('lastName')?.errors?.required">
+                                        El apellido es requerido.
+                                    </small>
+                                </div>
+
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="col-6">
                                 <label for="signatureImageUrl">Firma</label>
-                                <ng-signature-pad id="signatureImageUrl" clearButtonText='Limpiar' doneButtonText='Guardar firma'
-                                                  [emitOnDragEnd]="true" (done)="saveSignatureImage($event)"></ng-signature-pad>
+                                <ng-signature-pad id="signatureImageUrl" clearButtonText='Limpiar'
+                                                  doneButtonText='Guardar firma'
+                                                  [emitOnDragEnd]="true"
+                                                  (done)="saveSignatureImage($event)"></ng-signature-pad>
                             </div>
                         </div>
+
                     </div>
+
                     <div class="card-footer text-right">
-                        <button type="submit" class="btn btn-primary" >Actualizar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
                         <a class="btn btn-secondary">Cancelar</a>
                     </div>
+
                 </div>
             </form>
         </div>
