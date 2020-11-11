@@ -17,6 +17,7 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { SeeAuctionComponent } from './see-auction/see-auction.component';
+import { CardOfferComponent } from './see-auction/components/card-offer/card-offer.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { SeeAuctionComponent } from './see-auction/see-auction.component';
     FooterComponent,
     ServicePaymentComponent,
     SeeAuctionComponent,
+    CardOfferComponent,
   ],
   bootstrap: [MainComponent],
 })

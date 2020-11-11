@@ -7,10 +7,11 @@
 <div class="col-md-12 text-center img-h-max">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDoDTUd9eRNeYvfNGf80E4kmbqcMaNrPCNvA&usqp=CAU" class="img-fluid img-h-max" alt="Responsive image">
 </div>
-<div class="col-md-12 text-center">
+
+<div class="col-md-12 text-center mt-2">
    <div class="container">
        <div class="row">
-           <div class="col-md-6 text-center border-left">
+           <div class="col-md-6 text-center border-right">
                <h3>Titulo del inmueble</h3>
                 <p>Precio inicial &nbsp; $2000</p>
                <hr>
@@ -24,4 +25,16 @@
            </div>
        </div>
    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Ofertas del inmueble</h3>
+            </div>
+            <div class="col-md-4" *ngFor="let offer of offers">
+                <jhi-card-offer [amount]="''+offer.amount" [buyerName]="offer.userAccount?.user?.login+' '+offer.userAccount?.user?.firstName+' '+offer.userAccount?.user?.lastName" [buyerImage]="offer.userAccount?.profilePicture" [buyerMessage]="offer?.commentary"></jhi-card-offer>
+            </div>
+        </div>
+
+    </div>
 </div>
