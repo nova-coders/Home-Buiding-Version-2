@@ -9,15 +9,19 @@ import { PropertyDeleteDialogComponent } from './property-delete-dialog.componen
 import { propertyRoute } from './property.route';
 import { AgmCoreModule } from '@agm/core';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 @NgModule({
   imports: [
     HomeBuildingSharedModule,
     RouterModule.forChild(propertyRoute),
     GooglePlaceModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoy',
-      libraries: ['places']
+      apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoyQ',
+      libraries: ['places'],
     }),
+    NgxDropzoneModule,
+    NgxExtendedPdfViewerModule,
   ],
   declarations: [PropertyComponent, PropertyDetailComponent, PropertyUpdateComponent, PropertyDeleteDialogComponent],
   entryComponents: [PropertyDeleteDialogComponent],

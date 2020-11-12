@@ -1,13 +1,13 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="propertyForm">
             <h2 id="jhi-property-heading" class="d-flex justify-content-center" >Registrar un inmueble en subasta</h2>
             <hr style="border: 0; height:1px;  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
             <div *ngIf="step == 1 ">
                 <h4>Datos del inmueble</h4>
 <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
                 <div class="row">
-                     <div class="col-3" [hidden]="!editForm.get('id')!.value">
+                     <div class="col-3" [hidden]="!propertyForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
@@ -21,7 +21,7 @@
                          <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
                          <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
                              <option [ngValue]="null"></option>
-                             <option [ngValue]="moneyTypeOption.id === editForm.get('moneyType')!.value?.id ? editForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of moneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
+                             <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of moneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
                          </select>
 
                          <label class="form-control-label"  for="field_discount">Descuento</label>
@@ -31,7 +31,7 @@
                          <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
                          <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
                              <option [ngValue]="null"></option>
-                             <option [ngValue]="propertyCategoryOption.id === editForm.get('propertyCategory')!.value?.id ? editForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of propertycategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
+                             <option [ngValue]="propertyCategoryOption.id === propertyForm.get('propertyCategory')!.value?.id ? propertyForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of propertycategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
                          </select>
                          <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
                          <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
@@ -65,13 +65,52 @@
                                    formControlName="addressText"  rows="5" cols="40"></textarea>
                      </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label" id="inputGroupFileAddon01">Plano catastrado</label>
+                        <div class="custom-file">
+                            <input type="file" class="btn btn-primary custom-file-input" id="inputGroupFile01"
+                                   aria-describedby="inputGroupFileAddon01" (change)="onFileSelected($event,1)">
+                            <label class="custom-file-label" for="inputGroupFile01">Suba su archivo</label>
+                        </div>
+                        <iframe src="https://res.cloudinary.com/dsx9svdes/image/upload/v1604871406/property_files/Home_building_c2okhi.pdf" height="200" width="300" title="Iframe Example" class="mt-5"></iframe>
+
+                    </div>
+                    <div class="col">
+                        <label class="form-control-label" id="inputGroupFileAddon02">Estudio registral</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input primary" id="inputGroupFile02"
+                                   aria-describedby="inputGroupFileAddon02" (change)="onFileSelected($event,2)">
+                            <label class="custom-file-label" for="inputGroupFile02">Suba su archivo</label>
+                        </div>
+                        <iframe src="https://res.cloudinary.com/dsx9svdes/image/upload/v1604871406/property_files/Home_building_c2okhi.pdf" height="200" width="300" title="Iframe Example" class="mt-5"></iframe>
+                    </div>
+                    </div>
+
+                </div>
             <div *ngIf="step == 2">
                 <h4>Imágenes y localización del inmueble</h4>
                 <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
+                        <select class="form-control" id="field_Category_Image" name="category" formControlName="category_Image">
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="null"></option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-control-label"  for="field_canton">Categoría del inmueble</label>
+                        <select class="form-control" id="field_canton" name="canton" formControlName="canton">
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="propertyCategoryOption.id === propertyForm.get('canton')!.value?.id ? propertyForm.get('canton')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of cantons; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label>Ingrese la dirección</label>
-                    <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" class="form-control"/>
+                    <label for="address1">Ingrese la dirección</label>
+                    <input id="address1" name="address1" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" class="form-control"/>
                     <agm-map style="height: 300px;"
                         [latitude]="lat"
                         [longitude]="lng"
@@ -96,7 +135,7 @@
                 <button type="button" class="btn btn-primary" *ngIf="step != 1" (click)="previous()">Anterior</button>
                 <button type="button" class="btn btn-primary" *ngIf="step != 2" (click)="next()">Siguiente</button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2 ">
+                <button type="submit" id="save-entity" [disabled]="propertyForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2 ">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span>Enviar</span>
                 </button>
             </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,6 +21,9 @@ import { CantonService } from 'app/entities/canton/canton.service';
 import { IPropertyCategory } from 'app/shared/model/property-category.model';
 import { PropertyCategoryService } from 'app/entities/property-category/property-category.service';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { ProvinceService } from '../province/province.service';
+import { IProvince } from '../../shared/model/province.model';
+import { ImageService } from '../../global-services/image.service';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
@@ -34,6 +37,7 @@ export class PropertyUpdateComponent implements OnInit {
   useraccounts: IUserAccount[] = [];
   moneytypes: IMoneyType[] = [];
   cantons: ICanton[] = [];
+  provinces: IProvince[] = [];
   propertycategories: IPropertyCategory[] = [];
   zoom = 8;
   lat: any;
@@ -45,28 +49,30 @@ export class PropertyUpdateComponent implements OnInit {
     types: [],
     componentRestrictions: { country: 'CR' },
   };
+  files: File[];
+  fileUrl: string = '';
+  error = false;
 
-  editForm = this.fb.group({
+  propertyForm = this.fb.group({
     id: [],
-    title: [],
-    description: [],
-    price: [],
-    discount: [],
-    finalDate: [],
-    landSquareMeters: [],
-    areaSquareMeters: [],
-    latitude: [],
-    longitude: [],
-    zoom: [],
-    addressText: [],
-    creationDate: [],
-    state: [],
-    sale: [],
-    rent: [],
-    userAccount: [],
-    moneyType: [],
-    canton: [],
-    propertyCategory: [],
+    title: ['', [Validators.required]],
+    description: ['', [Validators.required]],
+    price: ['', [Validators.required]],
+    discount: ['', [Validators.required]],
+    finalDate: ['', [Validators.required]],
+    landSquareMeters: ['', [Validators.required]],
+    areaSquareMeters: ['', [Validators.required]],
+    latitude: ['', [Validators.required]],
+    longitude: ['', [Validators.required]],
+    zoom: ['', [Validators.required]],
+    addressText: ['', [Validators.required]],
+    creationDate: ['', [Validators.required]],
+    state: ['', [Validators.required]],
+    sale: ['', [Validators.required]],
+    userAccount: ['', [Validators.required]],
+    moneyType: ['', [Validators.required]],
+    canton: ['', [Validators.required]],
+    propertyCategory: ['', [Validators.required]],
   });
 
   constructor(
@@ -75,10 +81,14 @@ export class PropertyUpdateComponent implements OnInit {
     protected userAccountService: UserAccountService,
     protected moneyTypeService: MoneyTypeService,
     protected cantonService: CantonService,
+    protected provinceService: ProvinceService,
     protected propertyCategoryService: PropertyCategoryService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private imageService: ImageService
+  ) {
+    this.files = [];
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ property }) => {
@@ -113,8 +123,6 @@ export class PropertyUpdateComponent implements OnInit {
       this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.useraccounts = res.body || []));
 
       this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.moneytypes = res.body || []));
-
-      this.cantonService.query().subscribe((res: HttpResponse<ICanton[]>) => (this.cantons = res.body || []));
 
       this.propertyCategoryService
         .query()
@@ -157,7 +165,7 @@ export class PropertyUpdateComponent implements OnInit {
     });
   }
   updateForm(property: IProperty): void {
-    this.editForm.patchValue({
+    this.propertyForm.patchValue({
       id: property.id,
       title: property.title,
       description: property.description,
@@ -165,9 +173,9 @@ export class PropertyUpdateComponent implements OnInit {
       discount: property.discount,
       landSquareMeters: property.landSquareMeters,
       areaSquareMeters: property.areaSquareMeters,
-      latitude: property.latitude,
-      longitude: property.longitude,
-      zoom: property.zoom,
+      latitude: this.lat,
+      longitude: this.lng,
+      zoom: this.zoom,
       addressText: property.addressText,
       finalDate: property.finalDate ? property.finalDate.format(DATE_TIME_FORMAT) : null,
       state: property.state,
@@ -205,25 +213,26 @@ export class PropertyUpdateComponent implements OnInit {
   private createFromForm(): IProperty {
     return {
       ...new Property(),
-      id: this.editForm.get(['id'])!.value,
-      title: this.editForm.get(['title'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      price: this.editForm.get(['price'])!.value,
-      discount: this.editForm.get(['discount'])!.value,
-      landSquareMeters: this.editForm.get(['landSquareMeters'])!.value,
-      areaSquareMeters: this.editForm.get(['areaSquareMeters'])!.value,
-      latitude: this.editForm.get(['latitude'])!.value,
-      longitude: this.editForm.get(['longitude'])!.value,
-      zoom: this.editForm.get(['zoom'])!.value,
-      addressText: this.editForm.get(['addressText'])!.value,
-      finalDate: this.editForm.get(['finalDate'])!.value ? moment(this.editForm.get(['finalDate'])!.value, DATE_TIME_FORMAT) : undefined,
-      state: this.editForm.get(['state'])!.value,
-      sale: this.editForm.get(['sale'])!.value,
-      rent: this.editForm.get(['rent'])!.value,
-      userAccount: this.editForm.get(['userAccount'])!.value,
-      moneyType: this.editForm.get(['moneyType'])!.value,
-      canton: this.editForm.get(['canton'])!.value,
-      propertyCategory: this.editForm.get(['propertyCategory'])!.value,
+      id: this.propertyForm.get(['id'])!.value,
+      title: this.propertyForm.get(['title'])!.value,
+      description: this.propertyForm.get(['description'])!.value,
+      price: this.propertyForm.get(['price'])!.value,
+      discount: this.propertyForm.get(['discount'])!.value,
+      landSquareMeters: this.propertyForm.get(['landSquareMeters'])!.value,
+      areaSquareMeters: this.propertyForm.get(['areaSquareMeters'])!.value,
+      latitude: this.propertyForm.get(['latitude'])!.value,
+      longitude: this.propertyForm.get(['longitude'])!.value,
+      zoom: this.propertyForm.get(['zoom'])!.value,
+      addressText: this.propertyForm.get(['addressText'])!.value,
+      finalDate: this.propertyForm.get(['finalDate'])!.value
+        ? moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      state: this.propertyForm.get(['state'])!.value,
+      sale: this.propertyForm.get(['sale'])!.value,
+      userAccount: this.propertyForm.get(['userAccount'])!.value,
+      moneyType: this.propertyForm.get(['moneyType'])!.value,
+      canton: this.propertyForm.get(['canton'])!.value,
+      propertyCategory: this.propertyForm.get(['propertyCategory'])!.value,
     };
   }
 
@@ -245,5 +254,49 @@ export class PropertyUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  public onSelectImage(event: any): void {
+    if (this.files && this.files.length >= 1) {
+      this.onRemoveImage(this.files[0]);
+    }
+
+    this.files.push(...event.addedFiles);
+  }
+
+  public onRemoveImage(event: any): void {
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  public uploadFile(): void {
+    this.files.push();
+    const fileData = this.files[0];
+    this.imageService.uploadFile(fileData).subscribe(
+      response => {
+        this.fileUrl = response.url;
+        //console.log(this.fileUrl);
+      },
+      () => {
+        this.error = true;
+      }
+    );
+  }
+  public onFileSelected(event: any, opc: number): void {
+    this.getBase64(event.target.files[0]).then((base64: string) => {
+      if (opc == 1) {
+        let file = document.getElementById('urlfile');
+        file?.setAttribute('src', base64);
+      } else {
+      }
+    });
+  }
+
+  public getBase64(file: any): any {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 }
