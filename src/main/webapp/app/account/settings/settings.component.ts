@@ -29,6 +29,7 @@ import { UserAccountTwoServiceService } from './user-account-two-service.service
 export class SettingsComponent implements OnInit {
   public completeName = '';
 
+  updateSignature = false;
   isSaving = false;
   users: IUser[] = [];
   professionalprofileusers: IProfessionalProfileUser[] = [];
@@ -36,7 +37,7 @@ export class SettingsComponent implements OnInit {
   roles: IRole[] = [];
   signatureImageUrl: any;
   files: File[];
-  userImageUrl: string;
+  userImageUrl?: string;
   doNotMatch = false;
   error = false;
   errorEmailExists = false;
@@ -48,12 +49,14 @@ export class SettingsComponent implements OnInit {
   userAccount!: UserAccount; //This is a new instance
   success = false;
   languages = LANGUAGES;
+
   settingsForm = this.fb.group({
     id: [],
     identification: [],
     profilePicture: [],
     signaturePicture: [],
     signatureCode: [],
+    phone: [],
     state: [],
     creationDate: [],
     user: [],
@@ -124,6 +127,7 @@ export class SettingsComponent implements OnInit {
           langKey: userAccount.user?.langKey,
           birthday: userAccount?.birthdate,
           id: userAccount.id,
+          phone: userAccount.phone,
           identification: userAccount.identification,
           profilePicture: userAccount.profilePicture,
           signaturePicture: userAccount.signaturePicture,
@@ -153,6 +157,9 @@ export class SettingsComponent implements OnInit {
           lastModifiedDate: userAccount.user!.lastModifiedDate,
           loginForm: userAccount.user!.login,
         });
+        this.signatureImageUrl = userAccount.signaturePicture;
+        this.userImageUrl = userAccount.profilePicture;
+        console.log(<UserAccount>userAccount);
       }
     });
   }
@@ -178,13 +185,21 @@ export class SettingsComponent implements OnInit {
 
   update(): void {
     this.isSaving = true;
-    this.checkNewPicture();
-    const userAccount = this.createFromForm();
+    let userAccount = this.createFromForm();
+    userAccount.signaturePicture = this.signatureImageUrl;
+    userAccount.profilePicture = this.userImageUrl;
+    console.log(<UserAccount>userAccount);
     if (<UserAccount>userAccount.id !== undefined) {
-      this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {});
+      this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {
+        this.updateSignature = false;
+      });
     } else {
       console.log('The account can not be update cause it does not exists on the system');
     }
+  }
+
+  toUpdateSignature(): void {
+    this.updateSignature = true;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IUserAccount>>): void {
@@ -219,6 +234,7 @@ export class SettingsComponent implements OnInit {
       signaturePicture: this.settingsForm.get(['signaturePicture'])!.value,
       signatureCode: this.settingsForm.get(['signatureCode'])!.value,
       state: this.settingsForm.get(['state'])!.value,
+      phone: this.settingsForm.get(['phone'])!.value,
       creationDate: this.settingsForm.get(['creationDate'])!.value
         ? moment(this.settingsForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
@@ -261,6 +277,10 @@ export class SettingsComponent implements OnInit {
     reader.onloadend = () => {
       const base64data = reader.result;
       this.signatureImageUrl = base64data;
+      if (this.signatureImageUrl != '') {
+        this.userAccount.signaturePicture = this.signatureImageUrl;
+        this.updateSignature = false;
+      }
     };
   }
 
@@ -296,27 +316,18 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public checkNewPicture(): void {
+  public updateUserAccount(): void {
     /* First validate there's new profile picture. */
     if (!this.files[0]) {
       this.errorUserImage = true;
+      this.update();
     } else {
-      console.log('Will update the profile picture.');
       const fileData = this.files[0];
       /* Upload the image in Cloudinary */
       this.imageService.uploadImage(fileData).subscribe(response => {
         this.userImageUrl = response.url;
-        this.settingsForm.patchValue({
-          profilePicture: this.userImageUrl,
-        });
+        this.update();
       });
-    }
-    /* Valid that there's a new signature */
-    if (this.signatureImageUrl === '') {
-      console.log('Here is setting the error');
-      this.errorSignatureNotSaved = true;
-    } else {
-      this.errorSignatureNotSaved = false;
     }
   }
 }
