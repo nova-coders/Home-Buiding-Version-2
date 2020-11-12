@@ -1,37 +1,5 @@
 <div>
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
 
-            <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
-                <strong>Registration saved!</strong> Please check your email for confirmation.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="error" jhiTranslate="settings.messages.error.fail">
-                <strong>Registration failed!</strong> Please try again later.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="settings.messages.error.userexists">
-                <strong>Login name already registered!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="settings.messages.error.emailexists">
-                <strong>Email is already in use!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
-                The password and its confirmation do not match!
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorSignatureNotSaved"
-                 jhiTranslate="global.messages.error.dontdrawsignature">
-                The signature is required
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserImage" jhiTranslate="global.messages.error.dontuploadimage">
-                The user image is required
-            </div>
-        </div>
-    </div>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -46,7 +14,7 @@
 
                         <div class="container col-6 mb-3 p-0" (click)="toogleNGX()">
                             <img src="{{userAccount.profilePicture}}" alt="Foto de Perfil"
-                                 class="image rounded img-thumbnail">
+                                 class="image rounded img-thumbnail mb-3">
                             <div class="overlay rounded">
                                 <div class="text">Cambiar imagen</div>
                             </div>
@@ -207,7 +175,6 @@
 
                     </div>
 
-
                     <div class="card-footer text-right">
                         <button (click)="updateUserAccount()" type="submit" class="btn btn-primary">Actualizar</button>
                         <a class="btn btn-secondary">Cancelar</a>
@@ -219,4 +186,19 @@
 
         </div>
     </div>
+
+    <!--This section contains the messages that the user will see if there's some error or if the update success.-->
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="alert alert-success" *ngIf="success">
+                <strong>Informacion actualizada!</strong>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error">
+                <strong>Actualizacion fallida</strong> Intente mas tarde.
+            </div>
+
+        </div>
+    </div>
+
 </div>

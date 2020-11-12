@@ -39,12 +39,15 @@ export class SettingsComponent implements OnInit {
   files: File[];
   userImageUrl?: string;
   doNotMatch = false;
+
   error = false;
   errorEmailExists = false;
   errorUserExists = false;
   errorSignatureNotSaved = false;
   errorUserImage = false;
   errorInUploadImage = false;
+  errorYounger = false;
+
   account!: Account;
   userAccount!: UserAccount; //This is a new instance
   success = false;
@@ -192,9 +195,11 @@ export class SettingsComponent implements OnInit {
     if (<UserAccount>userAccount.id !== undefined) {
       this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {
         this.updateSignature = false;
+        this.success = true;
       });
     } else {
       console.log('The account can not be update cause it does not exists on the system');
+      this.error = false;
     }
   }
 
@@ -329,5 +334,14 @@ export class SettingsComponent implements OnInit {
         this.update();
       });
     }
+  }
+
+  public checkFormValues() {
+    if (this.settingsForm.get([''])) {
+    }
+  }
+
+  openLogin(): void {
+    this.loginModalService.open();
   }
 }
