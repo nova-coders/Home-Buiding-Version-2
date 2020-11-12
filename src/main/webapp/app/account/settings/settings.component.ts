@@ -20,6 +20,7 @@ import { HttpResponse } from '@angular/common/http';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
 import { UserAccountTwoServiceService } from './user-account-two-service.service';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'jhi-settings',
@@ -42,7 +43,7 @@ export class SettingsComponent implements OnInit {
 
   error = false;
   errorEmailExists = false;
-  errorUserExists = false;
+  errorUser = false;
   errorSignatureNotSaved = false;
   errorUserImage = false;
   errorInUploadImage = false;
@@ -162,12 +163,11 @@ export class SettingsComponent implements OnInit {
         });
         this.signatureImageUrl = userAccount.signaturePicture;
         this.userImageUrl = userAccount.profilePicture;
-        console.log(<UserAccount>userAccount);
       }
     });
   }
 
-  save(): void {
+  /*save(): void {
     this.success = false;
 
     this.account.firstName = this.settingsForm.get('firstName')!.value;
@@ -184,22 +184,27 @@ export class SettingsComponent implements OnInit {
         this.languageService.changeLanguage(this.account.langKey);
       }
     });
-  }
+  }*/
 
   update(): void {
     this.isSaving = true;
     let userAccount = this.createFromForm();
     userAccount.signaturePicture = this.signatureImageUrl;
     userAccount.profilePicture = this.userImageUrl;
-    console.log(<UserAccount>userAccount);
-    if (<UserAccount>userAccount.id !== undefined) {
-      this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {
-        this.updateSignature = false;
-        this.success = true;
-      });
+    if (this.checkFormValues() == true) {
+      console.log('Ingreso a actualizar.');
+      if (<UserAccount>userAccount.id !== undefined) {
+        this.userAccountTwoService.updateUserAccount(userAccount).subscribe(data => {
+          this.updateSignature = false;
+          this.success = true;
+          this.successClearErrors();
+        });
+      } else {
+        this.error = true;
+      }
     } else {
-      console.log('The account can not be update cause it does not exists on the system');
-      this.error = false;
+      console.log('No Ingreso a actualizar.');
+      this.error = true;
     }
   }
 
@@ -336,9 +341,48 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public checkFormValues() {
-    if (this.settingsForm.get([''])) {
+  public successClearErrors(): void {
+    this.error = false;
+    this.errorEmailExists = false;
+    this.errorUser = false;
+    this.errorSignatureNotSaved = false;
+    this.errorUserImage = false;
+    this.errorInUploadImage = false;
+    this.errorYounger = false;
+  }
+
+  public validateBirthdate(): boolean {
+    let birthdate = moment(this.settingsForm.get(['birthdate'])!.value, DATE_TIME_FORMAT);
+    return new Date().getFullYear() - birthdate.year() >= 18;
+  }
+
+  public checkFormValues(): boolean {
+    let check = true;
+    if (!this.validateBirthdate()) {
+      this.errorYounger = true;
+      check = false;
+    } else {
+      this.errorYounger = false;
     }
+    if (this.signatureImageUrl === '') {
+      this.errorSignatureNotSaved = true;
+      check = false;
+    } else {
+      this.errorSignatureNotSaved = false;
+    }
+    if (this.settingsForm.get(['firstName'])!.value == '') {
+      this.errorUser = true;
+      check = false;
+    } else {
+      this.errorUser = false;
+    }
+    if (this.settingsForm.get(['email'])!.value == '') {
+      this.errorEmailExists = true;
+      check = false;
+    } else {
+      this.errorEmailExists = false;
+    }
+    return check;
   }
 
   openLogin(): void {
