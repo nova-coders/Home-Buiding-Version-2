@@ -1,0 +1,9 @@
+{
+  "homeBuildingApp": {
+    "IdentificationType": {
+      "null": "",
+      "Nacional": "Nacional",
+      "Extranjera": "Extranjera"
+    }
+  }
+}

@@ -210,6 +210,12 @@
                     </li>
                 </ul>
             </li>
+            <li *ngIf="isAuthenticated() == true" class="nav-item">
+                <a class="nav-link" routerLink="/servicepayment">
+                    <fa-icon icon="wrench"></fa-icon>
+                    <span >Pagar servicio</span>
+                </a>
+            </li>
             <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                     <span *ngIf="!getImageUrl()">

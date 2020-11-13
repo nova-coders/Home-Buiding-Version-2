@@ -1,7 +1,10 @@
 package com.novacoders.homebuilding.web.rest;
 
+import com.novacoders.homebuilding.domain.User;
 import com.novacoders.homebuilding.domain.UserAccount;
 import com.novacoders.homebuilding.repository.UserAccountRepository;
+import com.novacoders.homebuilding.repository.UserRepository;
+import com.novacoders.homebuilding.security.SecurityUtils;
 import com.novacoders.homebuilding.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -34,9 +37,10 @@ public class UserAccountResource {
     private String applicationName;
 
     private final UserAccountRepository userAccountRepository;
-
-    public UserAccountResource(UserAccountRepository userAccountRepository) {
+    private final UserRepository userRepository;
+    public UserAccountResource(UserAccountRepository userAccountRepository, UserRepository userRepository) {
         this.userAccountRepository = userAccountRepository;
+        this.userRepository = userRepository;
     }
 
     /**

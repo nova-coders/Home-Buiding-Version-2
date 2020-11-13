@@ -36,6 +36,14 @@
                 <dd>
                     <span>{{ userAccount.creationDate }}</span>
                 </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.phone">Phone</span></dt>
+                <dd>
+                    <span>{{ userAccount.phone }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.userAccount.identificationType">Identification Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'homeBuildingApp.IdentificationType.' + userAccount.identificationType }}">{{ userAccount.identificationType }}</span>
+                </dd>
                 <dt><span jhiTranslate="homeBuildingApp.userAccount.user">User</span></dt>
                 <dd>
                     {{ userAccount.user?.id }}

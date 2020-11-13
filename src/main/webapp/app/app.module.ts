@@ -17,6 +17,10 @@ import { ErrorComponent } from './layouts/error/error.component';
 /* eslint-disable */
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
+
+import { ServicePaymentComponent } from './service-payment/service-payment.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+
 @NgModule({
   imports: [
     GooglePlaceModule,
@@ -27,12 +31,22 @@ import { AgmCoreModule } from '@agm/core';
     // jhipster-needle-angular-add-module JHipster will add new module here
     HomeBuildingEntityModule,
     HomeBuildingAppRoutingModule,
+
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoy',
-      libraries: ['places']
+      libraries: ['places'],
     }),
+    NgxPayPalModule,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [
+    MainComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    ServicePaymentComponent,
+  ],
   bootstrap: [MainComponent],
 })
 export class HomeBuildingAppModule {}
