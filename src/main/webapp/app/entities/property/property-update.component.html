@@ -3,67 +3,67 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="propertyForm">
             <h2 id="jhi-property-heading" class="d-flex justify-content-center" >Registrar un inmueble en subasta</h2>
             <hr style="border: 0; height:1px;  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-            <div *ngIf="step == 1 ">
+            <div *ngIf="step == 1">
                 <h4>Datos del inmueble</h4>
-<hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
                 <div class="row">
-                     <div class="col-3" [hidden]="!propertyForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
+                    <div class="col-3" [hidden]="!propertyForm.get('id')!.value">
+                        <label for="id" jhiTranslate="global.field.id">ID</label>
+                        <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                    </div>
                 </div>
                 <div class="row">
-                     <div class="col">
-                         <label class="form-control-label"  for="field_title">Título</label>
-                         <input type="text" class="form-control" name="title" id="field_title"
-                           formControlName="title"/>
+                    <div class="col">
+                        <label class="form-control-label"  for="field_title">Título</label>
+                        <input type="text" class="form-control" name="title" id="field_title"
+                               formControlName="title"/>
 
-                         <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
-                         <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
-                             <option [ngValue]="null"></option>
-                             <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of moneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
-                         </select>
+                        <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
+                        <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of lstMoneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
+                        </select>
 
-                         <label class="form-control-label"  for="field_discount">Descuento</label>
-                         <input type="number" class="form-control" name="discount" id="field_discount"
-                                formControlName="discount"/>
+                        <label class="form-control-label"  for="field_discount">Descuento</label>
+                        <input type="number" class="form-control" name="discount" id="field_discount"
+                               formControlName="discount"/>
 
-                         <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
-                         <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
-                             <option [ngValue]="null"></option>
-                             <option [ngValue]="propertyCategoryOption.id === propertyForm.get('propertyCategory')!.value?.id ? propertyForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of propertycategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
-                         </select>
-                         <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
-                         <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
-                                formControlName="areaSquareMeters"/>
+                        <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
+                        <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="propertyCategoryOption.id === propertyForm.get('propertyCategory')!.value?.id ? propertyForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of lstPropertyCategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
+                        </select>
+                        <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
+                        <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
+                               formControlName="areaSquareMeters"/>
 
-                         <label class="form-control-label" for="field_property_id">Número de plano</label>
-                         <input type="number" class="form-control" name="property_id" id="field_property_id"
-                                formControlName="property_id"/>
+                        <label class="form-control-label" for="field_property_id">Número de plano</label>
+                        <input type="number" class="form-control" name="property_id" id="field_property_id"
+                               formControlName="property_id"/>
 
-                         <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m2 del inmueble</label>
-                         <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters"
-                                formControlName="landSquareMeters"/>
-                     </div>
-
-                     <div class="col">
-                    <label class="form-control-label"  for="field_description">Descripción</label>
-                    <textarea  class="form-control" name="description" id="field_description"
-                              formControlName="description"  rows="5" cols="40"></textarea>
-
-                         <label class="form-control-label"  for="field_price">Precio</label>
-                         <input type="number" class="form-control" name="price" id="field_price"
-                                formControlName="price"/>
-
-                    <label class="form-control-label" for="field_finalDate">Fecha de expiración</label>
-                    <div class="d-flex">
-                        <input id="field_finalDate" type="datetime-local" class="form-control" name="finalDate" formControlName="finalDate" placeholder="YYYY-MM-DD HH:mm"/>
+                        <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m2 del inmueble</label>
+                        <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters"
+                               formControlName="landSquareMeters"/>
                     </div>
 
-                         <label class="form-control-label"  for="field_addressText">Dirección exacta del inmueble</label>
-                         <textarea class="form-control" name="addressText" id="field_addressText"
-                                   formControlName="addressText"  rows="5" cols="40"></textarea>
-                     </div>
+                    <div class="col">
+                        <label class="form-control-label"  for="field_description">Descripción</label>
+                        <textarea  class="form-control" name="description" id="field_description"
+                                   formControlName="description"  rows="5" cols="40"></textarea>
+
+                        <label class="form-control-label"  for="field_price">Precio</label>
+                        <input type="number" class="form-control" name="price" id="field_price"
+                               formControlName="price"/>
+
+                        <label class="form-control-label" for="field_finalDate">Fecha de expiración</label>
+                        <div class="d-flex">
+                            <input id="field_finalDate" type="datetime-local" class="form-control" name="finalDate" formControlName="finalDate" placeholder="YYYY-MM-DD HH:mm"/>
+                        </div>
+
+                        <label class="form-control-label"  for="field_addressText">Dirección exacta del inmueble</label>
+                        <textarea class="form-control" name="addressText" id="field_addressText"
+                                  formControlName="addressText"  rows="5" cols="40"></textarea>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -85,26 +85,43 @@
                         </div>
                         <iframe src="https://res.cloudinary.com/dsx9svdes/image/upload/v1604871406/property_files/Home_building_c2okhi.pdf" height="200" width="300" title="Iframe Example" class="mt-5"></iframe>
                     </div>
-                    </div>
-
                 </div>
+
+            </div>
             <div *ngIf="step == 2">
                 <h4>Imágenes y localización del inmueble</h4>
                 <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+
                 <div class="row">
                     <div class="col">
                         <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
                         <select class="form-control" id="field_Category_Image" name="category" formControlName="category_Image">
                             <option [ngValue]="null"></option>
                             <option [ngValue]="null"></option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label" for="field_Province" [(ngModel)]="provinceIndex"
+                               (change)="setCantonsList($event)">Provincia</label>
+                        <select class="form-control" id="field_Province" name="category" formControlName="province">
                             <option [ngValue]="null"></option>
+                            <option *ngFor="let province of lstProvinces;" [value]="province.id">{{ province.name}}</option>
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-control-label"  for="field_canton">Categoría del inmueble</label>
-                        <select class="form-control" id="field_canton" name="canton" formControlName="canton">
+                        <label class="form-control-label"  for="field_canton" [(ngModel)]="cantonIndex">Canton</label>
+                        <select class="form-control" id="field_canton" name="canton" formControlName="canton" *ngIf="isSelected==true">
                             <option [ngValue]="null"></option>
-                            <option [ngValue]="propertyCategoryOption.id === propertyForm.get('canton')!.value?.id ? propertyForm.get('canton')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of cantons; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
+                            <option  *ngFor="let cantonOption of lstCantons; index as c" value="{{c}}">{{ cantonOption.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -112,9 +129,9 @@
                     <label for="address1">Ingrese la dirección</label>
                     <input id="address1" name="address1" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" class="form-control"/>
                     <agm-map style="height: 300px;"
-                        [latitude]="lat"
-                        [longitude]="lng"
-                        [zoom]="zoom" >
+                             [latitude]="lat"
+                             [longitude]="lng"
+                             [zoom]="zoom" >
                         <agm-marker
                             [latitude]="lat"
                             [longitude]="lng"
@@ -122,7 +139,7 @@
                             (dragEnd)="markerDragEnd($event)"></agm-marker>
                     </agm-map>
                 </div>
-                </div>
+            </div>
 
 
             <jhi-alert-error></jhi-alert-error>

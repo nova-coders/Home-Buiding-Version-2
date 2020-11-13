@@ -33,16 +33,19 @@ type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyC
 export class PropertyUpdateComponent implements OnInit {
   step: any = 1;
   isSaving = false;
+  isSelected = false;
   sales: ISale[] = [];
-  useraccounts: IUserAccount[] = [];
-  moneytypes: IMoneyType[] = [];
-  cantons: ICanton[] = [];
-  provinces: IProvince[] = [];
-  propertycategories: IPropertyCategory[] = [];
+  lstUserAccounts: IUserAccount[] = [];
+  lstMoneytypes: IMoneyType[] = [];
+  lstCantons: ICanton[] = [];
+  lstProvinces: IProvince[] = [];
+  lstPropertyCategories: IPropertyCategory[] = [];
+  provinceIndex!: number;
+  cantonIndex!: number;
   zoom = 8;
   lat: any;
   lng: any;
-  address: string = '';
+  address!: string;
   private geoCoder: any;
   @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
   options: any = {
@@ -50,7 +53,7 @@ export class PropertyUpdateComponent implements OnInit {
     componentRestrictions: { country: 'CR' },
   };
   files: File[];
-  fileUrl: string = '';
+  fileUrl!: string;
   error = false;
 
   propertyForm = this.fb.group({
@@ -119,14 +122,14 @@ export class PropertyUpdateComponent implements OnInit {
               .subscribe((concatRes: ISale[]) => (this.sales = concatRes));
           }
         });
+      this.provinceService.query().subscribe((res: HttpResponse<IProvince[]>) => (this.lstProvinces = res.body || []));
+      this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.lstUserAccounts = res.body || []));
 
-      this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.useraccounts = res.body || []));
-
-      this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.moneytypes = res.body || []));
+      this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.lstMoneytypes = res.body || []));
 
       this.propertyCategoryService
         .query()
-        .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.propertycategories = res.body || []));
+        .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
     });
     this.setCurrentLocation();
   }
@@ -256,6 +259,13 @@ export class PropertyUpdateComponent implements OnInit {
     return item.id;
   }
 
+  public setCantonsList(event: any): void {
+    this.cantonService
+      .findByProvince(event.target.data.id)
+      .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+    this.isSelected = true;
+  }
+
   public onSelectImage(event: any): void {
     if (this.files && this.files.length >= 1) {
       this.onRemoveImage(this.files[0]);
@@ -274,7 +284,6 @@ export class PropertyUpdateComponent implements OnInit {
     this.imageService.uploadFile(fileData).subscribe(
       response => {
         this.fileUrl = response.url;
-        //console.log(this.fileUrl);
       },
       () => {
         this.error = true;
@@ -283,10 +292,12 @@ export class PropertyUpdateComponent implements OnInit {
   }
   public onFileSelected(event: any, opc: number): void {
     this.getBase64(event.target.files[0]).then((base64: string) => {
-      if (opc == 1) {
-        let file = document.getElementById('urlfile');
+      if (opc === 1) {
+        const file = document.getElementById('urlfile');
         file?.setAttribute('src', base64);
       } else {
+        const file2 = document.getElementById('urlfile');
+        file2?.setAttribute('src', base64);
       }
     });
   }

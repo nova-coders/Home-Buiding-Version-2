@@ -10,7 +10,7 @@ import { propertyRoute } from './property.route';
 import { AgmCoreModule } from '@agm/core';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
 @NgModule({
   imports: [
     HomeBuildingSharedModule,
@@ -21,7 +21,6 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
       libraries: ['places'],
     }),
     NgxDropzoneModule,
-    NgxExtendedPdfViewerModule,
   ],
   declarations: [PropertyComponent, PropertyDetailComponent, PropertyUpdateComponent, PropertyDeleteDialogComponent],
   entryComponents: [PropertyDeleteDialogComponent],
