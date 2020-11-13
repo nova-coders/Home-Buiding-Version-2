@@ -34,6 +34,8 @@
       "clientTickets": "Client Tickets",
       "ownedDocuments": "Owned Documents",
       "purchasedDocuments": "Purchased Documents",
+      "sentNotifications": "Sent Notifications",
+      "receivedNotifications": "Received Notifications",
       "publishingPackage": "Publishing Package",
       "role": "Role"
     }

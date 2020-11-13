@@ -101,6 +101,18 @@
       "relationshipName": "purchasedDocuments"
     },
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "notification",
+      "otherEntityRelationshipName": "transmitter",
+      "relationshipName": "sentNotifications"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "notification",
+      "otherEntityRelationshipName": "receptor",
+      "relationshipName": "receivedNotifications"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "publishingPackage",
       "otherEntityRelationshipName": "userAccount",

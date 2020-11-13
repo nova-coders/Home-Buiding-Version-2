@@ -6,6 +6,7 @@ import { IOffer } from 'app/shared/model/offer.model';
 import { IScore } from 'app/shared/model/score.model';
 import { ISupportTicket } from 'app/shared/model/support-ticket.model';
 import { IDocument } from 'app/shared/model/document.model';
+import { INotification } from 'app/shared/model/notification.model';
 import { IPublishingPackage } from 'app/shared/model/publishing-package.model';
 import { IRole } from 'app/shared/model/role.model';
 import { IdentificationType } from 'app/shared/model/enumerations/identification-type.model';
@@ -30,6 +31,8 @@ export interface IUserAccount {
   clientTickets?: ISupportTicket[];
   ownedDocuments?: IDocument[];
   purchasedDocuments?: IDocument[];
+  sentNotifications?: INotification[];
+  receivedNotifications?: INotification[];
   publishingPackage?: IPublishingPackage;
   role?: IRole;
 }
@@ -55,6 +58,8 @@ export class UserAccount implements IUserAccount {
     public clientTickets?: ISupportTicket[],
     public ownedDocuments?: IDocument[],
     public purchasedDocuments?: IDocument[],
+    public sentNotifications?: INotification[],
+    public receivedNotifications?: INotification[],
     public publishingPackage?: IPublishingPackage,
     public role?: IRole
   ) {
