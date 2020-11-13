@@ -69,7 +69,7 @@ describe('Service Tests', () => {
       it('should update a Document', () => {
         const returnedFromService = Object.assign(
           {
-            url: 'BBBBBB',
+            base64Code: 'BBBBBB',
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -93,7 +93,7 @@ describe('Service Tests', () => {
       it('should return a list of Document', () => {
         const returnedFromService = Object.assign(
           {
-            url: 'BBBBBB',
+            base64Code: 'BBBBBB',
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },

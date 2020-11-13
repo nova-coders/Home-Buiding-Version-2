@@ -23,8 +23,9 @@ public class Document implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "url")
-    private String url;
+    @Lob
+    @Column(name = "base_64_code")
+    private String base64Code;
 
     @Column(name = "state")
     private Boolean state;
@@ -53,17 +54,17 @@ public class Document implements Serializable {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getBase64Code() {
+        return base64Code;
     }
 
-    public Document url(String url) {
-        this.url = url;
+    public Document base64Code(String base64Code) {
+        this.base64Code = base64Code;
         return this;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setBase64Code(String base64Code) {
+        this.base64Code = base64Code;
     }
 
     public Boolean isState() {
@@ -153,7 +154,7 @@ public class Document implements Serializable {
     public String toString() {
         return "Document{" +
             "id=" + getId() +
-            ", url='" + getUrl() + "'" +
+            ", base64Code='" + getBase64Code() + "'" +
             ", state='" + isState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
             "}";

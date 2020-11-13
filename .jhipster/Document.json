@@ -2,8 +2,9 @@
   "name": "Document",
   "fields": [
     {
-      "fieldName": "url",
-      "fieldType": "String"
+      "fieldName": "base64Code",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "state",

@@ -2,6 +2,14 @@ enum IdentificationType {
 	Nacional,
     Extranjera
 }
+
+enum NotificationType {
+    Subasta,
+    Alquiler,
+    Soporte,
+    Sistema
+}
+
 entity MoneyType {
     Id Integer,
     Icon String,
@@ -64,7 +72,7 @@ entity Province {
 
 entity Document {
   Id Integer ,
-  Url String,
+  Base64Code TextBlob,
   State Boolean,
   CreationDate ZonedDateTime
 }
@@ -154,6 +162,15 @@ entity Role {
   CreationDate ZonedDateTime
 }
 
+entity Notification {
+ Id Integer,
+ Title String,
+ Message String,
+ State Boolean,
+ Type NotificationType,
+ CreationDate ZonedDateTime
+}
+
 relationship OneToMany{
 	UserAccount to Property
     UserAccount to Offer
@@ -162,6 +179,9 @@ relationship OneToMany{
     UserAccount{clientTickets} to SupportTicket{signOffUser}
     UserAccount{ownedDocuments} to Document{Seller}
     UserAccount{purchasedDocuments} to Document{Buyer}
+    UserAccount{notificationsSent} to Notification{transmitter}
+    UserAccount{notificationsReceived} to Notification{receptor}
+
     PublishingPackage to UserAccount
     Role to UserAccount
 
