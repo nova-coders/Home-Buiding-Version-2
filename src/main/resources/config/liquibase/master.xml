@@ -32,6 +32,7 @@
     <include file="config/liquibase/changelog/20201103042712_added_entity_Rent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201103042812_added_entity_Offer.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201103042912_added_entity_Role.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201113035345_added_entity_Notification.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20201103041312_added_entity_constraints_UserAccount.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201103041512_added_entity_constraints_SupportTicket.xml" relativeToChangelogFile="false"/>
@@ -42,6 +43,7 @@
     <include file="config/liquibase/changelog/20201103042312_added_entity_constraints_Score.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201103042412_added_entity_constraints_PropertyImage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20201103042812_added_entity_constraints_Offer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201113035345_added_entity_constraints_Notification.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

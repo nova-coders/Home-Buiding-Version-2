@@ -1,0 +1,81 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homeBuildingApp.notification.home.title">Notifications</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-notification" [routerLink]="['/notification/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homeBuildingApp.notification.home.createLabel">
+            Create a new Notification
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="notifications?.length === 0">
+        <span jhiTranslate="homeBuildingApp.notification.home.notFound">No notifications found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="notifications && notifications.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.title">Title</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.message">Message</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.type">Type</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.transmitter">Transmitter</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.notification.receptor">Receptor</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let notification of notifications ;trackBy: trackId">
+                    <td><a [routerLink]="['/notification', notification.id, 'view']">{{ notification.id }}</a></td>
+                    <td>{{ notification.title }}</td>
+                    <td>{{ notification.message }}</td>
+                    <td>{{ notification.state }}</td>
+                    <td jhiTranslate="{{ 'homeBuildingApp.NotificationType.' + notification.type }}">{{ notification.type }}</td>
+                    <td>{{ notification.creationDate | date:'medium' }}</td>
+                    <td>
+                        <div *ngIf="notification.transmitter">
+                            <a [routerLink]="['/user-account', notification.transmitter?.id, 'view']" >{{ notification.transmitter?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="notification.receptor">
+                            <a [routerLink]="['/user-account', notification.receptor?.id, 'view']" >{{ notification.receptor?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/notification', notification.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/notification', notification.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(notification)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

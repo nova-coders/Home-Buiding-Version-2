@@ -1,0 +1,11 @@
+{
+  "homeBuildingApp": {
+    "NotificationType": {
+      "null": "",
+      "Subasta": "Subasta",
+      "Alquiler": "Alquiler",
+      "Soporte": "Soporte",
+      "Sistema": "Sistema"
+    }
+  }
+}

@@ -179,8 +179,8 @@ relationship OneToMany{
     UserAccount{clientTickets} to SupportTicket{signOffUser}
     UserAccount{ownedDocuments} to Document{Seller}
     UserAccount{purchasedDocuments} to Document{Buyer}
-    UserAccount{notificationsSent} to Notification{transmitter}
-    UserAccount{notificationsReceived} to Notification{receptor}
+    UserAccount{sentNotifications} to Notification{transmitter}
+    UserAccount{receivedNotifications} to Notification{receptor}
 
     PublishingPackage to UserAccount
     Role to UserAccount
