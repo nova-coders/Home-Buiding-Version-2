@@ -26,7 +26,15 @@ import { PropertyBlockComponent } from './html-components/property-block/propert
     HomeBuildingEntityModule,
     HomeBuildingAppRoutingModule,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, PropertyBlockComponent],
+  declarations: [
+    MainComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    PropertyBlockComponent,
+  ],
   bootstrap: [MainComponent],
 })
 export class HomeBuildingAppModule {}
