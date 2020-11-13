@@ -141,6 +141,11 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+
+        User user = SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin).get();
+        user.setPassword(passwordChangeDto.getNewPassword());
+        mailService.sendPasswordChangeMail(user);
     }
 
     /**
