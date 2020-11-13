@@ -16,9 +16,7 @@
       "detail": {
         "title": "Document"
       },
-      "url": "Url",
-      "sellerUserId": "Seller User Id",
-      "buyerUserId": "Buyer User Id",
+      "base64Code": "Base 64 Code",
       "state": "State",
       "creationDate": "Creation Date",
       "seller": "Seller",

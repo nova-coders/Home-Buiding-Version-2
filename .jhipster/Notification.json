@@ -1,14 +1,22 @@
 {
-  "name": "Document",
+  "name": "Notification",
   "fields": [
     {
-      "fieldName": "base64Code",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "text"
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "message",
+      "fieldType": "String"
     },
     {
       "fieldName": "state",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "NotificationType",
+      "fieldValues": "Subasta,Alquiler,Soporte,Sistema"
     },
     {
       "fieldName": "creationDate",
@@ -19,27 +27,20 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "userAccount",
-      "otherEntityRelationshipName": "ownedDocuments",
-      "relationshipName": "seller",
+      "otherEntityRelationshipName": "sentNotifications",
+      "relationshipName": "transmitter",
       "otherEntityField": "id"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "userAccount",
-      "otherEntityRelationshipName": "purchasedDocuments",
-      "relationshipName": "buyer",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "property",
-      "otherEntityRelationshipName": "document",
-      "relationshipName": "property",
+      "otherEntityRelationshipName": "receivedNotifications",
+      "relationshipName": "receptor",
       "otherEntityField": "id"
     }
   ],
-  "changelogDate": "20201103041912",
-  "entityTableName": "document",
+  "changelogDate": "20201113035345",
+  "entityTableName": "notification",
   "dto": "no",
   "pagination": "no",
   "service": "no",

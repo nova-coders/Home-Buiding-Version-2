@@ -85,6 +85,11 @@ public class CacheConfiguration {
             createCache(cm, com.novacoders.homebuilding.domain.Offer.class.getName());
             createCache(cm, com.novacoders.homebuilding.domain.Role.class.getName());
             createCache(cm, com.novacoders.homebuilding.domain.Role.class.getName() + ".userAccounts");
+            createCache(cm, com.novacoders.homebuilding.domain.UserAccount.class.getName() + ".notificationsSents");
+            createCache(cm, com.novacoders.homebuilding.domain.UserAccount.class.getName() + ".notificationsReceiveds");
+            createCache(cm, com.novacoders.homebuilding.domain.Notification.class.getName());
+            createCache(cm, com.novacoders.homebuilding.domain.UserAccount.class.getName() + ".sentNotifications");
+            createCache(cm, com.novacoders.homebuilding.domain.UserAccount.class.getName() + ".receivedNotifications");
             // jhipster-needle-ehcache-add-entry
         };
     }
