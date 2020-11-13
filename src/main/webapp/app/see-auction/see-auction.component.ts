@@ -4,8 +4,7 @@ import { Property } from 'app/shared/model/property.model';
 import { PropertyService } from 'app/entities/property/property.service';
 import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 import { Offer } from 'app/shared/model/offer.model';
-import { UserAccount } from 'app/shared/model/user-account.model';
-import { User } from 'app/core/user/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-see-auction',
@@ -17,7 +16,12 @@ export class SeeAuctionComponent implements OnInit {
   public idProperty: number;
   public offers: Array<Offer> = [];
   public startPage = 1;
-  constructor(private route: ActivatedRoute, private propertyService: PropertyService, private seeAuctionService: SeeAuctionService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private propertyService: PropertyService,
+    private seeAuctionService: SeeAuctionService
+  ) {
     this.property = new Property();
     this.idProperty = -1;
     this.offers = [];
@@ -28,11 +32,25 @@ export class SeeAuctionComponent implements OnInit {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
         this.property = response.body as Property;
-        this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
-          this.offers = response;
-          console.log(response);
-        });
+        if (this.property.sale != null) {
+          this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
+            this.offers = response;
+            console.log(response);
+          });
+        }
       });
     });
+  }
+  public closeAuction(): void {
+    this.setAuctionState();
+  }
+  private setAuctionState(): void {
+    this.seeAuctionService.closeAuction(this.idProperty).subscribe((response: any) => {
+      console.log(response);
+    });
+  }
+  private notifyClients(): void {}
+  private goDocument(): void {
+    this.router.navigate(['/']);
   }
 }

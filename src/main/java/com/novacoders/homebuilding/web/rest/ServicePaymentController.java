@@ -28,10 +28,7 @@ public class ServicePaymentController {
       return this.servicePaymentService.findByUser();
     }
     @GetMapping("/payment-user-account/{packageid}/{userid}")
-    public void assignPackageToUser(@PathVariable Long packageid,@PathVariable Long userid) {
-        System.out.println(packageid);
-        System.out.println(userid);
-        servicePaymentService.assignPackageToUser( packageid, userid);
-
+    public UserAccount assignPackageToUser(@PathVariable Long packageid,@PathVariable Long userid) {
+        return servicePaymentService.assignPackageToUser( packageid, userid);
     }
 }

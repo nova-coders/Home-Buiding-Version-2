@@ -12,4 +12,7 @@ export class SeeAuctionService {
   public geByOffersBySale(idsale: number): Observable<any> {
     return this.httpClient.get(`${this.resourceUrl}/by-sale/${idsale}`);
   }
+  public closeAuction(idproperty: number): Observable<any> {
+    return this.httpClient.get(`${this.resourceUrl}/closeauction/${idproperty}`);
+  }
 }

@@ -1,6 +1,7 @@
 package com.novacoders.homebuilding.web.rest;
 
 import com.novacoders.homebuilding.domain.Offer;
+import com.novacoders.homebuilding.domain.Property;
 import com.novacoders.homebuilding.service.SeeAuctionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,4 +29,16 @@ public class SeeAuctionController {
     public List<Offer> getBySale(@PathVariable int saleid) {
         return this.seeAuctionService.findBySale(saleid);
     }
+
+    /**
+     * {@code GET  /by-sale/saleid} : get  userAccount.
+     *
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the List<Offer>, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/closeauction/{propertyid}")
+    public Property closeAuction(@PathVariable int propertyid) {
+        return this.seeAuctionService.closeAuction(propertyid);
+    }
+
 }
