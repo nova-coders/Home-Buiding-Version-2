@@ -11,6 +11,8 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.novacoders.homebuilding.domain.enumeration.IdentificationType;
+
 /**
  * A UserAccount.
  */
@@ -34,9 +36,11 @@ public class UserAccount implements Serializable {
     @Column(name = "profile_picture")
     private String profilePicture;
 
+    @Lob
     @Column(name = "signature_picture")
     private String signaturePicture;
 
+    @Lob
     @Column(name = "signature_code")
     private String signatureCode;
 
@@ -45,6 +49,13 @@ public class UserAccount implements Serializable {
 
     @Column(name = "creation_date")
     private ZonedDateTime creationDate;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "identification_type")
+    private IdentificationType identificationType;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -81,6 +92,14 @@ public class UserAccount implements Serializable {
     @OneToMany(mappedBy = "buyer")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> purchasedDocuments = new HashSet<>();
+
+    @OneToMany(mappedBy = "transmitter")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Notification> sentNotifications = new HashSet<>();
+
+    @OneToMany(mappedBy = "receptor")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Notification> receivedNotifications = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "userAccounts", allowSetters = true)
@@ -188,6 +207,32 @@ public class UserAccount implements Serializable {
 
     public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserAccount phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public IdentificationType getIdentificationType() {
+        return identificationType;
+    }
+
+    public UserAccount identificationType(IdentificationType identificationType) {
+        this.identificationType = identificationType;
+        return this;
+    }
+
+    public void setIdentificationType(IdentificationType identificationType) {
+        this.identificationType = identificationType;
     }
 
     public User getUser() {
@@ -391,6 +436,56 @@ public class UserAccount implements Serializable {
         this.purchasedDocuments = documents;
     }
 
+    public Set<Notification> getSentNotifications() {
+        return sentNotifications;
+    }
+
+    public UserAccount sentNotifications(Set<Notification> notifications) {
+        this.sentNotifications = notifications;
+        return this;
+    }
+
+    public UserAccount addSentNotifications(Notification notification) {
+        this.sentNotifications.add(notification);
+        notification.setTransmitter(this);
+        return this;
+    }
+
+    public UserAccount removeSentNotifications(Notification notification) {
+        this.sentNotifications.remove(notification);
+        notification.setTransmitter(null);
+        return this;
+    }
+
+    public void setSentNotifications(Set<Notification> notifications) {
+        this.sentNotifications = notifications;
+    }
+
+    public Set<Notification> getReceivedNotifications() {
+        return receivedNotifications;
+    }
+
+    public UserAccount receivedNotifications(Set<Notification> notifications) {
+        this.receivedNotifications = notifications;
+        return this;
+    }
+
+    public UserAccount addReceivedNotifications(Notification notification) {
+        this.receivedNotifications.add(notification);
+        notification.setReceptor(this);
+        return this;
+    }
+
+    public UserAccount removeReceivedNotifications(Notification notification) {
+        this.receivedNotifications.remove(notification);
+        notification.setReceptor(null);
+        return this;
+    }
+
+    public void setReceivedNotifications(Set<Notification> notifications) {
+        this.receivedNotifications = notifications;
+    }
+
     public PublishingPackage getPublishingPackage() {
         return publishingPackage;
     }
@@ -446,6 +541,8 @@ public class UserAccount implements Serializable {
             ", signatureCode='" + getSignatureCode() + "'" +
             ", state='" + isState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
+            ", phone='" + getPhone() + "'" +
+            ", identificationType='" + getIdentificationType() + "'" +
             "}";
     }
 }

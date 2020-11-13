@@ -14,6 +14,8 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { ServicePaymentComponent } from './service-payment/service-payment.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 import { PropertyBlockComponent } from './html-components/property-block/property-block.component';
 
 @NgModule({
@@ -25,6 +27,7 @@ import { PropertyBlockComponent } from './html-components/property-block/propert
     // jhipster-needle-angular-add-module JHipster will add new module here
     HomeBuildingEntityModule,
     HomeBuildingAppRoutingModule,
+    NgxPayPalModule,
   ],
   declarations: [
     MainComponent,
@@ -34,6 +37,7 @@ import { PropertyBlockComponent } from './html-components/property-block/propert
     ActiveMenuDirective,
     FooterComponent,
     PropertyBlockComponent,
+    ServicePaymentComponent
   ],
   bootstrap: [MainComponent],
 })

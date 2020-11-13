@@ -59,12 +59,13 @@ public class AccountResource {
      */
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
+    public User registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
+        return user;
     }
 
     /**
@@ -140,6 +141,11 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+
+        User user = SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin).get();
+        user.setPassword(passwordChangeDto.getNewPassword());
+        mailService.sendPasswordChangeMail(user);
     }
 
     /**

@@ -30,6 +30,8 @@
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.signatureCode">Signature Code</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.state">State</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.creationDate">Creation Date</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.phone">Phone</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.identificationType">Identification Type</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.user">User</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.professionalProfileUser">Professional Profile User</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.userAccount.publishingPackage">Publishing Package</span></th>
@@ -47,6 +49,8 @@
                     <td>{{ userAccount.signatureCode }}</td>
                     <td>{{ userAccount.state }}</td>
                     <td>{{ userAccount.creationDate | date:'medium' }}</td>
+                    <td>{{ userAccount.phone }}</td>
+                    <td jhiTranslate="{{ 'homeBuildingApp.IdentificationType.' + userAccount.identificationType }}">{{ userAccount.identificationType }}</td>
                     <td>
                         {{ userAccount.user?.id }}
                     </td>

@@ -4,9 +4,7 @@ import { IProperty } from 'app/shared/model/property.model';
 
 export interface IDocument {
   id?: number;
-  url?: string;
-  sellerUserId?: number;
-  buyerUserId?: number;
+  base64Code?: any;
   state?: boolean;
   creationDate?: Moment;
   seller?: IUserAccount;
@@ -17,9 +15,7 @@ export interface IDocument {
 export class Document implements IDocument {
   constructor(
     public id?: number,
-    public url?: string,
-    public sellerUserId?: number,
-    public buyerUserId?: number,
+    public base64Code?: any,
     public state?: boolean,
     public creationDate?: Moment,
     public seller?: IUserAccount,
