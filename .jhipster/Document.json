@@ -2,16 +2,9 @@
   "name": "Document",
   "fields": [
     {
-      "fieldName": "url",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "sellerUserId",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "buyerUserId",
-      "fieldType": "Integer"
+      "fieldName": "base64Code",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "state",

@@ -23,14 +23,9 @@ public class Document implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "url")
-    private String url;
-
-    @Column(name = "seller_user_id")
-    private Integer sellerUserId;
-
-    @Column(name = "buyer_user_id")
-    private Integer buyerUserId;
+    @Lob
+    @Column(name = "base_64_code")
+    private String base64Code;
 
     @Column(name = "state")
     private Boolean state;
@@ -59,43 +54,17 @@ public class Document implements Serializable {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getBase64Code() {
+        return base64Code;
     }
 
-    public Document url(String url) {
-        this.url = url;
+    public Document base64Code(String base64Code) {
+        this.base64Code = base64Code;
         return this;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Integer getSellerUserId() {
-        return sellerUserId;
-    }
-
-    public Document sellerUserId(Integer sellerUserId) {
-        this.sellerUserId = sellerUserId;
-        return this;
-    }
-
-    public void setSellerUserId(Integer sellerUserId) {
-        this.sellerUserId = sellerUserId;
-    }
-
-    public Integer getBuyerUserId() {
-        return buyerUserId;
-    }
-
-    public Document buyerUserId(Integer buyerUserId) {
-        this.buyerUserId = buyerUserId;
-        return this;
-    }
-
-    public void setBuyerUserId(Integer buyerUserId) {
-        this.buyerUserId = buyerUserId;
+    public void setBase64Code(String base64Code) {
+        this.base64Code = base64Code;
     }
 
     public Boolean isState() {
@@ -185,9 +154,7 @@ public class Document implements Serializable {
     public String toString() {
         return "Document{" +
             "id=" + getId() +
-            ", url='" + getUrl() + "'" +
-            ", sellerUserId=" + getSellerUserId() +
-            ", buyerUserId=" + getBuyerUserId() +
+            ", base64Code='" + getBase64Code() + "'" +
             ", state='" + isState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
             "}";

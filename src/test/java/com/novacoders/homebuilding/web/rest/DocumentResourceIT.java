@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -34,14 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class DocumentResourceIT {
 
-    private static final String DEFAULT_URL = "AAAAAAAAAA";
-    private static final String UPDATED_URL = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_SELLER_USER_ID = 1;
-    private static final Integer UPDATED_SELLER_USER_ID = 2;
-
-    private static final Integer DEFAULT_BUYER_USER_ID = 1;
-    private static final Integer UPDATED_BUYER_USER_ID = 2;
+    private static final String DEFAULT_BASE_64_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_BASE_64_CODE = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_STATE = false;
     private static final Boolean UPDATED_STATE = true;
@@ -68,9 +63,7 @@ public class DocumentResourceIT {
      */
     public static Document createEntity(EntityManager em) {
         Document document = new Document()
-            .url(DEFAULT_URL)
-            .sellerUserId(DEFAULT_SELLER_USER_ID)
-            .buyerUserId(DEFAULT_BUYER_USER_ID)
+            .base64Code(DEFAULT_BASE_64_CODE)
             .state(DEFAULT_STATE)
             .creationDate(DEFAULT_CREATION_DATE);
         return document;
@@ -83,9 +76,7 @@ public class DocumentResourceIT {
      */
     public static Document createUpdatedEntity(EntityManager em) {
         Document document = new Document()
-            .url(UPDATED_URL)
-            .sellerUserId(UPDATED_SELLER_USER_ID)
-            .buyerUserId(UPDATED_BUYER_USER_ID)
+            .base64Code(UPDATED_BASE_64_CODE)
             .state(UPDATED_STATE)
             .creationDate(UPDATED_CREATION_DATE);
         return document;
@@ -110,9 +101,7 @@ public class DocumentResourceIT {
         List<Document> documentList = documentRepository.findAll();
         assertThat(documentList).hasSize(databaseSizeBeforeCreate + 1);
         Document testDocument = documentList.get(documentList.size() - 1);
-        assertThat(testDocument.getUrl()).isEqualTo(DEFAULT_URL);
-        assertThat(testDocument.getSellerUserId()).isEqualTo(DEFAULT_SELLER_USER_ID);
-        assertThat(testDocument.getBuyerUserId()).isEqualTo(DEFAULT_BUYER_USER_ID);
+        assertThat(testDocument.getBase64Code()).isEqualTo(DEFAULT_BASE_64_CODE);
         assertThat(testDocument.isState()).isEqualTo(DEFAULT_STATE);
         assertThat(testDocument.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
@@ -148,9 +137,7 @@ public class DocumentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(document.getId().intValue())))
-            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
-            .andExpect(jsonPath("$.[*].sellerUserId").value(hasItem(DEFAULT_SELLER_USER_ID)))
-            .andExpect(jsonPath("$.[*].buyerUserId").value(hasItem(DEFAULT_BUYER_USER_ID)))
+            .andExpect(jsonPath("$.[*].base64Code").value(hasItem(DEFAULT_BASE_64_CODE.toString())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
@@ -166,9 +153,7 @@ public class DocumentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(document.getId().intValue()))
-            .andExpect(jsonPath("$.url").value(DEFAULT_URL))
-            .andExpect(jsonPath("$.sellerUserId").value(DEFAULT_SELLER_USER_ID))
-            .andExpect(jsonPath("$.buyerUserId").value(DEFAULT_BUYER_USER_ID))
+            .andExpect(jsonPath("$.base64Code").value(DEFAULT_BASE_64_CODE.toString()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
@@ -193,9 +178,7 @@ public class DocumentResourceIT {
         // Disconnect from session so that the updates on updatedDocument are not directly saved in db
         em.detach(updatedDocument);
         updatedDocument
-            .url(UPDATED_URL)
-            .sellerUserId(UPDATED_SELLER_USER_ID)
-            .buyerUserId(UPDATED_BUYER_USER_ID)
+            .base64Code(UPDATED_BASE_64_CODE)
             .state(UPDATED_STATE)
             .creationDate(UPDATED_CREATION_DATE);
 
@@ -208,9 +191,7 @@ public class DocumentResourceIT {
         List<Document> documentList = documentRepository.findAll();
         assertThat(documentList).hasSize(databaseSizeBeforeUpdate);
         Document testDocument = documentList.get(documentList.size() - 1);
-        assertThat(testDocument.getUrl()).isEqualTo(UPDATED_URL);
-        assertThat(testDocument.getSellerUserId()).isEqualTo(UPDATED_SELLER_USER_ID);
-        assertThat(testDocument.getBuyerUserId()).isEqualTo(UPDATED_BUYER_USER_ID);
+        assertThat(testDocument.getBase64Code()).isEqualTo(UPDATED_BASE_64_CODE);
         assertThat(testDocument.isState()).isEqualTo(UPDATED_STATE);
         assertThat(testDocument.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
