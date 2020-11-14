@@ -10,7 +10,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IProperty, Property } from 'app/shared/model/property.model';
 import { PropertyService } from './property.service';
-import { ISale } from 'app/shared/model/sale.model';
+import { ISale, Sale } from 'app/shared/model/sale.model';
 import { SaleService } from 'app/entities/sale/sale.service';
 import { IUserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
@@ -22,7 +22,7 @@ import { IPropertyCategory } from 'app/shared/model/property-category.model';
 import { PropertyCategoryService } from 'app/entities/property-category/property-category.service';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { ProvinceService } from '../province/province.service';
-import { IProvince } from '../../shared/model/province.model';
+import { IProvince, Province } from '../../shared/model/province.model';
 import { ImageService } from '../../global-services/image.service';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
@@ -42,6 +42,8 @@ export class PropertyUpdateComponent implements OnInit {
   lstPropertyCategories: IPropertyCategory[] = [];
   provinceIndex!: number;
   cantonIndex!: number;
+  catastralPlan!: string;
+  registryStudy!: string;
   zoom = 8;
   lat: any;
   lng: any;
@@ -69,9 +71,7 @@ export class PropertyUpdateComponent implements OnInit {
     longitude: ['', [Validators.required]],
     zoom: ['', [Validators.required]],
     addressText: ['', [Validators.required]],
-    creationDate: ['', [Validators.required]],
     state: ['', [Validators.required]],
-    sale: ['', [Validators.required]],
     userAccount: ['', [Validators.required]],
     moneyType: ['', [Validators.required]],
     canton: ['', [Validators.required]],
@@ -180,7 +180,7 @@ export class PropertyUpdateComponent implements OnInit {
       longitude: this.lng,
       zoom: this.zoom,
       addressText: property.addressText,
-      finalDate: property.finalDate ? property.finalDate.format(DATE_TIME_FORMAT) : null,
+      creationDate: property.creationDate ? property.creationDate.format(DATE_TIME_FORMAT) : null,
       state: property.state,
       sale: property.sale,
       userAccount: property.userAccount,
@@ -214,6 +214,9 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IProperty {
+    let mySale = new Sale();
+    mySale.cadastralPlan = this.catastralPlan;
+    mySale.registryStudy = this.registryStudy;
     return {
       ...new Property(),
       id: this.propertyForm.get(['id'])!.value,
@@ -223,15 +226,15 @@ export class PropertyUpdateComponent implements OnInit {
       discount: this.propertyForm.get(['discount'])!.value,
       landSquareMeters: this.propertyForm.get(['landSquareMeters'])!.value,
       areaSquareMeters: this.propertyForm.get(['areaSquareMeters'])!.value,
-      latitude: this.propertyForm.get(['latitude'])!.value,
-      longitude: this.propertyForm.get(['longitude'])!.value,
-      zoom: this.propertyForm.get(['zoom'])!.value,
+      latitude: this.lat,
+      longitude: this.lng,
+      zoom: this.zoom,
       addressText: this.propertyForm.get(['addressText'])!.value,
-      finalDate: this.propertyForm.get(['finalDate'])!.value
+      creationDate: this.propertyForm.get(['finalDate'])!.value
         ? moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      state: this.propertyForm.get(['state'])!.value,
-      sale: this.propertyForm.get(['sale'])!.value,
+      state: 1,
+      sale: mySale,
       userAccount: this.propertyForm.get(['userAccount'])!.value,
       moneyType: this.propertyForm.get(['moneyType'])!.value,
       canton: this.propertyForm.get(['canton'])!.value,
@@ -259,15 +262,19 @@ export class PropertyUpdateComponent implements OnInit {
     return item.id;
   }
 
-  public setCantonsList(event: any): void {
+  public setCantonsList(provinceIndex: any): void {
+    let mypro: Province;
+    mypro = this.lstProvinces[provinceIndex];
+    this.lat = mypro.latitude;
+    (this.lng = 10), 4958;
     this.cantonService
-      .findByProvince(event.target.data.id)
+      .findByProvince(provinceIndex)
       .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
     this.isSelected = true;
   }
 
   public onSelectImage(event: any): void {
-    if (this.files && this.files.length >= 1) {
+    if (this.files && this.files.length >= 5) {
       this.onRemoveImage(this.files[0]);
     }
 
@@ -290,12 +297,15 @@ export class PropertyUpdateComponent implements OnInit {
       }
     );
   }
+
   public onFileSelected(event: any, opc: number): void {
     this.getBase64(event.target.files[0]).then((base64: string) => {
       if (opc === 1) {
+        this.catastralPlan = base64;
         const file = document.getElementById('urlfile');
         file?.setAttribute('src', base64);
       } else {
+        this.registryStudy = base64;
         const file2 = document.getElementById('urlfile');
         file2?.setAttribute('src', base64);
       }

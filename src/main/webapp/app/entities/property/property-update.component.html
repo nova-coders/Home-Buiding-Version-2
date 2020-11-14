@@ -21,7 +21,7 @@
                         <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
                         <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
                             <option [ngValue]="null"></option>
-                            <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of lstMoneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
+                            <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of lstMoneytypes; trackBy: trackById">{{ moneyTypeOption.name }}</option>
                         </select>
 
                         <label class="form-control-label"  for="field_discount">Descuento</label>
@@ -31,7 +31,7 @@
                         <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
                         <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
                             <option [ngValue]="null"></option>
-                            <option [ngValue]="propertyCategoryOption.id === propertyForm.get('propertyCategory')!.value?.id ? propertyForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of lstPropertyCategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
+                            <option [ngValue]="propertyCategoryOption.id === propertyForm.get('propertyCategory')!.value?.id ? propertyForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of lstPropertyCategories; trackBy: trackById">{{ propertyCategoryOption.name }}</option>
                         </select>
                         <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
                         <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
@@ -70,7 +70,8 @@
                         <label class="form-control-label" id="inputGroupFileAddon01">Plano catastrado</label>
                         <div class="custom-file">
                             <input type="file" class="btn btn-primary custom-file-input" id="inputGroupFile01"
-                                   aria-describedby="inputGroupFileAddon01" (change)="onFileSelected($event,1)">
+                                   aria-describedby="inputGroupFileAddon01" (change)="onFileSelected($event,1)" name="cadastralPlan"
+                            formControlName="cadastralPlan">
                             <label class="custom-file-label" for="inputGroupFile01">Suba su archivo</label>
                         </div>
                         <iframe src="https://res.cloudinary.com/dsx9svdes/image/upload/v1604871406/property_files/Home_building_c2okhi.pdf" height="200" width="300" title="Iframe Example" class="mt-5"></iframe>
@@ -80,7 +81,8 @@
                         <label class="form-control-label" id="inputGroupFileAddon02">Estudio registral</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input primary" id="inputGroupFile02"
-                                   aria-describedby="inputGroupFileAddon02" (change)="onFileSelected($event,2)">
+                                   aria-describedby="inputGroupFileAddon02" (change)="onFileSelected($event,2)" name="registryStudy"
+                            formControlName="registryStudy">
                             <label class="custom-file-label" for="inputGroupFile02">Suba su archivo</label>
                         </div>
                         <iframe src="https://res.cloudinary.com/dsx9svdes/image/upload/v1604871406/property_files/Home_building_c2okhi.pdf" height="200" width="300" title="Iframe Example" class="mt-5"></iframe>
@@ -95,8 +97,7 @@
                 <div class="row">
                     <div class="col">
                         <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
-                        <select class="form-control" id="field_Category_Image" name="category" formControlName="category_Image">
-                            <option [ngValue]="null"></option>
+                        <select class="form-control" id="field_Category_Image" name="category_Image" formControlName="category_Image">
                             <option [ngValue]="null"></option>
                         </select>
                     </div>
@@ -104,21 +105,29 @@
                 </div>
                 <div class="row">
                     <div class="col">
-
-                    </div>
-
+                        <ngx-dropzone (change)="onSelectImage($event)"  class="mt-5 mb-5" [multiple]="true" [accept]="'image/*'">
+                            <ngx-dropzone-label>Suba las imágenes de su inmueble con el tipo seleccionado</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview
+                                ngProjectAs="ngx-dropzone-preview"
+                                *ngFor="let f of files"
+                                [file]="f"
+                                [removable]="true"
+                                (removed)="onRemoveImage(f)">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                        </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label class="form-control-label" for="field_Province" [(ngModel)]="provinceIndex"
-                               (change)="setCantonsList($event)">Provincia</label>
-                        <select class="form-control" id="field_Province" name="category" formControlName="province">
+                        <label class="form-control-label" for="field_Province" >Provincia</label>
+                        <select class="form-control" id="field_Province" name="province" formControlName="province"
+                                (change)="setCantonsList(provinceIndex.value)" #provinceIndex>
                             <option [ngValue]="null"></option>
-                            <option *ngFor="let province of lstProvinces;" [value]="province.id">{{ province.name}}</option>
-                        </select>
+                            <option *ngFor="let province of lstProvinces;index as i" [value]="i">{{ province.name}}</option>
+                        </select>v
                     </div>
                     <div class="col">
-                        <label class="form-control-label"  for="field_canton" [(ngModel)]="cantonIndex">Canton</label>
+                        <label class="form-control-label"  for="field_canton" [(ngModel)]="cantonIndex">Cantón</label>
                         <select class="form-control" id="field_canton" name="canton" formControlName="canton" *ngIf="isSelected==true">
                             <option [ngValue]="null"></option>
                             <option  *ngFor="let cantonOption of lstCantons; index as c" value="{{c}}">{{ cantonOption.name }}</option>
