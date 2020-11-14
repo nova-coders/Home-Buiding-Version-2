@@ -41,6 +41,12 @@ public class DocumentResourceIT {
     private static final Boolean DEFAULT_STATE = false;
     private static final Boolean UPDATED_STATE = true;
 
+    private static final Boolean DEFAULT_BUYER_STATE = false;
+    private static final Boolean UPDATED_BUYER_STATE = true;
+
+    private static final Boolean DEFAULT_SELLER_STATE = false;
+    private static final Boolean UPDATED_SELLER_STATE = true;
+
     private static final ZonedDateTime DEFAULT_CREATION_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_CREATION_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
@@ -65,6 +71,8 @@ public class DocumentResourceIT {
         Document document = new Document()
             .base64Code(DEFAULT_BASE_64_CODE)
             .state(DEFAULT_STATE)
+            .buyerState(DEFAULT_BUYER_STATE)
+            .sellerState(DEFAULT_SELLER_STATE)
             .creationDate(DEFAULT_CREATION_DATE);
         return document;
     }
@@ -78,6 +86,8 @@ public class DocumentResourceIT {
         Document document = new Document()
             .base64Code(UPDATED_BASE_64_CODE)
             .state(UPDATED_STATE)
+            .buyerState(UPDATED_BUYER_STATE)
+            .sellerState(UPDATED_SELLER_STATE)
             .creationDate(UPDATED_CREATION_DATE);
         return document;
     }
@@ -103,6 +113,8 @@ public class DocumentResourceIT {
         Document testDocument = documentList.get(documentList.size() - 1);
         assertThat(testDocument.getBase64Code()).isEqualTo(DEFAULT_BASE_64_CODE);
         assertThat(testDocument.isState()).isEqualTo(DEFAULT_STATE);
+        assertThat(testDocument.isBuyerState()).isEqualTo(DEFAULT_BUYER_STATE);
+        assertThat(testDocument.isSellerState()).isEqualTo(DEFAULT_SELLER_STATE);
         assertThat(testDocument.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
@@ -139,6 +151,8 @@ public class DocumentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(document.getId().intValue())))
             .andExpect(jsonPath("$.[*].base64Code").value(hasItem(DEFAULT_BASE_64_CODE.toString())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
+            .andExpect(jsonPath("$.[*].buyerState").value(hasItem(DEFAULT_BUYER_STATE.booleanValue())))
+            .andExpect(jsonPath("$.[*].sellerState").value(hasItem(DEFAULT_SELLER_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
     
@@ -155,6 +169,8 @@ public class DocumentResourceIT {
             .andExpect(jsonPath("$.id").value(document.getId().intValue()))
             .andExpect(jsonPath("$.base64Code").value(DEFAULT_BASE_64_CODE.toString()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
+            .andExpect(jsonPath("$.buyerState").value(DEFAULT_BUYER_STATE.booleanValue()))
+            .andExpect(jsonPath("$.sellerState").value(DEFAULT_SELLER_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
     @Test
@@ -180,6 +196,8 @@ public class DocumentResourceIT {
         updatedDocument
             .base64Code(UPDATED_BASE_64_CODE)
             .state(UPDATED_STATE)
+            .buyerState(UPDATED_BUYER_STATE)
+            .sellerState(UPDATED_SELLER_STATE)
             .creationDate(UPDATED_CREATION_DATE);
 
         restDocumentMockMvc.perform(put("/api/documents")
@@ -193,6 +211,8 @@ public class DocumentResourceIT {
         Document testDocument = documentList.get(documentList.size() - 1);
         assertThat(testDocument.getBase64Code()).isEqualTo(UPDATED_BASE_64_CODE);
         assertThat(testDocument.isState()).isEqualTo(UPDATED_STATE);
+        assertThat(testDocument.isBuyerState()).isEqualTo(UPDATED_BUYER_STATE);
+        assertThat(testDocument.isSellerState()).isEqualTo(UPDATED_SELLER_STATE);
         assertThat(testDocument.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 

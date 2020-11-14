@@ -31,6 +31,8 @@ export class DocumentUpdateComponent implements OnInit {
     id: [],
     base64Code: [],
     state: [],
+    buyerState: [],
+    sellerState: [],
     creationDate: [],
     seller: [],
     buyer: [],
@@ -67,6 +69,8 @@ export class DocumentUpdateComponent implements OnInit {
       id: document.id,
       base64Code: document.base64Code,
       state: document.state,
+      buyerState: document.buyerState,
+      sellerState: document.sellerState,
       creationDate: document.creationDate ? document.creationDate.format(DATE_TIME_FORMAT) : null,
       seller: document.seller,
       buyer: document.buyer,
@@ -110,6 +114,8 @@ export class DocumentUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       base64Code: this.editForm.get(['base64Code'])!.value,
       state: this.editForm.get(['state'])!.value,
+      buyerState: this.editForm.get(['buyerState'])!.value,
+      sellerState: this.editForm.get(['sellerState'])!.value,
       creationDate: this.editForm.get(['creationDate'])!.value
         ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
