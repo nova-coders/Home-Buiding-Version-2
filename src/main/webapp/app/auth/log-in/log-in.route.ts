@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 import { LogInComponent } from './log-in.component';
 
 export const loginRoute: Route = {
-  path: 'log-in',
+  path: 'login',
   component: LogInComponent,
   data: {
     authorities: [],

@@ -14,10 +14,9 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { PropertyBlockComponent } from './html-components/property-block/property-block.component';
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { NgxPayPalModule } from 'ngx-paypal';
-import { PropertyBlockComponent } from './html-components/property-block/property-block.component';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -37,7 +36,7 @@ import { PropertyBlockComponent } from './html-components/property-block/propert
     ActiveMenuDirective,
     FooterComponent,
     PropertyBlockComponent,
-    ServicePaymentComponent
+    ServicePaymentComponent,
   ],
   bootstrap: [MainComponent],
 })
