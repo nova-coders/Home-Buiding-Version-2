@@ -25,6 +25,8 @@
                     <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.base64Code">Base 64 Code</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.state">State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.buyerState">Buyer State</span></th>
+                    <th scope="col" ><span jhiTranslate="homeBuildingApp.document.sellerState">Seller State</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.creationDate">Creation Date</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.seller">Seller</span></th>
                     <th scope="col" ><span jhiTranslate="homeBuildingApp.document.buyer">Buyer</span></th>
@@ -37,6 +39,8 @@
                     <td><a [routerLink]="['/document', document.id, 'view']">{{ document.id }}</a></td>
                     <td>{{ document.base64Code }}</td>
                     <td>{{ document.state }}</td>
+                    <td>{{ document.buyerState }}</td>
+                    <td>{{ document.sellerState }}</td>
                     <td>{{ document.creationDate | date:'medium' }}</td>
                     <td>
                         <div *ngIf="document.seller">

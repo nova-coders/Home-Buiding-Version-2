@@ -51,6 +51,19 @@
 
 <!--In this section we display and set the signature elements-->
 <div>
+    <!--Section of the labels-->
+    <div class="row pt-3">
+        <div class="col-6 CheckFirma d-flex justify-content-center">
+            <div>
+                <label for="signatureSeller">Firma dueño</label>
+            </div>
+        </div>
+        <div class="col-6 CheckFirma d-flex justify-content-center">
+            <div>
+                <label for="signatureBuyer">Firma Comprador</label>
+            </div>
+        </div>
+    </div>
     <!--Section of the signature pictures-->
     <div class="row p-3">
         <div class="col-6 d-flex justify-content-center">
@@ -72,33 +85,20 @@
             </div>
         </div>
     </div>
-    <!--Section of the labels-->
-    <div class="row pt-3">
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
-                <label for="signatureSeller">Firma dueño</label>
-            </div>
-        </div>
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
-                <label for="signatureBuyer">Firma Comprador</label>
-            </div>
-        </div>
-    </div>
     <!--Section of the toogles-->
     <div class="row p-3">
         <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
+            <div *ngIf="toogleUser">
                 <label class="switch">
-                    <input id="signatureSeller" name="signatureSeller" type="checkbox" checked="{{this.checkSeller}}">
+                    <input id="signatureSeller" name="signatureSeller" type="checkbox" checked="{{this.checkSeller}}" (change)="checkChange(signatureSeller)" #signatureSeller>
                     <span class="slider round"></span>
                 </label>
             </div>
         </div>
         <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
+            <div  *ngIf="!toogleUser">
                 <label class="switch">
-                    <input id="signatureBuyer" name="signatureBuyer" type="checkbox" checked="{{this.checkBuyer}}">
+                    <input id="signatureBuyer" name="signatureBuyer" type="checkbox"  checked="{{this.checkBuyer}}" (change)="checkChange(signatureBuyer)" #signatureBuyer>
                     <span class="slider round"></span>
                 </label>
             </div>

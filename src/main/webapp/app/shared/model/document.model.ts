@@ -6,6 +6,8 @@ export interface IDocument {
   id?: number;
   base64Code?: any;
   state?: boolean;
+  buyerState?: boolean;
+  sellerState?: boolean;
   creationDate?: Moment;
   seller?: IUserAccount;
   buyer?: IUserAccount;
@@ -17,11 +19,15 @@ export class Document implements IDocument {
     public id?: number,
     public base64Code?: any,
     public state?: boolean,
+    public buyerState?: boolean,
+    public sellerState?: boolean,
     public creationDate?: Moment,
     public seller?: IUserAccount,
     public buyer?: IUserAccount,
     public property?: IProperty
   ) {
     this.state = this.state || false;
+    this.buyerState = this.buyerState || false;
+    this.sellerState = this.sellerState || false;
   }
 }

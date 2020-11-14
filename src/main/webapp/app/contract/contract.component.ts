@@ -3,7 +3,7 @@ import { UserAccount } from 'app/shared/model/user-account.model';
 import { ActivatedRoute } from '@angular/router';
 import { Document } from 'app/shared/model/document.model';
 import { DocumentService } from 'app/entities/document/document.service';
-import { UserAccountService } from 'app/entities/user-account/user-account.service';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 
 @Component({
   selector: 'jhi-contract',
@@ -15,13 +15,15 @@ export class ContractComponent implements OnInit {
   public rentContract = true;
   public contractId: number | null = 0;
 
-  public seller = new UserAccount();
-  public buyer = new UserAccount();
+  public loggedUserAccount = new UserAccount();
   public contract = new Document();
 
   /*Checks for the signature*/
   public checkSeller = '';
   public checkBuyer = '';
+
+  /*Boolean values that disable or enable the toogles that user needs to sign the document.*/
+  public toogleUser = false;
 
   /*Hold the picture of the signature for each user*/
   public sellerSignaturePicture =
@@ -32,25 +34,45 @@ export class ContractComponent implements OnInit {
   constructor(
     private activeRouter: ActivatedRoute,
     private documentService: DocumentService,
-    private userAccountService: UserAccountService
+    private servicePaymentService: ServicePaymentService
   ) {}
 
   ngOnInit(): void {
     this.contractId = Number(this.activeRouter.snapshot.paramMap.get('id'));
+    this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
+      let userAccount: UserAccount;
+      userAccount = <UserAccount>puserAccount.body;
+      this.loggedUserAccount = userAccount;
+      console.log('LOGED USER ACCOUNT');
+      console.log(<UserAccount>this.loggedUserAccount);
+    });
     this.documentService.find(this.contractId).subscribe(data => {
       this.contract = <Document>data.body;
       console.log('This is the contract data.');
       console.log(<Document>this.contract);
-      /*this.userAccountService.find(Number(this.contract.buyerUserId)).subscribe(dataU =>{
-         this.seller = <UserAccount>dataU.body;
-         console.log('This is the seller of the contract.');
-         console.log(<UserAccount>this.seller);
-         this.userAccountService.find(Number(this.contract.sellerUserId)).subscribe(dataU =>{
-           this.buyer = <UserAccount>dataU.body;
-           console.log('This is the buyer of the contract data.');
-           console.log(<UserAccount>this.seller);
-         });
-       });*/
+      if (<Document>this.contract.buyerState == true) {
+        this.checkBuyer = 'checked';
+      }
+      if (<Document>this.contract.sellerState == true) {
+        this.checkSeller = 'checked';
+      }
+      this.putUsersValuesOnContract();
+      this.sellerSignaturePicture = this.contract.seller?.signaturePicture;
+      this.BuyerSignaturePicture = this.contract.buyer?.signaturePicture;
     });
+  }
+
+  putUsersValuesOnContract(): void {
+    if (String(this.contract.seller?.id) === String(this.loggedUserAccount.id)) {
+      this.toogleUser = true;
+    }
+    console.log(this.toogleUser);
+  }
+
+  checkChange(element: HTMLInputElement): void {
+    let response = confirm('Are you the boss?');
+    if (!response) {
+      element.checked = !element.checked;
+    }
   }
 }

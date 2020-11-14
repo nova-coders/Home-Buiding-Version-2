@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Document(0, 'AAAAAAA', false, currentDate);
+      elemDefault = new Document(0, 'AAAAAAA', false, false, false, currentDate);
     });
 
     describe('Service methods', () => {
@@ -71,6 +71,8 @@ describe('Service Tests', () => {
           {
             base64Code: 'BBBBBB',
             state: true,
+            buyerState: true,
+            sellerState: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
@@ -95,6 +97,8 @@ describe('Service Tests', () => {
           {
             base64Code: 'BBBBBB',
             state: true,
+            buyerState: true,
+            sellerState: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
