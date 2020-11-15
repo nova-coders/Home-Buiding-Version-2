@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,9 +27,9 @@ public class SeeAuctionController {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the List<Offer>, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/by-sale/{saleid}")
-    public List<Offer> getBySale(@PathVariable int saleid) {
-        return this.seeAuctionService.findBySale(saleid);
+    @GetMapping("/offerby-sale/{saleid}")
+    public List<Offer> findOfferBySale(@PathVariable int saleid) {
+        return this.seeAuctionService.findOfferBySale(saleid);
     }
 
     /**
@@ -37,8 +39,8 @@ public class SeeAuctionController {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the List<Offer>, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/closeauction/{propertyid}")
-    public Property closeAuction(@PathVariable int propertyid) {
-        return this.seeAuctionService.closeAuction(propertyid);
+    public String closeAuction(@PathVariable int propertyid) {
+        String idDocument = this.seeAuctionService.closeAuction(propertyid);
+        return idDocument;
     }
-
 }

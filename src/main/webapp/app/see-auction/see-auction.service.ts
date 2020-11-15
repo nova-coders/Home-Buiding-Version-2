@@ -10,9 +10,9 @@ export class SeeAuctionService {
   constructor(private httpClient: HttpClient) {}
 
   public geByOffersBySale(idsale: number): Observable<any> {
-    return this.httpClient.get(`${this.resourceUrl}/by-sale/${idsale}`);
+    return this.httpClient.get(`${this.resourceUrl}/offerby-sale/${idsale}`);
   }
-  public closeAuction(idproperty: number): Observable<any> {
+  public auctionToCloseState(idproperty: number): Observable<any> {
     return this.httpClient.get(`${this.resourceUrl}/closeauction/${idproperty}`);
   }
 }
