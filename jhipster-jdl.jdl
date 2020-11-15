@@ -2,6 +2,14 @@ enum IdentificationType {
 	Nacional,
     Extranjera
 }
+
+enum NotificationType {
+    Subasta,
+    Alquiler,
+    Soporte,
+    Sistema
+}
+
 entity MoneyType {
     Id Integer,
     Icon String,
@@ -64,10 +72,10 @@ entity Province {
 
 entity Document {
   Id Integer ,
-  Url String,
-  SellerUserId Integer,
-  BuyerUserId Integer,
+  Base64Code TextBlob,
   State Boolean,
+  BuyerState Boolean,
+  SellerState Boolean,
   CreationDate ZonedDateTime
 }
 
@@ -130,11 +138,11 @@ entity ImageCategory {
 entity Sale {
   Id Integer,
   FinalDate ZonedDateTime,
-  CadastralPlan String,
-  RegistryStudy String,
+  CadastralPlan TextBlob,
+  RegistryStudy TextBlob,
   PropertyId Integer
 }
-
+ambio de JDL sale
 entity Rent {
   Id Integer,
   Deposit Integer
@@ -156,6 +164,15 @@ entity Role {
   CreationDate ZonedDateTime
 }
 
+entity Notification {
+ Id Integer,
+ Title String,
+ Message String,
+ State Boolean,
+ Type NotificationType,
+ CreationDate ZonedDateTime
+}
+
 relationship OneToMany{
 	UserAccount to Property
     UserAccount to Offer
@@ -164,6 +181,9 @@ relationship OneToMany{
     UserAccount{clientTickets} to SupportTicket{signOffUser}
     UserAccount{ownedDocuments} to Document{Seller}
     UserAccount{purchasedDocuments} to Document{Buyer}
+    UserAccount{sentNotifications} to Notification{transmitter}
+    UserAccount{receivedNotifications} to Notification{receptor}
+
     PublishingPackage to UserAccount
     Role to UserAccount
 

@@ -6,9 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { ISale, Sale } from 'app/shared/model/sale.model';
 import { SaleService } from './sale.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 
 @Component({
   selector: 'jhi-sale-update',
@@ -25,7 +27,13 @@ export class SaleUpdateComponent implements OnInit {
     propertyId: [],
   });
 
-  constructor(protected saleService: SaleService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected saleService: SaleService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ sale }) => {
@@ -45,6 +53,22 @@ export class SaleUpdateComponent implements OnInit {
       cadastralPlan: sale.cadastralPlan,
       registryStudy: sale.registryStudy,
       propertyId: sale.propertyId,
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  setFileData(event: any, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('homeBuildingApp.error', { ...err, key: 'error.file.' + err.key })
+      );
     });
   }
 

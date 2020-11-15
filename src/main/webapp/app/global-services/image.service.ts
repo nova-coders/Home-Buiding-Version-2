@@ -22,9 +22,9 @@ export class ImageService {
   public uploadImages(file: File): Observable<any> {
     const data = new FormData();
     data.append('file', file);
-    data.append('upload_preset', UPLOAD_RESET1);
+    data.append('upload_preset', UPLOAD_RESET);
     data.append('cloud_name', CLOUD_NAME);
-    console.log(this.httpClient.post(CLOUDINARY_URL + CLOUD_NAME + '/image/upload', data));
+
     return this.httpClient.post(CLOUDINARY_URL + CLOUD_NAME + '/image/upload', data);
   }
 }
