@@ -1,0 +1,108 @@
+<!--Contract, here we decide which of the two types of contracts will display.-->
+<div id="TitleContract" class="border rounded p-3">
+    <h2>HomeBuilding - Terminos del contrato</h2>
+    <div *ngIf="rentContract">
+        <H3 class="contractText">Contrato de alquiler</H3>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div *ngIf="salesContract">
+        <H3 class="contractText">Contrato de venta</H3>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+</div>
+
+<!--In this section we display and set the signature elements-->
+<div>
+    <!--Section of the labels-->
+    <div class="row pt-3">
+        <div class="col-6 CheckFirma d-flex justify-content-center">
+            <div>
+                <label for="signatureSeller">Firma dueño</label>
+            </div>
+        </div>
+        <div class="col-6 CheckFirma d-flex justify-content-center">
+            <div>
+                <label for="signatureBuyer">Firma Comprador</label>
+            </div>
+        </div>
+    </div>
+    <!--Section of the signature pictures-->
+    <div class="row p-3">
+        <div class="col-6 d-flex justify-content-center">
+            <div class="form-group">
+                <div>
+                    <img src="{{this.sellerSignaturePicture}}" id="signaturePictureSeller" name="signaturePictureSeller" class="border"
+                         width="100%"
+                         height="auto">
+                </div>
+            </div>
+        </div>
+        <div class="col-6 d-flex justify-content-center">
+            <div class="form-group">
+                <div>
+                    <img src="{{this.BuyerSignaturePicture}}" id="signaturePictureBuyer" name="signaturePictureBuyer" class="border"
+                         width="100%"
+                         height="auto">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Section of the toogles-->
+    <div class="row p-3">
+        <div class="col-6 CheckFirma d-flex justify-content-center">
+            <div *ngIf="toogleUser">
+                <label class="switch">
+                    <input id="signatureSeller" name="signatureSeller" type="checkbox" checked="{{this.checkSeller}}" (change)="checkChange(signatureSeller)" #signatureSeller>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="col-6 CheckFirma d-flex justify-content-center">
+            <div  *ngIf="!toogleUser">
+                <label class="switch">
+                    <input id="signatureBuyer" name="signatureBuyer" type="checkbox"  checked="{{this.checkBuyer}}" (change)="checkChange(signatureBuyer)" #signatureBuyer>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+

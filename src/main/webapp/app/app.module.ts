@@ -20,6 +20,7 @@ import { AgmCoreModule } from '@agm/core';
 
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { ContractComponent } from './contract/contract.component';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ActiveMenuDirective,
     FooterComponent,
     ServicePaymentComponent,
+    ContractComponent,
   ],
   bootstrap: [MainComponent],
 })

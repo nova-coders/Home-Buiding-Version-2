@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="notification">
+            <h2><span jhiTranslate="homeBuildingApp.notification.detail.title">Notification</span> {{ notification.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homeBuildingApp.notification.title">Title</span></dt>
+                <dd>
+                    <span>{{ notification.title }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.notification.message">Message</span></dt>
+                <dd>
+                    <span>{{ notification.message }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.notification.state">State</span></dt>
+                <dd>
+                    <span>{{ notification.state }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.notification.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'homeBuildingApp.NotificationType.' + notification.type }}">{{ notification.type }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.notification.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ notification.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.notification.transmitter">Transmitter</span></dt>
+                <dd>
+                    <div *ngIf="notification.transmitter">
+                        <a [routerLink]="['/user-account', notification.transmitter?.id, 'view']">{{ notification.transmitter?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="homeBuildingApp.notification.receptor">Receptor</span></dt>
+                <dd>
+                    <div *ngIf="notification.receptor">
+                        <a [routerLink]="['/user-account', notification.receptor?.id, 'view']">{{ notification.receptor?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/notification', notification.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

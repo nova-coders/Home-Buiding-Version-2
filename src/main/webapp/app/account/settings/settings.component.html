@@ -1,108 +1,213 @@
 <div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2 jhiTranslate="settings.title" [translateValues]="{ username: account.login }" *ngIf="account">User settings for [<b>{{ account.login }}</b>]</h2>
+            <form name="form" role="form" [formGroup]="settingsForm" *ngIf="!success">
+                <div class="card">
 
-            <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
-                <strong>Settings saved!</strong>
-            </div>
-
-            <jhi-alert-error></jhi-alert-error>
-
-            <form name="form" role="form" (ngSubmit)="save()" [formGroup]="settingsForm" *ngIf="account" novalidate>
-                <div class="form-group">
-                    <label class="form-control-label" for="firstName" jhiTranslate="settings.form.firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="{{ 'settings.form.firstname.placeholder' | translate }}"
-                           formControlName="firstName">
-
-                    <div *ngIf="settingsForm.get('firstName')!.invalid && (settingsForm.get('firstName')!.dirty || settingsForm.get('firstName')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('firstName')?.errors?.required"
-                               jhiTranslate="settings.messages.validate.firstname.required">
-                            Your first name is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('firstName')?.errors?.minlength"
-                               jhiTranslate="settings.messages.validate.firstname.minlength">
-                            Your first name is required to be at least 1 character.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('firstName')?.errors?.maxlength"
-                               jhiTranslate="settings.messages.validate.firstname.maxlength">
-                            Your first name cannot be longer than 50 characters.
-                        </small>
+                    <div class="card-header">
+                        <h2 class="card-title">Datos de la cuenta: {{completeName}}</h2>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="lastName" jhiTranslate="settings.form.lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="{{ 'settings.form.lastname.placeholder' | translate }}"
-                           formControlName="lastName">
+                    <div class="card-body">
 
-                    <div *ngIf="settingsForm.get('lastName')!.invalid && (settingsForm.get('lastName')!.dirty || settingsForm.get('lastName')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('lastName')?.errors?.required"
-                               jhiTranslate="settings.messages.validate.lastname.required">
-                            Your last name is required.
-                        </small>
+                        <div class="container col-6 mb-3 p-0" (click)="toogleNGX()">
+                            <img src="{{userAccount.profilePicture}}" alt="Foto de Perfil"
+                                 class="image rounded img-thumbnail mb-3">
+                            <div class="overlay rounded">
+                                <div class="text">Cambiar imagen</div>
+                            </div>
+                        </div>
 
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('lastName')?.errors?.minlength"
-                               jhiTranslate="settings.messages.validate.lastname.minlength">
-                            Your last name is required to be at least 1 character.
-                        </small>
+                        <div style="display: none" class="row pb-3" id="ngxPicture">
+                            <div class="col-12">
+                                <label>Foto de perfil</label>
+                                <ngx-dropzone (change)="onSelectImage($event)" class="m-1" [multiple]="false"
+                                              [accept]="'image/*'">
+                                    <ngx-dropzone-label>Suba la nueva foto de perfil</ngx-dropzone-label>
+                                    <ngx-dropzone-image-preview
+                                        ngProjectAs="ngx-dropzone-preview"
+                                        *ngFor="let f of files"
+                                        [file]="f"
+                                        [removable]="true"
+                                        (removed)="onRemoveImage(f)">
+                                    </ngx-dropzone-image-preview>
+                                </ngx-dropzone>
+                            </div>
+                        </div>
 
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('lastName')?.errors?.maxlength"
-                               jhiTranslate="settings.messages.validate.lastname.maxlength">
-                            Your last name cannot be longer than 50 characters.
-                        </small>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="birthdate"
+                                           jhiTranslate="global.form.birthdate.label">Birth date</label>
+                                    <input [ngModel]="userAccount.birthdate | date:'yyyy-MM-dd'" type="date"
+                                           class="form-control" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD"
+                                           formControlName="birthdate" #birthdate>
+                                </div>
+
+                                <div
+                                    *ngIf="settingsForm.get('birthdate')!.invalid && (settingsForm.get('birthdate')!.dirty || settingsForm.get('birthdate')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('birthdate')?.errors?.required">
+                                        La fecha de nacimiento es requerido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="email"
+                                           jhiTranslate="global.form.email.label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                           placeholder="{{ 'global.form.email.placeholder' | translate }}"
+                                           formControlName="email">
+
+                                    <div
+                                        *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
+                                        <small class="form-text text-danger"
+                                               *ngIf="settingsForm.get('email')?.errors?.required"
+                                               jhiTranslate="global.messages.validate.email.required">
+                                            Your email is required.
+                                        </small>
+
+                                        <small class="form-text text-danger"
+                                               *ngIf="settingsForm.get('email')?.errors?.invalid"
+                                               jhiTranslate="global.messages.validate.email.invalid">
+                                            Your email is invalid.
+                                        </small>
+
+                                        <small class="form-text text-danger"
+                                               *ngIf="settingsForm.get('email')?.errors?.minlength"
+                                               jhiTranslate="global.messages.validate.email.minlength">
+                                            Your email is required to be at least 5 characters.
+                                        </small>
+
+                                        <small class="form-text text-danger"
+                                               *ngIf="settingsForm.get('email')?.errors?.maxlength"
+                                               jhiTranslate="global.messages.validate.email.maxlength">
+                                            Your email cannot be longer than 100 characters.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="firstName">Nombre</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName"
+                                           formControlName="firstName" #firstName>
+                                </div>
+
+                                <div
+                                    *ngIf="settingsForm.get('firstName')!.invalid && (settingsForm.get('firstName')!.dirty || settingsForm.get('firstName')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('firstName')?.errors?.required">
+                                        El nombre es requerido.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="lastName">Apellido</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName"
+                                           formControlName="lastName" #lastName>
+                                </div>
+
+                                <div
+                                    *ngIf="settingsForm.get('lastName')!.invalid && (settingsForm.get('lastName')!.dirty || settingsForm.get('lastName')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('lastName')?.errors?.required">
+                                        El apellido es requerido.
+                                    </small>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="phone">Telefono</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                           formControlName="phone" #phone>
+                                </div>
+
+                                <div
+                                    *ngIf="settingsForm.get('phone')!.invalid && (settingsForm.get('phone')!.dirty || settingsForm.get('phone')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="settingsForm.get('phone')?.errors?.required">
+                                        El Telefono es requerido.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="this.updateSignature==false">
+                            <div class="col-md-12 p-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="firma">Firma</label>
+                                    <div>
+                                        <img src="{{this.signatureImageUrl}}" id="firma" class="border" width="100%"
+                                             height="60%">
+                                        <button class="btn btn-primary mt-3 btn-sm" (click)="toUpdateSignature()">
+                                            Actualizar Firma
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="this.updateSignature">
+                            <div class="col-12">
+                                <label for="signatureImageUrl">Firma</label>
+                                <ng-signature-pad id="signatureImageUrl" clearButtonText='Limpiar'
+                                                  doneButtonText='Guardar firma'
+                                                  [emitOnDragEnd]="false"
+                                                  (done)="saveSignatureImage($event)"></ng-signature-pad>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="email" jhiTranslate="global.form.email.label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="{{ 'global.form.email.placeholder' | translate }}"
-                           formControlName="email">
-
-                    <div *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('email')?.errors?.required"
-                               jhiTranslate="global.messages.validate.email.required">
-                            Your email is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('email')?.errors?.email"
-                               jhiTranslate="global.messages.validate.email.invalid">
-                            Your email is invalid.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('email')?.errors?.minlength"
-                               jhiTranslate="global.messages.validate.email.minlength">
-                            Your email is required to be at least 5 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="settingsForm.get('email')?.errors?.maxlength"
-                               jhiTranslate="global.messages.validate.email.maxlength">
-                            Your email cannot be longer than 100 characters.
-                        </small>
+                    <div class="card-footer text-right">
+                        <button (click)="updateUserAccount()" type="submit" class="btn btn-primary">Actualizar</button>
+                        <a class="btn btn-secondary">Cancelar</a>
                     </div>
-                </div>
 
-                <div class="form-group" *ngIf="languages && languages.length > 0">
-                    <label for="langKey" jhiTranslate="settings.form.language">Language</label>
-                    <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
-                        <option *ngFor="let language of languages" [value]="language">{{ language | findLanguageFromKey }}</option>
-                    </select>
                 </div>
-
-                <button type="submit" [disabled]="settingsForm.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
             </form>
+
+
         </div>
     </div>
+
+    <!--This section contains the messages that the user will see if there's some error or if the update success.-->
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="alert alert-success" *ngIf="success">
+                <strong>Informacion actualizada!</strong>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error">
+                <strong>Actualizacion fallida.</strong>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorUser">
+                <strong>Campo nombre no puede estar vacio.</strong>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorYounger">
+                <strong>Usuario menor de edad, revise la fecha de nacimiento.</strong>
+            </div>
+
+        </div>
+
+    </div>
 </div>
+

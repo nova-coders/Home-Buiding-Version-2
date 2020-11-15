@@ -31,6 +31,7 @@
   },
   "defaultProject": "home-building",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   }
 }

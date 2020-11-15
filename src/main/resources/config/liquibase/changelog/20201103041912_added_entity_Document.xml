@@ -16,16 +16,16 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="url" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="seller_user_id" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="buyer_user_id" type="integer">
+            <column name="base_64_code" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="state" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="buyer_state" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="seller_state" type="boolean">
                 <constraints nullable="true" />
             </column>
             <column name="creation_date" type="datetime">
@@ -64,10 +64,10 @@
                   separator=";"
                   tableName="document">
             <column name="id" type="numeric"/>
-            <column name="url" type="string"/>
-            <column name="seller_user_id" type="numeric"/>
-            <column name="buyer_user_id" type="numeric"/>
+            <column name="base_64_code" type="clob"/>
             <column name="state" type="boolean"/>
+            <column name="buyer_state" type="boolean"/>
+            <column name="seller_state" type="boolean"/>
             <column name="creation_date" type="datetime"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
