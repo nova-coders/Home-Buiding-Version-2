@@ -12,7 +12,7 @@ import { IProperty, Property } from 'app/shared/model/property.model';
 import { PropertyService } from './property.service';
 import { ISale, Sale } from 'app/shared/model/sale.model';
 import { SaleService } from 'app/entities/sale/sale.service';
-import { IUserAccount } from 'app/shared/model/user-account.model';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
 import { IMoneyType } from 'app/shared/model/money-type.model';
 import { MoneyTypeService } from 'app/entities/money-type/money-type.service';
@@ -24,6 +24,9 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { ProvinceService } from '../province/province.service';
 import { IProvince, Province } from '../../shared/model/province.model';
 import { ImageService } from '../../global-services/image.service';
+import { IImageCategory } from '../../shared/model/image-category.model';
+import { ImageCategoryService } from '../image-category/image-category.service';
+import { ServicePaymentService } from '../../service-payment/service-payment.service';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
@@ -34,19 +37,21 @@ export class PropertyUpdateComponent implements OnInit {
   step: any = 1;
   isSaving = false;
   isSelected = false;
+  isValidDate = false;
   sales: ISale[] = [];
   lstUserAccounts: IUserAccount[] = [];
   lstMoneytypes: IMoneyType[] = [];
   lstCantons: ICanton[] = [];
   lstProvinces: IProvince[] = [];
   lstPropertyCategories: IPropertyCategory[] = [];
+  lstImageCategory: IImageCategory[] = [];
   provinceIndex!: number;
   cantonIndex!: number;
   catastralPlan!: string;
   registryStudy!: string;
   zoom = 8;
-  lat: any;
-  lng: any;
+  lat = 9.9280694;
+  lng = -84.0907246;
   address!: string;
   private geoCoder: any;
   @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
@@ -55,27 +60,31 @@ export class PropertyUpdateComponent implements OnInit {
     componentRestrictions: { country: 'CR' },
   };
   files: File[];
-  fileUrl!: string;
+  fileUrl!: string[];
   error = false;
+  public userAccount = new UserAccount();
 
   propertyForm = this.fb.group({
     id: [],
-    title: ['', [Validators.required]],
-    description: ['', [Validators.required]],
-    price: ['', [Validators.required]],
-    discount: ['', [Validators.required]],
-    finalDate: ['', [Validators.required]],
-    landSquareMeters: ['', [Validators.required]],
-    areaSquareMeters: ['', [Validators.required]],
-    latitude: ['', [Validators.required]],
-    longitude: ['', [Validators.required]],
-    zoom: ['', [Validators.required]],
-    addressText: ['', [Validators.required]],
-    state: ['', [Validators.required]],
-    userAccount: ['', [Validators.required]],
-    moneyType: ['', [Validators.required]],
+    title: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]],
+    price: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    discount: [0],
+    finalDate: ['', [Validators.required, Validators.nullValidator]],
+    landSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    areaSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+    addressText: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    state: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    userAccount: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    moneyType: ['', [Validators.required, Validators.nullValidator]],
     canton: ['', [Validators.required]],
     propertyCategory: ['', [Validators.required]],
+    propertyId: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    cadastralPlan: ['', [Validators.required]],
+    registryStudy: ['', [Validators.required]],
+    propertyImages: ['', [Validators.required]],
+    category_Image: ['', [Validators.required]],
+    province: ['', [Validators.required, Validators.nullValidator]],
   });
 
   constructor(
@@ -85,12 +94,15 @@ export class PropertyUpdateComponent implements OnInit {
     protected moneyTypeService: MoneyTypeService,
     protected cantonService: CantonService,
     protected provinceService: ProvinceService,
+    protected imageCategoryService: ImageCategoryService,
     protected propertyCategoryService: PropertyCategoryService,
+    protected servicePaymentService: ServicePaymentService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private imageService: ImageService
   ) {
     this.files = [];
+    this.userAccount.publishingPackage = {} as UserAccount;
   }
 
   ngOnInit(): void {
@@ -122,6 +134,7 @@ export class PropertyUpdateComponent implements OnInit {
               .subscribe((concatRes: ISale[]) => (this.sales = concatRes));
           }
         });
+      this.imageCategoryService.query().subscribe((res: HttpResponse<IImageCategory[]>) => (this.lstImageCategory = res.body || []));
       this.provinceService.query().subscribe((res: HttpResponse<IProvince[]>) => (this.lstProvinces = res.body || []));
       this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.lstUserAccounts = res.body || []));
 
@@ -131,12 +144,18 @@ export class PropertyUpdateComponent implements OnInit {
         .query()
         .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
     });
+    this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
+      this.userAccount = userAccount.body;
+    });
+
     this.setCurrentLocation();
   }
 
   public handleAddressChange(address: any): void {
     this.lat = address.geometry.location.lat();
     this.lng = address.geometry.location.lng();
+    console.log(this.lat);
+    console.log(this.lng);
   }
   public setCurrentLocation(): void {
     if ('geolocation' in navigator) {
@@ -148,13 +167,13 @@ export class PropertyUpdateComponent implements OnInit {
     }
   }
   markerDragEnd($event: google.maps.MouseEvent): void {
-    this.lat = $event.latLng.lat;
-    this.lng = $event.latLng.lng;
+    this.lat = Number($event.latLng.lat);
+    this.lng = Number($event.latLng.lng);
     this.getAddress();
   }
 
   getAddress(): void {
-    this.geoCoder.geocode({ location: { lat: this.lat, lng: this.lng } }, (results: any, status: any) => {
+    this.geoCoder?.geocode({ location: { lat: this.lat, lng: this.lng } }, (results: any, status: any) => {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 12;
@@ -210,32 +229,41 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   next(): void {
-    this.step = this.step + 1;
+    if (!this.isFinalDate()) {
+      this.step = this.step + 1;
+      window.scrollTo(0, 0);
+    }
+  }
+
+  private isFinalDate(): boolean {
+    let date1 = moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT);
+    let difference = date1.diff(new Date(), 'days');
+    let days = this.userAccount!.publishingPackage!.cantDays;
+    // @ts-ignore
+    return (this.isValidDate = !(difference <= days && difference >= 0));
   }
 
   private createFromForm(): IProperty {
     let mySale = new Sale();
     mySale.cadastralPlan = this.catastralPlan;
     mySale.registryStudy = this.registryStudy;
+    mySale.propertyId = this.propertyForm.get(['propertyId'])!.value;
+    mySale.finalDate = this.propertyForm.get(['finaldate'])!.value;
     return {
       ...new Property(),
-      id: this.propertyForm.get(['id'])!.value,
       title: this.propertyForm.get(['title'])!.value,
       description: this.propertyForm.get(['description'])!.value,
       price: this.propertyForm.get(['price'])!.value,
       discount: this.propertyForm.get(['discount'])!.value,
       landSquareMeters: this.propertyForm.get(['landSquareMeters'])!.value,
       areaSquareMeters: this.propertyForm.get(['areaSquareMeters'])!.value,
-      latitude: this.lat,
-      longitude: this.lng,
+      latitude: String(this.lat),
+      longitude: String(this.lng),
       zoom: this.zoom,
       addressText: this.propertyForm.get(['addressText'])!.value,
-      creationDate: this.propertyForm.get(['finalDate'])!.value
-        ? moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      state: 1,
       sale: mySale,
-      userAccount: this.propertyForm.get(['userAccount'])!.value,
+      state: 1,
+      userAccount: this.userAccount,
       moneyType: this.propertyForm.get(['moneyType'])!.value,
       canton: this.propertyForm.get(['canton'])!.value,
       propertyCategory: this.propertyForm.get(['propertyCategory'])!.value,
@@ -265,8 +293,9 @@ export class PropertyUpdateComponent implements OnInit {
   public setCantonsList(provinceIndex: any): void {
     let mypro: Province;
     mypro = this.lstProvinces[provinceIndex];
-    this.lat = mypro.latitude;
-    (this.lng = 10), 4958;
+    this.lat = Number(mypro.latitude);
+    this.lng = Number(mypro.longitude);
+    this.getAddress();
     this.cantonService
       .findByProvince(provinceIndex)
       .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
@@ -279,6 +308,9 @@ export class PropertyUpdateComponent implements OnInit {
     }
 
     this.files.push(...event.addedFiles);
+    this.propertyForm.patchValue({
+      propertyImages: 'true',
+    });
   }
 
   public onRemoveImage(event: any): void {
@@ -286,27 +318,28 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   public uploadFile(): void {
-    this.files.push();
-    const fileData = this.files[0];
-    this.imageService.uploadFile(fileData).subscribe(
-      response => {
-        this.fileUrl = response.url;
-      },
-      () => {
-        this.error = true;
-      }
-    );
+    for (let index = 0; index < this.files.length; index++) {
+      const fileData = this.files;
+      this.imageService.uploadImages(fileData[index]).subscribe(
+        response => {
+          this.fileUrl[index] = String(response.url);
+        },
+        () => {
+          this.error = true;
+        }
+      );
+    }
   }
 
   public onFileSelected(event: any, opc: number): void {
     this.getBase64(event.target.files[0]).then((base64: string) => {
       if (opc === 1) {
         this.catastralPlan = base64;
-        const file = document.getElementById('urlfile');
+        const file = document.getElementById('urlCadastralPlan');
         file?.setAttribute('src', base64);
       } else {
         this.registryStudy = base64;
-        const file2 = document.getElementById('urlfile');
+        const file2 = document.getElementById('urlRegistryStudy');
         file2?.setAttribute('src', base64);
       }
     });

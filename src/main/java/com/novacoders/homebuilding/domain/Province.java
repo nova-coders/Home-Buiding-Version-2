@@ -28,10 +28,10 @@ public class Province implements Serializable {
     private String name;
 
     @Column(name = "latitude")
-    private Long latitude;
+    private String latitude;
 
     @Column(name = "longitude")
-    private Long longitude;
+    private String longitude;
 
     @Column(name = "state")
     private Boolean state;
@@ -65,29 +65,29 @@ public class Province implements Serializable {
         this.name = name;
     }
 
-    public Long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public Province latitude(Long latitude) {
+    public Province latitude(String latitude) {
         this.latitude = latitude;
         return this;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public Province longitude(Long longitude) {
+    public Province longitude(String longitude) {
         this.longitude = longitude;
         return this;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
@@ -165,8 +165,8 @@ public class Province implements Serializable {
         return "Province{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
+            ", latitude='" + getLatitude() + "'" +
+            ", longitude='" + getLongitude() + "'" +
             ", state='" + isState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
             "}";
