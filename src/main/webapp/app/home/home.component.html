@@ -8,6 +8,12 @@
 
         <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
 
+        <div *ngIf="isAuthenticated()">
+
+            <a class="btn btn-outline-info btn-sm mt-4 mb-4"  [routerLink]="['/see-auction',1]"> Ver subasta</a>
+
+        </div>
+
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
                 <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message"
