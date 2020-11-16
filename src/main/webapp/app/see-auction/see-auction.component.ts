@@ -9,7 +9,7 @@ import { NotificationService } from 'app/core/notification/notification.service'
 import { Notification } from 'app/shared/model/notification.model';
 import * as moment from 'moment';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
-import { PropertyImage } from 'app/shared/model/property-image.model';
+
 @Component({
   selector: 'jhi-see-auction',
   templateUrl: './see-auction.component.html',
