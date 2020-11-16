@@ -50,57 +50,40 @@
 </div>
 
 <!--In this section we display and set the signature elements-->
-<div>
-    <!--Section of the labels-->
-    <div class="row pt-3">
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
-                <label for="signatureSeller">Firma dueño</label>
+<div class="row">
+    <div class="col-3 float-left">
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" id="seller" type="checkbox" (change)="checkSellerSignature()" [disabled]="disabledSeller"
+                    [checked]="checkedSeller">
+                    <label class="custom-control-label font-weight-bold" for="seller">Firmar</label>
+                </div>
             </div>
-        </div>
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
-                <label for="signatureBuyer">Firma Comprador</label>
+            <div class="card-body text-center">
+                <img *ngIf="checkedSeller" style="width: 65%" src="{{sellerSignaturePicture}}">
+                <hr class="my-1">
+                <p>Firma del due&ntilde;o</p>
             </div>
         </div>
     </div>
-    <!--Section of the signature pictures-->
-    <div class="row p-3">
-        <div class="col-6 d-flex justify-content-center">
-            <div class="form-group">
-                <div>
-                    <img src="{{this.sellerSignaturePicture}}" id="signaturePictureSeller" name="signaturePictureSeller" class="border"
-                         width="100%"
-                         height="auto">
+
+    <div class="col-6"></div>
+
+    <div class="col-3 float-right">
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" id="buyer" type="checkbox" (change)="checkBuyerSignature()" [disabled]="disabledBuyer"
+                           [checked]="checkedBuyer">
+                    <label class="custom-control-label font-weight-bold" for="buyer">Firmar</label>
                 </div>
             </div>
-        </div>
-        <div class="col-6 d-flex justify-content-center">
-            <div class="form-group">
-                <div>
-                    <img src="{{this.BuyerSignaturePicture}}" id="signaturePictureBuyer" name="signaturePictureBuyer" class="border"
-                         width="100%"
-                         height="auto">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Section of the toogles-->
-    <div class="row p-3">
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div *ngIf="toogleUser">
-                <label class="switch">
-                    <input id="signatureSeller" name="signatureSeller" type="checkbox" checked="{{this.checkSeller}}" (change)="checkChange(signatureSeller)" #signatureSeller>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div  *ngIf="!toogleUser">
-                <label class="switch">
-                    <input id="signatureBuyer" name="signatureBuyer" type="checkbox"  checked="{{this.checkBuyer}}" (change)="checkChange(signatureBuyer)" #signatureBuyer>
-                    <span class="slider round"></span>
-                </label>
+            <div class="card-body text-center">
+                <img *ngIf="checkedBuyer" style="width: 65%"
+                     src="{{buyerSignaturePicture}}">
+                <hr class="my-1">
+                <p>Firma del comprador</p>
             </div>
         </div>
     </div>
