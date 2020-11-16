@@ -15,4 +15,7 @@ export class SeeAuctionService {
   public auctionToCloseState(idproperty: number): Observable<any> {
     return this.httpClient.get(`${this.resourceUrl}/closeauction/${idproperty}`);
   }
+  public getAuctionImgs(idproperty: number): Observable<any> {
+    return this.httpClient.get(`${this.resourceUrl}/getauctionimg/${idproperty}`);
+  }
 }
