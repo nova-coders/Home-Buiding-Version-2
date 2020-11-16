@@ -4,11 +4,10 @@ import { errorRoute } from './layouts/error/error.route';
 import { navbarRoute } from './layouts/navbar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/shared/constants/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ServicePaymentComponent } from 'app/service-payment/service-payment.component';
 import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
-
+import { ContractComponent } from 'app/contract/contract.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -34,6 +33,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'see-auction/:id',
           component: SeeAuctionComponent,
+        },
+        {
+          path: 'document/:id',
+          component: ContractComponent,
         },
         ...LAYOUT_ROUTES,
       ],

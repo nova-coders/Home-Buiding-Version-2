@@ -18,6 +18,8 @@
       },
       "base64Code": "Base 64 Code",
       "state": "State",
+      "buyerState": "Buyer State",
+      "sellerState": "Seller State",
       "creationDate": "Creation Date",
       "seller": "Seller",
       "buyer": "Buyer",

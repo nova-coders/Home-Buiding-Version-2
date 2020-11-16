@@ -30,6 +30,12 @@ public class Document implements Serializable {
     @Column(name = "state")
     private Boolean state;
 
+    @Column(name = "buyer_state")
+    private Boolean buyerState;
+
+    @Column(name = "seller_state")
+    private Boolean sellerState;
+
     @Column(name = "creation_date")
     private ZonedDateTime creationDate;
 
@@ -78,6 +84,32 @@ public class Document implements Serializable {
 
     public void setState(Boolean state) {
         this.state = state;
+    }
+
+    public Boolean isBuyerState() {
+        return buyerState;
+    }
+
+    public Document buyerState(Boolean buyerState) {
+        this.buyerState = buyerState;
+        return this;
+    }
+
+    public void setBuyerState(Boolean buyerState) {
+        this.buyerState = buyerState;
+    }
+
+    public Boolean isSellerState() {
+        return sellerState;
+    }
+
+    public Document sellerState(Boolean sellerState) {
+        this.sellerState = sellerState;
+        return this;
+    }
+
+    public void setSellerState(Boolean sellerState) {
+        this.sellerState = sellerState;
     }
 
     public ZonedDateTime getCreationDate() {
@@ -156,6 +188,8 @@ public class Document implements Serializable {
             "id=" + getId() +
             ", base64Code='" + getBase64Code() + "'" +
             ", state='" + isState() + "'" +
+            ", buyerState='" + isBuyerState() + "'" +
+            ", sellerState='" + isSellerState() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
             "}";
     }
