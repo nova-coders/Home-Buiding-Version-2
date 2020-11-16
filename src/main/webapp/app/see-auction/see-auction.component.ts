@@ -72,7 +72,7 @@ export class SeeAuctionComponent implements OnInit {
     this.seeAuctionService.auctionToCloseState(this.idProperty).subscribe(
       (response: any) => {
         this.property.state = 3;
-        this.goDocument(response);
+        //this.goDocument(response);
       },
       error => {
         console.log(error);

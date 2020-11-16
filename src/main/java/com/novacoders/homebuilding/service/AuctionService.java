@@ -21,13 +21,13 @@ public class AuctionService {
     public final DocumentRepository documentRepository;
     public final ImagePropertyRepository imagePropertyRepository;
     private final UserRepository userRepository;
-    private final ServicePaymentRepository servicePaymentRepository;
+    private final MailAuctionService mailAuctionService;
     private static final Logger log = LoggerFactory.getLogger(ActivityService.class);
-    public AuctionService(AuctionRepository auctionRepository, PropertyRepository propertyRepository, UserRepository userRepository, ServicePaymentRepository servicePaymentRepository, DocumentRepository documentRepository, ImagePropertyRepository imagePropertyRepository){
+    public AuctionService(AuctionRepository auctionRepository, PropertyRepository propertyRepository, UserRepository userRepository,  MailAuctionService mailAuctionService, DocumentRepository documentRepository, ImagePropertyRepository imagePropertyRepository){
         this.auctionRepository = auctionRepository;
         this.propertyRepository = propertyRepository;
         this.userRepository = userRepository;
-        this.servicePaymentRepository = servicePaymentRepository;
+        this.mailAuctionService = mailAuctionService;
         this.documentRepository = documentRepository;
         this.imagePropertyRepository = imagePropertyRepository;
 
@@ -57,6 +57,7 @@ public class AuctionService {
                     document.setState(true);
                     document.setCreationDate(ZonedDateTime.now());
                     document = this.documentRepository.save(document);
+                    this.mailAuctionService.sendAuctionEmailToBuyerUser(document);
                     return "" + document.getId();
                 }
             }
