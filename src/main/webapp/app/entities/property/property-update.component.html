@@ -151,8 +151,9 @@
 
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <ngx-dropzone (change)="onSelectImage($event)"   class="mt-5 mb-5" [multiple]="true" [accept]="'image/*'">
+
+                    <div class="col-12">
+                        <ngx-dropzone (change)="onSelectImage($event)"   class="mt-5" [multiple]="true" [accept]="'image/*'">
                             <ngx-dropzone-label>Suba las imágenes de su inmueble con el tipo seleccionado</ngx-dropzone-label>
                             <ngx-dropzone-image-preview
                                 ngProjectAs="ngx-dropzone-preview"
@@ -162,12 +163,12 @@
                                 (removed)="onRemoveImage(f)">
                             </ngx-dropzone-image-preview>
                         </ngx-dropzone>
+                        <small class="form-text text-danger mb-5">
+                            Debe subir almenos una imagen.
+                        </small>
                         </div>
-                    <small class="form-text text-danger"
-                           *ngIf="propertyForm.get('propertyImages')?.errors?.required">
-                        Debe subir almenos una imagen.
-                    </small>
                 </div>
+
                 <div class="row">
                     <div class="col">
                         <label class="form-control-label" for="field_Province" >Provincia</label>
