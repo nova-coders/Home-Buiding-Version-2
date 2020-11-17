@@ -196,12 +196,12 @@
                     <agm-map style="height: 300px;"
                              [latitude]="lat"
                              [longitude]="lng"
-                             [zoom]="zoom" >
+                             [zoom]="zoom"  (centerChange)="markerDragEnd($event)">
                         <agm-marker
                             [latitude]="lat"
                             [longitude]="lng"
                             [markerDraggable]="true"
-                            (dragEnd)="markerDragEnd($event)"></agm-marker>
+                           ></agm-marker>
                     </agm-map>
                 </div>
             </div>

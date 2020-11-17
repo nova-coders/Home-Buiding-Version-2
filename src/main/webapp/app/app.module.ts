@@ -34,7 +34,7 @@ import { ContractComponent } from './contract/contract.component';
     HomeBuildingAppRoutingModule,
 
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoy',
+      apiKey: 'AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoyQ',
       libraries: ['places'],
     }),
     NgxPayPalModule,

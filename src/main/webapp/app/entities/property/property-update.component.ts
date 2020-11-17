@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-
 import { IProperty, Property } from 'app/shared/model/property.model';
 import { PropertyService } from './property.service';
 import { ISale, Sale } from 'app/shared/model/sale.model';
@@ -55,7 +54,7 @@ export class PropertyUpdateComponent implements OnInit {
   lat = 9.9280694;
   lng = -84.0907246;
   address!: string;
-  private geoCoder: any;
+  private geoCoder = new google.maps.Geocoder();
   @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
   options: any = {
     types: [],
@@ -167,13 +166,16 @@ export class PropertyUpdateComponent implements OnInit {
       });
     }
   }
-  markerDragEnd($event: google.maps.MouseEvent): void {
-    this.lat = Number($event.latLng.lat);
-    this.lng = Number($event.latLng.lng);
+  public markerDragEnd(coords: any): void {
+    console.log(coords);
+    this.lat = Number(coords.lat);
+    this.lng = Number(coords.lng);
+    this.geoCoder == new google.maps.Geocoder();
+
     this.getAddress();
   }
 
-  getAddress(): void {
+  public getAddress(): void {
     this.geoCoder?.geocode({ location: { lat: this.lat, lng: this.lng } }, (results: any, status: any) => {
       if (status === 'OK') {
         if (results[0]) {
