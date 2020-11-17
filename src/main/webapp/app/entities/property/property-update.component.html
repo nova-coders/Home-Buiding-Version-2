@@ -139,12 +139,12 @@
                 <div class="row">
                     <div class="col">
                         <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
-                        <select class="form-control" id="field_Category_Image" name="category_Image" formControlName="category_Image">
+                        <select class="form-control" id="field_Category_Image" name="imageCategory" formControlName="imageCategory">
                             <option [ngValue]="null" selected disabled>Seleccione una opción</option>
                             <option *ngFor="let imageCategory of lstImageCategory;index as i" [value]="i">{{ imageCategory.name}}</option>
                         </select>
                         <small class="form-text text-danger"
-                               *ngIf="propertyForm.get('category_Image')?.errors?.required">
+                               *ngIf="propertyForm.get('imageCategory')?.errors?.required">
                             El tipo de imagen es requerido.
                         </small>
                     </div>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <ngx-dropzone (change)="onSelectImage($event)"  formControlName="propertyImages"  class="mt-5 mb-5" [multiple]="true" [accept]="'image/*'">
+                        <ngx-dropzone (change)="onSelectImage($event)"   class="mt-5 mb-5" [multiple]="true" [accept]="'image/*'">
                             <ngx-dropzone-label>Suba las imágenes de su inmueble con el tipo seleccionado</ngx-dropzone-label>
                             <ngx-dropzone-image-preview
                                 ngProjectAs="ngx-dropzone-preview"
@@ -178,10 +178,10 @@
                         </select>
                     </div>
                     <div class="col" *ngIf="isSelected==true">
-                        <label class="form-control-label"  for="field_canton" [(ngModel)]="cantonIndex" >Cantón</label>
+                        <label class="form-control-label"  for="field_canton" >Cantón</label>
                         <select class="form-control" id="field_canton" name="canton" formControlName="canton">
-                            <option [ngValue]="null"></option>
-                            <option  *ngFor="let cantonOption of lstCantons; index as c" value="{{c}}">{{ cantonOption.name }}</option>
+                            <option [ngValue]="null" selected disabled>Seleccione una opción</option>
+                            <option [ngValue]="cantonOption.id === propertyForm.get('canton')!.value?.id ? propertyForm.get('canton')!.value : cantonOption" *ngFor="let cantonOption of lstCantons; trackBy: trackById">{{ cantonOption.name }}</option>
                         </select>
                         <small class="form-text text-danger"
                                *ngIf="propertyForm.get('canton')?.errors?.required">

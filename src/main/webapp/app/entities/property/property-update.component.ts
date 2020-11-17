@@ -24,9 +24,10 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { ProvinceService } from '../province/province.service';
 import { IProvince, Province } from '../../shared/model/province.model';
 import { ImageService } from '../../global-services/image.service';
-import { IImageCategory } from '../../shared/model/image-category.model';
+import { IImageCategory, ImageCategory } from '../../shared/model/image-category.model';
 import { ImageCategoryService } from '../image-category/image-category.service';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
+import { IPropertyImage, PropertyImage } from '../../shared/model/property-image.model';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
@@ -45,10 +46,11 @@ export class PropertyUpdateComponent implements OnInit {
   lstProvinces: IProvince[] = [];
   lstPropertyCategories: IPropertyCategory[] = [];
   lstImageCategory: IImageCategory[] = [];
+  lstPropertyImages: IPropertyImage[] = [];
   provinceIndex!: number;
   cantonIndex!: number;
-  catastralPlan!: string;
-  registryStudy!: string;
+  catastralPlan!: any;
+  registryStudy!: any;
   zoom = 8;
   lat = 9.9280694;
   lng = -84.0907246;
@@ -60,7 +62,7 @@ export class PropertyUpdateComponent implements OnInit {
     componentRestrictions: { country: 'CR' },
   };
   files: File[];
-  fileUrl!: string[];
+  fileUrl: string;
   error = false;
   public userAccount = new UserAccount();
 
@@ -69,22 +71,20 @@ export class PropertyUpdateComponent implements OnInit {
     title: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]],
     price: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    discount: [0],
-    finalDate: ['', [Validators.required, Validators.nullValidator]],
+    discount: [''],
+    finalDate: ['', [Validators.required]],
     landSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     areaSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
     addressText: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    state: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    userAccount: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    moneyType: ['', [Validators.required, Validators.nullValidator]],
+    moneyType: ['', [Validators.required]],
     canton: ['', [Validators.required]],
     propertyCategory: ['', [Validators.required]],
     propertyId: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     cadastralPlan: ['', [Validators.required]],
     registryStudy: ['', [Validators.required]],
     propertyImages: ['', [Validators.required]],
-    category_Image: ['', [Validators.required]],
-    province: ['', [Validators.required, Validators.nullValidator]],
+    imageCategory: ['', [Validators.required]],
+    province: ['', [Validators.required]],
   });
 
   constructor(
@@ -102,6 +102,7 @@ export class PropertyUpdateComponent implements OnInit {
     private imageService: ImageService
   ) {
     this.files = [];
+    this.fileUrl = '';
     this.userAccount.publishingPackage = {} as UserAccount;
   }
 
@@ -214,13 +215,12 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.step = this.step + 1;
     this.isSaving = true;
     const property = this.createFromForm();
     if (property.id !== undefined) {
       this.subscribeToSaveResponse(this.propertyService.update(property));
     } else {
-      this.subscribeToSaveResponse(this.propertyService.create(property));
+      if (!this.error) console.log(this.subscribeToSaveResponse(this.propertyService.create(property)));
     }
   }
 
@@ -244,11 +244,13 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IProperty {
+    this.uploadFile();
+    console.log(this.lstPropertyImages);
     let mySale = new Sale();
     mySale.cadastralPlan = this.catastralPlan;
     mySale.registryStudy = this.registryStudy;
     mySale.propertyId = this.propertyForm.get(['propertyId'])!.value;
-    mySale.finalDate = this.propertyForm.get(['finaldate'])!.value;
+    mySale.finalDate = moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT);
     return {
       ...new Property(),
       title: this.propertyForm.get(['title'])!.value,
@@ -267,6 +269,7 @@ export class PropertyUpdateComponent implements OnInit {
       moneyType: this.propertyForm.get(['moneyType'])!.value,
       canton: this.propertyForm.get(['canton'])!.value,
       propertyCategory: this.propertyForm.get(['propertyCategory'])!.value,
+      propertyImages: this.lstPropertyImages,
     };
   }
 
@@ -318,11 +321,18 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   public uploadFile(): void {
+    const fileData = this.files;
     for (let index = 0; index < this.files.length; index++) {
-      const fileData = this.files;
-      this.imageService.uploadImages(fileData[index]).subscribe(
+      this.imageService.uploadImage(fileData[index]).subscribe(
         response => {
-          this.fileUrl[index] = String(response.url);
+          console.log(response.url);
+          this.fileUrl = response.url;
+          let myproperty = new PropertyImage();
+          let myCategory = new ImageCategory();
+          myCategory.id = this.propertyForm.get(['imageCategory'])!.value;
+          myproperty.imageCategory = myCategory;
+          myproperty.url = this.fileUrl;
+          this.lstPropertyImages.push(myproperty);
         },
         () => {
           this.error = true;
@@ -332,15 +342,15 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   public onFileSelected(event: any, opc: number): void {
-    this.getBase64(event.target.files[0]).then((base64: string) => {
+    this.getBase64(event.target.files[0]).then((base64: any) => {
       if (opc === 1) {
         this.catastralPlan = base64;
         const file = document.getElementById('urlCadastralPlan');
-        file?.setAttribute('src', base64);
+        file?.setAttribute('src', String(base64));
       } else {
         this.registryStudy = base64;
         const file2 = document.getElementById('urlRegistryStudy');
-        file2?.setAttribute('src', base64);
+        file2?.setAttribute('src', String(base64));
       }
     });
   }
