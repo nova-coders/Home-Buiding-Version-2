@@ -11,6 +11,14 @@
       "fieldType": "Boolean"
     },
     {
+      "fieldName": "buyerState",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "sellerState",
+      "fieldType": "Boolean"
+    },
+    {
       "fieldName": "creationDate",
       "fieldType": "ZonedDateTime"
     }

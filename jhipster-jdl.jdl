@@ -74,6 +74,8 @@ entity Document {
   Id Integer ,
   Base64Code TextBlob,
   State Boolean,
+  BuyerState Boolean,
+  SellerState Boolean,
   CreationDate ZonedDateTime
 }
 

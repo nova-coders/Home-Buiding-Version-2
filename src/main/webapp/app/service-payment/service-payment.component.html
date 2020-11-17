@@ -1,4 +1,13 @@
 
+<div class="col-md-12 text-center">
+    <br>
+    <h1>Paga un paquete publicitario</h1>
+    <br>
+    <hr>
+</div>
+<div class="col-md-12 text-left">
+    <h4>Seleccione el paquete que desea comprar:</h4>
+</div>
 <div *ngIf="publishingPackages && publishingPackages.length > 0" class="row">
     <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-3 col-lg-3 col-md-3 col-sm-12">
         <div class="card text-center m-2 height-1">
@@ -12,7 +21,7 @@
                     capacidad en subidas de {{ publishingPackage.cantPropertySale }} en subasta y en alquiler de {{ publishingPackage.cantPropertyRent }}.
                     <span *ngIf="publishingPackage.professional === true">
                         <br>
-                        También podrá registrar sus servicios como preferenciales.
+                        También podrá registrar sus servicios como profecional.
                     </span>
                     <br *ngIf="publishingPackage.professional === false">
                 </p>

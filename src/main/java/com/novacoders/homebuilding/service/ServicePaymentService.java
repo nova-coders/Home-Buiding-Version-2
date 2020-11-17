@@ -35,15 +35,14 @@ public class ServicePaymentService {
     }
     public UserAccount findByUser() {
         User user = SecurityUtils.getCurrentUserLogin().flatMap( userRepository::findOneByLogin).get();
-        if (user != null)
-        {
+        if (user != null) {
             UserAccount userAccount = this.servicePaymentRepository.findByUser(user.getId());
             return userAccount;
         } else {
             throw new ResourceException("Invalid authentication");
         }
     }
-    public UserAccount assignPackageToUser(long packageid,long userid){
+    public UserAccount assignPackageToUser(long packageid,long userid) {
         Optional<UserAccount> optionalUserAccount = this.userAccountRepository.findById(userid);
         if(optionalUserAccount.isPresent()) {
             User user = SecurityUtils.getCurrentUserLogin().flatMap( userRepository::findOneByLogin).get();
