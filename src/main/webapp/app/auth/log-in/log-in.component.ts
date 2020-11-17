@@ -1,14 +1,16 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-
-import { LoginService } from 'app/core/login/login.service';
-
+import {LoginService} from "../../core/login/login.service";
 @Component({
-  selector: 'jhi-login-modal',
-  templateUrl: './login.component.html',
+  selector: 'jhi-log-in',
+  templateUrl: './log-in.component.html',
+
+  styleUrls: ['./log-in.component.scss'],
 })
-export class LoginModalComponent implements AfterViewInit {
+
+export class LogInComponent implements OnInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
 
@@ -22,11 +24,10 @@ export class LoginModalComponent implements AfterViewInit {
 
   constructor(private loginService: LoginService, private router: Router,  private fb: FormBuilder) {}
 
-  ngAfterViewInit(): void {
-    if (this.username) {
-      this.username.nativeElement.focus();
+  ngOnInit(): void {
     }
-  }
+
+
 
   public cancel(): void {
     this.authenticationError = false;

@@ -31,6 +31,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: ServicePaymentComponent,
         },
         {
+          path: 'auth',
+          loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+        },
+        {
           path: 'see-auction/:id',
           component: SeeAuctionComponent,
         },
@@ -40,7 +44,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         ...LAYOUT_ROUTES,
       ],
-      { enableTracing: DEBUG_INFO_ENABLED }
+      { enableTracing: DEBUG_INFO_ENABLED, useHash: true }
     ),
   ],
   exports: [RouterModule],

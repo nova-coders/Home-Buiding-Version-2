@@ -15,6 +15,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { PropertyBlockComponent } from './html-components/property-block/property-block.component';
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { SeeAuctionComponent } from './see-auction/see-auction.component';
@@ -44,6 +45,7 @@ import { ContractComponent } from './contract/contract.component';
     PageRibbonComponent,
     ActiveMenuDirective,
     FooterComponent,
+    PropertyBlockComponent,
     ServicePaymentComponent,
     SeeAuctionComponent,
     CardOfferComponent,
