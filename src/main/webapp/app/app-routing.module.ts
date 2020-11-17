@@ -44,7 +44,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         ...LAYOUT_ROUTES,
       ],
-      { enableTracing: DEBUG_INFO_ENABLED, useHash: true }
+      { enableTracing: DEBUG_INFO_ENABLED }
     ),
   ],
   exports: [RouterModule],

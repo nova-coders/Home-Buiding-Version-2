@@ -1,16 +1,14 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import {LoginService} from "../../core/login/login.service";
+import { LoginService } from '../../core/login/login.service';
 @Component({
   selector: 'jhi-log-in',
   templateUrl: './log-in.component.html',
-
   styleUrls: ['./log-in.component.scss'],
 })
-
-export class LogInComponent implements OnInit {
+export class LogInComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
 
@@ -22,14 +20,15 @@ export class LogInComponent implements OnInit {
     rememberMe: [false],
   });
 
-  constructor(private loginService: LoginService, private router: Router,  private fb: FormBuilder) {}
+  constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    if (this.username) {
+      this.username.nativeElement.focus();
     }
+  }
 
-
-
-  public cancel(): void {
+  cancel(): void {
     this.authenticationError = false;
     this.loginForm.patchValue({
       username: '',
@@ -37,7 +36,7 @@ export class LogInComponent implements OnInit {
     });
   }
 
-  public login(): void {
+  login(): void {
     this.loginService
       .login({
         username: this.loginForm.get('username')!.value,
@@ -49,6 +48,7 @@ export class LogInComponent implements OnInit {
           this.authenticationError = false;
           if (
             this.router.url === '/account/register' ||
+            this.router.url === '/auth/login' ||
             this.router.url.startsWith('/account/activate') ||
             this.router.url.startsWith('/account/reset/')
           ) {
@@ -59,11 +59,11 @@ export class LogInComponent implements OnInit {
       );
   }
 
-  public register(): void {
+  register(): void {
     this.router.navigate(['/account/register']);
   }
 
-  public requestResetPassword(): void {
+  requestResetPassword(): void {
     this.router.navigate(['/account/reset', 'request']);
   }
 }

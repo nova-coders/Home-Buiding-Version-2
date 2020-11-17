@@ -1,12 +1,15 @@
-<header>
-    <div id="header" class="sticky"></div>
-    <div class="logo ">
+<header style="margin-bottom: 75px;">
+    <div id="header" class="sticky bg-primary"></div>
+    <div class="logo">
         <img src="https://i.imgur.com/yBlhXVS.png" class="img-fluid" alt="#">
-
     </div>
     <div class="links">
         <a class="link-element" [routerLink]="['/auth/login']">Iniciar sesión</a>
 
+        <a class="link-element" *ngIf="isAuthenticated() == true" (click)="logout()">Cerrar sesion</a>
 
+        <a class="link-element" *ngIf="isAuthenticated() == true" routerLink="/servicepayment">Pagar servicio</a>
+
+        <a class="link-element" *ngIf="isAuthenticated() == true" routerLink="account/settings">Opciones</a>
     </div>
 </header>
