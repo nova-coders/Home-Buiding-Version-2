@@ -7,6 +7,7 @@ import { HomeBuildingCoreModule } from 'app/core/core.module';
 import { HomeBuildingAppRoutingModule } from './app-routing.module';
 import { HomeBuildingHomeModule } from './home/home.module';
 import { HomeBuildingEntityModule } from './entities/entity.module';
+
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -17,10 +18,18 @@ import { ErrorComponent } from './layouts/error/error.component';
 /* eslint-disable */
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
-
+import { PropertyBlockComponent } from './html-components/property-block/property-block.component';
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { SeeAuctionComponent } from './see-auction/see-auction.component';
+import { CardOfferComponent } from './see-auction/components/card-offer/card-offer.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AngularImageViewerModule } from 'angular-x-image-viewer';
+import { ImageViewerComponent } from './see-auction/components/image-viewer/image-viewer.component';
 import { ContractComponent } from './contract/contract.component';
+/* eslint-disable */
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -38,6 +47,8 @@ import { ContractComponent } from './contract/contract.component';
       libraries: ['places'],
     }),
     NgxPayPalModule,
+    NgxPaginationModule,
+    AngularImageViewerModule,
   ],
   declarations: [
     MainComponent,
@@ -46,7 +57,11 @@ import { ContractComponent } from './contract/contract.component';
     PageRibbonComponent,
     ActiveMenuDirective,
     FooterComponent,
+    PropertyBlockComponent,
     ServicePaymentComponent,
+    SeeAuctionComponent,
+    CardOfferComponent,
+    ImageViewerComponent,
     ContractComponent,
   ],
   bootstrap: [MainComponent],

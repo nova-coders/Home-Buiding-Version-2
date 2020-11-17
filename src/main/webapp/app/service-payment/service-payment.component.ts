@@ -8,7 +8,6 @@ import { Account } from 'app/core/user/account.model';
 import { JhiEventManager } from 'ng-jhipster';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
-import { UserAccountService } from 'app/entities/user-account/user-account.service';
 
 @Component({
   selector: 'jhi-service-payment',
@@ -27,8 +26,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   constructor(
     private servicePaymentService: ServicePaymentService,
     protected publishingPackageService: PublishingPackageService,
-    protected eventManager: JhiEventManager,
-    private userAccountService: UserAccountService
+    protected eventManager: JhiEventManager
   ) {
     this.publishingPackageSelected = {} as IPublishingPackage;
     this.userAccount.publishingPackage = {} as UserAccount;
