@@ -32,6 +32,11 @@ export class ContractComponent implements OnInit {
   public sellerSignaturePicture: any;
   public buyerSignaturePicture: any;
 
+  success: boolean;
+  error: boolean;
+  errorSignatureEmpty: boolean;
+  errorNotAuthorization: boolean;
+
   constructor(
     private activeRouter: ActivatedRoute,
     private documentService: DocumentService,
@@ -41,28 +46,33 @@ export class ContractComponent implements OnInit {
     this.checkedSeller = false;
     this.disabledBuyer = true;
     this.disabledSeller = true;
+    this.errorSignatureEmpty = false;
+    this.success = false;
+    this.error = false;
+    this.errorNotAuthorization = false;
   }
 
   ngOnInit(): void {
-    this.contractId = Number(this.activeRouter.snapshot.paramMap.get('id'));
     this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
+      this.contractId = Number(this.activeRouter.snapshot.paramMap.get('id'));
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
       this.loggedUserAccount = userAccount;
       console.log('LOGED USER ACCOUNT');
       console.log(<UserAccount>this.loggedUserAccount);
-    });
-    this.documentService.find(this.contractId).subscribe(data => {
-      this.contract = <Document>data.body;
-      console.log('This is the contract data.');
-      console.log(<Document>this.contract);
-      this.checkedBuyer = this.contract.buyerState;
-      this.checkedSeller = this.contract.sellerState;
-      this.disabledBuyer = this.loggedUserAccount.id != this.contract.buyer?.id;
-      this.disabledSeller = this.loggedUserAccount.id != this.contract.seller?.id;
-      this.sellerSignaturePicture = this.contract.seller?.signaturePicture;
-      this.buyerSignaturePicture = this.contract.buyer?.signaturePicture;
-      this.putUsersValuesOnContract();
+
+      this.documentService.find(this.contractId).subscribe(data => {
+        this.contract = <Document>data.body;
+        console.log('This is the contract data.');
+        console.log(<Document>this.contract);
+        this.checkedBuyer = this.contract.buyerState;
+        this.checkedSeller = this.contract.sellerState;
+        this.disabledBuyer = this.loggedUserAccount.id != this.contract.buyer?.id;
+        this.disabledSeller = this.loggedUserAccount.id != this.contract.seller?.id;
+        this.sellerSignaturePicture = this.contract.seller?.signaturePicture;
+        this.buyerSignaturePicture = this.contract.buyer?.signaturePicture;
+        this.putUsersValuesOnContract();
+      });
     });
   }
 
@@ -86,6 +96,37 @@ export class ContractComponent implements OnInit {
       this.checkedBuyer = false;
     } else {
       this.checkedBuyer = true;
+    }
+  }
+
+  saveSignature(): void {
+    this.error = false;
+    this.success = false;
+    this.errorSignatureEmpty = false;
+    this.errorNotAuthorization = false;
+
+    if (this.loggedUserAccount.id == this.contract.buyer?.id) {
+      if (this.checkedBuyer) {
+        this.contract.buyerState = this.checkedBuyer;
+        this.documentService.update(this.contract).subscribe(
+          () => (this.success = true),
+          () => (this.error = true)
+        );
+      } else {
+        this.errorSignatureEmpty = true;
+      }
+    } else if (this.loggedUserAccount.id == this.contract.seller?.id) {
+      if (this.checkedSeller) {
+        this.contract.sellerState = this.checkedSeller;
+        this.documentService.update(this.contract).subscribe(
+          () => (this.success = true),
+          () => (this.error = true)
+        );
+      } else {
+        this.errorSignatureEmpty = true;
+      }
+    } else {
+      this.errorNotAuthorization = true;
     }
   }
 }

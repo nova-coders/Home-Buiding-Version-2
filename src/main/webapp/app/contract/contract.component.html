@@ -53,7 +53,7 @@
 <div class="row">
     <div class="col-3 float-left">
         <div class="card mt-3">
-            <div class="card-header">
+            <div *ngIf="!disabledSeller" class="card-header">
                 <div class="custom-control custom-checkbox">
                     <input class="custom-control-input" id="seller" type="checkbox" (change)="checkSellerSignature()" [disabled]="disabledSeller"
                     [checked]="checkedSeller">
@@ -72,7 +72,7 @@
 
     <div class="col-3 float-right">
         <div class="card mt-3">
-            <div class="card-header">
+            <div *ngIf="!disabledBuyer" class="card-header">
                 <div class="custom-control custom-checkbox">
                     <input class="custom-control-input" id="buyer" type="checkbox" (change)="checkBuyerSignature()" [disabled]="disabledBuyer"
                            [checked]="checkedBuyer">
@@ -86,6 +86,34 @@
                 <p>Firma del comprador</p>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div *ngIf="errorSignatureEmpty" class="col-12">
+        <div class="alert alert-warning">
+            Por favor, firme el documento antes de guardar
+        </div>
+    </div>
+    <div *ngIf="error" class="col-12">
+        <div class="alert alert-danger">
+            Disculpe, ocurri&oacute; un error al guardar la firma. Vuelve a intentarlo m&aacute;s tarde.
+        </div>
+    </div>
+    <div *ngIf="success" class="col-12">
+        <div class="alert alert-success">
+            Has firmado el contrato con &eacute;xito.
+        </div>
+    </div>
+    <div *ngIf="errorNotAuthorization" class="col-12">
+        <div class="alert alert-success">
+            No tiene autorizaci&oacute;n para guardar una firma en el contrato
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <a [routerLink]="''" class="btn btn-secondary float-right">Firmar m&aacute;s tarde</a>
+        <button class="btn btn-primary float-right" type="submit" (click)="saveSignature()">Guardar</button>
     </div>
 </div>
 
