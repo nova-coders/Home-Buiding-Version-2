@@ -37,6 +37,8 @@ public class MailAuctionService {
 
     private static final String DOCUMENT = "document";
 
+    private static final String PROPERTY = "property";
+
     private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
@@ -47,15 +49,13 @@ public class MailAuctionService {
 
     private final SpringTemplateEngine templateEngine;
 
-    public MailAuctionService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-                       MessageSource messageSource, SpringTemplateEngine templateEngine) {
+    public MailAuctionService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender, MessageSource messageSource, SpringTemplateEngine templateEngine) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
     }
-
     @Async
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
@@ -75,9 +75,8 @@ public class MailAuctionService {
             log.warn("Email could not be sent to user '{}'", to, e);
         }
     }
-
     @Async
-    public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
+    public void sendEmailFromTemplateByUser(User user, String templateName, String titleKey) {
         if (user.getEmail() == null) {
             log.debug("Email doesn't exist for user '{}'", user.getLogin());
             return;
@@ -89,6 +88,20 @@ public class MailAuctionService {
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
+    }
+    @Async
+    public void sendEmailFromTemplateByProperty(Property property, String templateName, String title) {
+        if (property.getUserAccount().getUser().getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", property.getUserAccount().getUser().getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(property.getUserAccount().getUser().getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(PROPERTY, property);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = title;
+        sendEmail(property.getUserAccount().getUser().getEmail(), subject, content, false, true);
     }
     @Async
     public void sendEmailFromTemplateByBuyer(Document document,String templateName, String title) {
@@ -105,9 +118,30 @@ public class MailAuctionService {
         sendEmail(document.getBuyer().getUser().getEmail(), subject, content, false, true);
     }
     @Async
+    public void sendEmailFromTemplateBySeller(Document document,String templateName, String title) {
+        if (document.getBuyer().getUser().getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", document.getBuyer().getUser().getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(document.getBuyer().getUser().getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(DOCUMENT,document);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = title;
+        sendEmail(document.getSeller().getUser().getEmail(), subject, content, false, true);
+    }
+    @Async
     public void sendAuctionEmailToBuyerUser(Document document) {
         if(document.getBuyer() != null && document.getSeller() != null){
             sendEmailFromTemplateByBuyer(document, "mail/auctionBuyerUserEmail", "Oferta aceptada de la subasta " + document.getProperty().getTitle());
+            sendEmailFromTemplateBySeller(document, "mail/auctionExpireSellerEmail", "Se ha cerrado la subasta " + document.getProperty().getTitle() + "  de su propiedad.");
+        }
+    }
+    @Async
+    public void sendAuctionExpireEmailToSeller(Property property) {
+        if(property!= null){
+            this.sendEmailFromTemplateByProperty(property, "mail/auctionExpireEmail", "Se ha cerrado la subasta "+ property.getTitle());
         }
     }
 }

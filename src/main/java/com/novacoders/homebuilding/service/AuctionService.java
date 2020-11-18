@@ -64,6 +64,27 @@ public class AuctionService {
         }
         throw new ResourceException("Action Invalid Data");
     }
+    public String closeAuctionExpire(long propertyId) {
+        Optional<Property> oProperty = this.propertyRepository.findById(propertyId);
+        if (oProperty.isPresent()) {
+            Property property = oProperty.get();
+            List<Offer> offerList = this.auctionRepository.findBySale(property.getSale().getId());
+            if (offerList.size() > 0) {
+                Document document = new Document();
+                property.setState(3);
+                this.propertyRepository.save(property);
+                document.setProperty(property);
+                document.setBuyer(offerList.get(0).getUserAccount());
+                document.setSeller(property.getUserAccount());
+                document.setState(true);
+                document.setCreationDate(ZonedDateTime.now());
+                document = this.documentRepository.save(document);
+                this.mailAuctionService.sendAuctionEmailToBuyerUser(document);
+                return "" + document.getId();
+            }
+        }
+        throw new ResourceException("Action Invalid Data");
+    }
     public List<PropertyImage> getImageAuction(long propertyId){
         return this.imagePropertyRepository.findByProperty(propertyId);
     }

@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="x-apple-disable-message-reformatting">
-    <title>Oferta aceptada</title>
+    <title>Se cerro la subasta</title>
     <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
 
@@ -308,39 +308,40 @@
                         <tr>
                             <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
                                 <div class="text">
-                                    <h2> He aceptado tú oferta </h2>
+                                    <h2>Se ha cerrado la subasta con la siguiente oferta aceptada como la mayor oferta</h2>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: center;">
                                 <div class="text-author">
-                                    <img th:src="${document.seller.profilePicture}" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
-                                    <h3 class="name"><span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}"></span></h3>
+                                    <h3 class="name">
+                                        <span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}">
+                                        </span>
+                                    </h3>
                                     <p class="position">
-                                        Hola señor <span th:text="${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}"></span>
-                                        , es un gusto saludarlo.
-                                        <br>La presente es para informale que  he aceptado su oferta para la negociación en la subas del inmueble<span th:text="${document.property.title}".></span>.
+                                        Hola señor
+                                        <span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}">
+                                        </span>
+                                        , saludos departe del equipo de Home Building.
+                                        <br>La presente es para informale que  se a ha cerrado la subasta
+                                        <span th:text="${document.property.title}".>
+                                        </span>
+                                        de su propiedad con la oferta de
+                                        <span th:text=" ${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}">
+                                        </span>
+                                        como mayor comprador o ofertante.
                                     </p>
-                                    <p th:text="${'Este es mí teléfono es:' + document.seller.phone}"></p>
-                                    <p th:text="${'Y mí email es:' + document.seller.user.email}"></p>
+                                    <img th:src="${document.seller.profilePicture}" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
+                                    <span th:text=" ${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}">
+                                    </span>  comprador.
                                 </div>
                                 <div>
                                     <p>
-                                        A continuación comparto el enlace del documento para que podamos llegar a un acuerdo.
+                                        A continuación compartimos el enlace del documento para la negociación entre usted y el comprador.
                                     </p>
                                     <p>
                                         <a th:with="url=(@{|${baseUrl}/document/${document.id}|})" th:href="${url}">Ir a ver el documento</a>
-                                    </p>
-                                    <p>
-                                        También comparto la dirección de la propiedad:
-                                    </p>
-                                    <p>Dirección:</p>
-                                    <p th:text="${document.property.addressText}">Dirección</p>
-                                    <p>
-                                        <a th:with="url=(@{|http://maps.google.com/maps?q=${document.property.longitude}+'%'+${document.property.latitude}|})" th:href="${url}">
-                                            Ir a la dirección de la propiedad en Google maps
-                                        </a>
                                     </p>
                                 </div>
                             </td>
