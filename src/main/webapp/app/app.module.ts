@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularImageViewerModule } from 'angular-x-image-viewer';
 import { ImageViewerComponent } from './see-auction/components/image-viewer/image-viewer.component';
 import { ContractComponent } from './contract/contract.component';
+import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { ContractComponent } from './contract/contract.component';
     CardOfferComponent,
     ImageViewerComponent,
     ContractComponent,
+    BidAtAuctionComponent,
   ],
   bootstrap: [MainComponent],
 })

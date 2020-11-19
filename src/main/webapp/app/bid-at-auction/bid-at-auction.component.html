@@ -8,34 +8,34 @@
     <jhi-image-viewer [images]="images"></jhi-image-viewer>
 </div>
 <div class="col-md-12 col-lg-12 text-center mt-2">
-   <div class="container">
-       <div class="row">
-           <div class="col-md-6 col-lg-6 text-center border-right">
-               <h3>{{property.title}}</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-6 text-center border-right">
+                <h3>{{property.title}}</h3>
                 <p>Precio inicial: &nbsp;${{property.price}}</p>
-               <hr>
-               <h3 *ngIf="offers.length > 0">Última oferta: ${{offers[0].amount}}</h3>
-           </div>
-           <div class="col-md-6 col-lg-6 text-center">
-               <h4>Descripción de la propiedad</h4>
-               <p>
-                   {{property.description}}
-               </p>
-           </div>
-       </div>
-       <div class="row"  *ngIf="offers.length > 0 && property.state === 1">
-           <div class="col-md-12 col-lg-12">
-               <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
-           </div>
-       </div>
-       <div class="row" *ngIf="offers.length > 0 && property.state == 3">
-           <div class="col-md-12 col-lg-12">
-               <div class="alert  alert-info opacity-8" role="alert mt-2">
-                   <h3>Subasta cerrada</h3>
-               </div>
-           </div>
-       </div>
-   </div>
+                <hr>
+                <h3 *ngIf="offers.length > 0">Última oferta: ${{offers[0].amount}}</h3>
+            </div>
+            <div class="col-md-6 col-lg-6 text-center">
+                <h4>Descripción de la propiedad</h4>
+                <p>
+                    {{property.description}}
+                </p>
+            </div>
+        </div>
+        <div class="row"  *ngIf="offers.length > 0 && property.state === 1">
+            <div class="col-md-12 col-lg-12">
+                <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
+            </div>
+        </div>
+        <div class="row" *ngIf="offers.length > 0 && property.state == 3">
+            <div class="col-md-12 col-lg-12">
+                <div class="alert  alert-info opacity-8" role="alert mt-2">
+                    <h3>Subasta cerrada</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <hr>
     <div class="container">

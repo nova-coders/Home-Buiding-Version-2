@@ -38,8 +38,8 @@ public class SchedulerCron {
                 long difference = zonedDatetimeCurrent.compareTo(property.getSale().getFinalDate());
                  if((difference > 0 || difference == 0) && (property.getState() == 1)) {
                      if(property.getSale() != null) {
-                        List<Offer> offerList =  this.auctionRepository.findBySale(property.getSale().getId());
-                         if(offerList.size() == 0) {
+                        long cantOffer =  this.auctionRepository.getCantOffer(property.getSale().getId());
+                         if(cantOffer == 0) {
                              property.setState(3);
                              property = this.propertyService.seveProperty(property);
                              this.mailAuctionService.sendAuctionExpireEmailToSeller(property);

@@ -39,7 +39,7 @@ body {
     width: 70px;
   }
 }
-span {
+.spanLoader {
   position: absolute;
   display: block;
   width: 20px;
@@ -55,22 +55,22 @@ span {
     transform: rotate(-40deg);
   }
 }
-span:nth-child(1) {
+.spanLoader:nth-child(1) {
   top: 0;
   left: 0;
   background: #1ac9ff;
 }
-span:nth-child(2) {
+.spanLoader:nth-child(2) {
   top: 0;
   right: 0;
   background: #fcb603;
 }
-span:nth-child(3) {
+.spanLoader:nth-child(3) {
   bottom: 0;
   left: 0;
   background: #af49b6;
 }
-span:nth-child(4) {
+.spanLoader:nth-child(4) {
   bottom: 0;
   right: 0;
   background: #e03870;
