@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/';
 const CLOUD_NAME = 'dsx9svdes';
 const UPLOAD_RESET = 'home_building';
-
 @Injectable({
   providedIn: 'root',
 })

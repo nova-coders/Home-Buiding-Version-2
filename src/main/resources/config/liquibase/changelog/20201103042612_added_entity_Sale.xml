@@ -19,10 +19,10 @@
             <column name="final_date" type="datetime">
                 <constraints nullable="true" />
             </column>
-            <column name="cadastral_plan" type="varchar(255)">
+            <column name="cadastral_plan" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            <column name="registry_study" type="varchar(255)">
+            <column name="registry_study" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="property_id" type="integer">
@@ -53,8 +53,8 @@
                   tableName="sale">
             <column name="id" type="numeric"/>
             <column name="final_date" type="datetime"/>
-            <column name="cadastral_plan" type="string"/>
-            <column name="registry_study" type="string"/>
+            <column name="cadastral_plan" type="clob"/>
+            <column name="registry_study" type="clob"/>
             <column name="property_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Property(0, 'AAAAAAA', 'AAAAAAA', 0, 0, 0, 0, 0, 0, 0, 'AAAAAAA', currentDate, 0);
+      elemDefault = new Property(0, 'AAAAAAA', 'AAAAAAA', 0, 0, 0, 0, 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA', currentDate, 0);
     });
 
     describe('Service methods', () => {
@@ -75,8 +75,8 @@ describe('Service Tests', () => {
             discount: 1,
             landSquareMeters: 1,
             areaSquareMeters: 1,
-            latitude: 1,
-            longitude: 1,
+            latitude: 'BBBBBB',
+            longitude: 'BBBBBB',
             zoom: 1,
             addressText: 'BBBBBB',
             creationDate: currentDate.format(DATE_TIME_FORMAT),
@@ -108,8 +108,8 @@ describe('Service Tests', () => {
             discount: 1,
             landSquareMeters: 1,
             areaSquareMeters: 1,
-            latitude: 1,
-            longitude: 1,
+            latitude: 'BBBBBB',
+            longitude: 'BBBBBB',
             zoom: 1,
             addressText: 'BBBBBB',
             creationDate: currentDate.format(DATE_TIME_FORMAT),

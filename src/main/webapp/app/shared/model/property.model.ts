@@ -16,8 +16,8 @@ export interface IProperty {
   discount?: number;
   landSquareMeters?: number;
   areaSquareMeters?: number;
-  latitude?: number;
-  longitude?: number;
+  latitude?: string;
+  longitude?: string;
   zoom?: number;
   addressText?: string;
   creationDate?: Moment;
@@ -41,8 +41,8 @@ export class Property implements IProperty {
     public discount?: number,
     public landSquareMeters?: number,
     public areaSquareMeters?: number,
-    public latitude?: number,
-    public longitude?: number,
+    public latitude?: string,
+    public longitude?: string,
     public zoom?: number,
     public addressText?: string,
     public creationDate?: Moment,

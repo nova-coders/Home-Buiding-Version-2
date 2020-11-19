@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -143,8 +144,8 @@ public class SaleResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sale.getId().intValue())))
             .andExpect(jsonPath("$.[*].finalDate").value(hasItem(sameInstant(DEFAULT_FINAL_DATE))))
-            .andExpect(jsonPath("$.[*].cadastralPlan").value(hasItem(DEFAULT_CADASTRAL_PLAN)))
-            .andExpect(jsonPath("$.[*].registryStudy").value(hasItem(DEFAULT_REGISTRY_STUDY)))
+            .andExpect(jsonPath("$.[*].cadastralPlan").value(hasItem(DEFAULT_CADASTRAL_PLAN.toString())))
+            .andExpect(jsonPath("$.[*].registryStudy").value(hasItem(DEFAULT_REGISTRY_STUDY.toString())))
             .andExpect(jsonPath("$.[*].propertyId").value(hasItem(DEFAULT_PROPERTY_ID)));
     }
     
@@ -160,8 +161,8 @@ public class SaleResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(sale.getId().intValue()))
             .andExpect(jsonPath("$.finalDate").value(sameInstant(DEFAULT_FINAL_DATE)))
-            .andExpect(jsonPath("$.cadastralPlan").value(DEFAULT_CADASTRAL_PLAN))
-            .andExpect(jsonPath("$.registryStudy").value(DEFAULT_REGISTRY_STUDY))
+            .andExpect(jsonPath("$.cadastralPlan").value(DEFAULT_CADASTRAL_PLAN.toString()))
+            .andExpect(jsonPath("$.registryStudy").value(DEFAULT_REGISTRY_STUDY.toString()))
             .andExpect(jsonPath("$.propertyId").value(DEFAULT_PROPERTY_ID));
     }
     @Test

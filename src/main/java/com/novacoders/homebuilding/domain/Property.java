@@ -44,10 +44,10 @@ public class Property implements Serializable {
     private Integer areaSquareMeters;
 
     @Column(name = "latitude")
-    private Long latitude;
+    private String latitude;
 
     @Column(name = "longitude")
-    private Long longitude;
+    private String longitude;
 
     @Column(name = "zoom")
     private Long zoom;
@@ -180,29 +180,29 @@ public class Property implements Serializable {
         this.areaSquareMeters = areaSquareMeters;
     }
 
-    public Long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public Property latitude(Long latitude) {
+    public Property latitude(String latitude) {
         this.latitude = latitude;
         return this;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public Property longitude(Long longitude) {
+    public Property longitude(String longitude) {
         this.longitude = longitude;
         return this;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
@@ -414,8 +414,8 @@ public class Property implements Serializable {
             ", discount=" + getDiscount() +
             ", landSquareMeters=" + getLandSquareMeters() +
             ", areaSquareMeters=" + getAreaSquareMeters() +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
+            ", latitude='" + getLatitude() + "'" +
+            ", longitude='" + getLongitude() + "'" +
             ", zoom=" + getZoom() +
             ", addressText='" + getAddressText() + "'" +
             ", creationDate='" + getCreationDate() + "'" +

@@ -27,11 +27,11 @@
     },
     {
       "fieldName": "latitude",
-      "fieldType": "Long"
+      "fieldType": "String"
     },
     {
       "fieldName": "longitude",
-      "fieldType": "Long"
+      "fieldType": "String"
     },
     {
       "fieldName": "zoom",
