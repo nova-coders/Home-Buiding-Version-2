@@ -14,12 +14,12 @@ import { NotificationType } from 'app/shared/model/enumerations/notification-typ
   styleUrls: ['./bid-at-auction.component.scss'],
 })
 export class BidAtAuctionComponent implements OnInit {
-  public property: Property;
+  public property: any;
   public idProperty: number;
   public offers: Array<Offer> = [];
   public images: string[];
   public startPage = 1;
-
+  public actualPrice = 0;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
