@@ -27,9 +27,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularImageViewerModule } from 'angular-x-image-viewer';
 import { ImageViewerComponent } from './see-auction/components/image-viewer/image-viewer.component';
 import { ContractComponent } from './contract/contract.component';
-/* eslint-disable */
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
