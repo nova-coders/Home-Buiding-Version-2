@@ -28,9 +28,11 @@ public class Sale implements Serializable {
     @Column(name = "final_date")
     private ZonedDateTime finalDate;
 
+    @Lob
     @Column(name = "cadastral_plan")
     private String cadastralPlan;
 
+    @Lob
     @Column(name = "registry_study")
     private String registryStudy;
 

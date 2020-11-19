@@ -19,10 +19,10 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="latitude" type="bigint">
+            <column name="latitude" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="longitude" type="bigint">
+            <column name="longitude" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="state" type="boolean">
@@ -56,8 +56,8 @@
                   tableName="province">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="latitude" type="numeric"/>
-            <column name="longitude" type="numeric"/>
+            <column name="latitude" type="string"/>
+            <column name="longitude" type="string"/>
             <column name="state" type="boolean"/>
             <column name="creation_date" type="datetime"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

@@ -1,147 +1,229 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-property-heading" jhiTranslate="homeBuildingApp.property.home.createOrEditLabel">Create or edit a Property</h2>
-
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="propertyForm">
+            <h2 id="jhi-property-heading" class="d-flex justify-content-center" >Registrar un inmueble en subasta</h2>
+            <hr style="border: 0; height:1px;  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+            <div *ngIf="step == 1">
+                <h4>Datos del inmueble</h4>
+                <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                <div class="row">
+                    <div class="col-3" [hidden]="!propertyForm.get('id')!.value">
+                        <label for="id" jhiTranslate="global.field.id">ID</label>
+                        <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label"  for="field_title">Título</label>
+                        <input type="text" class="form-control" name="title" id="field_title"
+                               formControlName="title"/>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('title')?.errors?.required">
+                            El título es requerido.
+                        </small>
+                        <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
+                        <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
+                            <option [ngValue]="null" selected disabled>Seleccione una opción</option>
+                            <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of lstMoneytypes; trackBy: trackById">{{ moneyTypeOption.name }}</option>
+                        </select>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('moneyType')?.errors?.required">
+                            El tipo de moneda es requerido.
+                        </small>
+                        <label class="form-control-label"  for="field_discount">Descuento</label>
+                        <input type="number" class="form-control" name="discount" id="field_discount"
+                               formControlName="discount"/>
+                        <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
+                        <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
+                            <option [ngValue]="null" selected disabled></option>
+                            <option [ngValue]="propertyCategoryOption.id === propertyForm.get('propertyCategory')!.value?.id ? propertyForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of lstPropertyCategories; trackBy: trackById">{{ propertyCategoryOption.name }}</option>
+                        </select>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('propertyCategory')?.errors?.required">
+                            La categoría del inmueble es requerido.
+                        </small>
+                        <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
+                        <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
+                               formControlName="areaSquareMeters"/>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('areaSquareMeters')?.errors?.required">
+                            El área de construcción es requerido.
+                        </small>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.title" for="field_title">Title</label>
-                    <input type="text" class="form-control" name="title" id="field_title"
-                           formControlName="title"/>
+                        <label class="form-control-label" for="field_propertyId">Número de plano</label>
+                        <input type="number" class="form-control" name="propertyId" id="field_propertyId"
+                               formControlName="propertyId"/>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('propertyId')?.errors?.required">
+                            El número de plano es requerido.
+                        </small>
+
+                        <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m2 del inmueble</label>
+                        <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters"
+                               formControlName="landSquareMeters"/>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('landSquareMeters')?.errors?.required">
+                            Las dimensiones del inmueble es requerido.
+                        </small>
+                    </div>
+
+                    <div class="col">
+                        <label class="form-control-label"  for="field_description">Descripción</label>
+                        <textarea  class="form-control" name="description" id="field_description"
+                                   formControlName="description"  rows="5" cols="40"></textarea>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('description')?.errors?.required">
+                            Las dimensiones del inmueble es requerido.
+                        </small>
+                        <label class="form-control-label"  for="field_price">Precio</label>
+                        <input type="number" class="form-control" name="price" id="field_price"
+                               formControlName="price"/>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('price')?.errors?.required">
+                            El precio del inmueble es requerido.
+                        </small>
+                        <label class="form-control-label" for="field_finalDate">Fecha de expiración</label>
+                        <div class="d-flex">
+                            <input id="field_finalDate" type="datetime-local" class="form-control" name="finalDate" formControlName="finalDate" placeholder="YYYY-MM-DD HH:mm"/>
+                        </div>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('finalDate')?.errors?.required">
+                            La fecha de finalización es requerida.
+                        </small>
+                        <label class="form-control-label"  for="field_addressText">Dirección exacta del inmueble</label>
+                        <textarea class="form-control" name="addressText" id="field_addressText"
+                                  formControlName="addressText"  rows="5" cols="40"></textarea>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('addressText')?.errors?.required">
+                             La dirección es requerida.
+                        </small>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label" for="cadastralPlan" >Plano catastrado</label>
+                        <div class="custom-file">
+                            <input type="file" class="btn btn-primary custom-file-input" id="cadastralPlan"
+                                   aria-describedby="inputGroupFileAddon01" (change)="onFileSelected($event,1)"
+                                   name="cadastralPlan" formControlName="cadastralPlan">
+                            <label class="custom-file-label" for="cadastralPlan" >Suba su archivo</label>
+                        </div>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('cadastralPlan')?.errors?.required">
+                            El plano catrastal es requerido.
+                        </small>
+                        <iframe src="../../../content/pdf/homeBuildingCadastral.pdf"  height="300" width="300" id="urlCadastralPlan" title="Iframe Example" class="mt-5 mb-5"></iframe>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.description" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           formControlName="description"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.price" for="field_price">Price</label>
-                    <input type="number" class="form-control" name="price" id="field_price"
-                           formControlName="price"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.discount" for="field_discount">Discount</label>
-                    <input type="number" class="form-control" name="discount" id="field_discount"
-                           formControlName="discount"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.landSquareMeters" for="field_landSquareMeters">Land Square Meters</label>
-                    <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters"
-                           formControlName="landSquareMeters"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.areaSquareMeters" for="field_areaSquareMeters">Area Square Meters</label>
-                    <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
-                           formControlName="areaSquareMeters"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.latitude" for="field_latitude">Latitude</label>
-                    <input type="number" class="form-control" name="latitude" id="field_latitude"
-                           formControlName="latitude"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.longitude" for="field_longitude">Longitude</label>
-                    <input type="number" class="form-control" name="longitude" id="field_longitude"
-                           formControlName="longitude"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.zoom" for="field_zoom">Zoom</label>
-                    <input type="number" class="form-control" name="zoom" id="field_zoom"
-                           formControlName="zoom"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.addressText" for="field_addressText">Address Text</label>
-                    <input type="text" class="form-control" name="addressText" id="field_addressText"
-                           formControlName="addressText"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.creationDate" for="field_creationDate">Creation Date</label>
-                    <div class="d-flex">
-                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div class="col">
+                        <label class="form-control-label" for="registryStudy">Estudio registral</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input primary" id="registryStudy"
+                                   aria-describedby="inputGroupFileAddon02" (change)="onFileSelected($event,2)"
+                                   name="registryStudy" formControlName="registryStudy">
+                            <label class="custom-file-label" for="registryStudy">Suba su archivo</label>
+                        </div>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('registryStudy')?.errors?.required">
+                            El estudio registral es requerido.
+                        </small>
+                        <iframe src="../../../content/pdf/homeBuildingStudy.pdf" height="300" width="300" id="urlRegistryStudy" class="mt-5 mb-5"></iframe>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.state" for="field_state">State</label>
-                    <input type="number" class="form-control" name="state" id="field_state"
-                           formControlName="state"/>
+            </div>
+            <div *ngIf="step == 2">
+                <h4>Imágenes y localización del inmueble</h4>
+                <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
+                        <select class="form-control" id="field_Category_Image" name="imageCategory" formControlName="imageCategory">
+                            <option [ngValue]="null" selected disabled>Seleccione una opción</option>
+                            <option *ngFor="let imageCategory of lstImageCategory;index as i" [value]="i">{{ imageCategory.name}}</option>
+                        </select>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('imageCategory')?.errors?.required">
+                            El tipo de imagen es requerido.
+                        </small>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-12">
+                        <ngx-dropzone (change)="onSelectImage($event)"   class="mt-5" [multiple]="true" [accept]="'image/*'">
+                            <ngx-dropzone-label>Suba las imágenes de su inmueble con el tipo seleccionado</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview
+                                ngProjectAs="ngx-dropzone-preview"
+                                *ngFor="let f of files"
+                                [file]="f"
+                                [removable]="true"
+                                (removed)="onRemoveImage(f)">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                        <small class="form-text text-danger mb-5">
+                            Debe subir almenos una imagen.
+                        </small>
+                        </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.sale" for="field_sale">Sale</label>
-                    <select class="form-control" id="field_sale" name="sale" formControlName="sale">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="saleOption.id === editForm.get('sale')!.value?.id ? editForm.get('sale')!.value : saleOption" *ngFor="let saleOption of sales; trackBy: trackById">{{ saleOption.id }}</option>
-                    </select>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-control-label" for="field_Province" >Provincia</label>
+                        <select class="form-control" id="field_Province" name="province" formControlName="province"
+                                (change)="setCantonsList(provinceIndex.value)" #provinceIndex>
+                            <option [ngValue]="null" selected disabled>Seleccione una opción</option>
+                            <option *ngFor="let province of lstProvinces;index as i" [value]="i">{{ province.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col" *ngIf="isSelected==true">
+                        <label class="form-control-label"  for="field_canton" >Cantón</label>
+                        <select class="form-control" id="field_canton" name="canton" formControlName="canton">
+                            <option [ngValue]="null" selected disabled>Seleccione una opción</option>
+                            <option [ngValue]="cantonOption.id === propertyForm.get('canton')!.value?.id ? propertyForm.get('canton')!.value : cantonOption" *ngFor="let cantonOption of lstCantons; trackBy: trackById">{{ cantonOption.name }}</option>
+                        </select>
+                        <small class="form-text text-danger"
+                               *ngIf="propertyForm.get('canton')?.errors?.required">
+                            El cantón es requerido.
+                        </small>
+                    </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.rent" for="field_rent">Rent</label>
-                    <select class="form-control" id="field_rent" name="rent" formControlName="rent">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="rentOption.id === editForm.get('rent')!.value?.id ? editForm.get('rent')!.value : rentOption" *ngFor="let rentOption of rents; trackBy: trackById">{{ rentOption.id }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.userAccount" for="field_userAccount">User Account</label>
-                    <select class="form-control" id="field_userAccount" name="userAccount" formControlName="userAccount">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userAccountOption.id === editForm.get('userAccount')!.value?.id ? editForm.get('userAccount')!.value : userAccountOption" *ngFor="let userAccountOption of useraccounts; trackBy: trackById">{{ userAccountOption.id }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.moneyType" for="field_moneyType">Money Type</label>
-                    <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="moneyTypeOption.id === editForm.get('moneyType')!.value?.id ? editForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of moneytypes; trackBy: trackById">{{ moneyTypeOption.id }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.canton" for="field_canton">Canton</label>
-                    <select class="form-control" id="field_canton" name="canton" formControlName="canton">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="cantonOption.id === editForm.get('canton')!.value?.id ? editForm.get('canton')!.value : cantonOption" *ngFor="let cantonOption of cantons; trackBy: trackById">{{ cantonOption.id }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.property.propertyCategory" for="field_propertyCategory">Property Category</label>
-                    <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="propertyCategoryOption.id === editForm.get('propertyCategory')!.value?.id ? editForm.get('propertyCategory')!.value : propertyCategoryOption" *ngFor="let propertyCategoryOption of propertycategories; trackBy: trackById">{{ propertyCategoryOption.id }}</option>
-                    </select>
+                    <label for="address1">Ingrese la dirección</label>
+                    <input id="address1" name="address1" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" placeholder="Ingrese una dirección" class="form-control mb-3"/>
+                    <agm-map style="height: 300px;"
+                             [latitude]="lat"
+                             [longitude]="lng"
+                             [zoom]="zoom"  (centerChange)="markerDragEnd($event)">
+                        <agm-marker
+                            [latitude]="lat"
+                            [longitude]="lng"
+                            [markerDraggable]="true"
+                           ></agm-marker>
+                    </agm-map>
                 </div>
             </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <jhi-alert-error></jhi-alert-error>
+            <div class="alert alert-danger" *ngIf="isValidDate">
+                No es permitido escoger una fecha inferior a la actual ni mayor a su a paquete de publicidad.
+            </div>
+            <div class="row justify-content-end">
+
+                <button type="button" id="cancel-save" class="btn btn-warning" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+                </button>
+                <button type="button" class="btn btn-primary" *ngIf="step != 1" (click)="previous()">Anterior</button>
+                <button type="button" class="btn btn-primary" *ngIf="step != 2" (click)="next()">Siguiente</button>
+
+                <button type="submit" id="save-entity" [disabled]="propertyForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2 ">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Enviar</span>
                 </button>
             </div>
         </form>
     </div>
 </div>
+
