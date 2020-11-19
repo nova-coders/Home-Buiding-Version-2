@@ -138,11 +138,11 @@ entity ImageCategory {
 entity Sale {
   Id Integer,
   FinalDate ZonedDateTime,
-  CadastralPlan String,
-  RegistryStudy String,
+  CadastralPlan TextBlob,
+  RegistryStudy TextBlob,
   PropertyId Integer
 }
-
+ambio de JDL sale
 entity Rent {
   Id Integer,
   Deposit Integer

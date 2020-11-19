@@ -37,11 +37,11 @@ public class ProvinceResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_LATITUDE = 1L;
-    private static final Long UPDATED_LATITUDE = 2L;
+    private static final String DEFAULT_LATITUDE = "AAAAAAAAAA";
+    private static final String UPDATED_LATITUDE = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_LONGITUDE = 1L;
-    private static final Long UPDATED_LONGITUDE = 2L;
+    private static final String DEFAULT_LONGITUDE = "AAAAAAAAAA";
+    private static final String UPDATED_LONGITUDE = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_STATE = false;
     private static final Boolean UPDATED_STATE = true;
@@ -149,8 +149,8 @@ public class ProvinceResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(province.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.intValue())))
-            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.intValue())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE)))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
@@ -167,8 +167,8 @@ public class ProvinceResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(province.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.intValue()))
-            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.intValue()))
+            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE))
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }

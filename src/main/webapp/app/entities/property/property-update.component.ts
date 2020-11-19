@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
@@ -7,14 +7,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-
 import { IProperty, Property } from 'app/shared/model/property.model';
 import { PropertyService } from './property.service';
-import { ISale } from 'app/shared/model/sale.model';
+import { ISale, Sale } from 'app/shared/model/sale.model';
 import { SaleService } from 'app/entities/sale/sale.service';
-import { IRent } from 'app/shared/model/rent.model';
-import { RentService } from 'app/entities/rent/rent.service';
-import { IUserAccount } from 'app/shared/model/user-account.model';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
 import { IMoneyType } from 'app/shared/model/money-type.model';
 import { MoneyTypeService } from 'app/entities/money-type/money-type.service';
@@ -22,61 +19,96 @@ import { ICanton } from 'app/shared/model/canton.model';
 import { CantonService } from 'app/entities/canton/canton.service';
 import { IPropertyCategory } from 'app/shared/model/property-category.model';
 import { PropertyCategoryService } from 'app/entities/property-category/property-category.service';
-
-type SelectableEntity = ISale | IRent | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { ProvinceService } from '../province/province.service';
+import { IProvince, Province } from '../../shared/model/province.model';
+import { ImageService } from '../../global-services/image.service';
+import { IImageCategory, ImageCategory } from '../../shared/model/image-category.model';
+import { ImageCategoryService } from '../image-category/image-category.service';
+import { ServicePaymentService } from '../../service-payment/service-payment.service';
+import { IPropertyImage, PropertyImage } from '../../shared/model/property-image.model';
+type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
   selector: 'jhi-property-update',
   templateUrl: './property-update.component.html',
 })
 export class PropertyUpdateComponent implements OnInit {
+  step: any = 1;
   isSaving = false;
+  isSelected = false;
+  isValidDate = false;
   sales: ISale[] = [];
-  rents: IRent[] = [];
-  useraccounts: IUserAccount[] = [];
-  moneytypes: IMoneyType[] = [];
-  cantons: ICanton[] = [];
-  propertycategories: IPropertyCategory[] = [];
+  lstUserAccounts: IUserAccount[] = [];
+  lstMoneytypes: IMoneyType[] = [];
+  lstCantons: ICanton[] = [];
+  lstProvinces: IProvince[] = [];
+  lstPropertyCategories: IPropertyCategory[] = [];
+  lstImageCategory: IImageCategory[] = [];
+  lstPropertyImages: IPropertyImage[] = [];
+  provinceIndex!: number;
+  cantonIndex!: number;
+  catastralPlan!: any;
+  registryStudy!: any;
+  zoom = 8;
+  lat = 9.9280694;
+  lng = -84.0907246;
+  address!: string;
+  private geoCoder = new google.maps.Geocoder();
+  @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
+  options: any = {
+    types: [],
+    componentRestrictions: { country: 'CR' },
+  };
+  files: File[];
+  fileUrl: string;
+  error = false;
+  public userAccount = new UserAccount();
 
-  editForm = this.fb.group({
+  propertyForm = this.fb.group({
     id: [],
-    title: [],
-    description: [],
-    price: [],
-    discount: [],
-    landSquareMeters: [],
-    areaSquareMeters: [],
-    latitude: [],
-    longitude: [],
-    zoom: [],
-    addressText: [],
-    creationDate: [],
-    state: [],
-    sale: [],
-    rent: [],
-    userAccount: [],
-    moneyType: [],
-    canton: [],
-    propertyCategory: [],
+    title: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]],
+    price: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    discount: [''],
+    finalDate: ['', [Validators.required]],
+    landSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    areaSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+    addressText: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    moneyType: ['', [Validators.required]],
+    canton: ['', [Validators.required]],
+    propertyCategory: ['', [Validators.required]],
+    propertyId: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    cadastralPlan: ['', [Validators.required]],
+    registryStudy: ['', [Validators.required]],
+    propertyImages: ['', [Validators.required]],
+    imageCategory: ['', [Validators.required]],
+    province: ['', [Validators.required]],
   });
 
   constructor(
     protected propertyService: PropertyService,
     protected saleService: SaleService,
-    protected rentService: RentService,
     protected userAccountService: UserAccountService,
     protected moneyTypeService: MoneyTypeService,
     protected cantonService: CantonService,
+    protected provinceService: ProvinceService,
+    protected imageCategoryService: ImageCategoryService,
     protected propertyCategoryService: PropertyCategoryService,
+    protected servicePaymentService: ServicePaymentService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private imageService: ImageService
+  ) {
+    this.files = [];
+    this.fileUrl = '';
+    this.userAccount.publishingPackage = {} as UserAccount;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ property }) => {
       if (!property.id) {
-        const today = moment().startOf('day');
-        property.creationDate = today;
+        property.creationDate = moment().startOf('day');
       }
 
       this.updateForm(property);
@@ -102,43 +134,63 @@ export class PropertyUpdateComponent implements OnInit {
               .subscribe((concatRes: ISale[]) => (this.sales = concatRes));
           }
         });
+      this.imageCategoryService.query().subscribe((res: HttpResponse<IImageCategory[]>) => (this.lstImageCategory = res.body || []));
+      this.provinceService.query().subscribe((res: HttpResponse<IProvince[]>) => (this.lstProvinces = res.body || []));
+      this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.lstUserAccounts = res.body || []));
 
-      this.rentService
-        .query({ filter: 'property-is-null' })
-        .pipe(
-          map((res: HttpResponse<IRent[]>) => {
-            return res.body || [];
-          })
-        )
-        .subscribe((resBody: IRent[]) => {
-          if (!property.rent || !property.rent.id) {
-            this.rents = resBody;
-          } else {
-            this.rentService
-              .find(property.rent.id)
-              .pipe(
-                map((subRes: HttpResponse<IRent>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
-              )
-              .subscribe((concatRes: IRent[]) => (this.rents = concatRes));
-          }
-        });
-
-      this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.useraccounts = res.body || []));
-
-      this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.moneytypes = res.body || []));
-
-      this.cantonService.query().subscribe((res: HttpResponse<ICanton[]>) => (this.cantons = res.body || []));
+      this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.lstMoneytypes = res.body || []));
 
       this.propertyCategoryService
         .query()
-        .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.propertycategories = res.body || []));
+        .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
     });
+    this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
+      this.userAccount = userAccount.body;
+    });
+
+    this.setCurrentLocation();
   }
 
+  public handleAddressChange(address: any): void {
+    this.lat = address.geometry.location.lat();
+    this.lng = address.geometry.location.lng();
+    console.log(this.lat);
+    console.log(this.lng);
+  }
+  public setCurrentLocation(): void {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.zoom = 15;
+      });
+    }
+  }
+  public markerDragEnd(coords: any): void {
+    console.log(coords);
+    this.lat = Number(coords.lat);
+    this.lng = Number(coords.lng);
+    this.geoCoder == new google.maps.Geocoder();
+
+    this.getAddress();
+  }
+
+  public getAddress(): void {
+    this.geoCoder?.geocode({ location: { lat: this.lat, lng: this.lng } }, (results: any, status: any) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 12;
+          this.address = results[0].formatted_address;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+  }
   updateForm(property: IProperty): void {
-    this.editForm.patchValue({
+    this.propertyForm.patchValue({
       id: property.id,
       title: property.title,
       description: property.description,
@@ -146,14 +198,13 @@ export class PropertyUpdateComponent implements OnInit {
       discount: property.discount,
       landSquareMeters: property.landSquareMeters,
       areaSquareMeters: property.areaSquareMeters,
-      latitude: property.latitude,
-      longitude: property.longitude,
-      zoom: property.zoom,
+      latitude: this.lat,
+      longitude: this.lng,
+      zoom: this.zoom,
       addressText: property.addressText,
       creationDate: property.creationDate ? property.creationDate.format(DATE_TIME_FORMAT) : null,
       state: property.state,
       sale: property.sale,
-      rent: property.rent,
       userAccount: property.userAccount,
       moneyType: property.moneyType,
       canton: property.canton,
@@ -171,34 +222,56 @@ export class PropertyUpdateComponent implements OnInit {
     if (property.id !== undefined) {
       this.subscribeToSaveResponse(this.propertyService.update(property));
     } else {
-      this.subscribeToSaveResponse(this.propertyService.create(property));
+      if (!this.error) console.log(this.subscribeToSaveResponse(this.propertyService.create(property)));
     }
   }
 
+  previous(): void {
+    this.step = this.step - 1;
+  }
+
+  next(): void {
+    if (!this.isFinalDate()) {
+      this.step = this.step + 1;
+      window.scrollTo(0, 0);
+    }
+  }
+
+  private isFinalDate(): boolean {
+    let date1 = moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT);
+    let difference = date1.diff(new Date(), 'days');
+    let days = this.userAccount!.publishingPackage!.cantDays;
+    // @ts-ignore
+    return (this.isValidDate = !(difference <= days && difference >= 0));
+  }
+
   private createFromForm(): IProperty {
+    this.uploadFile();
+    console.log(this.lstPropertyImages);
+    let mySale = new Sale();
+    mySale.cadastralPlan = this.catastralPlan;
+    mySale.registryStudy = this.registryStudy;
+    mySale.propertyId = this.propertyForm.get(['propertyId'])!.value;
+    mySale.finalDate = moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT);
     return {
       ...new Property(),
-      id: this.editForm.get(['id'])!.value,
-      title: this.editForm.get(['title'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      price: this.editForm.get(['price'])!.value,
-      discount: this.editForm.get(['discount'])!.value,
-      landSquareMeters: this.editForm.get(['landSquareMeters'])!.value,
-      areaSquareMeters: this.editForm.get(['areaSquareMeters'])!.value,
-      latitude: this.editForm.get(['latitude'])!.value,
-      longitude: this.editForm.get(['longitude'])!.value,
-      zoom: this.editForm.get(['zoom'])!.value,
-      addressText: this.editForm.get(['addressText'])!.value,
-      creationDate: this.editForm.get(['creationDate'])!.value
-        ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      state: this.editForm.get(['state'])!.value,
-      sale: this.editForm.get(['sale'])!.value,
-      rent: this.editForm.get(['rent'])!.value,
-      userAccount: this.editForm.get(['userAccount'])!.value,
-      moneyType: this.editForm.get(['moneyType'])!.value,
-      canton: this.editForm.get(['canton'])!.value,
-      propertyCategory: this.editForm.get(['propertyCategory'])!.value,
+      title: this.propertyForm.get(['title'])!.value,
+      description: this.propertyForm.get(['description'])!.value,
+      price: this.propertyForm.get(['price'])!.value,
+      discount: this.propertyForm.get(['discount'])!.value,
+      landSquareMeters: this.propertyForm.get(['landSquareMeters'])!.value,
+      areaSquareMeters: this.propertyForm.get(['areaSquareMeters'])!.value,
+      latitude: String(this.lat),
+      longitude: String(this.lng),
+      zoom: this.zoom,
+      addressText: this.propertyForm.get(['addressText'])!.value,
+      sale: mySale,
+      state: 1,
+      userAccount: this.userAccount,
+      moneyType: this.propertyForm.get(['moneyType'])!.value,
+      canton: this.propertyForm.get(['canton'])!.value,
+      propertyCategory: this.propertyForm.get(['propertyCategory'])!.value,
+      propertyImages: this.lstPropertyImages,
     };
   }
 
@@ -220,5 +293,76 @@ export class PropertyUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  public setCantonsList(provinceIndex: any): void {
+    let mypro: Province;
+    mypro = this.lstProvinces[provinceIndex];
+    this.lat = Number(mypro.latitude);
+    this.lng = Number(mypro.longitude);
+    this.getAddress();
+    this.cantonService
+      .findByProvince(provinceIndex)
+      .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+    this.isSelected = true;
+  }
+
+  public onSelectImage(event: any): void {
+    if (this.files && this.files.length >= 5) {
+      this.onRemoveImage(this.files[0]);
+    }
+
+    this.files.push(...event.addedFiles);
+    this.propertyForm.patchValue({
+      propertyImages: 'true',
+    });
+  }
+
+  public onRemoveImage(event: any): void {
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  public uploadFile(): void {
+    const fileData = this.files;
+    for (let index = 0; index < this.files.length; index++) {
+      this.imageService.uploadImage(fileData[index]).subscribe(
+        response => {
+          console.log(response.url);
+          this.fileUrl = response.url;
+          let myproperty = new PropertyImage();
+          let myCategory = new ImageCategory();
+          myCategory.id = this.propertyForm.get(['imageCategory'])!.value;
+          myproperty.imageCategory = myCategory;
+          myproperty.url = this.fileUrl;
+          this.lstPropertyImages.push(myproperty);
+        },
+        () => {
+          this.error = true;
+        }
+      );
+    }
+  }
+
+  public onFileSelected(event: any, opc: number): void {
+    this.getBase64(event.target.files[0]).then((base64: any) => {
+      if (opc === 1) {
+        this.catastralPlan = base64;
+        const file = document.getElementById('urlCadastralPlan');
+        file?.setAttribute('src', String(base64));
+      } else {
+        this.registryStudy = base64;
+        const file2 = document.getElementById('urlRegistryStudy');
+        file2?.setAttribute('src', String(base64));
+      }
+    });
+  }
+
+  public getBase64(file: any): any {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 }

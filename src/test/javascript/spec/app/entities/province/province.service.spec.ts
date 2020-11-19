@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Province(0, 'AAAAAAA', 0, 0, false, currentDate);
+      elemDefault = new Province(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, currentDate);
     });
 
     describe('Service methods', () => {
@@ -70,8 +70,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            latitude: 1,
-            longitude: 1,
+            latitude: 'BBBBBB',
+            longitude: 'BBBBBB',
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },
@@ -96,8 +96,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            latitude: 1,
-            longitude: 1,
+            latitude: 'BBBBBB',
+            longitude: 'BBBBBB',
             state: true,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
           },

@@ -7,5 +7,6 @@
     {
       "path": "./tsconfig.e2e.json"
     }
-  ]
+  ],
+  "types": ["googlemaps"]
 }
