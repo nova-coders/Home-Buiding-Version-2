@@ -6,6 +6,7 @@
     <div class="links">
         <a class="link-element" [routerLink]="['/auth/login']">Iniciar sesión</a>
 
+
         <a class="link-element" *ngIf="isAuthenticated() == true" (click)="logout()">Cerrar sesion</a>
 
         <a class="link-element" *ngIf="isAuthenticated() == true" routerLink="/servicepayment">Pagar servicio</a>

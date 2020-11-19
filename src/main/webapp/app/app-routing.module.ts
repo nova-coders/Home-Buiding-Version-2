@@ -8,6 +8,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { ServicePaymentComponent } from 'app/service-payment/service-payment.component';
 import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
 import { ContractComponent } from 'app/contract/contract.component';
+import { ShowMapComponent } from 'app/global-components/show-map/show-map.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -41,6 +42,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'document/:id',
           component: ContractComponent,
+        },
+        {
+          path: 'showMap',
+          component: ShowMapComponent,
         },
         ...LAYOUT_ROUTES,
       ],

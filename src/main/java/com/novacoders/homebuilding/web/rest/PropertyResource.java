@@ -73,9 +73,7 @@ public class PropertyResource {
             List <PropertyImage> mylistImages= new ArrayList(property.getPropertyImages());
             for(int i=0;i<mylistImages.size();i++) {
                 mylistImages.get(i).setProperty(result);
-                log.debug("------------------ : {}", mylistImages.get(i).toString());
             }
-
             propertyImageRepository.saveAll(mylistImages);
         }
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))

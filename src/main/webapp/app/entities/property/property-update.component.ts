@@ -46,7 +46,6 @@ export class PropertyUpdateComponent implements OnInit {
   lstPropertyCategories: IPropertyCategory[] = [];
   lstImageCategory: IImageCategory[] = [];
   lstPropertyImages: IPropertyImage[] = [];
-  provinceIndex!: number;
   cantonIndex!: number;
   catastralPlan!: any;
   registryStudy!: any;
