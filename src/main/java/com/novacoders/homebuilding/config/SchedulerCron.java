@@ -29,7 +29,7 @@ public class SchedulerCron {
         this.auctionService = auctionService;
     }
     @Async
-    @Scheduled(fixedRate  = 5000)
+    @Scheduled(fixedRate  = 5000,initialDelay = 180000)
     public void task() {
         List<Property> propertyList = this.propertyService.getAllProperty();
         propertyList.forEach(property -> {
