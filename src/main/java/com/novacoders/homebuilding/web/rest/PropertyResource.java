@@ -113,6 +113,11 @@ public class PropertyResource {
         return propertyRepository.findAll();
     }
 
+    @GetMapping("/properties/sale")
+    public List<Property> getAllPropertiesBySale() {
+        log.debug("REST request to get all Properties");
+        return propertyRepository.findBySaleNotNull();
+    }
     /**
      * {@code GET  /properties/:id} : get the "id" property.
      *

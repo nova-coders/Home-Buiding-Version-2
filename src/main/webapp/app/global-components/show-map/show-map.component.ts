@@ -5,9 +5,7 @@ import { IProperty, Property } from 'app/shared/model/property.model';
 import { ISale } from 'app/shared/model/sale.model';
 import { PropertyService } from 'app/entities/property/property.service';
 import { ProvinceService } from 'app/entities/province/province.service';
-import { IProvince, Province } from 'app/shared/model/province.model';
 import { ActivatedRoute } from '@angular/router';
-import { Offer } from 'app/shared/model/offer.model';
 
 @Component({
   selector: 'jhi-show-map',
@@ -18,9 +16,7 @@ export class ShowMapComponent implements OnInit {
   lat = 9.9280694;
   lng = -84.0907246;
   zoom = 15;
-  properties: IProperty[] = [];
-  sales: ISale[] = [];
-  oMarker?: Marker;
+  //oMarker?: Marker;
   markers = [];
 
   constructor(
@@ -29,24 +25,31 @@ export class ShowMapComponent implements OnInit {
     protected provinceService: ProvinceService,
     protected activatedRoute: ActivatedRoute
   ) {}
-  loadAll(): void {
-    this.propertyService.query().subscribe((res: HttpResponse<IProperty[]>) => (this.properties = res.body || []));
-    // @ts-ignore
-    for (let i = 0; i <= this.properties.length; i++) {
-      let marker = new Marker();
-      // @ts-ignore
-      marker.property = this.properties[i];
-      // @ts-ignore
-      marker.icon = this.obtainIcon(this.properties[i].canton.province.id);
-      // @ts-ignore
-      this.markers.push(marker);
-    }
-  }
 
   ngOnInit(): void {
     this.loadAll();
   }
+  loadAll(): void {
+    let myProperties;
+    this.showMapService.query().subscribe((res: HttpResponse<any>) => res.body || []);
+    this.showMapService.getByProvince().subscribe(response => {
+      myProperties = response.body as Property;
 
+      console.log(myProperties);
+      // @ts-ignore
+      for (let i = 0; i <= myProperties.length; i++) {
+        let marker = new Marker();
+        // @ts-ignore
+        marker.property = myProperties[i];
+        marker.lat = Number(myProperties[i].latitude);
+        marker.lng = Number(myProperties[i].longitude);
+        // @ts-ignore
+        marker.icon = this.obtainIcon(myProperties[i].canton.province.id);
+        // @ts-ignore
+        this.markers.push(marker);
+      }
+    });
+  }
   public obtainIcon(province: number): string {
     let iconChosen = '';
     switch (province) {
@@ -78,6 +81,9 @@ export class ShowMapComponent implements OnInit {
 
 export class Marker {
   public icon?: string;
-  public property?: Property;
+  public lat?: number;
+  public lng?: number;
+  public property?: IProperty;
+
   constructor() {}
 }

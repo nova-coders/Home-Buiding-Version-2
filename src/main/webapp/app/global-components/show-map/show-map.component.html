@@ -1,5 +1,6 @@
-<div>
-    <div class="row justify-content-center">
+
+<div class="mt-5">
+    <div class="row justify-content-center mt-5">
         <div class="col-md-8 text-center">
             <h1>Subastas de inmuebles</h1>
         </div>
@@ -12,8 +13,8 @@
                 <agm-marker
                   *ngFor=" let marker of markers"
                   [animation]="'BOUNCE'"
-                [latitude]="(marker.property.latitude|number)"
-                  [longitude]="(marker.property.longitude|number)"
+                [latitude]="marker.lat"
+                  [longitude]="marker.lng"
                [agmFitBounds]="true" [iconUrl]="marker.icon" >
                     <agm-info-window [disableAutoPan]="true" style="height: 400px">
                         <div class="card">
