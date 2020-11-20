@@ -41,6 +41,13 @@ export class NavbarComponent implements OnInit {
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
   }
+  addSticky(): void {
+    const header = document.getElementById('header');
+
+    if (header != null) {
+      header.classList.add('sticky');
+    }
+  }
   changeFooterOnScroll(): void {
     const header = document.getElementById('header');
     const totop = document.getElementById('scroll-to-top');

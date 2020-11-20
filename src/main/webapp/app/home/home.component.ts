@@ -29,10 +29,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const header = document.getElementById('header');
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
     // this.changeFooterOnScroll();
+    if (header != null) {
+      header.classList.remove('sticky');
+      this.changeFooterOnScroll();
+    }
   }
 
+  addSticky(): void {
+    const header = document.getElementById('header');
+
+    if (header != null) {
+      header.classList.add('sticky');
+    }
+  }
   changeFooterOnScroll(): void {
     const header = document.getElementById('header');
     const totop = document.getElementById('scroll-to-top');
