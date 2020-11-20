@@ -1,9 +1,13 @@
-<button (click)="setSrcIframe()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+
+
+
+
+<button (click)="setSrcIframe()" type="button" class="btn btn-primary btn-sm mt-2 mb-2" data-toggle="modal" [attr.data-target]="'#'+idmodal">
     {{btnName}}
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{idmodal}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +18,7 @@
             </div>
             <div class="modal-body">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe id="cadastralPlanDocument" class="embed-responsive-item" src="" allowfullscreen></iframe>
+                    <iframe id="document-{{idmodal}}" class="embed-responsive-item" src="../../../../content/pdf/homeBuildingCadastral.pdf" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="modal-footer">

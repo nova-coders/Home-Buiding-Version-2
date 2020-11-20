@@ -1,0 +1,35 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Ofertar</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Realiza tu oferta aquí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Para ofertar, debe ingresar una cantidad, y esta debe ser mayor que la oferta más alta que fue de ${{maximumBid}}.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="col-form-label">Tu oferta:</label>
+                        <input type="number" placeholder="{{maximumBid+1}}" min="{{maximumBid}}" class="form-control" id="amount" [(ngModel)]="this.offer.amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="commentary" class="col-form-label">Comentario:</label>
+                        <textarea class="form-control" id="commentary"  [(ngModel)]="this.offer.commentary"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="offerProperty()">Ofertar</button>
+            </div>
+        </div>
+    </div>
+</div>

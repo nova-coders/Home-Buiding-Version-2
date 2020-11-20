@@ -20,6 +20,7 @@ export class BidAtAuctionComponent implements OnInit {
   public images: string[];
   public startPage = 1;
   public actualPrice = 0;
+  public maximumBid: number | undefined;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -30,8 +31,8 @@ export class BidAtAuctionComponent implements OnInit {
     this.idProperty = -1;
     this.offers = [];
     this.images = [];
+    this.maximumBid = 0;
   }
-
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
@@ -40,7 +41,11 @@ export class BidAtAuctionComponent implements OnInit {
         if (this.property.sale != null) {
           this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
             this.offers = response;
+            if (this.offers.length > 0) {
+              this.maximumBid = this.offers[0]?.amount;
+            }
           });
+
           this.seeAuctionService.getAuctionImgs(this.property.id as number).subscribe(response => {
             response.forEach((value: any) => {
               this.images.push(value.url);
