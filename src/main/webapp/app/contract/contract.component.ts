@@ -39,7 +39,7 @@ export class ContractComponent implements OnInit {
 
   ngOnInit(): void {
     this.contractId = Number(this.activeRouter.snapshot.paramMap.get('id'));
-    this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
+    this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
       this.loggedUserAccount = userAccount;

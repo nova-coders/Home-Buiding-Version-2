@@ -48,21 +48,11 @@
                     <jhi-modal-document idmodal="modal2" btnName="Ver estudio registral" baseg4File="{{property?.sale?.registryStudy}}" title="Estudio registral de la propiedad"></jhi-modal-document>
                     <hr>
                     <h2 *ngIf="offers.length > 0">Oferta más alta: ${{offers[0].amount}}</h2>
-                    <jhi-modal-bid maximumBid="{{maximumBid}}"></jhi-modal-bid>
+                    <hr>
+                    <jhi-modal-bid [sale]="property?.sale"  [offers]="offers"  [maximumBid]="maximumBid"></jhi-modal-bid>
                 </div>
             </div>
         </div>
-
-
-
-        <div class="row"  *ngIf="offers.length > 0 && property.state === 1">
-            <div class="col-md-12 col-lg-12">
-                <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
-            </div>
-        </div>
-
-
-
 
         <div class="row" *ngIf="offers.length > 0 && property.state == 3">
             <div class="col-md-12 col-lg-12">
@@ -87,7 +77,7 @@
             </div>
         </div>
 
-        <div class="row" *ngIf="offers.length == 0 ">
+        <div class="row" *ngIf="offers.length === 0 ">
             <div class="col-md-12 col-lg-12 text-center mb-2">
                 <h3>Sin ofertas por el momento</h3>
             </div>
