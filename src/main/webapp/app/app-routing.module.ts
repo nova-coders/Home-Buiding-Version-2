@@ -9,6 +9,8 @@ import { ServicePaymentComponent } from 'app/service-payment/service-payment.com
 import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
 import { ContractComponent } from 'app/contract/contract.component';
 import { ShowMapComponent } from 'app/global-components/show-map/show-map.component';
+import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.component';
+
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -46,6 +48,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'showMap',
           component: ShowMapComponent,
+        },
+        {
+          path: 'bit-at-auction/:id',
+          component: BidAtAuctionComponent,
         },
         ...LAYOUT_ROUTES,
       ],

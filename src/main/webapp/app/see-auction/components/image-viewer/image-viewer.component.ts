@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ImageViewerComponent implements OnInit {
   @Input() images: string[];
   public config = {
-    btnClass: 'default', // The CSS class(es) that will apply to the buttons
+    btnClass: 'default  z-0', // The CSS class(es) that will apply to the buttons
     zoomFactor: 0.1, // The amount that the scale will be increased by
     containerBackgroundColor: '#ccc', // The color to use for the background. This can provided in hex, or rgb(a).
     wheelZoom: true, // If true, the mouse wheel can be used to zoom in

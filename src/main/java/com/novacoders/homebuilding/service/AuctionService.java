@@ -21,13 +21,13 @@ public class AuctionService {
     public final DocumentRepository documentRepository;
     public final ImagePropertyRepository imagePropertyRepository;
     private final UserRepository userRepository;
-    private final ServicePaymentRepository servicePaymentRepository;
+    private final MailAuctionService mailAuctionService;
     private static final Logger log = LoggerFactory.getLogger(ActivityService.class);
-    public AuctionService(AuctionRepository auctionRepository, PropertyRepository propertyRepository, UserRepository userRepository, ServicePaymentRepository servicePaymentRepository, DocumentRepository documentRepository, ImagePropertyRepository imagePropertyRepository){
+    public AuctionService(AuctionRepository auctionRepository, PropertyRepository propertyRepository, UserRepository userRepository,  MailAuctionService mailAuctionService, DocumentRepository documentRepository, ImagePropertyRepository imagePropertyRepository){
         this.auctionRepository = auctionRepository;
         this.propertyRepository = propertyRepository;
         this.userRepository = userRepository;
-        this.servicePaymentRepository = servicePaymentRepository;
+        this.mailAuctionService = mailAuctionService;
         this.documentRepository = documentRepository;
         this.imagePropertyRepository = imagePropertyRepository;
 
@@ -57,8 +57,30 @@ public class AuctionService {
                     document.setState(true);
                     document.setCreationDate(ZonedDateTime.now());
                     document = this.documentRepository.save(document);
+                    this.mailAuctionService.sendAuctionEmailToBuyerUser(document);
                     return "" + document.getId();
                 }
+            }
+        }
+        throw new ResourceException("Action Invalid Data");
+    }
+    public String closeAuctionExpire(long propertyId) {
+        Optional<Property> oProperty = this.propertyRepository.findById(propertyId);
+        if (oProperty.isPresent()) {
+            Property property = oProperty.get();
+            List<Offer> offerList = this.auctionRepository.findBySale(property.getSale().getId());
+            if (offerList.size() > 0) {
+                Document document = new Document();
+                property.setState(3);
+                this.propertyRepository.save(property);
+                document.setProperty(property);
+                document.setBuyer(offerList.get(0).getUserAccount());
+                document.setSeller(property.getUserAccount());
+                document.setState(true);
+                document.setCreationDate(ZonedDateTime.now());
+                document = this.documentRepository.save(document);
+                this.mailAuctionService.sendAuctionEmailToBuyerUser(document);
+                return "" + document.getId();
             }
         }
         throw new ResourceException("Action Invalid Data");
