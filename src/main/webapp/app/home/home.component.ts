@@ -5,6 +5,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { PropertyBlockComponent } from 'app/html-components/property-block/property-block.component';
 import { Property } from 'app/shared/model/property.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-home',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   propertyList: Property[];
   propertyListHtml: PropertyBlockComponent[];
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService) {
+  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private router: Router) {
     this.currentProperty = new Property();
     this.currentProperty.title = 'Propiedad de prueba';
     this.propertyList = [this.currentProperty];
@@ -33,7 +34,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
     // this.changeFooterOnScroll();
     if (header != null) {
-      header.classList.remove('sticky');
       this.changeFooterOnScroll();
     }
   }
@@ -42,28 +42,41 @@ export class HomeComponent implements OnInit, OnDestroy {
     const header = document.getElementById('header');
 
     if (header != null) {
-      header.classList.add('sticky');
+      if (this.router.url !== '') {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
     }
   }
+
   changeFooterOnScroll(): void {
     const header = document.getElementById('header');
     const totop = document.getElementById('scroll-to-top');
     // @ts-ignore
     const sticky = header.offsetTop;
     const scrollCallBack = window.addEventListener('scroll', () => {
-      if (window.pageYOffset > sticky + 0) {
-        if (header != null) {
-          header.classList.add('sticky');
-        }
-        if (totop != null) {
-          totop.classList.add('show');
+      if (this.router.url === '') {
+        if (window.pageYOffset > sticky) {
+          if (header != null) {
+            header.classList.add('sticky');
+          }
+          if (totop != null) {
+            totop.classList.add('show');
+          }
+        } else {
+          if (header != null) {
+            header.classList.remove('sticky');
+          }
+          if (totop != null) {
+            totop.classList.remove('show');
+          }
         }
       } else {
-        if (header != null) {
-          header.classList.remove('sticky');
-        }
-        if (totop != null) {
-          totop.classList.remove('show');
+        // @ts-ignore
+        if (!header.classList.contains('sticky')) {
+          // @ts-ignore
+          header.classList.add('sticky');
         }
       }
     });

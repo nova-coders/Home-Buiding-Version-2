@@ -50,7 +50,6 @@ export class NavbarComponent implements OnInit {
       if (this.isAuthenticated()) {
         this.servicePaymentService.getUserAccount().subscribe(response => {
           this.userAccount = <UserAccount>response.body;
-          console.log(this.userAccount);
         });
       }
     });
@@ -60,36 +59,7 @@ export class NavbarComponent implements OnInit {
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
   }
-  addSticky(): void {
-    const header = document.getElementById('header');
 
-    if (header != null) {
-      header.classList.add('sticky');
-    }
-  }
-  changeFooterOnScroll(): void {
-    const header = document.getElementById('header');
-    const totop = document.getElementById('scroll-to-top');
-    // @ts-ignore
-    const sticky = header.offsetTop;
-    const scrollCallBack = window.addEventListener('scroll', () => {
-      if (window.pageYOffset > sticky + 0) {
-        if (header != null) {
-          header.classList.add('sticky');
-        }
-        if (totop != null) {
-          totop.classList.add('show');
-        }
-      } else {
-        if (header != null) {
-          header.classList.remove('sticky');
-        }
-        if (totop != null) {
-          totop.classList.remove('show');
-        }
-      }
-    });
-  }
   changeLanguage(languageKey: string): void {
     this.sessionStorage.store('locale', languageKey);
     this.languageService.changeLanguage(languageKey);
