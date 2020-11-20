@@ -1,15 +1,72 @@
-<header style="margin-bottom: 75px;">
+<header>
     <div id="header" class="sticky bg-primary"></div>
     <div class="logo">
         <img src="https://i.imgur.com/yBlhXVS.png" class="img-fluid" alt="#">
     </div>
     <div class="links">
-        <a class="link-element" [routerLink]="['/auth/login']">Iniciar sesión</a>
+        <a class="link-element" [routerLink]="['']">Home</a>
 
-        <a class="link-element" *ngIf="isAuthenticated() == true" (click)="logout()">Cerrar sesion</a>
+        <a class="link-element">Subastas</a>
 
-        <a class="link-element" *ngIf="isAuthenticated() == true" routerLink="/servicepayment">Pagar servicio</a>
+        <a class="link-element">Alquileres</a>
 
-        <a class="link-element" *ngIf="isAuthenticated() == true" routerLink="account/settings">Opciones</a>
+        <a *ngIf="!isAuthenticated()" class="link-element" [routerLink]="['/account/register']">Crear cuenta</a>
+
+        <a *ngIf="!isAuthenticated()" class="btn btn-secondary" [routerLink]="['/auth/login']">
+            <fa-icon icon="sign-in-alt"></fa-icon>
+            Iniciar sesi&oacute;n
+        </a>
+
+        <div *ngIf="isAuthenticated()" class="dropup link-element">
+            <div class="btn btn-outline-light py-1 px-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="avatar avatar-sm" [src]="userAccount.profilePicture"  alt="Avatar">
+                <span *ngIf="account" class="mx-2">
+                    {{account.login}}
+                </span>
+            </div>
+            <div class="dropdown-menu">
+                <a href="javascript:;" class="dropdown-item">
+                    <i class="fa fa-user-circle"></i>
+                    <span>Mi perfil</span>
+                </a>
+                <a href="javascript:;" class="dropdown-item">
+                    <i class="fa fa-building"></i>
+                    <span>Registrar subasta</span>
+                </a>
+                <a href="javascript:;" class="dropdown-item">
+                   <i class="fa fa-truck-loading"></i>
+                    <span>Registrar alquiler</span>
+                </a>
+                <a href="javascript:;" class="dropdown-item">
+                    <i class="fa fa-calendar"></i>
+                    <span>Citas</span>
+                </a>
+                <a href="javascript:;" class="dropdown-item">
+                    <i class="fa fa-object-group"></i>
+                    <span>Mis subastas</span>
+                </a>
+                <a href="javascript:;" class="dropdown-item">
+                    <i class="fa fa-exclamation-circle"></i>
+                    <span>Mis ofertas</span>
+                </a>
+                <a href="javascript:;" class="dropdown-item">
+                    <i class="fa fa-hotel"></i>
+                    <span>Mis alquileres</span>
+                </a>
+                <a routerLink="/servicepayment" class="dropdown-item">
+                    <i class="fa fa-comment-dollar"></i>
+                    <span>Comprar servicio</span>
+                </a>
+                <a routerLink="account/settings" class="dropdown-item">
+                    <i class="fa fa-cog"></i>
+                    <span>Opciones</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a (click)="logout()" class="dropdown-item">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Cerrar sesi&oacute;n</span>
+                </a>
+            </div>
+        </div>
     </div>
 </header>

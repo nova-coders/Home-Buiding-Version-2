@@ -1411,3 +1411,25 @@ footer {
     }
   }
 }
+.slick-slide {
+  outline: none;
+  width: 355px;
+  display: inline-block;
+}
+
+.info-block fa-icon {
+  font-size: 8vh;
+}
+
+.info-block h4 {
+  padding: 10px;
+}
+.info-block p {
+  padding: 30px;
+}
+
+.property-block {
+  height: 400px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

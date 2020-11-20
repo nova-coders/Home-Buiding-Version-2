@@ -9,6 +9,10 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { Subscription } from 'rxjs';
+import { Account } from 'app/core/user/account.model';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
+import { UserAccount } from 'app/shared/model/user-account.model';
 
 @Component({
   selector: 'jhi-navbar',
@@ -16,12 +20,15 @@ import { ProfileService } from 'app/layouts/profiles/profile.service';
   styleUrls: ['navbar.scss'],
 })
 export class NavbarComponent implements OnInit {
+  authSubscription?: Subscription;
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
   swaggerEnabled?: boolean;
   version: string;
   header: null;
+  account: Account | null = null;
+  userAccount: UserAccount;
 
   constructor(
     private loginService: LoginService,
@@ -30,40 +37,29 @@ export class NavbarComponent implements OnInit {
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private servicePaymentService: ServicePaymentService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+    this.userAccount = new UserAccount();
   }
 
   ngOnInit(): void {
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+      if (this.isAuthenticated()) {
+        this.servicePaymentService.getUserAcoount().subscribe(response => {
+          this.userAccount = <UserAccount>response.body;
+        });
+      }
+    });
+
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
   }
-  changeFooterOnScroll(): void {
-    const header = document.getElementById('header');
-    const totop = document.getElementById('scroll-to-top');
-    // @ts-ignore
-    const sticky = header.offsetTop;
-    const scrollCallBack = window.addEventListener('scroll', () => {
-      if (window.pageYOffset > sticky + 0) {
-        if (header != null) {
-          header.classList.add('sticky');
-        }
-        if (totop != null) {
-          totop.classList.add('show');
-        }
-      } else {
-        if (header != null) {
-          header.classList.remove('sticky');
-        }
-        if (totop != null) {
-          totop.classList.remove('show');
-        }
-      }
-    });
-  }
+
   changeLanguage(languageKey: string): void {
     this.sessionStorage.store('locale', languageKey);
     this.languageService.changeLanguage(languageKey);
