@@ -8,6 +8,8 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { ServicePaymentComponent } from 'app/service-payment/service-payment.component';
 import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
 import { ContractComponent } from 'app/contract/contract.component';
+import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.component';
+
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -42,9 +44,13 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'document/:id',
           component: ContractComponent,
         },
+        {
+          path: 'bit-at-auction/:id',
+          component: BidAtAuctionComponent,
+        },
         ...LAYOUT_ROUTES,
       ],
-      { enableTracing: DEBUG_INFO_ENABLED, useHash: true }
+      { enableTracing: DEBUG_INFO_ENABLED }
     ),
   ],
   exports: [RouterModule],

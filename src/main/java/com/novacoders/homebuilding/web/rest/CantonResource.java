@@ -102,7 +102,11 @@ public class CantonResource {
         Optional<Canton> canton = cantonRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(canton);
     }
-
+    @GetMapping("/cantons/province/{idProvince}")
+    public List<Canton> getAllCantonsByProvince(@PathVariable Long idProvince) {
+        log.debug("REST request to get all Cantons by province");
+        return cantonRepository.findByProvinceId(idProvince);
+    }
     /**
      * {@code DELETE  /cantons/:id} : delete the "id" canton.
      *

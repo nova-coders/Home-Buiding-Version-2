@@ -1,5 +1,5 @@
 id;name;price;cant_property_sale;cant_property_rent;cant_days;professional;creation_date;type;state
-1;Cambridgeshire object-oriented Movies;23094;59990;5289;53368;false;2020-11-02T10:51:58;82723;false
+1;Cambridgeshire object-oriented Movies;23094;59990;5289;8;false;2020-11-02T10:51:58;82723;true
 2;Mobility;72758;93542;94653;8426;false;2020-11-02T23:48:53;87119;false
 3;Fresh Rustic Plastic Ball;64780;13461;29653;87085;true;2020-11-02T17:12:09;83394;false
 4;online Regional;74791;52420;50316;88902;false;2020-11-02T10:08:00;61608;true

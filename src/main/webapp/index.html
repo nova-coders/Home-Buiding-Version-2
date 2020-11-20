@@ -14,19 +14,18 @@
     <link rel="stylesheet" href="/content/css/loading.css">
     <link rel="stylesheet" href="/content/fonts/fontawesome-free-5.15.1/css/all.css" />
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0WA_0aYc0LYjQizsUml91CIAKUtQnoyQ&libraries=places&language=en"></script>
 </head>
 <body>
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <jhi-main>
-        <div class="app-loading">
-            <div class="lds-css ng-scope">
-                <div class="lds-pacman">
-                    <div><div></div><div></div><div></div></div>
-                    <div><div></div><div></div><div></div></div>
-                </div>
-            </div>
+        <div class="loading">
+            <span class="spanLoader"></span>
+            <span class="spanLoader"></span>
+            <span class="spanLoader"></span>
+            <span class="spanLoader"></span>
         </div>
         <div class="app-loading">
             <div id="jhipster-error" style="display:none">
@@ -76,7 +75,7 @@
     <script type="text/javascript" language="javascript">
         // show an error message if the app loading takes more than 5 sec
         window.onload=function() {
-            setTimeout(showError, 4000);
+            setTimeout(showError, 6000);
         }
         function showError() {
             var errorElm = document.getElementById("jhipster-error");
@@ -85,6 +84,7 @@
             }
         }
     </script>
+
     <!-- uncomment this for adding service worker
         <script>
             if ('serviceWorker' in navigator) {
@@ -107,4 +107,7 @@
         ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>-->
 </body>
+<script src="/content/js/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
+<script src="/content/js/popper/popper.min.js"></script>
+<script src="/content/js/bootstrap-4.5.3/js/bootstrap.min.js"></script>
 </html>

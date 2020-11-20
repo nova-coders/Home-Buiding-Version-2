@@ -37,6 +37,13 @@ export class CantonService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByProvince(idProvince?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(idProvince);
+    return this.http
+      .get<ICanton[]>(`${this.resourceUrl}/province/${idProvince}`, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

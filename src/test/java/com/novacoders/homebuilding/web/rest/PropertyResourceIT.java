@@ -52,11 +52,11 @@ public class PropertyResourceIT {
     private static final Integer DEFAULT_AREA_SQUARE_METERS = 1;
     private static final Integer UPDATED_AREA_SQUARE_METERS = 2;
 
-    private static final Long DEFAULT_LATITUDE = 1L;
-    private static final Long UPDATED_LATITUDE = 2L;
+    private static final String DEFAULT_LATITUDE = "AAAAAAAAAA";
+    private static final String UPDATED_LATITUDE = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_LONGITUDE = 1L;
-    private static final Long UPDATED_LONGITUDE = 2L;
+    private static final String DEFAULT_LONGITUDE = "AAAAAAAAAA";
+    private static final String UPDATED_LONGITUDE = "BBBBBBBBBB";
 
     private static final Long DEFAULT_ZOOM = 1L;
     private static final Long UPDATED_ZOOM = 2L;
@@ -196,8 +196,8 @@ public class PropertyResourceIT {
             .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT)))
             .andExpect(jsonPath("$.[*].landSquareMeters").value(hasItem(DEFAULT_LAND_SQUARE_METERS)))
             .andExpect(jsonPath("$.[*].areaSquareMeters").value(hasItem(DEFAULT_AREA_SQUARE_METERS)))
-            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.intValue())))
-            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.intValue())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE)))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE)))
             .andExpect(jsonPath("$.[*].zoom").value(hasItem(DEFAULT_ZOOM.intValue())))
             .andExpect(jsonPath("$.[*].addressText").value(hasItem(DEFAULT_ADDRESS_TEXT)))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
@@ -221,8 +221,8 @@ public class PropertyResourceIT {
             .andExpect(jsonPath("$.discount").value(DEFAULT_DISCOUNT))
             .andExpect(jsonPath("$.landSquareMeters").value(DEFAULT_LAND_SQUARE_METERS))
             .andExpect(jsonPath("$.areaSquareMeters").value(DEFAULT_AREA_SQUARE_METERS))
-            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.intValue()))
-            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.intValue()))
+            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE))
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE))
             .andExpect(jsonPath("$.zoom").value(DEFAULT_ZOOM.intValue()))
             .andExpect(jsonPath("$.addressText").value(DEFAULT_ADDRESS_TEXT))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
