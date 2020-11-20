@@ -15,4 +15,7 @@ import java.util.List;
 public interface AuctionRepository extends JpaRepository<Offer, Long> {
     @Query(value = "SELECT o FROM Offer o WHERE o.sale.id = :saleid ORDER BY o.amount DESC")
     List<Offer> findBySale(@Param("saleid") long saleid);
+
+    @Query(value = "SELECT COUNT(o) FROM Offer o WHERE o.sale.id = :saleid")
+    long getCantOffer(@Param("saleid") long saleid);
 }
