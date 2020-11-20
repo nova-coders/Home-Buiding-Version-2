@@ -1,27 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
 import { Property } from 'app/shared/model/property.model';
+import { Offer } from 'app/shared/model/offer.model';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PropertyService } from 'app/entities/property/property.service';
 import { SeeAuctionService } from 'app/see-auction/see-auction.service';
-import { Offer } from 'app/shared/model/offer.model';
-import { Router } from '@angular/router';
-import { NotificationService } from 'app/core/notification/notification.service';
 import { Notification } from 'app/shared/model/notification.model';
 import * as moment from 'moment';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
 
 @Component({
-  selector: 'jhi-see-auction',
-  templateUrl: './see-auction.component.html',
-  styleUrls: ['./see-auction.component.scss'],
+  selector: 'jhi-bid-at-auction',
+  templateUrl: './bid-at-auction.component.html',
+  styleUrls: ['./bid-at-auction.component.scss'],
 })
-export class SeeAuctionComponent implements OnInit {
-  public property: Property;
+export class BidAtAuctionComponent implements OnInit {
+  public property: any;
   public idProperty: number;
   public offers: Array<Offer> = [];
   public images: string[];
   public startPage = 1;
-
+  public actualPrice = 0;
   constructor(
     private router: Router,
     private route: ActivatedRoute,

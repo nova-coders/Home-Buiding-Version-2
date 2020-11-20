@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="x-apple-disable-message-reformatting">
-    <title th:text="#{email.reset.title}">Password reset</title>
+    <title>Se cerro la subasta</title>
     <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
 
@@ -280,97 +280,112 @@
 
     </style>
 
+
 </head>
-    <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #f1f1f1;">
-        <section style="width: 100%; background-color: #f1f1f1;">
-            <div style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-                &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
-            </div>
-            <div style="max-width: 600px; margin: 0 auto;" class="email-container">
-                <!-- BEGIN BODY -->
-                <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
-                    <tr>
-                        <td valign="top" class="bg_white" style="padding: 1em 2.5em 0 2.5em;">
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td class="logo" style="text-align: center;">
-                                        <h1><a href="#">HomeBuilding</a></h1>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr><!-- end tr -->
-                    <tr>
-                        <td valign="middle" class="hero bg_white" style="padding: 2em 0 4em 0;">
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
-                                        <div class="text">
-                                            <h2 th:text="#{email.reset.title}">Password reset</h2>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="text-author">
-                                            <p th:text="#{email.reset.greeting(${user.login})}">
-                                                Dear
-                                            </p>
-                                            <p th:text="#{email.reset.text1}">
-                                                For your JHipster account a password reset was requested, please click on the URL below to reset it:
-                                            </p>
-                                            <p>
-                                                <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}"
-                                                   th:text="${url}">Login link</a>
-                                            </p>
-                                            <p>
-                                                <span th:text="#{email.reset.text2}">Regards, </span>
-                                                <br/>
-                                                <em th:text="#{email.signature}">JHipster.</em>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr><!-- end tr -->
-                    <!-- 1 Column Text + Button : END -->
-                </table>
-                <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
-                    <tr>
-                        <td valign="middle" class="bg_light footer email-section">
-                            <table>
-                                <tr>
-                                    <td valign="top" width="50%" style="padding-top: 20px;">
-                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td style="text-align: left; padding-right: 10px;">
-                                                    <h3 class="heading">HomeBuilding</h3>
-                                                    <p>HomeBuilding es una organización creada en Costa Rica para la subasta y alquiler de inmuebles en línea.</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td valign="top" width="50%" style="padding-top: 20px;">
-                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td style="text-align: left; padding-left: 5px; padding-right: 5px;">
-                                                    <h3 class="heading">Información del contacto</h3>
-                                                    <ul>
-                                                        <li><span class="text">San Jose, Costa Rica</span></li>
-                                                        <li><span class="text">+506 2444 22 22</span></li>
-                                                        <li><span class="text">homebuilding123su@gmail.com</span></li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-    </body>
+
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #f1f1f1;">
+<section style="width: 100%; background-color: #f1f1f1;">
+    <div style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+        &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+    </div>
+    <div style="max-width: 600px; margin: 0 auto;" class="email-container">
+        <!-- BEGIN BODY -->
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+            <tr>
+                <td valign="top" class="bg_white" style="padding: 1em 2.5em 0 2.5em;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td class="logo" style="text-align: center;">
+                                <h1><a href="#">HomeBuilding</a></h1>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr><!-- end tr -->
+            <tr>
+                <td valign="middle" class="hero bg_white" style="padding: 2em 0 4em 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
+                                <div class="text">
+                                    <h2>Se ha cerrado la subasta con la siguiente oferta aceptada como la mayor oferta</h2>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <div class="text-author">
+                                    <h3 class="name">
+                                        <span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}">
+                                        </span>
+                                    </h3>
+                                    <p class="position">
+                                        Hola señor
+                                        <span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}">
+                                        </span>
+                                        , saludos departe del equipo de Home Building.
+                                        <br>La presente es para informale que  se a ha cerrado la subasta
+                                        <span th:text="${document.property.title}".>
+                                        </span>
+                                        de su propiedad con la oferta de
+                                        <span th:text=" ${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}">
+                                        </span>
+                                        como mayor comprador o ofertante.
+                                    </p>
+                                    <img th:src="${document.seller.profilePicture}" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
+                                    <span th:text=" ${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}">
+                                    </span>  comprador.
+                                </div>
+                                <div>
+                                    <p>
+                                        A continuación compartimos el enlace del documento para la negociación entre usted y el comprador.
+                                    </p>
+                                    <p>
+                                        <a th:with="url=(@{|${baseUrl}/document/${document.id}|})" th:href="${url}">Ir a ver el documento</a>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr><!-- end tr -->
+            <!-- 1 Column Text + Button : END -->
+        </table>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+            <tr>
+                <td valign="middle" class="bg_light footer email-section">
+                    <table>
+                        <tr>
+                            <td valign="top" width="50%" style="padding-top: 20px;">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="text-align: left; padding-right: 10px;">
+                                            <h3 class="heading">HomeBuilding</h3>
+                                            <p>HomeBuilding es una organización creada en Costa Rica para la subasta y alquiler de inmuebles en línea.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td valign="top" width="50%" style="padding-top: 20px;">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="text-align: left; padding-left: 5px; padding-right: 5px;">
+                                            <h3 class="heading">Información del contacto</h3>
+                                            <ul>
+                                                <li><span class="text">San Jose, Costa Rica</span></li>
+                                                <li><span class="text">+506 2444 22 22</span></li>
+                                                <li><span class="text">homebuilding123su@gmail.com</span></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+</body>
 </html>
