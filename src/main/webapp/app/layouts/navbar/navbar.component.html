@@ -10,7 +10,7 @@
 
         <a class="link-element">Alquileres</a>
 
-        <a *ngIf="!isAuthenticated()" class="link-element" [routerLink]="">Crear cuenta</a>
+        <a *ngIf="!isAuthenticated()" class="link-element" [routerLink]="['/account/register']">Crear cuenta</a>
 
         <a *ngIf="!isAuthenticated()" class="btn btn-secondary" [routerLink]="['/auth/login']">
             <fa-icon icon="sign-in-alt"></fa-icon>
