@@ -1,0 +1,42 @@
+<div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1>Subastas de inmuebles</h1>
+        </div>
+    </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <agm-map style="height: 400px;"
+                [latitude]="lat"
+                [longitude]="lng" [zoom]="zoom"   [fitBounds]="true">
+                <agm-marker
+                  *ngFor=" let marker of markers"
+                  [animation]="'BOUNCE'"
+                [latitude]="(marker.property.latitude|number)"
+                  [longitude]="(marker.property.longitude|number)"
+               [agmFitBounds]="true" [iconUrl]="marker.icon" >
+                    <agm-info-window [disableAutoPan]="true" style="height: 400px">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-sm-6  p-b-2">
+                                       <img class="card-img" src="{{marker.icon}}">
+                                    </div>
+                                    <div class="col-sm-4 text-center offset-lg-1">
+                                        <div class="row  m-x-auto m-b-2">
+                                            <h2 class="card-title">{{marker.icon}}</h2>
+                                            <h4 class="card-text">Ultima oferta: </h4>
+                                            <a [routerLink]="['/property', 'view']"class="btn justify-content-center btn-primary">Ver inmuebles</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/card-block-->
+                        </div>
+                    </agm-info-window>
+                </agm-marker>
+
+                </agm-map>
+            </div>
+        </div>
+</div>
