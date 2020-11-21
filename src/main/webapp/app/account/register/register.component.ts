@@ -12,6 +12,7 @@ import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
 import { UserAccountService } from '../../entities/user-account/user-account.service';
 import { Md5 } from 'ts-md5';
 import { Router } from '@angular/router';
+import { PublishingPackage } from '../../shared/model/publishing-package.model';
 
 @Component({
   selector: 'jhi-register',
@@ -49,8 +50,8 @@ export class RegisterComponent implements AfterViewInit {
       ],
     ],
     birthdate: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
     lastname1: ['', [Validators.required]],
-    lastname2: [],
     phone: ['', [Validators.required, Validators.pattern('(\\+506|00506|506)?[ -]*([0-9][ -]*){8}')]],
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
@@ -109,8 +110,8 @@ export class RegisterComponent implements AfterViewInit {
                 this.userImageUrl = response.url;
                 const login = this.registerForm.get(['login'])!.value;
                 const email = this.registerForm.get(['email'])!.value;
-                const firstName = this.registerForm.get(['lastname1'])!.value;
-                const lastName = this.registerForm.get(['lastname2'])!.value;
+                const firstName = this.registerForm.get(['firstName'])!.value;
+                const lastName = this.registerForm.get(['lastname1'])!.value;
 
                 /* Register a JHipster user */
                 this.registerService
@@ -121,6 +122,8 @@ export class RegisterComponent implements AfterViewInit {
                       let newUserAccount = this.createUserAccount();
                       newUserAccount.user = userCreated;
                       newUserAccount.signatureCode = <string>Md5.hashStr(JSON.stringify(newUserAccount));
+                      newUserAccount.publishingPackage = new PublishingPackage();
+                      newUserAccount.publishingPackage.id = 1;
 
                       /* Register a user account */
                       this.userAccountService.create(newUserAccount).subscribe(

@@ -121,7 +121,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="lastname1" jhiTranslate="global.form.lastname1.label">Last name 1</label>
+                                    <label class="form-control-label" for="firstName" jhiTranslate="global.form.firstName.label">First name</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName"
+                                           formControlName="firstName" #firstName>
+                                </div>
+
+                                <div *ngIf="registerForm.get('firstName')!.invalid && (registerForm.get('firstName')!.dirty || registerForm.get('firstName')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="registerForm.get('firstName')?.errors?.required">
+                                        El nombre es requerido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="lastname1" jhiTranslate="global.form.lastname1.label">Last name</label>
                                     <input type="text" class="form-control" id="lastname1" name="lastname1"
                                            formControlName="lastname1" #lastname1>
                                 </div>
@@ -131,13 +145,6 @@
                                            *ngIf="registerForm.get('lastname1')?.errors?.required">
                                         El primer apellido es requerido
                                     </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="lastname2" jhiTranslate="global.form.lastname2.label">Last name 2</label>
-                                    <input type="text" class="form-control" id="lastname2" name="lastname2"
-                                           formControlName="lastname2" #lastname2>
                                 </div>
                             </div>
                         </div>
