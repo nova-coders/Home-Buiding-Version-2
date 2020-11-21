@@ -1,7 +1,7 @@
 <div class="col-md-12 col-lg-12 text-center">
 
     <h1>Subasta del inmueble</h1>
-    <span *ngIf="offers.length > 0 && property.state == 3" class="badge badge-danger">Subasta cerrada</span>
+    <span *ngIf="offers.length > 0 && property.state != 1" class="badge badge-danger">Subasta cerrada</span>
     <hr class="w-50">
 </div>
 <div class="col-md-12 col-lg-12 text-center">
@@ -28,7 +28,7 @@
                <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
            </div>
        </div>
-       <div class="row" *ngIf="offers.length > 0 && property.state == 3">
+       <div class="row" *ngIf="offers.length > 0 && property.state != 1">
            <div class="col-md-12 col-lg-12">
                <div class="alert  alert-info opacity-8" role="alert mt-2">
                    <h3>Subasta cerrada</h3>
