@@ -4,15 +4,14 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/constants/error.constants';
-import { LoginModalService } from 'app/core/login/login-modal.service';
 import { RegisterService } from './register.service';
 import { ImageService } from '../../global-services/image.service';
 import { UserAccount } from '../../shared/model/user-account.model';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
-import { User } from '../../core/user/user.model';
 import { UserAccountService } from '../../entities/user-account/user-account.service';
 import { Md5 } from 'ts-md5';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-register',
@@ -60,11 +59,11 @@ export class RegisterComponent implements AfterViewInit {
 
   constructor(
     private languageService: JhiLanguageService,
-    private loginModalService: LoginModalService,
     private registerService: RegisterService,
     private fb: FormBuilder,
     private imageService: ImageService,
-    private userAccountService: UserAccountService
+    private userAccountService: UserAccountService,
+    private router: Router
   ) {
     this.signatureImageUrl = '';
     this.files = [];
@@ -143,7 +142,7 @@ export class RegisterComponent implements AfterViewInit {
   }
 
   openLogin(): void {
-    this.loginModalService.open();
+    this.router.navigate(['/auth/login']);
   }
 
   private processError(response: HttpErrorResponse): void {

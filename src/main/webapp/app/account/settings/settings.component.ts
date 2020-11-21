@@ -5,7 +5,6 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { LANGUAGES } from 'app/core/language/language.constants';
-import { LoginModalService } from '../../core/login/login-modal.service';
 import { RegisterService } from '../register/register.service';
 import { ImageService } from '../../global-services/image.service';
 import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
@@ -20,7 +19,7 @@ import { HttpResponse } from '@angular/common/http';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
 import { UserAccountTwoServiceService } from './user-account-two-service.service';
-import { Md5 } from 'ts-md5';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-settings',
@@ -100,7 +99,7 @@ export class SettingsComponent implements OnInit {
   });
 
   constructor(
-    private loginModalService: LoginModalService,
+    private router: Router,
     private registerService: RegisterService,
     private imageService: ImageService,
     private accountService: AccountService,
@@ -386,6 +385,6 @@ export class SettingsComponent implements OnInit {
   }
 
   openLogin(): void {
-    this.loginModalService.open();
+    this.router.navigate(['/auth/login']);
   }
 }

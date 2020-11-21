@@ -12,14 +12,14 @@
 
         <a *ngIf="!isAuthenticated()" class="link-element" [routerLink]="['/account/register']">Crear cuenta</a>
 
-        <a *ngIf="!isAuthenticated()" class="btn btn-secondary" [routerLink]="['/auth/login']">
+        <a *ngIf="!isAuthenticated()" class="btn btn-secondary py-1 px-3" [routerLink]="['/auth/login']">
             <fa-icon icon="sign-in-alt"></fa-icon>
             Iniciar sesi&oacute;n
         </a>
 
         <div *ngIf="isAuthenticated()" class="dropup link-element">
-            <div class="btn btn-outline-light py-1 px-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="avatar avatar-sm" [src]="userAccount.profilePicture"  alt="Avatar">
+            <div class="btn btn-outline-light white py-1 px-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="avatar avatar-sm" [src]="userAccount.profilePicture" alt="Avatar" style="width: 30px !important; height: 30px !important;">
                 <span *ngIf="account" class="mx-2">
                     {{account.login}}
                 </span>
