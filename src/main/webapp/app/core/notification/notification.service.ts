@@ -19,7 +19,7 @@ export class NotificationService {
 
   constructor(private authServerProvider: AuthServerProvider, private location: Location) {}
 
-  connect(): void {
+  public connect(): void {
     if (this.stompClient && this.stompClient.connected) {
       return;
     }
