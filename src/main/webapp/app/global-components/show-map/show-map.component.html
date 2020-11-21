@@ -9,7 +9,9 @@
             <div class="col-md-8 text-center">
                 <agm-map style="height: 400px;"
                 [latitude]="lat"
-                [longitude]="lng" [zoom]="zoom"   [fitBounds]="true">
+                [longitude]="lng" [zoom]="zoom"   [fitBounds]="true"
+                         [minZoom]="7.5" [maxZoom]="7.5
+" [scrollwheel]="true">
                 <agm-marker
                   *ngFor=" let marker of markers"
                   [animation]="'BOUNCE'"
@@ -25,9 +27,9 @@
                                     </div>
                                     <div class="col-sm-4 text-center offset-lg-1">
                                         <div class="row  m-x-auto m-b-2">
-                                            <h2 class="card-title">{{marker.icon}}</h2>
+                                            <h2 class="card-title">{{marker.property.title}}</h2>
                                             <h4 class="card-text">Ultima oferta: </h4>
-                                            <a [routerLink]="['/property', 'view']"class="btn justify-content-center btn-primary">Ver inmuebles</a>
+                                            <a [routerLink]="['/bit-at-auction/', marker.property.id]"class="btn justify-content-center btn-primary">Ver inmuebles</a>
                                         </div>
                                     </div>
                                 </div>

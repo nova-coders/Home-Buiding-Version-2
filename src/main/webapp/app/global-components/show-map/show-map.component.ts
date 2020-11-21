@@ -16,40 +16,104 @@ export class ShowMapComponent implements OnInit {
   lat = 9.9280694;
   lng = -84.0907246;
   zoom = 15;
-  //oMarker?: Marker;
-  markers = [];
+  markers: any;
 
   constructor(
     protected showMapService: ShowMapService,
     protected propertyService: PropertyService,
     protected provinceService: ProvinceService,
     protected activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.markers = [];
+  }
 
   ngOnInit(): void {
     this.loadAll();
   }
+
   loadAll(): void {
     let myProperties;
-    this.showMapService.query().subscribe((res: HttpResponse<any>) => res.body || []);
-    this.showMapService.getByProvince().subscribe(response => {
-      myProperties = response.body as Property;
+    this.propertyService.getBySale().subscribe((res: any) => {
+      myProperties = res.body;
 
       console.log(myProperties);
-      // @ts-ignore
-      for (let i = 0; i <= myProperties.length; i++) {
-        let marker = new Marker();
-        // @ts-ignore
-        marker.property = myProperties[i];
-        marker.lat = Number(myProperties[i].latitude);
-        marker.lng = Number(myProperties[i].longitude);
-        // @ts-ignore
-        marker.icon = this.obtainIcon(myProperties[i].canton.province.id);
-        // @ts-ignore
+      for (let i = 0; i < myProperties.length; i++) {
+        let marker = {
+          id: i,
+          property: myProperties[i],
+          lat: Number(myProperties[i].latitude),
+          lng: Number(myProperties[i].longitude),
+          icon: this.obtainIcon(myProperties[i].canton.province.id),
+        };
         this.markers.push(marker);
       }
     });
   }
+
+  loadByProvince(indexProvince: number): void {
+    this.markers = [];
+    let myProperties;
+    this.propertyService.getBySale().subscribe((res: any) => {
+      myProperties = res.body;
+
+      console.log(myProperties);
+      for (let i = 0; i < myProperties.length; i++) {
+        if (myProperties[i].canton.province.id == indexProvince) {
+          let marker = {
+            id: i,
+            property: myProperties[i],
+            lat: Number(myProperties[i].latitude),
+            lng: Number(myProperties[i].longitude),
+            icon: this.obtainIcon(myProperties[i].canton.province.id),
+          };
+          this.markers.push(marker);
+        }
+      }
+    });
+  }
+
+  loadByCanton(indexCanton: number): void {
+    this.markers = [];
+    let myProperties;
+    this.propertyService.getBySale().subscribe((res: any) => {
+      myProperties = res.body;
+      console.log(myProperties);
+      for (let i = 0; i < myProperties.length; i++) {
+        if (myProperties[i].canton.id === indexCanton) {
+          let marker = {
+            id: i,
+            property: myProperties[i],
+            lat: Number(myProperties[i].latitude),
+            lng: Number(myProperties[i].longitude),
+            icon: this.obtainIcon(myProperties[i].canton.province.id),
+          };
+          this.markers.push(marker);
+        }
+      }
+    });
+  }
+
+  loadByCategory(indexCategory: number): void {
+    this.markers = [];
+    let myProperties;
+    this.propertyService.getBySale().subscribe((res: any) => {
+      myProperties = res.body;
+      console.log(myProperties);
+      for (let i = 0; i < myProperties.length; i++) {
+        if (myProperties[i].propertyCategory === indexCategory) {
+          let marker = {
+            id: i,
+            property: myProperties[i],
+            lat: Number(myProperties[i].latitude),
+            lng: Number(myProperties[i].longitude),
+            icon: this.obtainIcon(myProperties[i].canton.province.id),
+          };
+          this.markers.push(marker);
+        }
+      }
+    });
+  }
+
   public obtainIcon(province: number): string {
     let iconChosen = '';
     switch (province) {
@@ -77,13 +141,4 @@ export class ShowMapComponent implements OnInit {
     }
     return iconChosen;
   }
-}
-
-export class Marker {
-  public icon?: string;
-  public lat?: number;
-  public lng?: number;
-  public property?: IProperty;
-
-  constructor() {}
 }

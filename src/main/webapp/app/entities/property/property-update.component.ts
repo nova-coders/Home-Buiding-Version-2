@@ -300,9 +300,7 @@ export class PropertyUpdateComponent implements OnInit {
     this.lat = Number(mypro.latitude);
     this.lng = Number(mypro.longitude);
     this.getAddress();
-    this.cantonService
-      .findByProvince(provinceIndex)
-      .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+    this.cantonService.findByProvince(mypro.id).subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
     this.isSelected = true;
   }
 
