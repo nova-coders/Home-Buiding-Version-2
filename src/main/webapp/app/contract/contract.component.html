@@ -1,108 +1,219 @@
 <!--Contract, here we decide which of the two types of contracts will display.-->
-<div id="TitleContract" class="border rounded p-3">
-    <h2>HomeBuilding - Terminos del contrato</h2>
-    <div *ngIf="rentContract">
-        <H3 class="contractText">Contrato de alquiler</H3>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
+<div class="container">
+    <div id="TitleContract" class="border rounded p-3">
+        <h2>HomeBuilding - Terminos del contrato</h2>
+        <div *ngIf="rentContract">
+            <H3 class="contractText">Contrato de alquiler</H3>
+            <p class="contractText"><label class="font-weight-bold">NÚMERO</label> ____: Ante mí ____, Notario Público con oficina en _________, comparecen los señores ____(nombre y apellidos),
+                mayor, ____ (estado civil completo), ____(profesión u oficio), vecino de ____, portador de la cédula de identidad número ____, y ____,
+                (nombre y apellidos) mayor, ____(estado civil completo), ____ (profesión), vecino de ____, portador de la cédula de identidad número ____;
+                y DICEN: Que el primero, en adelante conocido como: El Propietario y el segundo en adelante conocido como: El Inquilino, han convenido en
+                celebrar el presente contrato de arrendamiento que se regirá por la Ley General de Arrendamientos y Urbanos y Suburbanos Número siete mil
+                quinientos veintisiete y por las siguientes cláusulas:</p>
+            <p class="contractText">
+                <label class="font-weight-bold">PRIMERA:</label> El propietario es dueño de un inmueble inscrito en el Registro Público de la propiedad, Partido de ____, matrícula de
+                folio real ____, que es terreno ______(naturaleza) situado en ____(distrito, cantón, provincia), mide ____ y tiene los siguientes linderos
+                ____ plano catastrado número ____.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">SEGUNDA:</label> En este acto el propietario da en arrendamiento al INQUILINO, quien acepta, el inmueble antes descrito en los siguientes términos
+                y condiciones.
+            </p>
+            <p>
+                <label class="font-weight-bold">TERCERA:</label> EL inmueble que se alquila, tiene un área de ____
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">CUARTA</label> El plazo de este contrato es de ____ años a partir del día ____ de ____ de ____. El contrato se prorrogará en
+                forma automática de conformidad con lo que establece el artículo setenta y uno de la Ley de Arrendamientos Urbanos y Suburbanos, cuando
+                el arrendador no haya notificado al arrendatario, su voluntad de no renovar el contrato, por lo menos tres meses antes de la expiración
+                del plazo original o el prorrogado anteriormente. La prórroga tácita será por un nuevo período de tres años, cualquiera que sea el plazo
+                inicial del contrato o el destino del bien. Con la prórroga tácita, quedan vigentes todas las estipulaciones del contrato. Sin perjuicio
+                de la prórroga tácita operada, las partes podrán convenir en modificar las cláusulas del contrato.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">QUINTA</label> El precio mensual del
+                arrendamiento es la suma de ____ Durante el segundo año, el monto de los alquileres será de ____ colones, durante el tercer año de ____
+                colones, (así sucesivamente). El alquiler deberá ser pagado con dinero efectivo, por mensualidades adelantadas, el día ____ de cada mes,
+                en ____.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">SEXTA</label> El INQUILINO alquila, con el exclusivo propósito de destinar el inmueble a ____. No podrá variar ese destino sin el
+                consentimiento previo y escrito del propietario. Cualquier variación del destino se considerará una grave violación de este contrato.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">SETIMA</label> EL INQUILINO recibe el inmueble, en su estado actual y a su entera satisfacción y se obliga a restituirlo al propietario,
+                inmediatamente que venza el plazo de este contrato, en las mismas condiciones en que lo recibe, salvo por el desgaste natural producido
+                por su uso racional.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">OCTAVA</label> EL INQUILINO no podrá, sin el consentimiento previo y escrito del propietario, ceder, gravar, enajenar o en
+                cualquier forma transferir, en todo o en parte, los derechos que le confiere este contrato. Tampoco podrá, sin el referido consentimiento
+                previo y escrito del propietario, subarrendar, en todo o en parte.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">NOVENA</label> Correrá por cuenta del INQUILINO el pago del servicio de
+                corriente eléctrica, agua, patentes, permisos y cualquier suma que sea necesaria para la operación del inmueble.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMA</label> En caso de que
+                EL INQUILINO quisiera instalar en (nombre del local) uno o varios aparatos telefónicos, será exclusivamente responsable del pago de las
+                facturas correspondientes.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">UNDECIMA</label> El propietario pagará los impuestos municipales y territoriales que correspondan.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DUODECIMA</label> Todas
+                las reparaciones que haya que hacer, incluyendo la reposición de vidrios y cristales, serán efectuadas por cuenta del INQUILINO.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO TERCERA:</label> El INQUILINO no podrá, sin el permiso previo y escrito del propietario, introducir modificaciones capaces de alterar o modificar
+                la estructura de lugar.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO CUARTA:</label> Las mejoras de cualquier clase que EL INQUILINO introduzca, con o sin el consentimiento del
+                propietario, quedarán a beneficio del inmueble, a la terminación del contrato, sin que el propietario, tenga que pagar suma alguna por
+                ellas. No obstante lo anterior, si el propietario, notificare por escrito al INQUILINO sobre la necesidad de remover tales mejoras, por
+                lo menos treinta días antes de la terminación del contrato, este deberá efectuar esos trabajos por su propia cuenta, antes de entregar
+                el inmueble, procediendo a restaurarlo hasta dejarlo en la misma condición en que lo recibió.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO QUINTA:</label> EL INQUILINO no podrá instalar o pintar rótulos sin el permiso previo y escrito del propietario.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO SEXTA:</label> El propietario, no asume responsabilidad civil
+                por los accidentes de cualquier naturaleza que ocurran en el interior del lugar, cualquiera que haya sido la causa productora de ellos.
+                (En caso de que se trate del arrendamiento de un local comercial, se pueden agregar las siguientes cláusulas) EL INQUILINO será el único
+                responsable de la operación comercial de (local) por lo que le corresponderá responder civil y penalmente de cualquier tipo de actos o
+                accidentes que se produzca en virtud de su operación. Asimismo, corresponde a EL INQUILINO la obtención de todos los permisos y patentes
+                que la ley exija para la operación de ese tipo de establecimientos.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO SETIMA:</label> El propietario no responderá, en forma alguna por daños, hurtos o robos que terceras personas o empleados de EL
+                INQUILINO pudieran hacerle o usuarios del local.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO OCTAVA:</label> El presente contrato
+                termina y el propietario tendrá el derecho de pedir, en la vía del desahucio, la inmediata desocupación de (local), en cualquiera de los
+                casos que señala la Ley General de Arrendamientos Urbanos y Suburbanos; y, por haber incumplido EL INQUILINO, en cualquier forma, con
+                alguna de las obligaciones que le impone el presente contrato.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">DECIMO NOVENO:</label> El INQUILINO no podrá reclamar ningún derecho de llave en su beneficio.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">VIGESIMA:</label>Cualquier concesión que el propietario hiciere al INQUILINO, en relación con el cumplimiento de sus obligaciones,
+                deberá interpretarse como una mera tolerancia de su parte, y no constituirá modificación tácita de este contrato. En consecuencia, el
+                propietario, podrá exigir el cumplimiento de esas obligaciones, en la forma aquí estipulada, y ninguna concesión eventual podrá ser
+                invocada contra una posible acción de desahucio, ni impedirá su procedencia.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">VIGESIMA PRIMERA:</label> Para la ejecución e interpretación de este contrato, las partes señalan como domicilio la ciudad de ____.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">VIGESIMA SEGUNDA:</label> Los honorarios y gastos de este contrato serán cubiertos por mitades, por ambas partes.
+            </p>
+            <p class="contractText">
+                <label class="font-weight-bold">VIGESIMO TERCERA:</label> Se estima este contrato en la suma de ____ colones. En este acto el INQUILINO
+                hace un depósito por el monto de ____ colones que el propietario recibe de conformidad y del cual podrá deducir cualquiera suma que EL
+                INQUILINO le quedare debiendo, al finalizar este contrato. El saldo, junto con los comprobantes respectivos, los reintegrará al INQUILINO
+                ____ días después de que este contrato termine. ES TODO, extiendo un primer testimonio, para el propietario en el que agrego y cancelo
+                las especies fiscales de ley. Leído lo escrito a los comparecientes, lo aprueban y juntos firmamos en la ciudad de ____, a las ____ horas
+                del ____ de ____ de ____ (Firma de las partes y del notario)
+            </p>
+        </div>
+        <div *ngIf="salesContract">
+            <H3 class="contractText">Contrato de venta</H3>
+            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est laborum.</p>
+            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est laborum.</p>
+            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est laborum.</p>
+            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est laborum.</p>
+        </div>
     </div>
-    <div *ngIf="salesContract">
-        <H3 class="contractText">Contrato de venta</H3>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
-        <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.</p>
+
+    <!--In this section we display and set the signature elements-->
+    <div class="row">
+        <div class="col-3 float-left">
+            <div class="card mt-3">
+                <div *ngIf="!disabledSeller" class="card-header">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" id="seller" type="checkbox" (change)="checkSellerSignature()" [disabled]="disabledSeller"
+                               [checked]="checkedSeller">
+                        <label class="custom-control-label font-weight-bold" for="seller">Firmar</label>
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <img *ngIf="checkedSeller" style="width: 65%" src="{{sellerSignaturePicture}}">
+                    <hr class="my-1">
+                    <p>Firma del due&ntilde;o</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6"></div>
+
+        <div class="col-3 float-right">
+            <div class="card mt-3">
+                <div *ngIf="!disabledBuyer" class="card-header">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" id="buyer" type="checkbox" (change)="checkBuyerSignature()" [disabled]="disabledBuyer"
+                               [checked]="checkedBuyer">
+                        <label class="custom-control-label font-weight-bold" for="buyer">Firmar</label>
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <img *ngIf="checkedBuyer" style="width: 65%"
+                         src="{{buyerSignaturePicture}}">
+                    <hr class="my-1">
+                    <p>Firma del comprador</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="errorSignatureEmpty" class="col-12">
+            <div class="alert alert-warning">
+                Por favor, firme el documento antes de guardar
+            </div>
+        </div>
+        <div *ngIf="error" class="col-12">
+            <div class="alert alert-danger">
+                Disculpe, ocurri&oacute; un error al guardar la firma. Vuelve a intentarlo m&aacute;s tarde.
+            </div>
+        </div>
+        <div *ngIf="success" class="col-12">
+            <div class="alert alert-success">
+                Has firmado el contrato con &eacute;xito.
+            </div>
+        </div>
+        <div *ngIf="errorNotAuthorization" class="col-12">
+            <div class="alert alert-success">
+                No tiene autorizaci&oacute;n para guardar una firma en el contrato
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a [routerLink]="''" class="btn btn-secondary float-right">Firmar m&aacute;s tarde</a>
+            <button class="btn btn-primary float-right" type="submit" (click)="saveSignature()">Guardar</button>
+        </div>
     </div>
 </div>
 
-<!--In this section we display and set the signature elements-->
-<div>
-    <!--Section of the labels-->
-    <div class="row pt-3">
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
-                <label for="signatureSeller">Firma dueño</label>
-            </div>
-        </div>
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div>
-                <label for="signatureBuyer">Firma Comprador</label>
-            </div>
-        </div>
-    </div>
-    <!--Section of the signature pictures-->
-    <div class="row p-3">
-        <div class="col-6 d-flex justify-content-center">
-            <div class="form-group">
-                <div>
-                    <img src="{{this.sellerSignaturePicture}}" id="signaturePictureSeller" name="signaturePictureSeller" class="border"
-                         width="100%"
-                         height="auto">
-                </div>
-            </div>
-        </div>
-        <div class="col-6 d-flex justify-content-center">
-            <div class="form-group">
-                <div>
-                    <img src="{{this.BuyerSignaturePicture}}" id="signaturePictureBuyer" name="signaturePictureBuyer" class="border"
-                         width="100%"
-                         height="auto">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Section of the toogles-->
-    <div class="row p-3">
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div *ngIf="toogleUser">
-                <label class="switch">
-                    <input id="signatureSeller" name="signatureSeller" type="checkbox" checked="{{this.checkSeller}}" (change)="checkChange(signatureSeller)" #signatureSeller>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
-        <div class="col-6 CheckFirma d-flex justify-content-center">
-            <div  *ngIf="!toogleUser">
-                <label class="switch">
-                    <input id="signatureBuyer" name="signatureBuyer" type="checkbox"  checked="{{this.checkBuyer}}" (change)="checkChange(signatureBuyer)" #signatureBuyer>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
 
