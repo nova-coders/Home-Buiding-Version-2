@@ -1,0 +1,63 @@
+<div class="container" style="margin-top: 110px;">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Mis ofertas</h2>
+            <div class="dropdown-divider"></div>
+        </div>
+    </div>
+    <div *ngFor="let offer of myOffers;" class="row my-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge badge-pill badge-success float-right">Disponible</span>
+                    <h4 class="card-title text-center m-0">{{offer.sale?.property?.title}}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid">
+                        </div>
+                        <div class="col-6">
+                            <div class="row mb-4">
+                                <div class="col-2">
+                                    <i class="far fa-thumbs-up" style="font-size: 4vh;"></i>
+                                </div>
+                                <div class="col-3 pl-0 mt-1">
+                                    <h6 class="font-weight-bold">Mejor oferta: </h6>
+                                </div>
+                                <div class="col-7 pl-0">
+                                    <h5>{{offer.amount | currency: 'CRC'}}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-2">
+                                    <i class="fa fa-money-check" style="font-size: 4vh;"></i>
+                                </div>
+                                <div class="col-3 pl-0 mt-1">
+                                    <h6 class="font-weight-bold">Mi oferta: </h6>
+                                </div>
+                                <div class="col-6 pl-0">
+                                    <h5>{{offer.amount | currency: 'CRC'}}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-2">
+                                    <i class="far fa-clock" style="font-size: 4vh;"></i>
+                                </div>
+                                <div class="col-3 pl-0 mt-1">
+                                    <h6 class="font-weight-bold">Vence en: </h6>
+                                </div>
+                                <div class="col-6 pl-0">
+                                    <h5>{{offer.sale!.finalDate}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,6 +29,7 @@ import { ImageViewerComponent } from './see-auction/components/image-viewer/imag
 import { ContractComponent } from './contract/contract.component';
 import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component';
 import { ModalDocumentComponent } from './bid-at-auction/components/modal-document/modal-document.component';
+import { MyOffersComponent } from './my-offers/my-offers.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { ModalDocumentComponent } from './bid-at-auction/components/modal-docume
     ContractComponent,
     BidAtAuctionComponent,
     ModalDocumentComponent,
+    MyOffersComponent,
   ],
   bootstrap: [MainComponent],
 })
