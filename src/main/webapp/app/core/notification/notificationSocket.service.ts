@@ -4,18 +4,18 @@ import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
 import { Location } from '@angular/common';
 import * as SockJS from 'sockjs-client';
-import { Notification } from 'app/shared/model/notification.model';
 import { Frame } from 'webstomp-client';
+import { INotification } from 'app/shared/model/notification.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationService {
+export class NotificationSocketService {
   private stompClient: Stomp.Client | null = null;
   private connectionSubject: ReplaySubject<void> = new ReplaySubject(1);
   private connectionSubscription: Subscription | null = null;
   private stompSubscription: Stomp.Subscription | null = null;
-  private listenerSubject: Subject<string> = new Subject();
+  private listenerSubject: Subject<INotification> = new Subject();
 
   constructor(private authServerProvider: AuthServerProvider, private location: Location) {}
 
@@ -50,7 +50,7 @@ export class NotificationService {
     }
   }
 
-  receive(): Subject<string> {
+  receive(): Subject<INotification> {
     return this.listenerSubject;
   }
   subscribe(): void {
@@ -60,8 +60,8 @@ export class NotificationService {
     this.connectionSubscription = this.connectionSubject.subscribe(() => {
       if (this.stompClient) {
         this.stompSubscription = this.stompClient.subscribe('/topic/inbox', (data: Stomp.Message) => {
+          console.log(data);
           this.listenerSubject.next(JSON.parse(data.body));
-          console.log(data.body);
         });
       }
     });
@@ -72,11 +72,11 @@ export class NotificationService {
       this.connectionSubscription = null;
     }
   }
-  public sendNotification(message: string): void {
+  public sendNotification(notificationId: string): void {
     if (this.stompClient && this.stompClient.connected) {
       this.stompClient.send(
         '/topic/notification', // destination
-        JSON.stringify(message), // body
+        notificationId, // body
         {} // header
       );
     }

@@ -31,6 +31,7 @@ import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component
 import { ModalDocumentComponent } from './bid-at-auction/components/modal-document/modal-document.component';
 import { ModalBidComponent } from './bid-at-auction/components/modal-bid/modal-bid.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,9 @@ import { NotificationsComponent } from './notifications/notifications.component'
     ModalDocumentComponent,
     ModalBidComponent,
     NotificationsComponent,
+    ChatComponent,
   ],
   bootstrap: [MainComponent],
+  exports: [ChatComponent],
 })
 export class HomeBuildingAppModule {}

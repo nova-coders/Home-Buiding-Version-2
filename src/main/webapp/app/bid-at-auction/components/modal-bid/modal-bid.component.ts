@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { OfferService } from 'app/entities/offer/offer.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
+import { BidAtAuctionService } from 'app/bid-at-auction/bid-at-auction.service';
 @Component({
   selector: 'jhi-modal-bid',
   templateUrl: './modal-bid.component.html',
@@ -16,7 +17,11 @@ export class ModalBidComponent implements OnInit, AfterViewInit {
   public successfulOffer = 0;
   public offer: any;
   public hasError = false;
-  constructor(public servicePaymentService: ServicePaymentService, public offerService: OfferService) {
+  constructor(
+    public servicePaymentService: ServicePaymentService,
+    public offerService: OfferService,
+    private bidAtAuctionService: BidAtAuctionService
+  ) {
     this.offer = new Offer();
     this.offer.commentary = 'Sin comentario';
     this.offer.state = true;
@@ -41,24 +46,14 @@ export class ModalBidComponent implements OnInit, AfterViewInit {
   public processOffer(): void {
     this.servicePaymentService.getUserAccount().subscribe((response: any) => {
       this.offer.userAccount = response.body;
-      console.log(this.offer.userAccount);
       this.offer.sale = this.sale;
-      if (this.offers.length > 0) {
-        if (this.offers[0]?.userAccount?.id != this.offer.userAccount.id) {
-          this.saveOffer();
-        } else {
-          this.successfulOffer = 2;
-        }
-      } else {
-        this.saveOffer();
-      }
+      this.saveOffer();
     });
   }
   private saveOffer() {
-    this.offerService.create(this.offer).subscribe(
+    this.bidAtAuctionService.saveBidAuction(this.offer).subscribe(
       (response: any) => {
-        this.successfulOffer = 1;
-        this.offer = response;
+        this.successfulOffer = response;
       },
       error => {
         this.successfulOffer = 3;
