@@ -46,7 +46,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: ContractComponent,
         },
         {
-          path: 'showMap',
+          path: 'show-map',
           component: ShowMapComponent,
         },
         {

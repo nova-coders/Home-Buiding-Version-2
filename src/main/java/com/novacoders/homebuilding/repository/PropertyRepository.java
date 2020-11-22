@@ -16,7 +16,7 @@ import java.util.List;
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
 
-    @Query(value = "SELECT p FROM Property p WHERE p.sale is not null")
+    @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0")
     List<Property> findBySaleNotNull();
 
     @Query("SELECT p FROM Property p WHERE p.sale.finalDate <= :expireDateTime AND p.state = 1")

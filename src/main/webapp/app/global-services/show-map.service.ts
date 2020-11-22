@@ -13,12 +13,6 @@ type EntityArrayResponseType = HttpResponse<IProperty[]>;
 export class ShowMapService {
   public resourceUrl = SERVER_API_URL + 'api/properties/sale';
   constructor(protected http: HttpClient) {}
-  query(req?: any): Observable<EntityArrayResponseType> {
-    const options = createRequestOption(req);
-    return this.http
-      .get<IProperty[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
-  }
 
   getByProvince(): Observable<any> {
     return this.http.get(`${this.resourceUrl}`, { observe: 'response' });

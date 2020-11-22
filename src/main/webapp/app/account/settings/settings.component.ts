@@ -388,4 +388,7 @@ export class SettingsComponent implements OnInit {
   openLogin(): void {
     this.loginModalService.open();
   }
+
+  // tslint:disable-next-line:typedef
+  save() {}
 }
