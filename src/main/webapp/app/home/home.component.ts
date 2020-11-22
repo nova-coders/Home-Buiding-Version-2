@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { PropertyBlockComponent } from 'app/html-components/property-block/property-block.component';
@@ -19,7 +18,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   propertyList: Property[];
   propertyListHtml: PropertyBlockComponent[];
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router) {
     this.currentProperty = new Property();
     this.currentProperty.title = 'Propiedad de prueba';
     this.propertyList = [this.currentProperty];
@@ -86,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    this.loginModalService.open();
+    this.router.navigate(['/auth/login']);
   }
 
   ngOnDestroy(): void {
