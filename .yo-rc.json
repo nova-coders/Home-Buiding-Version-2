@@ -38,6 +38,9 @@
     "enableTranslation": true,
     "nativeLanguage": "es",
     "languages": ["es"],
-    "blueprints": []
+    "blueprints": [],
+    "herokuAppName": "homebuildingapp-v-2",
+    "herokuDeployType": "git",
+    "herokuJavaVersion": "14"
   }
 }

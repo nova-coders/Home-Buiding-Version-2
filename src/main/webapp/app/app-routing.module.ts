@@ -8,6 +8,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { ServicePaymentComponent } from 'app/service-payment/service-payment.component';
 import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
 import { ContractComponent } from 'app/contract/contract.component';
+import { ShowMapComponent } from 'app/global-components/show-map/show-map.component';
 import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
@@ -43,6 +44,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'document/:id',
           component: ContractComponent,
+        },
+        {
+          path: 'show-map',
+          component: ShowMapComponent,
         },
         {
           path: 'bit-at-auction/:id',

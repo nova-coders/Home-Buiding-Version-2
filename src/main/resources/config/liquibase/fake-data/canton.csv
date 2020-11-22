@@ -1,11 +1,2 @@
-id;name;state;creation_date
-1;Wooden Multi-tiered navigate;false;2020-11-02T11:22:24
-2;navigate Forge invoice;true;2020-11-02T20:02:42
-3;United Kingdom;false;2020-11-02T05:39:09
-4;magnetic;false;2020-11-02T16:32:09
-5;Buckinghamshire;true;2020-11-02T15:03:46
-6;Leone;false;2020-11-02T09:07:58
-7;Personal Loan Account;false;2020-11-02T07:57:43
-8;Salad homogeneous;false;2020-11-02T23:02:43
-9;compressing Assistant repurpose;true;2020-11-03T00:46:18
-10;Heights;false;2020-11-02T18:51:12
+id;name;state;creation_date;province_id
+1;San José;true;2020-11-02T11:22:24;1
