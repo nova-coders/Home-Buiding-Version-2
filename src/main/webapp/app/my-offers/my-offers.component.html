@@ -5,58 +5,81 @@
             <div class="dropdown-divider"></div>
         </div>
     </div>
-    <div *ngFor="let offer of myOffers;" class="row my-3">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <span class="badge badge-pill badge-success float-right">Disponible</span>
-                    <h4 class="card-title text-center m-0">{{offer.sale?.property?.title}}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <img src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid">
-                        </div>
-                        <div class="col-6">
-                            <div class="row mb-4">
-                                <div class="col-2">
-                                    <i class="far fa-thumbs-up" style="font-size: 4vh;"></i>
-                                </div>
-                                <div class="col-3 pl-0 mt-1">
-                                    <h6 class="font-weight-bold">Mejor oferta: </h6>
-                                </div>
-                                <div class="col-7 pl-0">
-                                    <h5>{{offer.amount | currency: 'CRC'}}</h5>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-2">
-                                    <i class="fa fa-money-check" style="font-size: 4vh;"></i>
-                                </div>
-                                <div class="col-3 pl-0 mt-1">
-                                    <h6 class="font-weight-bold">Mi oferta: </h6>
-                                </div>
-                                <div class="col-6 pl-0">
-                                    <h5>{{offer.amount | currency: 'CRC'}}</h5>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-2">
-                                    <i class="far fa-clock" style="font-size: 4vh;"></i>
-                                </div>
-                                <div class="col-3 pl-0 mt-1">
-                                    <h6 class="font-weight-bold">Vence en: </h6>
-                                </div>
-                                <div class="col-6 pl-0">
-                                    <h5>{{offer.sale!.finalDate}}</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
+    <div *ngIf="myOffers.length > 0">
+        <div *ngFor="let offer of myOffers| paginate: { itemsPerPage: 3, currentPage: startPage }" class="row my-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header" [ngSwitch]="offer.sale!.property!.state">
+                        <span *ngSwitchCase="1" class="badge badge-pill badge-success float-right">Disponible</span>
+                        <span *ngSwitchCase="0" class="badge badge-pill badge-danger float-right">Eliminado</span>
+                        <span *ngSwitchCase="3" class="badge badge-pill badge-info float-right">Cerrado</span>
 
+                        <h4 class="card-title text-center m-0">{{offer.sale?.property?.title}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <img *ngIf="offer.sale!.property!.propertyImages != null" src="{{offer.sale!.property!.propertyImages![0].url}}" class="img-fluid">
+
+                                <img *ngIf="offer.sale!.property!.propertyImages == null" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid">
+                            </div>
+                            <div class="col-6">
+                                <div class="row mb-4">
+                                    <div class="col-2">
+                                        <i class="far fa-thumbs-up" style="font-size: 4vh;"></i>
+                                    </div>
+                                    <div class="col-3 pl-0 mt-1">
+                                        <h6 class="font-weight-bold">Mejor oferta: </h6>
+                                    </div>
+                                    <div class="col-7 pl-0">
+                                        <h5>{{offer.sale!.offers![0].amount | currency: 'CRC'}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-2">
+                                        <i class="fa fa-money-check" style="font-size: 4vh;"></i>
+                                    </div>
+                                    <div class="col-3 pl-0 mt-1">
+                                        <h6 class="font-weight-bold">Mi oferta: </h6>
+                                    </div>
+                                    <div class="col-6 pl-0">
+                                        <h5>{{offer.amount | currency: 'CRC'}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-2">
+                                        <i class="far fa-clock" style="font-size: 4vh;"></i>
+                                    </div>
+                                    <div class="col-3 pl-0 mt-1">
+                                        <h6 class="font-weight-bold">Vence en: </h6>
+                                    </div>
+                                    <div class="col-6 pl-0">
+                                        <h5>{{offer.sale!.finalDate | date: 'MMM d, y, h:mm a'}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <button *ngIf="offer.sale!.property!.state == 1" class="btn btn-primary btn-sm">Reofertar</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-12 text-center">
+                <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="startPage = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="myOffers.length == 0" class="row">
+        <div class="col">
+            <div class="alert alert-info">
+                Aun no ha registrado ofertas.
             </div>
         </div>
     </div>

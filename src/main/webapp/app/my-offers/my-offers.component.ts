@@ -18,13 +18,16 @@ import { CustomPropertyService } from 'app/global-services/custom-property.servi
   styleUrls: ['./my-offers.component.scss'],
 })
 export class MyOffersComponent implements OnInit {
-  myOffers?: Offer[];
+  myOffers: Offer[] = [];
   userAccount?: UserAccount;
+  startPage = 1;
   constructor(
     private customOfferService: CustomOfferService,
     private servicePaymentService: ServicePaymentService,
     private customPropertyService: CustomPropertyService
-  ) {}
+  ) {
+    this.myOffers = [];
+  }
 
   ngOnInit(): void {
     this.servicePaymentService.getUserAcoount().subscribe(response => {
@@ -36,6 +39,13 @@ export class MyOffersComponent implements OnInit {
         for (let offer of this.myOffers) {
           this.customPropertyService.getPropertyBySaleId(offer.sale!.id!).subscribe((response: HttpResponse<IProperty>) => {
             offer.sale!.property = response.body || undefined;
+
+            this.customOfferService.getMaxOfferBySaleId(offer.sale!.id!).subscribe((response: HttpResponse<number>) => {
+              offer.sale!.offers = [];
+              let maxOffer = new Offer();
+              maxOffer.amount = <number>response.body;
+              offer.sale!.offers?.push(maxOffer);
+            });
           });
         }
       });

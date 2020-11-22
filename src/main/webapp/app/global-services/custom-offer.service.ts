@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
 type EntityArrayResponseType = HttpResponse<IOffer[]>;
+type EntityResponseType = HttpResponse<number>;
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,16 @@ export class CustomOfferService {
     return this.http
       .get<IOffer[]>(this.resourceUrl + '/get-offer-by-user/' + id, { observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  getMaxOfferBySaleId(saleId: number): Observable<EntityResponseType> {
+    return this.http
+      .get<number>(this.resourceUrl + '/get-max-offer-by-sale/' + saleId, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    return res;
   }
 
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {

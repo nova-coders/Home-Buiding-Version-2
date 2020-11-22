@@ -1,6 +1,7 @@
 package com.novacoders.homebuilding.web.rest;
 
 import com.novacoders.homebuilding.HomeBuildingApp;
+import com.novacoders.homebuilding.repository.PropertyImageRepository;
 import com.novacoders.homebuilding.repository.PropertyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,15 +24,18 @@ public class CustomPropertyResourceIT {
 
     private final PropertyRepository propertyRepository;
 
-    public CustomPropertyResourceIT(PropertyRepository propertyRepository){
+    private final PropertyImageRepository propertyImageRepository;
+
+    public CustomPropertyResourceIT(PropertyRepository propertyRepository, PropertyImageRepository propertyImageRepository){
         this.propertyRepository = propertyRepository;
+        this.propertyImageRepository = propertyImageRepository;
     }
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        CustomPropertyResource customPropertyResource = new CustomPropertyResource(propertyRepository);
+        CustomPropertyResource customPropertyResource = new CustomPropertyResource(propertyRepository, propertyImageRepository);
         restMockMvc = MockMvcBuilders
             .standaloneSetup(customPropertyResource)
             .build();
