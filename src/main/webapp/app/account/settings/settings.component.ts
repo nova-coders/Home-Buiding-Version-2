@@ -387,4 +387,7 @@ export class SettingsComponent implements OnInit {
   openLogin(): void {
     this.router.navigate(['/auth/login']);
   }
+
+  // tslint:disable-next-line:typedef
+  save() {}
 }

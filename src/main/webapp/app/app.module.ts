@@ -27,6 +27,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularImageViewerModule } from 'angular-x-image-viewer';
 import { ImageViewerComponent } from './see-auction/components/image-viewer/image-viewer.component';
 import { ContractComponent } from './contract/contract.component';
+/* eslint-disable */
+import { ShowMapComponent } from './global-components/show-map/show-map.component';
 import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component';
 import { ModalDocumentComponent } from './bid-at-auction/components/modal-document/modal-document.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
@@ -63,6 +65,7 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
     CardOfferComponent,
     ImageViewerComponent,
     ContractComponent,
+    ShowMapComponent,
     BidAtAuctionComponent,
     ModalDocumentComponent,
     MyOffersComponent,
