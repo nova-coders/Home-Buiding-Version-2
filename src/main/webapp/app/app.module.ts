@@ -31,6 +31,9 @@ import { ContractComponent } from './contract/contract.component';
 import { ShowMapComponent } from './global-components/show-map/show-map.component';
 import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component';
 import { ModalDocumentComponent } from './bid-at-auction/components/modal-document/modal-document.component';
+import { ModalBidComponent } from './bid-at-auction/components/modal-bid/modal-bid.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ChatComponent } from './chat/chat.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 
 @NgModule({
@@ -68,8 +71,12 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
     ShowMapComponent,
     BidAtAuctionComponent,
     ModalDocumentComponent,
+    ModalBidComponent,
+    NotificationsComponent,
+    ChatComponent,
     MyOffersComponent,
   ],
   bootstrap: [MainComponent],
+  exports: [ChatComponent],
 })
 export class HomeBuildingAppModule {}

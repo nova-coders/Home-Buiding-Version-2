@@ -143,7 +143,7 @@ export class PropertyUpdateComponent implements OnInit {
         .query()
         .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
     });
-    this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
+    this.servicePaymentService.getUserAccount().subscribe(userAccount => {
       this.userAccount = userAccount.body;
     });
 

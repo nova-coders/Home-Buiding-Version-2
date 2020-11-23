@@ -117,7 +117,7 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
+    this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
       this.userAccount = userAccount;

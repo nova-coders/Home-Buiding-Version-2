@@ -23,5 +23,10 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query("SELECT p FROM Property p WHERE p.sale.finalDate <= :expireDateTime AND p.state = 1")
     List<Property> findAllWithCreationDateTimeBefore(@Param("expireDateTime") ZonedDateTime expireDateTime);
 
+
+    @Query("SELECT p FROM Property p WHERE p.sale.id = :saleid")
+    Optional<Property> findPropertyBySale(@Param("saleid") long saleid);
+
     Optional<Property> findBySale_Id(long id);
+
 }

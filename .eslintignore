@@ -5,6 +5,7 @@ src/test/javascript/jest.conf.js
 src/main/webapp/content/js
 src/main/webapp/content/fonts
 src/main/webapp/app/
+src/main/webapp/content/js
 webpack/
 src/main/webapp/app
 target/

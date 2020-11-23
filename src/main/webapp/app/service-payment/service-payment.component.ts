@@ -33,7 +33,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.loadAll();
-    this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
+    this.servicePaymentService.getUserAccount().subscribe(userAccount => {
       this.userAccount = userAccount.body;
     });
   }

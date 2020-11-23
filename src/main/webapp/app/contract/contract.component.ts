@@ -53,14 +53,13 @@ export class ContractComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.servicePaymentService.getUserAcoount().subscribe(puserAccount => {
+    this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
       this.contractId = Number(this.activeRouter.snapshot.paramMap.get('id'));
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
       this.loggedUserAccount = userAccount;
       console.log('LOGED USER ACCOUNT');
       console.log(<UserAccount>this.loggedUserAccount);
-
       this.documentService.find(this.contractId).subscribe(data => {
         this.contract = <Document>data.body;
         console.log('This is the contract data.');

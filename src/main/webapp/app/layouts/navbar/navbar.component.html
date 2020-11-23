@@ -16,7 +16,9 @@
             <fa-icon icon="sign-in-alt"></fa-icon>
             Iniciar sesi&oacute;n
         </a>
-
+        <div class="d-inline-block" *ngIf="isAuthenticated()">
+            <jhi-notifications></jhi-notifications>
+        </div>
         <div *ngIf="isAuthenticated()" class="dropup link-element">
             <div class="btn btn-outline-light white py-1 px-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="avatar avatar-sm" [src]="userAccount.profilePicture" alt="Avatar" style="width: 30px !important; height: 30px !important;">

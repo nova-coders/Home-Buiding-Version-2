@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.isAuthenticated()) {
-        this.servicePaymentService.getUserAcoount().subscribe(response => {
+        this.servicePaymentService.getUserAccount().subscribe(response => {
           this.userAccount = <UserAccount>response.body;
         });
       }
