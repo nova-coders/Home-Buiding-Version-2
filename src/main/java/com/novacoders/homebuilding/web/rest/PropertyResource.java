@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -117,7 +118,7 @@ public class PropertyResource {
     @GetMapping("/properties/getPropertiesOnSale")
     public List<Property> getPropertiesOnSale() {
         log.debug("REST request to get all Properties");
-        return propertyRepository.findAll();
+        return propertyRepository.findAllPropertiesOnSale(ZonedDateTime.now());
     }
     /**
      * {@code GET  /properties/:id} : get the "id" property.
