@@ -16,7 +16,7 @@ public class BidAtAuctionController {
         this.bidAtAuctionService = bidAtAuctionService;
     }
     @PostMapping("/saveBidAuction")
-    public int saveBidAuction(@RequestBody Offer offer) {
+    public List<Object> saveBidAuction(@RequestBody Offer offer) {
         return bidAtAuctionService.saveBidAuction(offer);
     }
 }

@@ -32,16 +32,16 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.servicePaymentService.getUserAccount().subscribe((response: any) => {
       this.userAccount = response.body;
     });
-    this.notificationSocketService.receive().subscribe((response: Notification) => {
+    this.notificationSocketService.receive().subscribe((notification: Notification) => {
       console.log(this.userAccount.id);
-      console.log(response);
+      console.log(notification);
       if (this.notifications.length > 0) {
-        if (this.notifications[0].id != response.id && this.userAccount.id === response.receptor?.id) {
-          this.notifications.unshift(response);
+        if (this.notifications[0].id != notification.id && this.userAccount.id === notification.receptor?.id) {
+          this.notifications.unshift(notification);
         }
       } else {
-        if (this.userAccount.id === response.receptor?.id && this.notifications.length === 0) {
-          this.notifications.unshift(response);
+        if (this.userAccount.id === notification.receptor?.id && this.notifications.length === 0) {
+          this.notifications.unshift(notification);
         }
       }
     });

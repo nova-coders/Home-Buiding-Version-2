@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Property } from 'app/shared/model/property.model';
 import { PropertyService } from 'app/entities/property/property.service';
@@ -9,13 +9,14 @@ import { NotificationSocketService } from 'app/core/notification/notificationSoc
 import { Notification } from 'app/shared/model/notification.model';
 import * as moment from 'moment';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
+import { OfferSocketService } from 'app/core/offer/offer-socket.service';
 
 @Component({
   selector: 'jhi-see-auction',
   templateUrl: './see-auction.component.html',
   styleUrls: ['./see-auction.component.scss'],
 })
-export class SeeAuctionComponent implements OnInit {
+export class SeeAuctionComponent implements OnInit, OnDestroy {
   public property: Property;
   public idProperty: number;
   public offers: Array<Offer> = [];
@@ -26,7 +27,8 @@ export class SeeAuctionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private propertyService: PropertyService,
-    private seeAuctionService: SeeAuctionService
+    private seeAuctionService: SeeAuctionService,
+    private offerSocketService: OfferSocketService
   ) {
     this.property = new Property();
     this.idProperty = -1;
@@ -35,6 +37,8 @@ export class SeeAuctionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.offerSocketService.connect();
+    this.offerSocketService.subscribe();
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
@@ -50,6 +54,13 @@ export class SeeAuctionComponent implements OnInit {
           });
         }
       });
+    });
+    this.offerSocketService.receive().subscribe((offer: Offer) => {
+      if (this.property?.sale?.id === offer?.sale?.id) {
+        if (offer.id != this.offers[0].id) {
+          this.offers.unshift(offer);
+        }
+      }
     });
   }
   public closeAuction(): void {
@@ -92,5 +103,9 @@ export class SeeAuctionComponent implements OnInit {
   }
   private goDocument(idDocumen: number): void {
     this.router.navigate(['/document/', idDocumen]);
+  }
+
+  ngOnDestroy(): void {
+    this.offerSocketService.disconnect();
   }
 }

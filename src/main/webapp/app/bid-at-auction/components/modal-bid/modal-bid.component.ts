@@ -5,6 +5,7 @@ import { ServicePaymentService } from 'app/service-payment/service-payment.servi
 import { OfferService } from 'app/entities/offer/offer.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
 import { BidAtAuctionService } from 'app/bid-at-auction/bid-at-auction.service';
+import { OfferSocketService } from 'app/core/offer/offer-socket.service';
 @Component({
   selector: 'jhi-modal-bid',
   templateUrl: './modal-bid.component.html',
@@ -20,7 +21,8 @@ export class ModalBidComponent implements OnInit, AfterViewInit {
   constructor(
     public servicePaymentService: ServicePaymentService,
     public offerService: OfferService,
-    private bidAtAuctionService: BidAtAuctionService
+    private bidAtAuctionService: BidAtAuctionService,
+    private offerSocketService: OfferSocketService
   ) {
     this.offer = new Offer();
     this.offer.commentary = 'Sin comentario';
@@ -32,7 +34,10 @@ export class ModalBidComponent implements OnInit, AfterViewInit {
     this.offer.amount = this.maximumBid;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.offerSocketService.connect();
+    this.offerSocketService.subscribe();
+  }
   public sendOffer(): void {
     if (this.offer.amount > this.maximumBid) {
       this.hasError = false;
@@ -53,7 +58,13 @@ export class ModalBidComponent implements OnInit, AfterViewInit {
   private saveOffer() {
     this.bidAtAuctionService.saveBidAuction(this.offer).subscribe(
       (response: any) => {
-        this.successfulOffer = response;
+        console.log(response);
+        if (response.length === 2) {
+          this.successfulOffer = response[1];
+          this.offerSocketService.sendOffer('' + response[0].id);
+        } else {
+          this.successfulOffer = response[0];
+        }
       },
       error => {
         this.successfulOffer = 3;

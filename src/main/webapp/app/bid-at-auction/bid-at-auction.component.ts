@@ -5,6 +5,7 @@ import { PropertyService } from 'app/entities/property/property.service';
 import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 import { Property } from 'app/shared/model/property.model';
 import { BidAtAuctionService } from 'app/bid-at-auction/bid-at-auction.service';
+import { OfferSocketService } from 'app/core/offer/offer-socket.service';
 
 @Component({
   selector: 'jhi-bid-at-auction',
@@ -20,12 +21,12 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
   public actualPrice = 0;
   public maximumBid: number | undefined;
   public successfulOffer = 0;
-  public timerOffer = setInterval(() => this.updateOffers(), 5000);
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private propertyService: PropertyService,
-    private seeAuctionService: SeeAuctionService
+    private seeAuctionService: SeeAuctionService,
+    private offerSocketService: OfferSocketService
   ) {
     this.property = new Property();
     this.idProperty = -1;
@@ -44,6 +45,8 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    this.offerSocketService.connect();
+    this.offerSocketService.subscribe();
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
@@ -63,9 +66,16 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
         }
       });
     });
+    this.offerSocketService.receive().subscribe((offer: Offer) => {
+      if (this.property?.sale?.id === offer?.sale?.id) {
+        if (offer.id != this.offers[0].id) {
+          this.offers.unshift(offer);
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.timerOffer);
+    this.offerSocketService.disconnect();
   }
 }
