@@ -1,7 +1,7 @@
 <!--Contract, here we decide which of the two types of contracts will display.-->
-<div class="container">
+<div class="container" style="margin-top: 110px;">
     <div id="TitleContract" class="border rounded p-3">
-        <h2>HomeBuilding - Terminos del contrato</h2>
+        <h2>HomeBuilding - T&eacute;rminos del contrato</h2>
         <div *ngIf="rentContract">
             <H3 class="contractText">Contrato de alquiler</H3>
             <p class="contractText"><label class="font-weight-bold">NÚMERO</label> ____: Ante mí ____, Notario Público con oficina en _________, comparecen los señores ____(nombre y apellidos),
@@ -208,9 +208,9 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row my-5">
         <div class="col-12">
-            <a [routerLink]="''" class="btn btn-secondary float-right">Firmar m&aacute;s tarde</a>
+            <a [routerLink]="''" class="btn btn-secondary float-right mx-3">Firmar m&aacute;s tarde</a>
             <button class="btn btn-primary float-right" type="submit" (click)="saveSignature()">Guardar</button>
         </div>
     </div>

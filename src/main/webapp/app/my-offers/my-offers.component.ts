@@ -30,7 +30,7 @@ export class MyOffersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.servicePaymentService.getUserAcoount().subscribe(response => {
+    this.servicePaymentService.getUserAccount().subscribe(response => {
       this.userAccount = <UserAccount>response.body;
 
       this.customOfferService.getOffersByUserAccount(this.userAccount.id).subscribe((res: HttpResponse<IOffer[]>) => {
