@@ -1,5 +1,5 @@
 
-<div class="btn-group dropleft">
+<div class="btn-group dropleft" *ngIf="notifications.length > 0">
     <button type="button" class="btn btn-primary -border-none dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="fa fa-bell bell" aria-hidden="true">
             <i class="badge mybadge">{{notifications.length}}</i>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { INotification } from 'app/shared/model/notification.model';
 import { NotificationService } from 'app/notifications/notification.service';
 import { NotificationSocketService } from 'app/core/notification/notificationSocket.service';
@@ -11,7 +11,7 @@ import { UserAccount } from 'app/shared/model/user-account.model';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss'],
 })
-export class NotificationsComponent implements OnInit, OnDestroy {
+export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit {
   public notifications: INotification[];
   public userAccount: UserAccount;
   constructor(
@@ -22,14 +22,15 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this.notifications = [];
     this.userAccount = new UserAccount();
   }
+
   ngOnInit(): void {
     this.notificationSocketService.connect();
     this.notificationSocketService.subscribe();
     this.notificationService.getNotificationsByUserReceptor().subscribe((response: Notification[]) => {
       this.notifications = response || [];
     });
-    this.servicePaymentService.getUserAccount().subscribe((response: UserAccount) => {
-      this.userAccount = response;
+    this.servicePaymentService.getUserAccount().subscribe((response: any) => {
+      this.userAccount = response.body;
     });
     this.notificationSocketService.receive().subscribe((response: Notification) => {
       console.log(this.userAccount.id);
@@ -48,4 +49,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.notificationSocketService.disconnect();
   }
+
+  ngAfterViewInit(): void {}
 }
