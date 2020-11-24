@@ -1,10 +1,10 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="margin-top: 110px;">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="propertyForm">
-            <h2 id="jhi-property-heading" class="d-flex justify-content-center" >Registrar un inmueble en subasta</h2>
-            <hr style="border: 0; height:1px;  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+            <h1 id="jhi-property-heading" class="d-flex justify-content-center" >Registrar un inmueble en subasta</h1>
+            <hr>
             <div *ngIf="step == 1">
-                <h4>Datos del inmueble</h4>
+                <h2>Datos del inmueble</h2>
                 <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
                 <div class="row">
                     <div class="col-3" [hidden]="!propertyForm.get('id')!.value">
@@ -21,6 +21,9 @@
                                *ngIf="propertyForm.get('title')?.errors?.required">
                             El título es requerido.
                         </small>
+
+                        <br>
+
                         <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
                         <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
                             <option [ngValue]="null" selected disabled>Seleccione una opción</option>
@@ -30,9 +33,15 @@
                                *ngIf="propertyForm.get('moneyType')?.errors?.required">
                             El tipo de moneda es requerido.
                         </small>
+
+                        <br>
+
                         <label class="form-control-label"  for="field_discount">Descuento</label>
                         <input type="number" class="form-control" name="discount" id="field_discount"
                                formControlName="discount"/>
+
+                        <br>
+
                         <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
                         <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
                             <option [ngValue]="null" selected disabled></option>
@@ -42,6 +51,9 @@
                                *ngIf="propertyForm.get('propertyCategory')?.errors?.required">
                             La categoría del inmueble es requerido.
                         </small>
+
+                        <br>
+
                         <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
                         <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters"
                                formControlName="areaSquareMeters"/>
@@ -49,6 +61,8 @@
                                *ngIf="propertyForm.get('areaSquareMeters')?.errors?.required">
                             El área de construcción es requerido.
                         </small>
+
+                        <br>
 
                         <label class="form-control-label" for="field_propertyId">Número de plano</label>
                         <input type="number" class="form-control" name="propertyId" id="field_propertyId"
@@ -58,6 +72,8 @@
                             El número de plano es requerido.
                         </small>
 
+                        <br>
+
                         <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m2 del inmueble</label>
                         <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters"
                                formControlName="landSquareMeters"/>
@@ -65,6 +81,7 @@
                                *ngIf="propertyForm.get('landSquareMeters')?.errors?.required">
                             Las dimensiones del inmueble es requerido.
                         </small>
+                        <br>
                     </div>
 
                     <div class="col">
@@ -75,6 +92,9 @@
                                *ngIf="propertyForm.get('description')?.errors?.required">
                             Las dimensiones del inmueble es requerido.
                         </small>
+
+                        <br>
+
                         <label class="form-control-label"  for="field_price">Precio</label>
                         <input type="number" class="form-control" name="price" id="field_price"
                                formControlName="price"/>
@@ -82,6 +102,9 @@
                                *ngIf="propertyForm.get('price')?.errors?.required">
                             El precio del inmueble es requerido.
                         </small>
+
+                        <br>
+
                         <label class="form-control-label" for="field_finalDate">Fecha de expiración</label>
                         <div class="d-flex">
                             <input id="field_finalDate" type="datetime-local" class="form-control" name="finalDate" formControlName="finalDate" placeholder="YYYY-MM-DD HH:mm"/>
@@ -90,6 +113,9 @@
                                *ngIf="propertyForm.get('finalDate')?.errors?.required">
                             La fecha de finalización es requerida.
                         </small>
+
+                        <br>
+
                         <label class="form-control-label"  for="field_addressText">Dirección exacta del inmueble</label>
                         <textarea class="form-control" name="addressText" id="field_addressText"
                                   formControlName="addressText"  rows="5" cols="40"></textarea>
@@ -130,8 +156,8 @@
                         <iframe src="../../../content/pdf/homeBuildingStudy.pdf" height="300" width="300" id="urlRegistryStudy" class="mt-5 mb-5"></iframe>
                     </div>
                 </div>
-
             </div>
+
             <div *ngIf="step == 2">
                 <h4>Imágenes y localización del inmueble</h4>
                 <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
@@ -178,6 +204,7 @@
                             <option *ngFor="let province of lstProvinces; index as i" [value]="i">{{ province.name}}</option>
                         </select>
                     </div>
+                    <br>
                     <div class="col" *ngIf="isSelected==true">
                         <label class="form-control-label"  for="field_canton" >Cantón</label>
                         <select class="form-control" id="field_canton" name="canton" formControlName="canton">
