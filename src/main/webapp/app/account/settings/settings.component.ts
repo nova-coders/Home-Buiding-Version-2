@@ -41,6 +41,7 @@ export class SettingsComponent implements OnInit {
   doNotMatch = false;
 
   error = false;
+  errorPhone = false;
   errorEmailExists = false;
   errorUser = false;
   errorSignatureNotSaved = false;
@@ -59,7 +60,7 @@ export class SettingsComponent implements OnInit {
     profilePicture: [],
     signaturePicture: [],
     signatureCode: [],
-    phone: [],
+    phone: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(15)]],
     state: [],
     creationDate: [],
     user: [],
@@ -166,25 +167,6 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  /*save(): void {
-    this.success = false;
-
-    this.account.firstName = this.settingsForm.get('firstName')!.value;
-    this.account.lastName = this.settingsForm.get('lastName')!.value;
-    this.account.email = this.settingsForm.get('email')!.value;
-    this.account.langKey = this.settingsForm.get('langKey')!.value;
-
-    this.accountService.save(this.account).subscribe(() => {
-      this.success = true;
-
-      this.accountService.authenticate(this.account);
-
-      if (this.account.langKey !== this.languageService.getCurrentLanguage()) {
-        this.languageService.changeLanguage(this.account.langKey);
-      }
-    });
-  }*/
-
   update(): void {
     this.isSaving = true;
     let userAccount = this.createFromForm();
@@ -197,6 +179,7 @@ export class SettingsComponent implements OnInit {
           this.updateSignature = false;
           this.success = true;
           this.successClearErrors();
+          window.scrollTo(0, 0);
         });
       } else {
         this.error = true;
@@ -379,7 +362,19 @@ export class SettingsComponent implements OnInit {
       this.errorEmailExists = true;
       check = false;
     } else {
-      this.errorEmailExists = false;
+      console.log('the email is in valid format: ' + emailIsValid(this.settingsForm.get(['email'])!.value));
+      if (emailIsValid(this.settingsForm.get(['email'])!.value)) {
+        this.errorEmailExists = false;
+      } else {
+        this.errorEmailExists = true;
+        check = false;
+      }
+    }
+    if (this.settingsForm.get(['phone'])!.value == '') {
+      this.errorPhone = true;
+      check = false;
+    } else {
+      this.errorPhone = false;
     }
     return check;
   }
@@ -390,4 +385,8 @@ export class SettingsComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   save() {}
+}
+
+function emailIsValid(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
