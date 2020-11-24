@@ -1,7 +1,6 @@
 <div class="col-md-12 col-lg-12 text-center">
-
     <h1>{{property.title}}</h1>
-    <span *ngIf="offers.length > 0 && property.state == 3" class="badge badge-danger">Subasta cerrada</span>
+    <span *ngIf="offers.length > 0 && property.state != 1" class="badge badge-danger">Subasta cerrada</span>
     <hr class="w-50">
 </div>
 <div class="col-md-12 col-lg-12 text-center">
@@ -53,33 +52,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="row" *ngIf="offers.length > 0 && property.state == 3">
+        <div class="row" *ngIf="offers.length > 0 && property.state != 1">
             <div class="col-md-12 col-lg-12">
                 <div class="alert  alert-info opacity-8" role="alert mt-2">
                     <h3>Subasta cerrada</h3>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <hr>
-    <div class="container">
-        <div class="row" *ngIf="offers.length > 0 ">
-            <div class="col-md-12 col-lg-12 text-center mb-2">
-                <h3>Ofertas del inmueble</h3>
-            </div>
-            <div class="col-md-4 col-lg-4" *ngFor="let offer of offers| paginate: { itemsPerPage: 3, currentPage: startPage}">
-                <jhi-card-offer [amount]="''+offer.amount" [buyerName]="offer.userAccount?.user?.login+' '+offer.userAccount?.user?.firstName+' '+offer.userAccount?.user?.lastName" [buyerImage]="offer.userAccount?.profilePicture" [buyerMessage]="offer?.commentary"></jhi-card-offer>
-            </div>
-            <div class="col-md-12 text-center mb-2" *ngIf="offers.length > 3">
-                <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="startPage = $event"></pagination-controls>
-            </div>
-        </div>
-
-        <div class="row" *ngIf="offers.length === 0 ">
-            <div class="col-md-12 col-lg-12 text-center mb-2">
-                <h3>Sin ofertas por el momento</h3>
             </div>
         </div>
     </div>

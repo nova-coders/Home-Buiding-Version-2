@@ -3,9 +3,9 @@ import { Offer } from 'app/shared/model/offer.model';
 import * as moment from 'moment';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { OfferService } from 'app/entities/offer/offer.service';
-import { UserAccount } from 'app/shared/model/user-account.model';
 import { BidAtAuctionService } from 'app/bid-at-auction/bid-at-auction.service';
 import { OfferSocketService } from 'app/core/offer/offer-socket.service';
+
 @Component({
   selector: 'jhi-modal-bid',
   templateUrl: './modal-bid.component.html',
@@ -29,11 +29,9 @@ export class ModalBidComponent implements OnInit, AfterViewInit {
     this.offer.state = true;
     this.offer.date = moment();
   }
-
   ngAfterViewInit(): void {
     this.offer.amount = this.maximumBid;
   }
-
   ngOnInit(): void {
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
