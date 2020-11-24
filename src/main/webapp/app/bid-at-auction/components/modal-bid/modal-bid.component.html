@@ -1,0 +1,41 @@
+<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" >Ofertar</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Realiza tú oferta aquí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="alert alert-warning {{hasError?'show d-block':'d-none'}}" role="alert">
+                        Para ofertar, debe ingresar una cantidad, y esta debe ser mayor que la oferta más alta que fue de ${{maximumBid}}.
+                    </div>
+                    <div class="alert alert-warning {{successfulOffer === 2?'show d-block':'d-none'}}" role="alert">
+                        Ya eres el mayor postor de la propiedad. No se puede sobreofertar.
+                    </div>
+                    <div class="alert alert-success {{successfulOffer === 1?'show d-block':'d-none'}}" role="alert" >
+                        La oferta se realizó con éxito. Si el vendedor acepta su oferta,serás contactado por correo electrónico.
+                    </div>
+                    <div class="alert alert-danger {{successfulOffer === 3?'show d-block':'d-none'}}" role="alert" >
+                        Ocurrió un error en el servidor. Intente más tarde.
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="col-form-label">Tu oferta:</label>
+                        <input type="number" placeholder="{{maximumBid+1}}" min="{{maximumBid}}" class="form-control" id="amount" name="amount" [(ngModel)]="this.offer.amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="commentary" class="col-form-label">Comentario:</label>
+                        <textarea class="form-control" cols="5" rows="5" id="commentary" name="commentary" [(ngModel)]="this.offer.commentary"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="sendOffer()">Ofertar</button>
+            </div>
+        </div>
+    </div>
+</div>

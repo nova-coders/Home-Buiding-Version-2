@@ -46,7 +46,6 @@ export class PropertyUpdateComponent implements OnInit {
   lstPropertyCategories: IPropertyCategory[] = [];
   lstImageCategory: IImageCategory[] = [];
   lstPropertyImages: IPropertyImage[] = [];
-  provinceIndex!: number;
   cantonIndex!: number;
   catastralPlan!: any;
   registryStudy!: any;
@@ -144,7 +143,7 @@ export class PropertyUpdateComponent implements OnInit {
         .query()
         .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
     });
-    this.servicePaymentService.getUserAcoount().subscribe(userAccount => {
+    this.servicePaymentService.getUserAccount().subscribe(userAccount => {
       this.userAccount = userAccount.body;
     });
 
@@ -301,9 +300,7 @@ export class PropertyUpdateComponent implements OnInit {
     this.lat = Number(mypro.latitude);
     this.lng = Number(mypro.longitude);
     this.getAddress();
-    this.cantonService
-      .findByProvince(provinceIndex)
-      .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+    this.cantonService.findByProvince(mypro.id).subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
     this.isSelected = true;
   }
 

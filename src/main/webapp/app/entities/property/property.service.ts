@@ -43,6 +43,9 @@ export class PropertyService {
       .get<IProperty[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
+  public getBySale(): Observable<any> {
+    return this.http.get(`${this.resourceUrl}/sale`, { observe: 'response' });
+  }
 
   getProperties(): Observable<EntityArrayResponseType> {
     return this.http

@@ -13,24 +13,26 @@
 
         <a *ngIf="!isAuthenticated()" class="link-element" [routerLink]="['/account/register']">Crear cuenta</a>
 
-        <a *ngIf="!isAuthenticated()" class="btn btn-secondary" [routerLink]="['/auth/login']">
+        <a *ngIf="!isAuthenticated()" class="btn btn-secondary py-1 px-3" [routerLink]="['/auth/login']">
             <fa-icon icon="sign-in-alt"></fa-icon>
             Iniciar sesi&oacute;n
         </a>
-
+        <div class="d-inline-block" *ngIf="isAuthenticated()">
+            <jhi-notifications></jhi-notifications>
+        </div>
         <div *ngIf="isAuthenticated()" class="dropup link-element">
-            <div class="btn btn-outline-light py-1 px-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="avatar avatar-sm" [src]="userAccount.profilePicture"  alt="Avatar">
+            <div class="btn btn-outline-light white py-1 px-3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="avatar avatar-sm" [src]="userAccount.profilePicture" alt="Avatar" style="width: 30px !important; height: 30px !important;">
                 <span *ngIf="account" class="mx-2">
                     {{account.login}}
                 </span>
             </div>
             <div class="dropdown-menu">
-                <a href="javascript:;" class="dropdown-item">
+                <a routerLink="account/settings" class="dropdown-item">
                     <i class="fa fa-user-circle"></i>
                     <span>Mi perfil</span>
                 </a>
-                <a href="javascript:;" class="dropdown-item">
+                <a class="dropdown-item" [routerLink]="['/property/new']">
                     <i class="fa fa-building"></i>
                     <span>Registrar subasta</span>
                 </a>
@@ -46,7 +48,7 @@
                     <i class="fa fa-object-group"></i>
                     <span>Mis subastas</span>
                 </a>
-                <a href="javascript:;" class="dropdown-item">
+                <a routerLink="my-offers" class="dropdown-item">
                     <i class="fa fa-exclamation-circle"></i>
                     <span>Mis ofertas</span>
                 </a>
@@ -58,9 +60,9 @@
                     <i class="fa fa-comment-dollar"></i>
                     <span>Comprar servicio</span>
                 </a>
-                <a routerLink="account/settings" class="dropdown-item">
-                    <i class="fa fa-cog"></i>
-                    <span>Opciones</span>
+                <a routerLink="account/password" class="dropdown-item">
+                    <i class="fa fa-key"></i>
+                    <span>Actualizar contrase&ntilde;a</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a (click)="logout()" class="dropdown-item">

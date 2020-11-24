@@ -9,10 +9,11 @@ export class ModalDocumentComponent implements OnInit {
   @Input() title = 'Documento';
   @Input() baseg4File = '';
   @Input() btnName = '';
+  @Input() idmodal = 'modal';
   constructor() {}
 
   ngOnInit(): void {}
   public setSrcIframe(): void {
-    document.getElementById('cadastralPlanDocument')?.setAttribute('src', this.baseg4File);
+    document.getElementById('document-' + this.idmodal)?.setAttribute('src', this.baseg4File);
   }
 }

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,5 +24,8 @@ public class PropertyService {
 
     public Property  seveProperty(Property property){
         return this.propertyRepository.save(property);
+    }
+    public Optional<Property> findPropertyBySale(long saleid){
+        return  this.propertyRepository.findPropertyBySale(saleid);
     }
 }

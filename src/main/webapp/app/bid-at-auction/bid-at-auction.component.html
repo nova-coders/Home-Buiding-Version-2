@@ -33,8 +33,6 @@
                     </div>
                     <h6>Descripción de la propiedad:</h6>
                     <textarea disabled="true" class="form-control" name="comment" cols="30" rows="5"> {{property.description}}</textarea>
-                    <hr>
-                    <h2 *ngIf="offers.length > 0">Última oferta: ${{offers[0].amount}}</h2>
                 </div>
             </div>
             <div class="col-md-6 col-lg-6 text-lg-left text-md-left text-sm-center">
@@ -46,20 +44,16 @@
                     <textarea disabled="true" class="form-control" name="comment" cols="30" rows="5"> {{property.addressText}}</textarea>
                     <hr>
                     <h4>Documentos de la propiedad</h4>
-                    <jhi-modal-document id="modal1" btnName="Ver plano" baseg4File="{{property?.sale?.cadastralPlan}}" title="Estudio registral de la propiedad"></jhi-modal-document>
-                    <jhi-modal-document id="modal1" btnName="Ver estudio registral" baseg4File="{{property?.sale?.registryStudy}}" title="Plando de la propiedad"></jhi-modal-document>
+                    <jhi-modal-document idmodal="modal1"  btnName="Ver plano" baseg4File="{{property?.sale?.cadastralPlan}}" title="Plando de la propiedad"></jhi-modal-document>
+                    <jhi-modal-document idmodal="modal2" btnName="Ver estudio registral" baseg4File="{{property?.sale?.registryStudy}}" title="Estudio registral de la propiedad"></jhi-modal-document>
                     <hr>
+                    <h2 *ngIf="offers.length > 0">Oferta más alta: ${{offers[0].amount}}</h2>
                     <hr>
-
-                    <h2 *ngIf="offers.length > 0">Última oferta: ${{offers[0].amount}}</h2>
+                    <jhi-modal-bid [sale]="property?.sale"  [offers]="offers"  [maximumBid]="maximumBid"></jhi-modal-bid>
                 </div>
             </div>
         </div>
-        <div class="row"  *ngIf="offers.length > 0 && property.state === 1">
-            <div class="col-md-12 col-lg-12">
-                <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
-            </div>
-        </div>
+
         <div class="row" *ngIf="offers.length > 0 && property.state == 3">
             <div class="col-md-12 col-lg-12">
                 <div class="alert  alert-info opacity-8" role="alert mt-2">
@@ -83,10 +77,12 @@
             </div>
         </div>
 
-        <div class="row" *ngIf="offers.length == 0 ">
+        <div class="row" *ngIf="offers.length === 0 ">
             <div class="col-md-12 col-lg-12 text-center mb-2">
                 <h3>Sin ofertas por el momento</h3>
             </div>
         </div>
     </div>
 </div>
+
+

@@ -67,8 +67,8 @@
       "identification-type.label": "Tipo de identificación",
       "identification.label": "Número de identificación",
       "birthdate.label": "Fecha de nacimiento",
-      "lastname1.label": "Primer apellido",
-      "lastname2.label": "Segundo apellido",
+      "firstName.label": "Nombre",
+      "lastname1.label": "Apellido",
       "phone.label": "Teléfono"
     },
     "messages": {

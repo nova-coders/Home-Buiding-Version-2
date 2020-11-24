@@ -8,6 +8,7 @@ import com.novacoders.homebuilding.repository.NotificationTwoRepositoy;
 import com.novacoders.homebuilding.repository.UserAccountRepository;
 import com.novacoders.homebuilding.repository.UserRepository;
 import com.novacoders.homebuilding.security.SecurityUtils;
+import com.novacoders.homebuilding.service.BellNotificationService;
 import com.novacoders.homebuilding.service.ServicePaymentService;
 import com.novacoders.homebuilding.web.websocket.dto.NotificationDTO;
 import org.slf4j.Logger;
@@ -25,14 +26,14 @@ import java.util.List;
 
 @Controller
 public class NotificationService {
-
-    private static final Logger log = LoggerFactory.getLogger(ActivityService.class);
-    public NotificationService() {
+    public BellNotificationService bellNotificationService;
+    public NotificationService(BellNotificationService bellNotificationService) {
+        this.bellNotificationService = bellNotificationService;
     }
     @MessageMapping("/topic/notification")
     @SendTo("/topic/inbox")
-    public String sendActivity(String pmessage) {
-            return pmessage + " hermoso";
+    public Notification sendActivity(String notificationId) {
+        return this.bellNotificationService.getNotificationById(Integer.parseInt(notificationId));
     }
 }
 

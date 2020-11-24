@@ -5,7 +5,7 @@ import { PropertyService } from 'app/entities/property/property.service';
 import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 import { Offer } from 'app/shared/model/offer.model';
 import { Router } from '@angular/router';
-import { NotificationService } from 'app/core/notification/notification.service';
+import { NotificationSocketService } from 'app/core/notification/notificationSocket.service';
 import { Notification } from 'app/shared/model/notification.model';
 import * as moment from 'moment';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';

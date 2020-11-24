@@ -9,7 +9,7 @@ export class ServicePaymentService {
   public resourceUrl = SERVER_API_URL + 'api';
   constructor(protected http: HttpClient) {}
 
-  getUserAcoount(): Observable<any> {
+  public getUserAccount(): Observable<any> {
     return this.http.get(`${this.resourceUrl}/payment-user-account`, { observe: 'response' });
   }
   assignPackageToUser(packegeid: number, userid: number): Observable<any> {

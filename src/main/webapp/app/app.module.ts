@@ -27,8 +27,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularImageViewerModule } from 'angular-x-image-viewer';
 import { ImageViewerComponent } from './see-auction/components/image-viewer/image-viewer.component';
 import { ContractComponent } from './contract/contract.component';
+/* eslint-disable */
+import { ShowMapComponent } from './global-components/show-map/show-map.component';
 import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component';
 import { ModalDocumentComponent } from './bid-at-auction/components/modal-document/modal-document.component';
+import { ModalBidComponent } from './bid-at-auction/components/modal-bid/modal-bid.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ChatComponent } from './chat/chat.component';
+import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 
 @NgModule({
@@ -63,10 +69,16 @@ import { ListSalesComponent } from './sales/list-sales/list-sales.component';
     CardOfferComponent,
     ImageViewerComponent,
     ContractComponent,
+    ShowMapComponent,
     BidAtAuctionComponent,
     ModalDocumentComponent,
+    ModalBidComponent,
+    NotificationsComponent,
+    ChatComponent,
+    MyOffersComponent,
     ListSalesComponent,
   ],
   bootstrap: [MainComponent],
+  exports: [ChatComponent],
 })
 export class HomeBuildingAppModule {}
