@@ -25,6 +25,6 @@ public class PropertyService {
         return this.propertyRepository.save(property);
     }
     public Optional<Property> findPropertyBySale(long saleid){
-        return  this.propertyRepository.findPropertyBySale(saleid);
+        return  this.propertyRepository.findBySale_Id(saleid);
     }
 }

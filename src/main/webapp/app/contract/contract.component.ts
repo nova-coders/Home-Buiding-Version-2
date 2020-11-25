@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Document } from 'app/shared/model/document.model';
 import { DocumentService } from 'app/entities/document/document.service';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
-import { createLogErrorHandler } from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
+import { CustomSaleService } from 'app/global-services/custom-sale.service';
 
 @Component({
   selector: 'jhi-contract',
@@ -12,12 +12,11 @@ import { createLogErrorHandler } from '@angular/compiler-cli/ngcc/src/execution/
   styleUrls: ['./contract.component.scss'],
 })
 export class ContractComponent implements OnInit {
-  public salesContract = false;
-  public rentContract = true;
-  public contractId: number | null = 0;
+  salesContract = false;
+  contractId: number | null = 0;
 
-  public loggedUserAccount = new UserAccount();
-  public contract = new Document();
+  loggedUserAccount = new UserAccount();
+  contract = new Document();
 
   /* Checks for the signature */
   checkedSeller: undefined | boolean;
@@ -40,7 +39,8 @@ export class ContractComponent implements OnInit {
   constructor(
     private activeRouter: ActivatedRoute,
     private documentService: DocumentService,
-    private servicePaymentService: ServicePaymentService
+    private servicePaymentService: ServicePaymentService,
+    private customSaleService: CustomSaleService
   ) {
     this.checkedBuyer = false;
     this.checkedSeller = false;
@@ -70,6 +70,11 @@ export class ContractComponent implements OnInit {
         this.disabledSeller = this.loggedUserAccount.id != this.contract.seller?.id;
         this.sellerSignaturePicture = this.contract.seller?.signaturePicture;
         this.buyerSignaturePicture = this.contract.buyer?.signaturePicture;
+
+        this.customSaleService.isPropertySale(this.contract.property?.id).subscribe(
+          data => (this.salesContract = <boolean>data.body),
+          () => (this.error = true)
+        );
         this.putUsersValuesOnContract();
       });
     });
