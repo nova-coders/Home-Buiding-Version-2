@@ -180,6 +180,7 @@ export class SettingsComponent implements OnInit {
           this.success = true;
           this.successClearErrors();
           window.scrollTo(0, 0);
+          console.log('window scrolled to the top');
         });
       } else {
         this.error = true;
