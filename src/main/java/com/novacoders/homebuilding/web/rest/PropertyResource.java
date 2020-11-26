@@ -116,7 +116,7 @@ public class PropertyResource {
     @GetMapping("/properties/getPropertiesOnSale")
     public List<Property> getPropertiesOnSale() {
         log.debug("REST request to get all Properties");
-        return propertyRepository.findAllPropertiesOnSale();
+        return propertyRepository.findAllPropertiesOnSale(ZonedDateTime.now());
     }
 
     @GetMapping("/properties/sale")

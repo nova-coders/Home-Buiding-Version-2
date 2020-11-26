@@ -37,6 +37,12 @@ export class ProvinceService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  getAll(): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IProvince[]>(this.resourceUrl, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
