@@ -5,6 +5,9 @@ import { Document } from 'app/shared/model/document.model';
 import { DocumentService } from 'app/entities/document/document.service';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { CustomSaleService } from 'app/global-services/custom-sale.service';
+import { HttpResponse } from '@angular/common/http';
+import { Offer } from 'app/shared/model/offer.model';
+import { CustomOfferService } from 'app/global-services/custom-offer.service';
 
 @Component({
   selector: 'jhi-contract',
@@ -17,6 +20,7 @@ export class ContractComponent implements OnInit {
 
   loggedUserAccount = new UserAccount();
   contract = new Document();
+  bestOffer: number;
 
   /* Checks for the signature */
   checkedSeller: undefined | boolean;
@@ -40,7 +44,8 @@ export class ContractComponent implements OnInit {
     private activeRouter: ActivatedRoute,
     private documentService: DocumentService,
     private servicePaymentService: ServicePaymentService,
-    private customSaleService: CustomSaleService
+    private customSaleService: CustomSaleService,
+    private customOfferService: CustomOfferService
   ) {
     this.checkedBuyer = false;
     this.checkedSeller = false;
@@ -50,6 +55,7 @@ export class ContractComponent implements OnInit {
     this.success = false;
     this.error = false;
     this.errorNotAuthorization = false;
+    this.bestOffer = 0;
   }
 
   ngOnInit(): void {
@@ -72,7 +78,18 @@ export class ContractComponent implements OnInit {
         this.buyerSignaturePicture = this.contract.buyer?.signaturePicture;
 
         this.customSaleService.isPropertySale(this.contract.property?.id).subscribe(
-          data => (this.salesContract = <boolean>data.body),
+          data => {
+            this.salesContract = <boolean>data.body;
+
+            if (this.contract.property?.sale?.id != null) {
+              this.customOfferService.getMaxOfferBySaleId(this.contract.property?.sale?.id).subscribe(
+                (response: HttpResponse<number>) => {
+                  this.bestOffer = <number>response.body;
+                },
+                () => (this.error = true)
+              );
+            }
+          },
           () => (this.error = true)
         );
         this.putUsersValuesOnContract();
