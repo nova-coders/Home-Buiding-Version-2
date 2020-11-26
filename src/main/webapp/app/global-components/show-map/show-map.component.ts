@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ShowMapService } from 'app/global-services/show-map.service';
-import { HttpResponse } from '@angular/common/http';
-import { IProperty, Property } from 'app/shared/model/property.model';
-import { ISale } from 'app/shared/model/sale.model';
 import { PropertyService } from 'app/entities/property/property.service';
 import { ProvinceService } from 'app/entities/province/province.service';
 import { ActivatedRoute } from '@angular/router';

@@ -19,6 +19,7 @@ export class ListSalesComponent implements OnInit {
   constructor(service: PropertyService, private route: ActivatedRoute, private pService: ProvinceService) {
     this.propertyService = service;
     this.provinceService = pService;
+    this.currentProvinceId = 1;
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -34,12 +35,5 @@ export class ListSalesComponent implements OnInit {
         this.provinceList = res.body as Array<Province>;
       });
     });
-  }
-
-  loadCurrentCantons() {
-    var currentProvince = document.getElementById('sltProvincias')?.value;
-    if (currentProvince != null) {
-      this.currentProvinceId = Number.parseInt(currentProvince);
-    }
   }
 }
