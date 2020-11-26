@@ -12,7 +12,7 @@ import { ShowMapComponent } from 'app/global-components/show-map/show-map.compon
 import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.component';
 import { ChatComponent } from 'app/chat/chat.component';
 import { MyOffersComponent } from 'app/my-offers/my-offers.component';
-
+import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -54,6 +54,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'bit-at-auction/:id',
           component: BidAtAuctionComponent,
+        },
+        {
+          path: 'sales/list',
+          component: ListSalesComponent,
         },
         {
           path: 'chat',

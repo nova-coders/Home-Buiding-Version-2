@@ -8,12 +8,14 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,6 +24,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/custom-property-resource")
+@Transactional
 public class CustomPropertyResource {
 
     private final Logger log = LoggerFactory.getLogger(CustomPropertyResource.class);
@@ -55,6 +58,18 @@ public class CustomPropertyResource {
         }
 
         return property;
+    }
+
+    /**
+     * GET getPropertyinSalesByUserID
+     */
+    @GetMapping("/get-properties-in-sales-by-Userid/{id}")
+    public List<Property> getPropertyBySaleUserId(@PathVariable int id) {
+        log.debug("REST request to get Properties in sale, using the userId: {}", id);
+        List<Property> listProperties;
+        listProperties = propertyRepository.findSalesByUserId(id);
+        log.debug(listProperties.toString());
+        return listProperties;
     }
 
 }

@@ -47,6 +47,17 @@ export class PropertyService {
     return this.http.get(`${this.resourceUrl}/sale`, { observe: 'response' });
   }
 
+  getProperties(): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IProperty[]>(this.resourceUrl, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  getPropertiesOnSale(): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IProperty[]>(this.resourceUrl + '/getPropertiesOnSale', { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

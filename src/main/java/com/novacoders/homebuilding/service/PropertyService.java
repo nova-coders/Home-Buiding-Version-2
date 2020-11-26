@@ -21,6 +21,7 @@ public class PropertyService {
         ZonedDateTime zonedDatetimeCurrent = ZonedDateTime.now();
         return this.propertyRepository.findAllWithCreationDateTimeBefore(zonedDatetimeCurrent);
     }
+
     public Property  seveProperty(Property property){
         return this.propertyRepository.save(property);
     }

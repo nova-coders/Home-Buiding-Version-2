@@ -16,6 +16,9 @@ import java.util.Optional;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
+    //Query that returns the properties that are in sales for one specific owner(userAccount)
+    @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0 and p.userAccount.id = :id")
+    List<Property> findSalesByUserId(@Param("id") long id);
 
     @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0")
     List<Property> findBySaleNotNull();
@@ -24,4 +27,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     List<Property> findAllWithCreationDateTimeBefore(@Param("expireDateTime") ZonedDateTime expireDateTime);
 
     Optional<Property> findBySale_Id(long id);
+	  
+	@Query("SELECT p FROM Property p WHERE p.sale is not null and p.sale.finalDate <=:currentDate")
+	List<Property> findAllPropertiesOnSale(@Param("currentDate") ZonedDateTime currentDate);
 }
