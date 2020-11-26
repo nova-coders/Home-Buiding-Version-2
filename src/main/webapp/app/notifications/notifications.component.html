@@ -1,5 +1,5 @@
 
-<div class="btn-group dropleft">
+<div class="btn-group dropleft" *ngIf="notifications.length > 0">
     <button type="button" class="btn btn-primary -border-none dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="fa fa-bell bell" aria-hidden="true">
             <i class="badge mybadge">{{notifications.length}}</i>
@@ -9,15 +9,32 @@
         <div class="inbox_chat ">
             <div class="chat_list active_chat" *ngFor="let notification of notifications; index as i">
                 <div class="chat_people">
-                    <div class="chat_img"> <img class="avatar" src="{{notification?.transmitter?.profilePicture}}" alt="sunil"> </div>
+                    <div class="chat_img" *ngIf="notification?.transmitter != null">
+                        <img class="avatar" src="{{notification?.transmitter?.profilePicture}}" alt="sunil">
+                    </div>
+                    <div class="chat_img" *ngIf="notification?.transmitter === null">
+                        <img class="avatar" src="../../content/images/sistem.png" alt="sunil">
+                    </div>
                     <div class="chat_ib">
-                        <h5>
-                            {{ notification?.transmitter?.user?.login }} {{ notification?.transmitter?.user?.firstName }}
+                        <h5 *ngIf="notification?.transmitter != null">
+                            {{ notification?.transmitter?.user?.firstName }}
                             <span class="chat_date">
                               {{ notification?.creationDate | date }}
                             </span>
                         </h5>
-                        <p><b>{{ notification?.title }}</b><br>{{ notification?.message }}</p>
+                        <h5 *ngIf="notification?.transmitter === null">
+                            Sistema Home Building
+                            <span class="chat_date">
+                              {{ notification?.creationDate | date }}
+                            </span>
+                        </h5>
+                        <p>
+                            <b>
+                            {{ notification?.title }}
+                            </b>
+                            <br>
+                        </p>
+                        <div [innerHTML]="notification?.message"></div>
                         <div>
                             <button class="btn btn-outline-primary btn-sm  float-right">Ver</button>
                         </div>
