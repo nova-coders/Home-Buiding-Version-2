@@ -4,7 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-import { IProperty } from '../shared/model/property.model';
+import { IProperty, Property } from '../shared/model/property.model';
 
 type EntityResponseType = HttpResponse<IProperty>;
 
@@ -20,6 +20,11 @@ export class CustomPropertyService {
     return this.http
       .get<IProperty>(this.resourceUrl + '/get-property-by-sale-id/' + saleId, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  getPropertiesInSaleByUserId(userId: number): Observable<any> {
+    console.log('THIS IS THE ID OF THE USER: ', userId);
+    return this.http.get(this.resourceUrl + '/get-properties-in-sales-by-Userid/' + userId);
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
