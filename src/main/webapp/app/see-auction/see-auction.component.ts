@@ -6,6 +6,7 @@ import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 import { Offer } from 'app/shared/model/offer.model';
 import { Router } from '@angular/router';
 import { NotificationSocketService } from 'app/core/notification/notificationSocket.service';
+import { NotificationService } from 'app/entities/notification/notification.service';
 import { Notification } from 'app/shared/model/notification.model';
 import * as moment from 'moment';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
@@ -22,13 +23,15 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   public offers: Array<Offer> = [];
   public images: string[];
   public startPage = 1;
-
+  public idDocumen = 0;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private propertyService: PropertyService,
     private seeAuctionService: SeeAuctionService,
-    private offerSocketService: OfferSocketService
+    private offerSocketService: OfferSocketService,
+    private notificationSocketService: NotificationSocketService,
+    private notificationService: NotificationService
   ) {
     this.property = new Property();
     this.idProperty = -1;
@@ -39,6 +42,7 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
+    this.notificationSocketService.connect();
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
@@ -65,17 +69,11 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   }
   public closeAuction(): void {
     const opcion = confirm(
-      '¿ Se guro de cerar la subasta ' +
-        this.property.userAccount?.user?.login +
-        ' ' +
-        this.property.userAccount?.user?.firstName +
-        ' ' +
-        this.property.userAccount?.user?.lastName +
-        ' ?'
+      '¿ Seguro de cerrar la subasta ' + this.property.userAccount?.user?.firstName + ' ' + this.property.userAccount?.user?.lastName + ' ?'
     );
-    if (opcion == true) {
+    if (opcion === true) {
       this.setAuctionToCloseState();
-      //this.notifyClients();
+      this.notifyClients();
     } else {
     }
   }
@@ -83,7 +81,7 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
     this.seeAuctionService.auctionToCloseState(this.idProperty).subscribe(
       (response: any) => {
         this.property.state = 3;
-        //this.goDocument(response);
+        this.goDocument(response);
       },
       error => {
         console.log(error);
@@ -93,19 +91,38 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   private notifyClients(): void {
     if (this.offers.length > 0) {
       let notification = new Notification();
-      notification.title = 'La subasta se ha cerrado';
-      notification.message = 'La subasta a la que asistia fue cerrada';
+      notification.title = 'Oferta aceptada';
+      notification.message =
+        'He  aceptado su oferta en al subasta ' +
+        this.property.title +
+        '. El ' +
+        '<a  href=' +
+        '"' +
+        '/document/' +
+        this.idDocumen +
+        '"' +
+        '>' +
+        'Documento del contranto' +
+        '</a>' +
+        ' estaria pediente de su firma.';
       notification.receptor = this.offers[0].userAccount;
+      notification.transmitter = this.property.userAccount;
       notification.state = false;
       notification.creationDate = moment();
       notification.type = NotificationType.Alquiler;
+      this.notificationService.create(notification).subscribe((response: any) => {
+        notification = response.body;
+        return this.notificationSocketService.sendNotification('' + notification.id);
+      });
     }
   }
   private goDocument(idDocumen: number): void {
+    this.idDocumen = idDocumen;
     this.router.navigate(['/document/', idDocumen]);
   }
 
   ngOnDestroy(): void {
     this.offerSocketService.disconnect();
+    this.notificationSocketService.disconnect();
   }
 }

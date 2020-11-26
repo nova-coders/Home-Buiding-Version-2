@@ -16,19 +16,17 @@
                         <img src="{{property?.userAccount?.profilePicture}}" alt="Avatar" class="avatar">
                     </div>
                     <div class="col-md-9 col-lg-9 col-sm-9 text-lg-left text-md-left text-sm-center">
-                        <h6>Nombre:&nbsp;{{property?.userAccount?.user.login+' '+property?.userAccount?.user.firstName+' '+property?.userAccount?.user.lastName}}</h6>
-                        <h6>Correo:&nbsp;{{property?.userAccount?.user.email}}</h6>
-                        <h6>Teléfono:&nbsp;{{property?.userAccount?.phone}}</h6>
+                        <h6>Nombre:&nbsp;{{property?.userAccount?.user.firstName+' '+property?.userAccount?.user.lastName}}</h6>
                     </div>
                 </div>
                 <hr>
                 <div class="text-lg-left text-md-left text-sm-center">
                     <h4>Detalles de la propiedad</h4>
-                    <h6>Precio inicial: &nbsp;${{property.price}}</h6>
+                    <h6>Precio inicial: &nbsp;{{property.price | currency:'CRC':'₡':'4.0-0':'en-cr'}}</h6>
                     <div *ngIf="property.discount >0 && property.discount < 101">
                         <h6>Descuento: &nbsp;{{property.discount}}%</h6>
-                        <h6>Precio actual: &nbsp;${{(property.price) - (property.price*property.discount/100)}}</h6>
-                        <h6>Ahorra: &nbsp;${{property.price *property.discount/100}}</h6>
+                        <h6>Precio actual: &nbsp;{{(property.price) - (property.price*property.discount/100)| currency:'CRC':'₡':'4.0-0':'en-cr'}}</h6>
+                        <h6>Ahorra: &nbsp;{{(property.price *property.discount/100)| currency:'CRC':'₡':'4.0-0':'en-cr'}}</h6>
                     </div>
                     <h6>Descripción de la propiedad:</h6>
                     <textarea disabled="true" class="form-control" name="comment" cols="30" rows="5"> {{property.description}}</textarea>
@@ -43,12 +41,17 @@
                     <textarea disabled="true" class="form-control" name="comment" cols="30" rows="5"> {{property.addressText}}</textarea>
                     <hr>
                     <h4>Documentos de la propiedad</h4>
-                    <jhi-modal-document idmodal="modal1"  btnName="Ver plano" baseg4File="{{property?.sale?.cadastralPlan}}" title="Plando de la propiedad"></jhi-modal-document>
+                    <jhi-modal-document idmodal="modal1"  btnName="Ver plano" baseg4File="{{property?.sale?.cadastralPlan}}" title="Plano de la propiedad"></jhi-modal-document>
                     <jhi-modal-document idmodal="modal2" btnName="Ver estudio registral" baseg4File="{{property?.sale?.registryStudy}}" title="Estudio registral de la propiedad"></jhi-modal-document>
                     <hr>
-                    <h2 *ngIf="offers.length > 0">Oferta más alta: ${{offers[0].amount}}</h2>
+                    <h2 *ngIf="offers.length > 0">Oferta más alta: {{ offers[0].amount | currency:'CRC':'₡':'4.0-0':'en-cr'}}</h2>
                     <hr>
-                    <jhi-modal-bid [sale]="property?.sale"  [offers]="offers"  [maximumBid]="maximumBid"></jhi-modal-bid>
+                    <div *ngIf="userAccount.id != property?.userAccount?.id && property.state === 1">
+                        <jhi-modal-bid [property]="property" currenValue="{{property.discount === 0 ?property.price: (property.price) - (property.price*property.discount/100)}}" [sale]="property?.sale"  [offers]="offers"  [maximumBid]="maximumBid"></jhi-modal-bid>
+                    </div>
+                    <div *ngIf="userAccount.id === property?.userAccount?.id && property.state === 1" class="alert alert-info" role="alert">
+                        {{userAccount?.user?.firstName+' '+userAccount?.user?.lastName+' '}} eres el propietario de la subasta, por lo que no puedes ofertar.
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,6 +6,8 @@ import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 import { Property } from 'app/shared/model/property.model';
 import { BidAtAuctionService } from 'app/bid-at-auction/bid-at-auction.service';
 import { OfferSocketService } from 'app/core/offer/offer-socket.service';
+import { UserAccount } from 'app/shared/model/user-account.model';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 
 @Component({
   selector: 'jhi-bid-at-auction',
@@ -14,6 +16,7 @@ import { OfferSocketService } from 'app/core/offer/offer-socket.service';
 })
 export class BidAtAuctionComponent implements OnInit, OnDestroy {
   public property: any;
+  public userAccount: UserAccount;
   public idProperty: number;
   public offers: Array<Offer> = [];
   public images: string[];
@@ -26,7 +29,8 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private propertyService: PropertyService,
     private seeAuctionService: SeeAuctionService,
-    private offerSocketService: OfferSocketService
+    private offerSocketService: OfferSocketService,
+    private servicePaymentService: ServicePaymentService
   ) {
     this.property = new Property();
     this.idProperty = -1;
@@ -34,6 +38,7 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
     this.images = [];
     this.maximumBid = 0;
     this.successfulOffer = 0;
+    this.userAccount = new UserAccount();
   }
 
   public updateOffers() {
@@ -47,10 +52,14 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
+
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
         this.property = response.body as Property;
+        this.servicePaymentService.getUserAccount().subscribe((response: any) => {
+          this.userAccount = response.body;
+        });
         if (this.property.sale != null) {
           this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
             this.offers = response;
