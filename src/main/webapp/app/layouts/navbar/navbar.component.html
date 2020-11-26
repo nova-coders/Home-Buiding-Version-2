@@ -27,7 +27,7 @@
                 </span>
             </div>
             <div class="dropdown-menu">
-                <a href="javascript:;" class="dropdown-item">
+                <a routerLink="account/settings" class="dropdown-item">
                     <i class="fa fa-user-circle"></i>
                     <span>Mi perfil</span>
                 </a>
@@ -47,7 +47,7 @@
                     <i class="fa fa-object-group"></i>
                     <span>Mis subastas</span>
                 </a>
-                <a href="javascript:;" class="dropdown-item">
+                <a routerLink="my-offers" class="dropdown-item">
                     <i class="fa fa-exclamation-circle"></i>
                     <span>Mis ofertas</span>
                 </a>
@@ -59,9 +59,9 @@
                     <i class="fa fa-comment-dollar"></i>
                     <span>Comprar servicio</span>
                 </a>
-                <a routerLink="account/settings" class="dropdown-item">
-                    <i class="fa fa-cog"></i>
-                    <span>Opciones</span>
+                <a routerLink="account/password" class="dropdown-item">
+                    <i class="fa fa-key"></i>
+                    <span>Actualizar contrase&ntilde;a</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a (click)="logout()" class="dropdown-item">
