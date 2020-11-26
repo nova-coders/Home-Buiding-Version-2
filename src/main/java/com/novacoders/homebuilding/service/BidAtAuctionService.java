@@ -6,6 +6,7 @@ import com.novacoders.homebuilding.repository.BidAtAuctionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,16 +19,18 @@ public class BidAtAuctionService {
         this.bidAtAuctionRepository = bidAtAuctionRepository;
         this.propertyService = propertyService;
     }
-    public int saveBidAuction(Offer offer){
-        int status = 0;
-        List<Offer> offerList = this.bidAtAuctionRepository.getMaxOffer(offer.getId());
+    public List<Object> saveBidAuction(Offer offer){
+        Integer status = 0;
+        List<Object> listObject = new ArrayList();
+        List<Offer> offerList = this.bidAtAuctionRepository.getMaxOffer(offer.getSale().getId());
             if(offerList.size() > 0) {
-                if(offerList.get(0).getUserAccount().getId() == offer.getUserAccount().getId()) {
+                if(offerList.get(0).getUserAccount().getId() != offer.getUserAccount().getId()) {
                     Optional <Property> property = this.propertyService.findPropertyBySale(offerList.get(0).getSale().getId());
                     if(property.isPresent()) {
                         if(property.get().getState() == 1) {
                             if(offerList.get(0).getAmount() < offer.getAmount()) {
-                                this.bidAtAuctionRepository.save(offer);
+                                offer = this.bidAtAuctionRepository.save(offer);
+                                listObject.add(offer);
                                 status = 1;
                             } else {
                                 status = 5;
@@ -42,6 +45,7 @@ public class BidAtAuctionService {
                     status = 2;
                 }
             }
-        return status;
+        listObject.add(status);
+        return listObject;
     }
 }
