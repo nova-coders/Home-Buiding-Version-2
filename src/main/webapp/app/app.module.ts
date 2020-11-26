@@ -35,7 +35,6 @@ import { ModalBidComponent } from './bid-at-auction/components/modal-bid/modal-b
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ChatComponent } from './chat/chat.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
-import { ListusersalesComponent } from './listusersales/listusersales.component';
 
 @NgModule({
   imports: [
@@ -76,7 +75,6 @@ import { ListusersalesComponent } from './listusersales/listusersales.component'
     NotificationsComponent,
     ChatComponent,
     MyOffersComponent,
-    ListusersalesComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

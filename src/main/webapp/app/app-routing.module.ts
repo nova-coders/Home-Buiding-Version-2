@@ -12,7 +12,6 @@ import { ShowMapComponent } from 'app/global-components/show-map/show-map.compon
 import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.component';
 import { ChatComponent } from 'app/chat/chat.component';
 import { MyOffersComponent } from 'app/my-offers/my-offers.component';
-import { ListusersalesComponent } from 'app/listusersales/listusersales.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -59,10 +58,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'chat',
           component: ChatComponent,
-        },
-        {
-          path: 'mySales',
-          component: ListusersalesComponent,
         },
         {
           path: 'my-offers',
