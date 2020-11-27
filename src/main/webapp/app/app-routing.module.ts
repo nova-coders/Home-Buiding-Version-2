@@ -13,6 +13,7 @@ import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.compone
 import { ChatComponent } from 'app/chat/chat.component';
 import { MyOffersComponent } from 'app/my-offers/my-offers.component';
 import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts';
+import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -62,6 +63,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'chat',
           component: ChatComponent,
+        },
+        {
+          path: 'mySales',
+          component: ListUserSalesComponent,
         },
         {
           path: 'my-offers',

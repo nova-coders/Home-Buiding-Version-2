@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-listusersales',
-  templateUrl: './listusersales.component.html',
-  styleUrls: ['./listusersales.component.scss'],
+  templateUrl: './list-user-sales.component.html',
+  styleUrls: ['./list-user-sales.component.scss'],
 })
-export class ListusersalesComponent implements OnInit {
+export class ListUserSalesComponent implements OnInit {
   myProperties: Property[] = [];
   userAccount?: UserAccount;
   startPage = 1;
