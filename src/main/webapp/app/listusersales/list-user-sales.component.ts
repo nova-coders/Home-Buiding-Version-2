@@ -4,6 +4,7 @@ import { ServicePaymentService } from 'app/service-payment/service-payment.servi
 import { CustomPropertyService } from 'app/global-services/custom-property.service';
 import { Property } from 'app/shared/model/property.model';
 import { Router } from '@angular/router';
+import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 
 @Component({
   selector: 'jhi-listusersales',
@@ -18,6 +19,7 @@ export class ListUserSalesComponent implements OnInit {
   constructor(
     private servicePaymentService: ServicePaymentService,
     private customPropertyService: CustomPropertyService,
+    private seeAuctionService: SeeAuctionService,
     private router: Router
   ) {
     this.myProperties = [];
@@ -31,6 +33,12 @@ export class ListUserSalesComponent implements OnInit {
       if (userAccount) {
         this.customPropertyService.getPropertiesInSaleByUserId(userAccount.id).subscribe(data => {
           this.myProperties = data;
+
+          for (let ind = 0; ind < this.myProperties.length; ind++) {
+            this.seeAuctionService.getAuctionImgs(this.myProperties[ind].id as number).subscribe(response => {
+              this.myProperties[ind].propertyImages = response;
+            });
+          }
         });
       } else {
         console.log('No user is logged on.');
