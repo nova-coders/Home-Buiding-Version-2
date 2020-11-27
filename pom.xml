@@ -54,6 +54,9 @@
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <liquibase.version>3.9.0</liquibase.version>
         <liquibase-hibernate5.version>3.8</liquibase-hibernate5.version>
+        <liquibase.mysql.url>jdbc:mysql://orbitasmysql.mysql.database.azure.com:3306/homeBuildingChris?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true</liquibase.mysql.url>
+        <liquibase.mysql.username>rootmysqlorbitas</liquibase.mysql.username>
+        <liquibase.mysql.password>Msak1OlaK32</liquibase.mysql.password>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
         <archunit-junit5.version>0.14.1</archunit-junit5.version>
@@ -638,10 +641,10 @@
                         <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                         <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                         <driver>com.mysql.cj.jdbc.Driver</driver>
-                        <url>jdbc:mysql://orbitasmysql.mysql.database.azure.com:3306/homeBuildingChris?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true</url>
+                        <url>${liquibase.mysql.url}</url>
                         <defaultSchemaName>homeBuilding</defaultSchemaName>
-                        <username>rootmysqlorbitas</username>
-                        <password>Msak1OlaK32</password>
+                        <username>${liquibase.mysql.username}</username>
+                        <password>${liquibase.mysql.password}</password>
                         <referenceUrl>hibernate:spring:com.novacoders.homebuilding.domain?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
