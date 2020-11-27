@@ -62,3 +62,14 @@ header .links {
     display: none;
   }
 }
+
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  left: -59px !important;
+}
