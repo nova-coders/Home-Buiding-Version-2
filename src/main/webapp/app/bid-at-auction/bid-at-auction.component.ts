@@ -22,7 +22,7 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
   public images: string[];
   public startPage = 1;
   public actualPrice = 0;
-  public maximumBid: number | undefined;
+  public maximumBid: number | undefined = 0;
   public successfulOffer = 0;
   constructor(
     private router: Router,

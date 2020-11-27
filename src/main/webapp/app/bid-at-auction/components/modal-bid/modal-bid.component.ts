@@ -20,7 +20,7 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() offers: any;
   @Input() sale: any;
   @Input() property: any;
-  @Input() currenValue: any = 0;
+  @Input() currenValue: any | undefined = 0;
   public successfulOffer = 0;
   public offer: any;
   public hasError = false;
@@ -74,14 +74,42 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
           this.offerSocketService.sendOffer('' + response[0].id);
           if (this.successfulOffer === 1) {
             this.offer = response[0];
-            if (this.offers[0]?.userAccount?.id != this.offer.userAccount.id && this.offers.length > 0) {
+            if (this.offers.length > 0) {
+              if (this.offers[0]?.userAccount?.id != this.offer.userAccount.id) {
+                let notification = new Notification();
+                notification.receptor = this.offers[0].userAccount;
+                notification.title = 'Oferta superada';
+                notification.message =
+                  'Su oferta de ' +
+                  formatCurrency(this.offers[0]?.amount || 0, 'en-cr', '₡', 'CR', '2.0-0') +
+                  ' fue rebasada en la subasta ' +
+                  '<a href=' +
+                  '"' +
+                  '/bit-at-auction/' +
+                  this.property.id +
+                  '"' +
+                  '>' +
+                  this.property.title +
+                  '.' +
+                  '</a>';
+                notification.creationDate = moment();
+                notification.type = NotificationType.Subasta;
+                notification.state = true;
+                console.log(notification);
+
+                this.notificationService.create(notification).subscribe((response: any) => {
+                  notification = response.body;
+                  console.log(response);
+                  return this.notificationSocketService.sendNotification('' + notification.id);
+                });
+              }
+            } else {
+              this.offers.unshift(this.offer);
               let notification = new Notification();
-              notification.receptor = this.offers[0].userAccount;
-              notification.title = 'Oferta superada';
+              notification.receptor = this.offer.userAccount;
+              notification.title = 'Eres mayor postor';
               notification.message =
-                'Su oferta de ' +
-                formatCurrency(this.offers[0]?.amount || 0, 'en-cr', '₡', 'CR', '2.0-0') +
-                ' fue rebasada en la subasta ' +
+                'Su oferta es la más alta en la subasta de la propiedad ' +
                 '<a href=' +
                 '"' +
                 '/bit-at-auction/' +
@@ -99,8 +127,7 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
               this.notificationService.create(notification).subscribe((response: any) => {
                 notification = response.body;
                 console.log(response);
-
-                //return this.notificationSocketService.sendNotification('' + notification.id);
+                return this.notificationSocketService.sendNotification('' + notification.id);
               });
             }
           }
