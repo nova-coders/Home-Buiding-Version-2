@@ -1,9 +1,12 @@
 package com.novacoders.homebuilding.web.rest;
 
 import com.novacoders.homebuilding.domain.Property;
+import com.novacoders.homebuilding.domain.PropertyImage;
+import com.novacoders.homebuilding.domain.Sale;
+import com.novacoders.homebuilding.repository.PropertyImageRepository;
 import com.novacoders.homebuilding.repository.PropertyRepository;
+import com.novacoders.homebuilding.repository.SaleRepository;
 import com.novacoders.homebuilding.web.rest.errors.BadRequestAlertException;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +39,12 @@ public class PropertyResource {
     private String applicationName;
 
     private final PropertyRepository propertyRepository;
-
-    public PropertyResource(PropertyRepository propertyRepository) {
+    private final SaleRepository saleRepository;
+    private final PropertyImageRepository propertyImageRepository;
+    public PropertyResource(PropertyRepository propertyRepository,SaleRepository saleRepository,PropertyImageRepository propertyImageRepository) {
         this.propertyRepository = propertyRepository;
+        this.saleRepository= saleRepository;
+        this.propertyImageRepository=propertyImageRepository;
     }
 
     /**
@@ -52,7 +60,23 @@ public class PropertyResource {
         if (property.getId() != null) {
             throw new BadRequestAlertException("A new property cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        Sale mySale=property.getSale();
+        if(mySale == null) {
+            throw new BadRequestAlertException("Null object", ENTITY_NAME, "required");
+        }else {
+            property.setSale(saleRepository.save(mySale));
+        }
+
         Property result = propertyRepository.save(property);
+        if(property.getPropertyImages()==null){
+            throw new BadRequestAlertException("Null object", ENTITY_NAME, "required");
+        }else{
+            List <PropertyImage> mylistImages= new ArrayList(property.getPropertyImages());
+            for(int i=0;i<mylistImages.size();i++) {
+                mylistImages.get(i).setProperty(result);
+            }
+            propertyImageRepository.saveAll(mylistImages);
+        }
         return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -89,7 +113,17 @@ public class PropertyResource {
         log.debug("REST request to get all Properties");
         return propertyRepository.findAll();
     }
+    @GetMapping("/properties/getPropertiesOnSale")
+    public List<Property> getPropertiesOnSale() {
+        log.debug("REST request to get all Properties");
+        return propertyRepository.findAllPropertiesOnSale(ZonedDateTime.now());
+    }
 
+    @GetMapping("/properties/sale")
+    public List<Property> getAllPropertiesBySale() {
+        log.debug("REST request to get all Properties");
+        return propertyRepository.findBySaleNotNull();
+    }
     /**
      * {@code GET  /properties/:id} : get the "id" property.
      *

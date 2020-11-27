@@ -1,0 +1,101 @@
+.bell {
+  font-size: 25px;
+}
+.mybadge {
+  color: orange;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/*Chat Styles*/
+img {
+  max-width: 100%;
+}
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.chat_ib h5 {
+  font-size: 15px;
+  color: #464646;
+  margin: 0 0 8px 0;
+}
+.chat_ib h5 span {
+  font-size: 13px;
+  float: right;
+}
+.chat_ib p {
+  font-size: 14px;
+  color: #989898;
+  margin: auto;
+}
+.chat_img {
+  float: left;
+}
+.chat_ib {
+  float: left;
+  padding: 0 0 0 15px;
+  width: 88%;
+}
+.chat_people {
+  overflow: hidden;
+  clear: both;
+}
+.chat_list {
+  border-bottom: 1px solid #c4c4c4;
+  margin: 0;
+  padding: 18px 16px 10px;
+}
+.inbox_chat::-webkit-scrollbar {
+  display: none;
+}
+.inbox_chat {
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 500px;
+}
+
+.active_chat {
+  background: #ebebeb;
+}
+.active_chat:hover {
+  background: #5e72e4;
+  color: #ffffff;
+  a.link-element {
+    color: #ffffff;
+  }
+  p {
+    color: #ffffff;
+  }
+  div > p {
+    color: #ffffff;
+  }
+  div > h5,
+  div > h5 > span {
+    color: #ffffff;
+  }
+  .btn {
+    background-color: #ffffff;
+  }
+  .btn:hover {
+    color: #5e72e4;
+  }
+}
+
+.incoming_msg_img {
+  display: inline-block;
+  width: 6%;
+}
+.time_date {
+  color: #747474;
+  display: block;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.dropdown-menu {
+  min-width: 23rem !important;
+  background-color: #c4c4c4;
+}

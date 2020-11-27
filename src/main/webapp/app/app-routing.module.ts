@@ -4,9 +4,16 @@ import { errorRoute } from './layouts/error/error.route';
 import { navbarRoute } from './layouts/navbar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/shared/constants/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-
+import { ServicePaymentComponent } from 'app/service-payment/service-payment.component';
+import { SeeAuctionComponent } from 'app/see-auction/see-auction.component';
+import { ContractComponent } from 'app/contract/contract.component';
+import { ShowMapComponent } from 'app/global-components/show-map/show-map.component';
+import { BidAtAuctionComponent } from 'app/bid-at-auction/bid-at-auction.component';
+import { ChatComponent } from 'app/chat/chat.component';
+import { MyOffersComponent } from 'app/my-offers/my-offers.component';
+import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts';
+import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -24,6 +31,46 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
+        },
+        {
+          path: 'servicepayment',
+          component: ServicePaymentComponent,
+        },
+        {
+          path: 'auth',
+          loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+        },
+        {
+          path: 'see-auction/:id',
+          component: SeeAuctionComponent,
+        },
+        {
+          path: 'document/:id',
+          component: ContractComponent,
+        },
+        {
+          path: 'show-map',
+          component: ShowMapComponent,
+        },
+        {
+          path: 'bit-at-auction/:id',
+          component: BidAtAuctionComponent,
+        },
+        {
+          path: 'sales/list',
+          component: ListSalesComponent,
+        },
+        {
+          path: 'chat',
+          component: ChatComponent,
+        },
+        {
+          path: 'mySales',
+          component: ListUserSalesComponent,
+        },
+        {
+          path: 'my-offers',
+          component: MyOffersComponent,
         },
         ...LAYOUT_ROUTES,
       ],

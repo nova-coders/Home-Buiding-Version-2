@@ -5,8 +5,8 @@ import { IProperty } from 'app/shared/model/property.model';
 export interface ISale {
   id?: number;
   finalDate?: Moment;
-  cadastralPlan?: string;
-  registryStudy?: string;
+  cadastralPlan?: any;
+  registryStudy?: any;
   propertyId?: number;
   offers?: IOffer[];
   property?: IProperty;
@@ -16,8 +16,8 @@ export class Sale implements ISale {
   constructor(
     public id?: number,
     public finalDate?: Moment,
-    public cadastralPlan?: string,
-    public registryStudy?: string,
+    public cadastralPlan?: any,
+    public registryStudy?: any,
     public propertyId?: number,
     public offers?: IOffer[],
     public property?: IProperty

@@ -1,3 +1,14 @@
+enum IdentificationType {
+	Nacional,
+    Extranjera
+}
+
+enum NotificationType {
+    Subasta,
+    Alquiler,
+    Soporte,
+    Sistema
+}
 
 entity MoneyType {
     Id Integer,
@@ -11,10 +22,12 @@ entity UserAccount {
   Identification String,
   Birthdate ZonedDateTime,
   ProfilePicture String,
-  SignaturePicture String,
-  SignatureCode String,
+  SignaturePicture TextBlob,
+  SignatureCode TextBlob,
   State Boolean,
-  CreationDate ZonedDateTime
+  CreationDate ZonedDateTime,
+  Phone String
+  IdentificationType IdentificationType
 }
 
 entity ProfessionalProfileUser {
@@ -23,7 +36,7 @@ entity ProfessionalProfileUser {
   PricePerHour Double,
   Description String,
   CreationDate ZonedDateTime,
-  State Boolean 
+  State Boolean
 }
 
 entity SupportTicket {
@@ -31,7 +44,7 @@ entity SupportTicket {
   Title String ,
   Message String ,
   CreationDate ZonedDateTime,
-  State Boolean 
+  State Boolean
 }
 
 entity SupportTicketLog {
@@ -59,10 +72,10 @@ entity Province {
 
 entity Document {
   Id Integer ,
-  Url String,
-  SellerUserId Integer,
-  BuyerUserId Integer,
+  Base64Code TextBlob,
   State Boolean,
+  BuyerState Boolean,
+  SellerState Boolean,
   CreationDate ZonedDateTime
 }
 
@@ -86,7 +99,7 @@ entity PropertyCategory {
   Id Integer,
   Name String,
   PropertyType String,
-  State Boolean 
+  State Boolean
 }
 
 entity PublishingPackage {
@@ -99,7 +112,7 @@ entity PublishingPackage {
   Professional Boolean,
   CreationDate ZonedDateTime,
   Type Integer,
-  State Boolean 
+  State Boolean
 }
 
 entity Score {
@@ -107,14 +120,14 @@ entity Score {
   Rating Integer,
   Commentary String,
   CreationDate ZonedDateTime,
-  State Boolean 
+  State Boolean
 }
 
 entity PropertyImage {
   Id Integer,
   Url String,
   CreationDate ZonedDateTime,
-  State Boolean 
+  State Boolean
 }
 
 entity ImageCategory {
@@ -125,11 +138,11 @@ entity ImageCategory {
 entity Sale {
   Id Integer,
   FinalDate ZonedDateTime,
-  CadastralPlan String,
-  RegistryStudy String,
+  CadastralPlan TextBlob,
+  RegistryStudy TextBlob,
   PropertyId Integer
 }
-
+ambio de JDL sale
 entity Rent {
   Id Integer,
   Deposit Integer
@@ -140,7 +153,7 @@ entity Offer {
   Date ZonedDateTime,
   Commentary String,
   Amount Double,
-  State Boolean 
+  State Boolean
 }
 
 entity Role {
@@ -151,31 +164,43 @@ entity Role {
   CreationDate ZonedDateTime
 }
 
+entity Notification {
+ Id Integer,
+ Title String,
+ Message String,
+ State Boolean,
+ Type NotificationType,
+ CreationDate ZonedDateTime
+}
+
 relationship OneToMany{
-	UserAccount to Property 
+	UserAccount to Property
     UserAccount to Offer
     UserAccount to Score
     UserAccount{ownedTickets} to SupportTicket{client}
     UserAccount{clientTickets} to SupportTicket{signOffUser}
     UserAccount{ownedDocuments} to Document{Seller}
     UserAccount{purchasedDocuments} to Document{Buyer}
+    UserAccount{sentNotifications} to Notification{transmitter}
+    UserAccount{receivedNotifications} to Notification{receptor}
+
     PublishingPackage to UserAccount
     Role to UserAccount
-    
+
 	MoneyType to Property
-    Canton to Property   
+    Canton to Property
     PropertyCategory to Property
     Property to PropertyImage
     Property to Document
-    
+
     ImageCategory to PropertyImage
-  
+
     Sale to Offer
-    
+
     Province to Canton
-    
+
     Rent to Score
-    
+
     SupportTicket to SupportTicketLog
 }
 

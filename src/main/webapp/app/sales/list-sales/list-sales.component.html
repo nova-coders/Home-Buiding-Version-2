@@ -1,0 +1,64 @@
+<section class="page-banner-section">
+    <span class="title">Lista de subastas</span>
+</section>
+<div class="mt-3">
+    <div class="row">
+        <div class="col-12">
+            <jhi-show-map></jhi-show-map>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-3 offset-3">
+            <div class="form-group">
+                <label class="font-weight-600" for="sltProvincias">Provincia</label>
+                <select id="sltProvincias" class="form-control">
+                    <option value="{{province.id}}" *ngFor="let province of provinceList" >
+                        {{province.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="font-weight-600" for="sltCantones">Cantón</label>
+                <select id="sltCantones" class="form-control">
+
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="font-weight-600" for="sltDistritos">Distrito</label>
+                <select id="sltDistritos" class="form-control">
+
+                </select>
+            </div>
+        </div>
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>-->
+</div>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-12"></div>
+        <div *ngFor="let property of propertyList" class="col-6 col-sm-6 col-md-3 col-lg-3">
+            <a [routerLink]="['/bit-at-auction/', property.id]" class="property-item">
+                <div class="image-banner" *ngIf="property.propertyImages == null"
+                     style="background: url(https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png) center center no-repeat;background-size: cover">
+                </div>
+                <div class="image-banner" *ngIf="property.propertyImages != null"
+                     [style]="'background: url(' + property.propertyImages[0].url + ') center center no-repeat; background-size: cover;'">
+                </div>
+                <div class="title">
+                    {{property.title}}
+                    <p class="text-muted description">
+                        {{property.description}}
+                    </p>
+                </div>
+
+            </a>
+        </div>
+
+    </div>
+</div>

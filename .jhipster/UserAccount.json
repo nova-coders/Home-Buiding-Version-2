@@ -15,11 +15,13 @@
     },
     {
       "fieldName": "signaturePicture",
-      "fieldType": "String"
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "signatureCode",
-      "fieldType": "String"
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "state",
@@ -28,6 +30,15 @@
     {
       "fieldName": "creationDate",
       "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "identificationType",
+      "fieldType": "IdentificationType",
+      "fieldValues": "Nacional,Extranjera"
     }
   ],
   "relationships": [
@@ -88,6 +99,18 @@
       "otherEntityName": "document",
       "otherEntityRelationshipName": "buyer",
       "relationshipName": "purchasedDocuments"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "notification",
+      "otherEntityRelationshipName": "transmitter",
+      "relationshipName": "sentNotifications"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "notification",
+      "otherEntityRelationshipName": "receptor",
+      "relationshipName": "receivedNotifications"
     },
     {
       "relationshipType": "many-to-one",

@@ -6,9 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IDocument, Document } from 'app/shared/model/document.model';
 import { DocumentService } from './document.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
 import { IProperty } from 'app/shared/model/property.model';
@@ -27,10 +29,10 @@ export class DocumentUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    url: [],
-    sellerUserId: [],
-    buyerUserId: [],
+    base64Code: [],
     state: [],
+    buyerState: [],
+    sellerState: [],
     creationDate: [],
     seller: [],
     buyer: [],
@@ -38,6 +40,8 @@ export class DocumentUpdateComponent implements OnInit {
   });
 
   constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
     protected documentService: DocumentService,
     protected userAccountService: UserAccountService,
     protected propertyService: PropertyService,
@@ -63,14 +67,30 @@ export class DocumentUpdateComponent implements OnInit {
   updateForm(document: IDocument): void {
     this.editForm.patchValue({
       id: document.id,
-      url: document.url,
-      sellerUserId: document.sellerUserId,
-      buyerUserId: document.buyerUserId,
+      base64Code: document.base64Code,
       state: document.state,
+      buyerState: document.buyerState,
+      sellerState: document.sellerState,
       creationDate: document.creationDate ? document.creationDate.format(DATE_TIME_FORMAT) : null,
       seller: document.seller,
       buyer: document.buyer,
       property: document.property,
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  setFileData(event: any, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('homeBuildingApp.error', { ...err, key: 'error.file.' + err.key })
+      );
     });
   }
 
@@ -92,10 +112,10 @@ export class DocumentUpdateComponent implements OnInit {
     return {
       ...new Document(),
       id: this.editForm.get(['id'])!.value,
-      url: this.editForm.get(['url'])!.value,
-      sellerUserId: this.editForm.get(['sellerUserId'])!.value,
-      buyerUserId: this.editForm.get(['buyerUserId'])!.value,
+      base64Code: this.editForm.get(['base64Code'])!.value,
       state: this.editForm.get(['state'])!.value,
+      buyerState: this.editForm.get(['buyerState'])!.value,
+      sellerState: this.editForm.get(['sellerState'])!.value,
       creationDate: this.editForm.get(['creationDate'])!.value
         ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
         : undefined,

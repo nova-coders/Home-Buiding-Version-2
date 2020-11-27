@@ -34,10 +34,10 @@
             <column name="area_square_meters" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="latitude" type="bigint">
+            <column name="latitude" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="longitude" type="bigint">
+            <column name="longitude" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="zoom" type="bigint">
@@ -100,8 +100,8 @@
             <column name="discount" type="numeric"/>
             <column name="land_square_meters" type="numeric"/>
             <column name="area_square_meters" type="numeric"/>
-            <column name="latitude" type="numeric"/>
-            <column name="longitude" type="numeric"/>
+            <column name="latitude" type="string"/>
+            <column name="longitude" type="string"/>
             <column name="zoom" type="numeric"/>
             <column name="address_text" type="string"/>
             <column name="creation_date" type="datetime"/>
