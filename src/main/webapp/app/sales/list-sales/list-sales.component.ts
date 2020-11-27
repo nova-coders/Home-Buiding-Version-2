@@ -16,30 +16,33 @@ export class ListSalesComponent implements OnInit {
   public provinceService: ProvinceService;
   public currentProvinceId: number;
   propertyService: PropertyService;
-  constructor(service: PropertyService, private route: ActivatedRoute, private pService: ProvinceService) {
+  constructor(service: PropertyService, private pService: ProvinceService) {
     this.propertyService = service;
+    this.currentProvinceId = 1;
     this.provinceService = pService;
-  }
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      //Obtención de propiedades
-      this.propertyService.getPropertiesOnSale().subscribe(res => {
-        console.log('Event fired!');
-        this.propertyList = res.body as Array<Property>;
-        console.log(this.propertyList);
-      });
+    this.propertyService.getPropertiesOnSale().subscribe(res => {
+      console.log('Event fired!');
+      this.propertyList = res.body as Array<Property>;
+      console.log(this.propertyList);
+    });
 
-      //Obtención de provincias
-      this.provinceService.getAll().subscribe(res => {
-        this.provinceList = res.body as Array<Province>;
-      });
+    //Obtención de provincias
+    this.provinceService.getAll().subscribe(res => {
+      this.provinceList = res.body as Array<Province>;
     });
   }
+  ngOnInit(): void {}
 
-  loadCurrentCantons() {
-    var currentProvince = document.getElementById('sltProvincias')?.value;
+  /* loadCurrentCantons(): void {
+
+    var elementSlt = document.getElementById('sltProvincias');
+    if(elementSlt != null){
+      var currentProvince = elementSlt.value;
+
+    }
     if (currentProvince != null) {
       this.currentProvinceId = Number.parseInt(currentProvince);
     }
   }
+   */
 }

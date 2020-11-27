@@ -10,6 +10,7 @@
             <div class="form-group">
                 <label class="font-weight-600" for="sltProvincias">Provincia</label>
                 <select id="sltProvincias" class="form-control">
+                    <option disabled="disabled" selected>Seleccione la provincia</option>
                     <option value="{{province.id}}" *ngFor="let province of provinceList" >
                         {{province.name}}
                     </option>
@@ -19,8 +20,10 @@
         <div class="col-3">
             <div class="form-group">
                 <label class="font-weight-600" for="sltCantones">Cantón</label>
-                <select id="sltCantones" class="form-control">
-
+                <select  id="sltCantones" class="form-control">
+                    <option value="{{province.id}}" *ngFor="let province of provinceList" >
+                        {{province.name}}
+                    </option>
                 </select>
             </div>
         </div>
