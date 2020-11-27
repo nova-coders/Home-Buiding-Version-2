@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -32,6 +33,7 @@ type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyC
 @Component({
   selector: 'jhi-property-update',
   templateUrl: './property-update.component.html',
+  styleUrls: ['./property.scss'],
 })
 export class PropertyUpdateComponent implements OnInit {
   step: any = 1;
@@ -53,6 +55,8 @@ export class PropertyUpdateComponent implements OnInit {
   lat = 9.9280694;
   lng = -84.0907246;
   address!: string;
+  errorImage = false;
+  errorFiles = false;
   private geoCoder = new google.maps.Geocoder();
   @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
   options: any = {
@@ -66,23 +70,22 @@ export class PropertyUpdateComponent implements OnInit {
 
   propertyForm = this.fb.group({
     id: [],
-    title: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]],
-    price: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    title: ['', [Validators.required]],
+    description: ['', [Validators.required]],
+    price: ['', [Validators.required]],
     discount: [''],
     finalDate: ['', [Validators.required]],
-    landSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    areaSquareMeters: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-    addressText: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    landSquareMeters: ['', [Validators.required]],
+    areaSquareMeters: ['', [Validators.required]],
+    addressText: ['', [Validators.required]],
     moneyType: ['', [Validators.required]],
     canton: ['', [Validators.required]],
     propertyCategory: ['', [Validators.required]],
-    propertyId: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    propertyId: ['', [Validators.required]],
     cadastralPlan: ['', [Validators.required]],
     registryStudy: ['', [Validators.required]],
-    propertyImages: ['', [Validators.required]],
     imageCategory: ['', [Validators.required]],
-    province: ['', [Validators.required]],
+    province: [],
   });
 
   constructor(
@@ -97,7 +100,8 @@ export class PropertyUpdateComponent implements OnInit {
     protected servicePaymentService: ServicePaymentService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private router: Router
   ) {
     this.files = [];
     this.fileUrl = '';
@@ -153,8 +157,6 @@ export class PropertyUpdateComponent implements OnInit {
   public handleAddressChange(address: any): void {
     this.lat = address.geometry.location.lat();
     this.lng = address.geometry.location.lng();
-    console.log(this.lat);
-    console.log(this.lng);
   }
   public setCurrentLocation(): void {
     if ('geolocation' in navigator) {
@@ -166,7 +168,6 @@ export class PropertyUpdateComponent implements OnInit {
     }
   }
   public markerDragEnd(coords: any): void {
-    console.log(coords);
     this.lat = Number(coords.lat);
     this.lng = Number(coords.lng);
     this.geoCoder == new google.maps.Geocoder();
@@ -181,10 +182,10 @@ export class PropertyUpdateComponent implements OnInit {
           this.zoom = 12;
           this.address = results[0].formatted_address;
         } else {
-          window.alert('No results found');
+          //window.alert('No results found');
         }
       } else {
-        window.alert('Geocoder failed due to: ' + status);
+        // window.alert('Geocoder failed due to: ' + status);
       }
     });
   }
@@ -221,12 +222,13 @@ export class PropertyUpdateComponent implements OnInit {
     if (property.id !== undefined) {
       this.subscribeToSaveResponse(this.propertyService.update(property));
     } else {
-      if (!this.error) console.log(this.subscribeToSaveResponse(this.propertyService.create(property)));
+      this.processSave(property);
     }
   }
 
   previous(): void {
     this.step = this.step - 1;
+    console.log(this.propertyForm);
   }
 
   next(): void {
@@ -245,8 +247,6 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IProperty {
-    this.uploadFile();
-    console.log(this.lstPropertyImages);
     let mySale = new Sale();
     mySale.cadastralPlan = this.catastralPlan;
     mySale.registryStudy = this.registryStudy;
@@ -277,17 +277,20 @@ export class PropertyUpdateComponent implements OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IProperty>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
-      () => this.onSaveError()
+      error => this.onSaveError(error)
     );
   }
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.router.navigate(['sales/list']);
+    //this.previousState();
   }
 
-  protected onSaveError(): void {
+  protected onSaveError(error: any): void {
+    console.log(error);
     this.isSaving = false;
+    this.error = true;
   }
 
   trackById(index: number, item: SelectableEntity): any {
@@ -297,10 +300,13 @@ export class PropertyUpdateComponent implements OnInit {
   public setCantonsList(provinceIndex: any): void {
     let mypro: Province;
     mypro = this.lstProvinces[provinceIndex];
+
     this.lat = Number(mypro.latitude);
     this.lng = Number(mypro.longitude);
     this.getAddress();
-    this.cantonService.findByProvince(mypro.id).subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+    this.cantonService
+      .findByProvince(provinceIndex)
+      .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
     this.isSelected = true;
   }
 
@@ -308,30 +314,46 @@ export class PropertyUpdateComponent implements OnInit {
     if (this.files && this.files.length >= 5) {
       this.onRemoveImage(this.files[0]);
     }
-
     this.files.push(...event.addedFiles);
     this.propertyForm.patchValue({
       propertyImages: 'true',
     });
+    if (this.files.length === 0) {
+      this.errorImage = true;
+    }
   }
 
   public onRemoveImage(event: any): void {
     this.files.splice(this.files.indexOf(event), 1);
+    if (this.files.length === 0) {
+      this.errorImage = true;
+    } else {
+      this.errorImage = false;
+    }
   }
-
-  public uploadFile(): void {
+  public calDiscount(): void {
+    let price = this.propertyForm.get(['price'])!.value;
+    let discount = this.propertyForm.get(['discount'])!.value;
+    let total = document.getElementById('total');
+    var descuento = Number(price) * (Number(discount) / 100);
+    // @ts-ignore
+    total.innerHTML = ': ' + descuento;
+  }
+  public processSave(property: Property): void {
     const fileData = this.files;
     for (let index = 0; index < this.files.length; index++) {
       this.imageService.uploadImage(fileData[index]).subscribe(
         response => {
-          console.log(response.url);
           this.fileUrl = response.url;
           let myproperty = new PropertyImage();
-          let myCategory = new ImageCategory();
-          myCategory.id = this.propertyForm.get(['imageCategory'])!.value;
-          myproperty.imageCategory = myCategory;
+          myproperty.imageCategory = this.propertyForm.get(['imageCategory'])!.value;
           myproperty.url = this.fileUrl;
           this.lstPropertyImages.push(myproperty);
+          if (this.lstPropertyImages.length - 1 === index) {
+            property.propertyImages = this.lstPropertyImages;
+            console.log(property);
+            this.subscribeToSaveResponse(this.propertyService.create(property));
+          }
         },
         () => {
           this.error = true;
@@ -340,7 +362,12 @@ export class PropertyUpdateComponent implements OnInit {
     }
   }
 
-  public onFileSelected(event: any, opc: number): void {
+  public onFileSelected(event: any, opc: number, labelregistryStudy: HTMLLabelElement): void {
+    if (event.target.files[0].type != 'application/pdf') {
+      alert('solo se permiten archivo PDF');
+      return;
+    }
+    labelregistryStudy.innerHTML = event.target.files.length > 0 ? event.target.files[0].name : 'Suba su archivo';
     this.getBase64(event.target.files[0]).then((base64: any) => {
       if (opc === 1) {
         this.catastralPlan = base64;
