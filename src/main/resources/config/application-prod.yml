@@ -37,9 +37,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3838/homeBuild?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: skajKJS19Ksa
+    url: jdbc:mysql://orbitasmysql.mysql.database.azure.com:3306/homeBuildingChris?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: rootmysqlorbitas@orbitasmysql
+    password: Msak1OlaK32
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -75,8 +75,7 @@ server:
   # ===================================================================
   # JHipster specific properties
   #
-  # Full reference is available at-+
-  : https://www.jhipster.tech/common-application-properties/
+  # Full reference is available at: https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
 jhipster:
