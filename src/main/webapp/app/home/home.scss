@@ -587,7 +587,6 @@ section {
   .slick-slide {
     position: relative;
     div {
-      margin-right: 15px;
       .itm {
         margin: 0;
         position: relative;
@@ -799,7 +798,6 @@ section {
     }
     .slick-slide {
       div {
-        margin-right: 15px;
         .bg {
           margin-right: 0;
         }
@@ -1413,23 +1411,45 @@ footer {
 }
 .slick-slide {
   outline: none;
-  width: 355px;
+  width: 300px;
   display: inline-block;
 }
 
 .info-block fa-icon {
   font-size: 8vh;
 }
-
+.info-block {
+  margin-bottom: 20px;
+}
 .info-block h4 {
   padding: 10px;
-}
-.info-block p {
-  padding: 30px;
 }
 
 .property-block {
   height: 400px;
   background-position: center center;
   background-repeat: no-repeat;
+}
+.iconsize {
+  font-size: 50px;
+}
+
+element.style {
+}
+section {
+  padding: 25px 0 !important;
+}
+.jumbotron {
+  background-color: #ffffff !important;
+}
+
+/*Slider styles*/
+.slider-img {
+  max-height: 250px;
+  min-height: 250px;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+.carousel-caption {
+  color: #ffffff;
 }
