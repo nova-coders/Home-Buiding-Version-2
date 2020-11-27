@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="alert alert-warning {{hasError?'show d-block':'d-none'}}" role="alert">
+                    <div class="alert alert-warning {{hasError || successfulOffer=== 5 ?'show d-block':'d-none'}}" role="alert">
                         Para ofertar, debe ingresar una cantidad, y esta debe ser mayor que la oferta más alta que fue de ${{maximumBid}}.
                     </div>
                     <div class="alert alert-warning {{successfulOffer === 2?'show d-block':'d-none'}}" role="alert">
@@ -21,6 +21,9 @@
                     </div>
                     <div class="alert alert-danger {{successfulOffer === 3?'show d-block':'d-none'}}" role="alert" >
                         Ocurrió un error en el servidor. Intente más tarde.
+                    </div>
+                    <div class="alert alert-danger {{successfulOffer === 6?'show d-block':'d-none'}}" role="alert" >
+                        No puede ofertar en la subasta de su propiedad.
                     </div>
                     <div class="form-group">
                         <label for="amount" class="col-form-label">Tu oferta:</label>

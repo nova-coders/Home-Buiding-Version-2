@@ -21,9 +21,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
   public sendMessage(): void {
     let transmitter = new UserAccount();
-    transmitter.id = 2;
+    transmitter.id = 1;
     let receptor = new UserAccount();
-    receptor.id = 1;
+    receptor.id = 2;
     let notification: Notification = {
       title: 'Mensaje de prueba',
       message: this.message,

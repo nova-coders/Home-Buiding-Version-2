@@ -197,6 +197,14 @@
                 <strong>Actualizaci&oacute;n fallida.</strong>
             </div>
 
+            <div class="alert alert-danger" *ngIf="errorPhone">
+                <strong>Campo de telefono, invalido.</strong>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorEmailExists">
+                <strong>El correo dentro del formulario es invalido.</strong>
+            </div>
+
             <div class="alert alert-danger" *ngIf="errorUser">
                 <strong>Campo nombre no puede estar vac&iacute;o.</strong>
             </div>
