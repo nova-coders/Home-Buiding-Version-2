@@ -1,8 +1,9 @@
 <!--Contract, here we decide which of the two types of contracts will display.-->
 <div class="container" style="margin-top: 110px;">
-    <div id="TitleContract" class="border rounded p-3">
+    <div id="TitleContract" class="border rounded p-5">
         <h2>HomeBuilding - T&eacute;rminos del contrato</h2>
-        <div *ngIf="rentContract">
+        <br>
+        <div *ngIf="!salesContract">
             <H3 class="contractText">Contrato de alquiler</H3>
             <p class="contractText"><label class="font-weight-bold">NÚMERO</label> ____: Ante mí ____, Notario Público con oficina en _________, comparecen los señores ____(nombre y apellidos),
                 mayor, ____ (estado civil completo), ____(profesión u oficio), vecino de ____, portador de la cédula de identidad número ____, y ____,
@@ -123,69 +124,90 @@
             </p>
         </div>
         <div *ngIf="salesContract">
-            <H3 class="contractText">Contrato de venta</H3>
-            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.</p>
-            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.</p>
-            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.</p>
-            <p class="contractText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.</p>
+            <H3 class="contractText">Contrato de subasta</H3>
+            <br>
+            <p class="contractText">
+                Comparecen los señores <label class="font-weight-bold" style="font-size: 16px;">{{this.contract.buyer?.user?.firstName}} {{this.contract.buyer?.user?.lastName}}</label>,
+                mayor, portador de la cédula de identidad número <label class="font-weight-bold" style="font-size: 16px;">{{this.contract.buyer?.identification}}</label> y,
+                <label class="font-weight-bold" style="font-size: 16px;">{{contract.seller?.user?.firstName}} {{contract.seller?.user?.lastName}}</label>, mayor, portador de la cédula de identidad número
+                <label class="font-weight-bold" style="font-size: 16px;">{{contract.seller?.identification}}</label> y DICEN: Que el primero, en adelante conocido como:
+                EL PROPIETARIO y el segundo en adelante conocido como: EL COMPRADOR, han convenido en
+                acordar los términos siguientes, como normas para la promesa de compraventa a ser realizada con las siguientes cláusulas:
+            </p>
+            <br>
+            <p class="contractText">
+                Se declara el propietario como leg&iacute;timo due&ntilde;o del inmueble presente en este contrato,
+                inscrito en el Registro Público de la propiedad, situado en <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.canton?.province?.name}}, {{contract.property?.canton?.name}}</label>
+                <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.addressText}}</label>,
+                tiene de &aacute;rea <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.areaSquareMeters}}</label> metros cuadrados y
+                tiene dimensiones de {{contract.property?.landSquareMeters}} metros cuadrados.
+            </p>
+            <br>
+            <p class="contractText">
+                Por medio del presente acuerdo, EL PROPIETARIO promete la transmisi&oacute;n futura del INMUEBLE, a favor
+                del COMPRADOR, siendo esta &uacute;ltima quien lo adquirir&aacute; para s&iacute; misma, en las condiciones en que actualmente se encuentra,
+                con todos sus usos, mejoras y todo cuanto de hecho y por derecho correspondan.
+            </p>
+            <br>
+            <p class="contractText">
+                Las PARTES convienen que el precio de la presente operaci&oacute;n ser&aacute; de <label class="font-weight-bold" style="font-size: 16px;">{{bestOffer}}</label> colones.
+                Las PARTES se&ntilde;alan que en este mismo acuerdo El COMPRADOR liquida totalmente el precio se&ntilde;alado
+            </p>
+            <br>
+            <p class="contractText">
+                    LAS PARTES reconocen y aceptan que este contrato y sus adicionaes constituyen a un acuerdo total entre ellos, por lo
+                que desde el momento de su firma dejan sin efecto cualquier acuerdo o negociaci&oacute;n previa, prevaleciendo lo dispuesto en
+                este instrumento respecto, de cualquier otro, hasta en tanto se realice la firma de la escritura o del contrato de compraventa.
+            </p>
+            <br>
+            <p class="contractText">
+                    LAS PARTES convienen que el presente contrato es de car&aacute;ter privado y, por lo tanto, se abstendr&aacute;n de
+                comunicar a un tercero su contenido o hacerlo p&uacute;blico, as&iacute; como tampoco podr&aacute;n divulgar, compartir,
+                o hacer mal uso de los datos aportados por las PARTES para celebrar el contrato, no obstante, prevalecer&aacute;n todos
+                los derechos y obligaciones de LAS PARTES, y por tanto podr&aacute;n ejercitarse todas las acciones legales que se deriven
+                del mismo conforme a la Ley.
+            </p>
         </div>
-    </div>
-
-    <!--In this section we display and set the signature elements-->
-    <div class="row">
-        <div class="col-3 float-left">
-            <div class="card mt-3">
-                <div *ngIf="!disabledSeller" class="card-header">
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" id="seller" type="checkbox" (change)="checkSellerSignature()" [disabled]="disabledSeller"
-                               [checked]="checkedSeller">
-                        <label class="custom-control-label font-weight-bold" for="seller">Firmar</label>
+        <div class="row">
+            <div class="col-3 float-left">
+                <div class="card mt-3">
+                    <div *ngIf="!disabledSeller" class="card-header">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="seller" type="checkbox" (change)="checkSellerSignature()" [disabled]="disabledSeller"
+                                   [checked]="checkedSeller">
+                            <label class="custom-control-label font-weight-bold" for="seller">Firmar</label>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <img *ngIf="checkedSeller" style="width: 65%" src="{{sellerSignaturePicture}}">
+                        <hr class="my-1">
+                        <p>Firma del propietario</p>
                     </div>
                 </div>
-                <div class="card-body text-center">
-                    <img *ngIf="checkedSeller" style="width: 65%" src="{{sellerSignaturePicture}}">
-                    <hr class="my-1">
-                    <p>Firma del due&ntilde;o</p>
+            </div>
+
+            <div class="col-6"></div>
+
+            <div class="col-3 float-right">
+                <div class="card mt-3">
+                    <div *ngIf="!disabledBuyer" class="card-header">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="buyer" type="checkbox" (change)="checkBuyerSignature()" [disabled]="disabledBuyer"
+                                   [checked]="checkedBuyer">
+                            <label class="custom-control-label font-weight-bold" for="buyer">Firmar</label>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <img *ngIf="checkedBuyer" style="width: 65%"
+                             src="{{buyerSignaturePicture}}">
+                        <hr class="my-1">
+                        <p>Firma del comprador</p>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-6"></div>
-
-        <div class="col-3 float-right">
-            <div class="card mt-3">
-                <div *ngIf="!disabledBuyer" class="card-header">
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" id="buyer" type="checkbox" (change)="checkBuyerSignature()" [disabled]="disabledBuyer"
-                               [checked]="checkedBuyer">
-                        <label class="custom-control-label font-weight-bold" for="buyer">Firmar</label>
-                    </div>
-                </div>
-                <div class="card-body text-center">
-                    <img *ngIf="checkedBuyer" style="width: 65%"
-                         src="{{buyerSignaturePicture}}">
-                    <hr class="my-1">
-                    <p>Firma del comprador</p>
-                </div>
-            </div>
-        </div>
     </div>
+
     <div class="row">
         <div *ngIf="errorSignatureEmpty" class="col-12">
             <div class="alert alert-warning">
@@ -208,6 +230,7 @@
             </div>
         </div>
     </div>
+    <!--In this section we display and set the signature elements-->
     <div class="row my-5">
         <div class="col-12">
             <a [routerLink]="''" class="btn btn-secondary float-right mx-3">Firmar m&aacute;s tarde</a>

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ShowMapService } from 'app/global-services/show-map.service';
-import { HttpResponse } from '@angular/common/http';
-import { IProperty, Property } from 'app/shared/model/property.model';
-import { ISale } from 'app/shared/model/sale.model';
 import { PropertyService } from 'app/entities/property/property.service';
 import { ProvinceService } from 'app/entities/province/province.service';
 import { ActivatedRoute } from '@angular/router';
+import { PropertyImageService } from 'app/entities/property-image/property-image.service';
+import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 
 @Component({
   selector: 'jhi-show-map',
@@ -17,14 +16,17 @@ export class ShowMapComponent implements OnInit {
   lng = -84.0907246;
   zoom = 15;
   markers: any;
+  images: string[];
 
   constructor(
     protected showMapService: ShowMapService,
     protected propertyService: PropertyService,
+    protected propertiesImages: SeeAuctionService,
     protected provinceService: ProvinceService,
     protected activatedRoute: ActivatedRoute
   ) {
     this.markers = [];
+    this.images = [];
   }
 
   ngOnInit(): void {
@@ -38,9 +40,15 @@ export class ShowMapComponent implements OnInit {
 
       console.log(myProperties);
       for (let i = 0; i < myProperties.length; i++) {
+        this.propertiesImages.getAuctionImgs(myProperties[i].id as number).subscribe(response => {
+          response.forEach((value: any) => {
+            this.images.push(value.url);
+          });
+        });
         let marker = {
           id: i,
           property: myProperties[i],
+          myImage: this.images[i],
           lat: Number(myProperties[i].latitude),
           lng: Number(myProperties[i].longitude),
           icon: this.obtainIcon(myProperties[i].canton.province.id),

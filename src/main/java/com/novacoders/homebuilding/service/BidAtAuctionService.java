@@ -44,6 +44,23 @@ public class BidAtAuctionService {
                 } else {
                     status = 2;
                 }
+            } else {
+                Optional <Property> property = this.propertyService.findPropertyBySale(offer.getSale().getId());
+                if(property.isPresent()) {
+                    if(property.get().getState() == 1) {
+                        if(property.get().getPrice() < offer.getAmount()) {
+                            offer = this.bidAtAuctionRepository.save(offer);
+                            listObject.add(offer);
+                            status = 1;
+                        } else {
+                            status = 5;
+                        }
+                    } else {
+                        status = 3;
+                    }
+                } else {
+                    status = 4;
+                }
             }
         listObject.add(status);
         return listObject;

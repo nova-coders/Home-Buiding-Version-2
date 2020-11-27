@@ -36,6 +36,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ChatComponent } from './chat/chat.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
+import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 
 @NgModule({
   imports: [
@@ -77,6 +78,7 @@ import { ListSalesComponent } from './sales/list-sales/list-sales.component';
     ChatComponent,
     MyOffersComponent,
     ListSalesComponent,
+    ListUserSalesComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

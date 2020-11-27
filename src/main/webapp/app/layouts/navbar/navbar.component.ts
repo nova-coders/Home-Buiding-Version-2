@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'jhi-navbar',
@@ -35,13 +36,12 @@ export class NavbarComponent implements OnInit {
     private sessionStorage: SessionStorageService,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router,
+    public router: Router,
     private servicePaymentService: ServicePaymentService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
     this.userAccount = new UserAccount();
   }
-
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;

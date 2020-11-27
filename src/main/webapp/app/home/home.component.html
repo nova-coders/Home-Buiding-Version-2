@@ -5,8 +5,8 @@
             <div class=" slide current slider-content current-img">
                 <div class="inner">
                     <h1>Home Building</h1>
-                    <p style="font-size:22px !important">BBienvenido a la subasta en línea más eficaz y famosa en Costa Rica</p>
-                    <button class="btn btn-success btn-block" style="max-width: 300px">Ver subastas</button>
+                    <p style="font-size:22px !important">Bienvenido a la subasta en línea más eficaz y famosa en Costa Rica</p>
+                    <a class="btn btn-success btn-block" style="max-width: 300px" [routerLink]="['/sales/list']" *ngIf="isAuthenticated()">Ver subastas</a>
                 </div>
             </div>
         </div>
