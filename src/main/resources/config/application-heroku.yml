@@ -12,7 +12,7 @@
 
 eureka:
   instance:
-    hostname: homebuildingapp-v-2.herokuapp.com
+    hostname: homebuildingapp.herokuapp.com
     non-secure-port: 80
     prefer-ip-address: false
 
