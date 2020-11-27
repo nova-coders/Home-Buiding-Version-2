@@ -100,7 +100,7 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
                 notification = response.body;
                 console.log(response);
 
-                return this.notificationSocketService.sendNotification('' + notification.id);
+                //return this.notificationSocketService.sendNotification('' + notification.id);
               });
             }
           }

@@ -1,4 +1,4 @@
-<div>
+<div class="container" style="margin-top: 110px;">
     <div style="margin-top: 110px;" class="col-12 text-center">
         <h1>Mis subastas</h1>
         <hr>
@@ -31,7 +31,7 @@
                                             <h6 class="font-weight-bold">Mejor oferta: </h6>
                                         </div>
                                         <div class="col-7 pl-0">
-                                            <h5 *ngIf="property.sale!.offers == null" >{{ 0 | currency: 'CRC'}}</h5>
+                                            <h5 *ngIf="property.sale!.offers == null">{{ 0 | currency: 'CRC'}}</h5>
                                             <h5 *ngIf="property.sale!.offers != null">{{ property.sale!.offers![0].amount | currency: 'CRC'}}</h5>
                                         </div>
                                     </div>

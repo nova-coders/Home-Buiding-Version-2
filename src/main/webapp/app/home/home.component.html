@@ -6,7 +6,7 @@
                 <div class="inner">
                     <h1>Home Building</h1>
                     <p style="font-size:22px !important">Bienvenido a la subasta en línea más eficaz y famosa en Costa Rica</p>
-                    <button class="btn btn-success btn-block" style="max-width: 300px">Ver subastas</button>
+                    <a class="btn btn-success btn-block" style="max-width: 300px" [routerLink]="['/sales/list']" *ngIf="isAuthenticated()">Ver subastas</a>
                 </div>
             </div>
         </div>
