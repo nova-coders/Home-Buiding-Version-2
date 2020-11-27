@@ -1,0 +1,74 @@
+<div>
+    <div style="margin-top: 110px;" class="col-12 text-center">
+        <h1>Mis subastas</h1>
+        <hr>
+    </div>
+    <div>
+        <div *ngIf="myProperties.length > 0">
+
+            <div *ngFor="let property of myProperties| paginate: { itemsPerPage: 3, currentPage: startPage }" class="row my-5 m-4 border">
+                <div class="col-12 p-0 box">
+                    <div class="card">
+                        <div class="card-header" [ngSwitch]="property.state">
+                            <span *ngSwitchCase="1" class="badge badge-pill badge-success float-right">Disponible</span>
+                            <span *ngSwitchCase="0" class="badge badge-pill badge-danger float-right">Eliminado</span>
+                            <span *ngSwitchCase="3" class="badge badge-pill badge-info float-right">Cerrado</span>
+                            <h4 class="card-title text-center m-0">{{property.title}}</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img *ngIf="property.propertyImages != null" src="{{property.propertyImages![0].url}}" class="img-fluid">
+                                    <img *ngIf="property.propertyImages == null" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid">
+                                </div>
+                                <div class="col-6">
+                                    <div class="row mb-4">
+                                        <div class="col-2">
+                                            <i class="far fa-thumbs-up" style="font-size: 4vh;"></i>
+                                        </div>
+                                        <div class="col-3 pl-0 mt-1">
+                                            <h6 class="font-weight-bold">Mejor oferta: </h6>
+                                        </div>
+                                        <div class="col-7 pl-0">
+                                            <h5 *ngIf="property.sale!.offers == null" >{{ 0 | currency: 'CRC'}}</h5>
+                                            <h5 *ngIf="property.sale!.offers != null">{{ property.sale!.offers![0].amount | currency: 'CRC'}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-2">
+                                            <i class="far fa-clock" style="font-size: 4vh;"></i>
+                                        </div>
+                                        <div class="col-3 pl-0 mt-1">
+                                            <h6 class="font-weight-bold">Vence en: </h6>
+                                        </div>
+                                        <div class="col-6 pl-0">
+                                            <h5>{{property.sale!.finalDate | date: 'MMM d, y, h:mm a'}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <button class="btn btn-primary" (click)="routetoSaleView(property?.sale?.id)"> ver subasta</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col-12 text-center">
+                    <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="startPage = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="myProperties.length == 0" class="row">
+            <div class="col mr-2 ml-2">
+                <div class="alert alert-info">
+                    Aun no tienes subastas.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
