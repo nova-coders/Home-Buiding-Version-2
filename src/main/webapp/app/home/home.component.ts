@@ -4,7 +4,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { PropertyBlockComponent } from 'app/html-components/property-block/property-block.component';
 import { Property } from 'app/shared/model/property.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'jhi-home',
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   propertyList: Property[];
   propertyListHtml: PropertyBlockComponent[];
 
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router, private route: ActivatedRoute) {
     this.currentProperty = new Property();
     this.currentProperty.title = 'Propiedad de prueba';
     this.propertyList = [this.currentProperty];
@@ -29,12 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const header = document.getElementById('header');
+    const header = document.querySelector('header');
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
-    // this.changeFooterOnScroll();
-    if (header != null) {
-      this.changeFooterOnScroll();
-    }
   }
 
   addSticky(): void {
