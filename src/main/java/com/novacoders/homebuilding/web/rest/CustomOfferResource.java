@@ -34,7 +34,7 @@ public class CustomOfferResource {
     */
     @GetMapping("/get-offer-by-user/{id}")
     public List<Offer> getOfferByUser(@PathVariable long id) {
-        List<Offer> offerList = offerRepository.findByUserAccount_Id(id);
+        List<Offer> offerList = offerRepository.findByUserAccount_IdOrderByDateDesc(id);
         Map<Long, Offer> offerMap = new HashMap<>();
 
         for(Offer offer: offerList){
