@@ -64,12 +64,9 @@ export class ContractComponent implements OnInit {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
       this.loggedUserAccount = userAccount;
-      console.log('LOGED USER ACCOUNT');
-      console.log(<UserAccount>this.loggedUserAccount);
+
       this.documentService.find(this.contractId).subscribe(data => {
         this.contract = <Document>data.body;
-        console.log('This is the contract data.');
-        console.log(<Document>this.contract);
         this.checkedBuyer = this.contract.buyerState;
         this.checkedSeller = this.contract.sellerState;
         this.disabledBuyer = this.loggedUserAccount.id != this.contract.buyer?.id;
@@ -92,16 +89,8 @@ export class ContractComponent implements OnInit {
           },
           () => (this.error = true)
         );
-        this.putUsersValuesOnContract();
       });
     });
-  }
-
-  putUsersValuesOnContract(): void {
-    if (String(this.contract.seller?.id) === String(this.loggedUserAccount.id)) {
-      this.toogleUser = true;
-    }
-    console.log(this.toogleUser);
   }
 
   checkSellerSignature(): void {
