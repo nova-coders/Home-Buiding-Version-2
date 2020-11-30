@@ -59,9 +59,15 @@
                                 </div>
                             </div>
                             <div class="col-2">
-                                <div class="row text-center">
+                                <div class="row text-center my-3">
                                     <div class="col">
-                                        <button *ngIf="offer.sale!.property!.state == 1" class="btn btn-primary btn-sm">Reofertar</button>
+                                        <a *ngIf="offer.sale!.property!.state == 1" class="btn btn-primary btn-sm"
+                                           [routerLink]="['/bit-at-auction/', offer.sale!.id]">Reofertar</a>
+                                    </div>
+                                </div>
+                                <div class="row text-center my-3">
+                                    <div class="col">
+                                        <a class="btn btn-secondary btn-sm">Firmar documento</a>
                                     </div>
                                 </div>
                             </div>
