@@ -19,6 +19,14 @@
                 El pago del paquete de publicitario {{publishingPackageSelected?.name}} fue exitoso!
             </div>
         </div>
+        <div class="col-md-12 text-center mt-5" *ngIf="paymentError">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> Ocurrió un error al querer pagar el paquete.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
         <div *ngIf=" isPayment" class="col-md-12 text-left">
             <h4>Seleccione el paquete que desea comprar:</h4>
         </div>
@@ -49,7 +57,7 @@
                 </div>
                 <div class="card-footer text-muted faPager">
                     <div class="form-check">
-                        <input class="form-check-input"
+                        <input style="visibility: hidden;" class="form-check-input"
                                type="radio"
                                name="service"
                                id="exampleRadios-{{i}}"
@@ -68,6 +76,7 @@
         <div class="col-md-4 col-lg-4 col-ms-4"></div>
         <div class="col-md-4 col-lg-4 col-ms-4">
             <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+            <button style="width: 100%;" class="btn btn-secondary btn-lg mt-3" (click)="cancel()">Calcelar</button>
         </div>
         <div class="col-md-4 col-lg-4 col-ms-4"></div>
     </div>

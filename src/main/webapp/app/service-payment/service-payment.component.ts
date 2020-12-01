@@ -26,6 +26,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   public isPayment = true;
   public loading = false;
   public payment = false;
+  public paymentError = false;
   public successPayment = false;
   constructor(
     private servicePaymentService: ServicePaymentService,
@@ -70,6 +71,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
     this.setPaymentLanding();
   }
   public setPaymentLanding(): void {
+    window.scroll(0, 0);
     window.setTimeout(() => {
       this.loading = false;
       this.payment = true;
@@ -149,11 +151,21 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
         this.successPayment = false;
       },
       onError: (err): void => {
-        this.showSuccess = false;
+        this.paymentError = true;
+        this.isPayment = true;
+        this.loading = false;
+        this.payment = false;
+        this.successPayment = false;
       },
       onClick: (data: any, actions: any): void => {
         this.showSuccess = false;
       },
     };
+  }
+  public cancel(): void {
+    this.isPayment = true;
+    this.loading = false;
+    this.payment = false;
+    this.successPayment = false;
   }
 }
