@@ -23,6 +23,10 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   public publishingPackages: IPublishingPackage[] | [] = [];
   public publishingPackageSelected?: IPublishingPackage | PublishingPackage = new PublishingPackage();
   public userAccount = new UserAccount();
+  public isPayment = true;
+  public loading = false;
+  public payment = false;
+  public successPayment = false;
   constructor(
     private servicePaymentService: ServicePaymentService,
     protected publishingPackageService: PublishingPackageService,
@@ -61,6 +65,15 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   setServiceIndex(index: number): void {
     this.publishingPackageSelected = this.publishingPackages[index];
     this.initConfig();
+    this.isPayment = false;
+    this.loading = true;
+    this.setPaymentLanding();
+  }
+  public setPaymentLanding(): void {
+    window.setTimeout(() => {
+      this.loading = false;
+      this.payment = true;
+    }, 2000);
   }
   getUser() {}
   public initConfig(): void {
@@ -111,24 +124,35 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
           if (details.status === 'APPROVED') {
             this.userAccount.publishingPackage = this.publishingPackageSelected;
             if (this.userAccount.publishingPackage?.id != null && this.userAccount.id != null) {
+              this.payment = false;
+              this.loading = true;
               this.servicePaymentService
                 .assignPackageToUser(this.userAccount.publishingPackage.id, this.userAccount.id)
-                .subscribe((response: any) => {});
+                .subscribe((response: any) => {
+                  this.successPayment = true;
+                  window.setTimeout(() => {
+                    window.location.href = '/';
+                  }, 5000);
+                });
             }
           }
         });
       },
       onClientAuthorization: (data: any): void => {
+        this.loading = true;
         this.showSuccess = true;
       },
       onCancel: (data: any, actions: any): void => {
-        this.showSuccess = false;
+        this.isPayment = true;
+        this.loading = false;
+        this.payment = false;
+        this.successPayment = false;
       },
       onError: (err): void => {
         this.showSuccess = false;
       },
       onClick: (data: any, actions: any): void => {
-        this.showSuccess = true;
+        this.showSuccess = false;
       },
     };
   }
