@@ -277,7 +277,7 @@ export class PropertyUpdateComponent implements OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IProperty>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
-      ()=> this.onSaveError()
+      error => this.onSaveError(error)
     );
   }
 
