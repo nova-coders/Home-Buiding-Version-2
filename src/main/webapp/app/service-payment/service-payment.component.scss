@@ -1,25 +1,59 @@
 .height-2 {
-  max-height: 200px;
-  min-height: 200px;
+  max-height: 480px;
+  min-height: 480px;
+  overflow: auto;
 }
-.page-banner-section {
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06);
-  width: 100%;
-  margin-top: 82px;
-  height: 400px;
-  display: flex;
-  justify-content: center; /* align horizontal */
-  align-items: center; /* align vertical */
-  background-repeat: no-repeat;
-  background-size: cover;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%),
-    url(https://images.unsplash.com/photo-1553524789-59ac0ed1d2d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=3050&q=80) no-repeat center center !important;
-  text-align: center;
+
+.iconpayment {
+  font-size: 50px;
 }
-.page-banner-section .title {
-  font-size: 30px;
-  color: #ffffff;
-  font-weight: 500;
-  margin: 0 auto;
-  font-family: 'Poppins', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+.card-title {
+  min-height: 70px;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 40px;
+  width: 40px;
+  transform: translate(-50%, -50%) rotate(20deg) translate3d(0, 0, 0);
+  animation: animate 1.2s ease-in-out infinite;
+}
+
+.spanLoader {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  animation: rotate 1.2s linear both infinite;
+}
+@keyframes rotate {
+  0%,
+  30% {
+    transform: rotate(0);
+  }
+  65% {
+    transform: rotate(-40deg);
+  }
+}
+.spanLoader:nth-child(1) {
+  top: 0;
+  left: 0;
+  background: #1ac9ff;
+}
+.spanLoader:nth-child(2) {
+  top: 0;
+  right: 0;
+  background: #fcb603;
+}
+.spanLoader:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  background: #af49b6;
+}
+.spanLoader:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  background: #e03870;
 }
