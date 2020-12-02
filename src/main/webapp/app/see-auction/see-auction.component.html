@@ -23,12 +23,20 @@
                     </p>
                 </div>
             </div>
-            <div class="row"  *ngIf="offers.length > 0 && property.state === 1">
+            <div class="row"  *ngIf="property.state === 1 && property?.userAccount?.id === userAccount.id">
                 <div class="col-md-12 col-lg-12">
                     <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
+                    <jhi-modalconfirm
+                        message="¡Al aceptar esta acción, cerrará la subasta!"
+                        (acept)="acept($event)"
+                        title="Confirmar para cerrar la subasta"
+                        btnAceptStyle="btn btn-outline-dark float-md-right float-lg-right"
+                        btnAceptName="Aceptar"
+                        btnName="Cerrar subasta">
+                    </jhi-modalconfirm>
                 </div>
             </div>
-            <div class="row" *ngIf="offers.length > 0 && property.state != 1">
+            <div class="row" *ngIf="property.state != 1">
                 <div class="col-md-12 col-lg-12">
                     <div class="alert  alert-info opacity-8" role="alert mt-2">
                         <h3>Subasta cerrada</h3>
@@ -59,3 +67,4 @@
         </div>
     </div>
 </div>
+

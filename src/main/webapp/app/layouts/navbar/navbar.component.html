@@ -71,13 +71,13 @@
                     <a routerLink="account/settings" class="dropdown-item">
                         <i class="fa fa-user-circle"></i>
                         <span>Mi perfil</span>
-                        <i  *ngIf="userAccount?.publishingPackage == null" style="font-size: 10px;" class="badge badge-pill badge-primary float-right"
-                           data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: Gratis">Gratis</i>
-                        <i style="color: green" class="fa fa-leaf float-right" *ngIf="userAccount?.publishingPackage?.id ===1"
+                        <i  *ngIf="userAccount?.publishingPackage?.type === 0" style="font-size: 10px;" class="badge badge-pill badge-primary float-right"
+                           data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: Gratis" >Gratis</i>
+                        <i style="color: green" class="fa fa-leaf float-right" *ngIf="userAccount?.publishingPackage?.type === 1"
                            data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: {{userAccount?.publishingPackage?.name}}"></i>
-                        <i style="color: #4f40ff" class="far fa-gem float-right" *ngIf="userAccount?.publishingPackage?.id ===2"
+                        <i style="color: #4f40ff" class="far fa-gem float-right" *ngIf="userAccount?.publishingPackage?.type === 2"
                            data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: {{userAccount?.publishingPackage?.name}}"></i>
-                        <i style="color: chartreuse" class="fas fa-spa float-right" *ngIf="userAccount?.publishingPackage?.id ===3"
+                        <i style="color: chartreuse" class="fas fa-spa float-right" *ngIf="userAccount?.publishingPackage?.type === 3"
                            data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: {{userAccount?.publishingPackage?.name}}"></i>
                     </a>
                     <a class="dropdown-item" [routerLink]="['/property/new']">
