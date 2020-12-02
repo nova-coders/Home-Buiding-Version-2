@@ -25,7 +25,6 @@
         "rent": "Rent",
         "offer": "Offer",
         "role": "Role",
-        "userAccount": "User Account",
         "notification": "Notification",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
