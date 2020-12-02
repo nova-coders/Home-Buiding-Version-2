@@ -25,7 +25,6 @@
             </div>
             <div class="row"  *ngIf="property.state === 1 && property?.userAccount?.id === userAccount.id">
                 <div class="col-md-12 col-lg-12">
-                    <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
                     <jhi-modalconfirm
                         message="¡Al aceptar esta acción, cerrará la subasta!"
                         (acept)="acept($event)"
