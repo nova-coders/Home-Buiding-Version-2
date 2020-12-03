@@ -10,17 +10,16 @@
                     </div>
 
                     <div class="card-body">
-
-                        <div class="container col-6 mb-3 p-0" (click)="toogleNGX()">
+                        <div class="profilePicture d-flex col-6 mb-3 p-0" (click)="toogleNGX()">
                             <img src="{{userAccount.profilePicture}}" alt="Foto de Perfil"
-                                 class="image rounded img-thumbnail mb-3">
+                                 class="image rounded img-thumbnail mb-3 ">
                             <div class="overlay rounded">
-                                <div class="text">Cambiar imagen</div>
+                                <div class="text ">Cambiar imagen</div>
                             </div>
                         </div>
 
                         <div style="display: none" class="row pb-3" id="ngxPicture">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <label>Foto de perfil</label>
                                 <ngx-dropzone (change)="onSelectImage($event)" class="m-1" [multiple]="false"
                                               [accept]="'image/*'">
