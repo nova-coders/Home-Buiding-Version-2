@@ -1,4 +1,4 @@
-<div class="row justify-content-center" style="margin-top: 110px;">
+<div class="container justify-content-center" style="margin-top: 110px;">
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12">
             <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="propertyForm">
@@ -27,7 +27,7 @@
                             </div>
                             <label class="form-control-label"  for="field_moneyType">Tipo de Moneda</label>
                             <select class="form-control" id="field_moneyType" name="moneyType" formControlName="moneyType">
-                                <option [ngValue]="null" selected disabled>Seleccione una opción</option>
+                                <option selected disabled>Seleccione una opción</option>
                                 <option [ngValue]="moneyTypeOption.id === propertyForm.get('moneyType')!.value?.id ? propertyForm.get('moneyType')!.value : moneyTypeOption" *ngFor="let moneyTypeOption of lstMoneytypes; trackBy: trackById">{{ moneyTypeOption.name }}</option>
                             </select>
                             <div *ngIf="propertyForm.get('moneyType')!.invalid && (propertyForm.get('moneyType')!.dirty || propertyForm.get('moneyType')!.touched)">
@@ -68,8 +68,10 @@
                                        *ngIf="propertyForm.get('propertyId')?.errors?.required">
                                     El número de plano es requerido.
                                 </small>
+
                                 <br>
                             </div>
+
                             <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m2 del inmueble</label>
                             <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters" min="0" oninput="this.value =!!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" formControlName="landSquareMeters"/>
                             <div *ngIf="propertyForm.get('landSquareMeters')!.invalid && (propertyForm.get('landSquareMeters')!.dirty || propertyForm.get('landSquareMeters')!.touched)">
@@ -86,7 +88,7 @@
                             <textarea  class="form-control" name="description" id="field_description"  formControlName="description"  rows="5" cols="40"></textarea>
                             <div *ngIf="propertyForm.get('description')!.invalid && (propertyForm.get('description')!.dirty || propertyForm.get('description')!.touched)">
                                 <small class="form-text text-danger" *ngIf="propertyForm.get('description')?.errors?.required">
-                                    Las dimensiones del inmueble es requerido.
+                                    Las descripción del inmueble es requerido.
                                 </small>
                                 <br>
                             </div>
@@ -170,7 +172,8 @@
 
                     <div class="row">
 
-                        <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-4 col-lg-4 col-sm-4">
+                            <div>
                             <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
                             <select class="form-control" id="field_Category_Image" name="imageCategory" formControlName="imageCategory">
                                 <option [ngValue]="" disabled selected>Seleccione una opción</option>
@@ -182,6 +185,7 @@
                                 </small>
                                 <br>
                             </div>
+                        </div>
                         </div>
                     </div>
                     <div class="row">
@@ -197,7 +201,7 @@
                                     (removed)="onRemoveImage(f)">
                                 </ngx-dropzone-image-preview>
                             </ngx-dropzone>
-                            <small class="form-text text-danger mb-5" *ngIf="errorImage">
+                            <small class="form-text text-danger mb-5" *ngIf="files.length===0&&errorImage">
                                 Debe subir almenos una imagen.
                             </small>
                             <br>
@@ -213,17 +217,19 @@
                                 <option *ngFor="let provinceOption of lstProvinces;index as i" [value]="provinceOption.id">{{provinceOption.name}}</option>
                             </select>
                         </div>
-                        <div class="col" *ngIf="isSelected==true">
+                        <div class="col">
+                            <div *ngIf="isSelected==true">
                             <label class="form-control-label"  for="field_canton" >Cantón</label>
                             <select class="form-control" id="field_canton" name="canton" formControlName="canton">
                                 <option [ngValue]="" selected disabled>Seleccione una opción</option>
                                 <option [ngValue]="cantonOption.id === propertyForm.get('canton')!.value?.id ? propertyForm.get('canton')!.value : cantonOption" *ngFor="let cantonOption of lstCantons;">{{ cantonOption.name }}</option>
                             </select>
+
                             <small class="form-text text-danger" *ngIf="propertyForm.get('canton')?.errors?.required">
                                 El cantón es requerido.
                             </small>
                             <br>
-
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -252,6 +258,9 @@
                 <div class="alert alert-danger" *ngIf="isValidDate">
                     No es permitido escoger una fecha inferior a la actual ni mayor a su a paquete de publicidad.
                 </div>
+                <div class="alert alert-danger" *ngIf="saleExist">
+                    El número de plano ya existe.
+                </div>
                 <div class="row justify-content-end">
 
                     <button type="button" id="cancel-save" class="btn btn-warning" (click)="previousState()">
@@ -260,7 +269,8 @@
                     <button type="button" class="btn btn-primary" *ngIf="step != 1" (click)="previous()">Anterior</button>
                     <button type="button" class="btn btn-primary" *ngIf="step != 2" (click)="next()">Siguiente</button>
 
-                    <button  type="submit" id="save-entity" [disabled]="propertyForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2 ">
+
+                    <button  type="submit" id="save-entity" [disabled]="propertyForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2" (mouseover)="validateForm()">
                         <fa-icon icon="save"></fa-icon>&nbsp;<span>Enviar</span>
                     </button>
                 </div>
