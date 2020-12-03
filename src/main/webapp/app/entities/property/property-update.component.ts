@@ -345,7 +345,8 @@ export class PropertyUpdateComponent implements OnInit {
           myproperty.imageCategory = this.propertyForm.get(['imageCategory'])!.value;
           myproperty.url = this.fileUrl;
           this.lstPropertyImages.push(myproperty);
-          if (this.lstPropertyImages.length - 1 === index) {
+          if (this.lstPropertyImages.length === this.files.length) {
+            console.log(this.files.length, this.lstPropertyImages.length);
             property.propertyImages = this.lstPropertyImages;
             this.subscribeToSaveResponse(this.propertyService.create(property));
           }

@@ -256,7 +256,7 @@
                     Solo se permiten archivos PDF. Por favor, seleccione un archivo de este tipo.
                 </div>
                 <div class="alert alert-danger" *ngIf="isValidDate">
-                    No es permitido escoger una fecha inferior a la actual ni mayor a su a paquete de publicidad.
+                    No es permitido escoger una fecha inferior a la actual ni mayor a su a paquete de publicidad. Si desea un paquete superior haz click <a [routerLink]="['/servicepayment']">aquí</a>.
                 </div>
                 <div class="alert alert-danger" *ngIf="saleExist">
                     El número de plano ya existe.
