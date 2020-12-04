@@ -14,7 +14,7 @@ export class NotificationSocketService {
   private stompClient: Stomp.Client | null = null;
   private connectionSubject: ReplaySubject<void> = new ReplaySubject(1);
   private connectionSubscription: Subscription | null = null;
-  private stompSubscription: Stomp.Subscription | null = null;
+  private stompSubscription: Stomp.Subscription | undefined;
   private listenerSubject: Subject<INotification> = new Subject();
 
   constructor(private authServerProvider: AuthServerProvider, private location: Location) {}
@@ -58,9 +58,11 @@ export class NotificationSocketService {
     }
     this.connectionSubscription = this.connectionSubject.subscribe(() => {
       if (this.stompClient) {
-        this.stompSubscription = this.stompClient.subscribe('/topic/inbox', (data: Stomp.Message) => {
-          this.listenerSubject.next(JSON.parse(data.body));
-        });
+        setTimeout(() => {
+          this.stompSubscription = this.stompClient?.subscribe('/topic/inbox', (data: Stomp.Message) => {
+            this.listenerSubject.next(JSON.parse(data.body));
+          });
+        }, 3000); //wait 3 seconds
       }
     });
   }
