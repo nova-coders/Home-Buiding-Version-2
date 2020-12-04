@@ -35,7 +35,6 @@ export class NotificationSocketService {
     const headers: Stomp.ConnectionHeaders = {};
     this.stompClient.connect(headers, (frame: Frame | undefined) => {
       this.connectionSubject.next();
-      console.log(frame);
     });
   }
 
@@ -60,7 +59,6 @@ export class NotificationSocketService {
     this.connectionSubscription = this.connectionSubject.subscribe(() => {
       if (this.stompClient) {
         this.stompSubscription = this.stompClient.subscribe('/topic/inbox', (data: Stomp.Message) => {
-          console.log(data);
           this.listenerSubject.next(JSON.parse(data.body));
         });
       }
