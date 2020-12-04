@@ -3,8 +3,8 @@ import { ShowMapService } from 'app/global-services/show-map.service';
 import { PropertyService } from 'app/entities/property/property.service';
 import { ProvinceService } from 'app/entities/province/province.service';
 import { ActivatedRoute } from '@angular/router';
-import { PropertyImageService } from 'app/entities/property-image/property-image.service';
 import { SeeAuctionService } from 'app/see-auction/see-auction.service';
+import { Property } from 'app/shared/model/property.model';
 
 @Component({
   selector: 'jhi-show-map',
@@ -34,25 +34,21 @@ export class ShowMapComponent implements OnInit {
   }
 
   loadAll(): void {
-    let myProperties;
+    let myProperties: Array<Property> = [];
     this.propertyService.getBySale().subscribe((res: any) => {
       myProperties = res.body;
-
-      console.log(myProperties);
       for (let i = 0; i < myProperties.length; i++) {
-        this.propertiesImages.getAuctionImgs(myProperties[i].id as number).subscribe(response => {
-          response.forEach((value: any) => {
-            this.images.push(value.url);
-          });
+        this.propertiesImages.getAuctionImgs(myProperties[i].id as number).subscribe((response: any) => {
+          myProperties[i].propertyImages = response;
         });
         let marker = {
           id: i,
           property: myProperties[i],
-          myImage: this.images[i],
           lat: Number(myProperties[i].latitude),
           lng: Number(myProperties[i].longitude),
-          icon: this.obtainIcon(myProperties[i].canton.province.id),
+          icon: this.obtainIcon(myProperties[i]?.canton?.province?.id),
         };
+        console.log('mi marker' + marker);
         this.markers.push(marker);
       }
     });
@@ -106,7 +102,7 @@ export class ShowMapComponent implements OnInit {
     let myProperties;
     this.propertyService.getBySale().subscribe((res: any) => {
       myProperties = res.body;
-      console.log(myProperties);
+      console.log(myProperties[0].sale);
       for (let i = 0; i < myProperties.length; i++) {
         if (myProperties[i].propertyCategory === indexCategory) {
           let marker = {
@@ -122,7 +118,7 @@ export class ShowMapComponent implements OnInit {
     });
   }
 
-  public obtainIcon(province: number): string {
+  public obtainIcon(province: number | undefined): string {
     let iconChosen = '';
     switch (province) {
       case 1:

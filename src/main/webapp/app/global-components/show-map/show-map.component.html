@@ -13,18 +13,24 @@
                 [latitude]="marker.lat"
                   [longitude]="marker.lng"
                [agmFitBounds]="true" [iconUrl]="marker.icon" >
-                    <agm-info-window [disableAutoPan]="true" style="height: 400px">
+                    <agm-info-window [disableAutoPan]="true" style="overflow-x: hidden; min-height: 400px;" >
                         <div class="card">
                             <div class="card-block">
                                 <div class="row">
-                                    <div class="col-sm-6  p-b-2">
-                                       <img class="card-img" src="{{marker.myImage}}">
+                                    <div class="col-sm-6  p-b-2" *ngIf="marker.property.propertyImages != null">
+                                       <img class="card-img" style="max-height: 150px; max-width:150px" src="{{marker.property.propertyImages[0].url}}">
+                                    </div>
+                                    <div class="col-sm-6  p-b-2" style="max-height: 150px; max-width:150px" *ngIf="marker.property.propertyImages == null">
+                                    <img class="card-img" src="{{marker.icon}}">
                                     </div>
                                     <div class="col-sm-4 text-center offset-lg-1">
                                         <div class="row  m-x-auto m-b-2">
                                             <h2 class="card-title">{{marker.property.title}}</h2>
-                                            <h4 class="card-text">Ultima oferta: </h4>
-                                            <a [routerLink]="['/bit-at-auction/', marker.property.id]"class="btn justify-content-center btn-primary">Ver inmuebles</a>
+                                            <div class="col-sm-6  p-b-2" *ngIf="marker.property.sale.offers != null">
+                                            <h4 class="card-text">Ultima oferta: {{marker.property.price}}</h4>
+                                            </div>
+                                            <h4 class="card-text" *ngIf="marker.property.sale.offers == null ">Precio incial: {{marker.property.price}}</h4>
+                                            <a [routerLink]="['/bit-at-auction/', marker.property.id]"class="btn justify-content-center btn-primary">Ofertar</a>
                                         </div>
                                     </div>
                                 </div>
