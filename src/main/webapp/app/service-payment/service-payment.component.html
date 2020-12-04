@@ -31,35 +31,38 @@
     </div>
 
     <div *ngIf="publishingPackages && publishingPackages.length > 0 && isPayment" class="row">
-        <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-4 col-lg-4 col-md-4 col-sm-12 {{i != 0 ? '' : 'd-none'}}">
-            <div class="card text-center m-2 height-2"  *ngIf="i < 4 ">
+        <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="card text-center m-2 height-2"  *ngIf="i < 3 ">
                 <div class="card-body">
 
                     <h5 class="card-title">
                         {{ publishingPackage.name }}
                     </h5>
                     <span class="d-block mb-4">
-                        <i style="color: green" class="fa fa-leaf iconpayment" *ngIf="publishingPackage.type === 1"></i>
-                        <i style="color: #4f40ff" class="far fa-gem iconpayment" *ngIf="publishingPackage.type === 2"></i>
-                        <i style="color: chartreuse" class="fas fa-spa iconpayment" *ngIf="publishingPackage.type === 3"></i>
+                        <i style="color: green" class="fa fa-leaf iconpayment d-block " *ngIf="publishingPackage.type === 0"></i>
+                        <i style="color: #4f40ff" class="far fa-gem iconpayment" *ngIf="publishingPackage.type === 1"></i>
+                        <i style="color: chartreuse" class="fas fa-spa iconpayment" *ngIf="publishingPackage.type === 2"></i>
                      </span>
                     <p class="card-text ">
                         Con este paquete publicitario va poder publicar propiedades durante {{ publishingPackage.cantDays }} día y con
-                        capacidad en subidas de {{ publishingPackage.cantPropertySale }} en subasta y en alquiler de {{ publishingPackage.cantPropertyRent }}.
+                        capacidad en publicaciones de {{ publishingPackage.cantPropertySale }} inmuebles en subasta.
                         <span *ngIf="publishingPackage.professional === true">
                             <br>
                             También podrá registrar sus servicios como profecional.
                         </span>
                         <br *ngIf="publishingPackage.professional === false">
                     </p>
+                    <i style="font-size: 15px;" class="badge badge-pill badge-primary d-block" *ngIf="publishingPackage.type === 0">
+                        Paquete Gratis
+                    </i>
                 </div>
                 <div class="card-footer text-muted faPager">
                     <div class="form-check">
-                        <input style="visibility: hidden;" class="form-check-input"
+                        <input class="form-check-input"
                                type="radio"
                                name="service"
                                id="exampleRadios-{{i}}"
-                               checked
+                               checked="{{userAccount?.publishingPackage?.id === publishingPackage.id? 'checked':'' }}"
                                [value]="i"
                                (click)="setServiceIndex(i)">
                         <label class="form-check-label font-italic font-size-1 btn btn-success btn-sm" for="exampleRadios-{{i}}">
