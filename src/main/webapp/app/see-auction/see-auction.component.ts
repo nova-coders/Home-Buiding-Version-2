@@ -76,7 +76,6 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   }
   public closeAuction(): void {
     this.setAuctionToCloseState();
-    this.notifyClients();
   }
   private setAuctionToCloseState(): void {
     this.seeAuctionService.auctionToCloseState(this.idProperty).subscribe(
@@ -84,6 +83,7 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
         this.property.state = 3;
         if (response === -1) {
         } else {
+          this.notifyClients();
           this.goDocument(response);
         }
       },
