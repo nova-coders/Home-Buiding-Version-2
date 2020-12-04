@@ -6,7 +6,6 @@ import { DocumentService } from 'app/entities/document/document.service';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { CustomSaleService } from 'app/global-services/custom-sale.service';
 import { HttpResponse } from '@angular/common/http';
-import { Offer } from 'app/shared/model/offer.model';
 import { CustomOfferService } from 'app/global-services/custom-offer.service';
 
 @Component({
@@ -27,9 +26,6 @@ export class ContractComponent implements OnInit {
   checkedBuyer: undefined | boolean;
   disabledSeller: boolean;
   disabledBuyer: boolean;
-
-  /* Boolean values that disable or enable the toogles that user needs to sign the document. */
-  public toogleUser = false;
 
   /* Hold the picture of the signature for each user */
   public sellerSignaturePicture: any;
