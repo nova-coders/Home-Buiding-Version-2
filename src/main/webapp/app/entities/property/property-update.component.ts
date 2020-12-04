@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -85,7 +85,7 @@ export class PropertyUpdateComponent implements OnInit {
     cadastralPlan: ['', [Validators.required]],
     registryStudy: ['', [Validators.required]],
     imageCategory: ['', [Validators.required]],
-    province: [],
+    province: ['', [Validators.required]],
   });
 
   constructor(
@@ -101,7 +101,8 @@ export class PropertyUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    private el: ElementRef
   ) {
     this.files = [];
     this.fileUrl = '';
@@ -232,6 +233,7 @@ export class PropertyUpdateComponent implements OnInit {
 
   next(): void {
     this.validatePropertyId();
+    this.validateForm();
     if (!this.isFinalDate() && !this.saleExist) {
       this.step = this.step + 1;
       window.scrollTo(0, 0);
@@ -290,7 +292,13 @@ export class PropertyUpdateComponent implements OnInit {
     this.saleExist = count > 0;
   }
   public validateForm(): void {
-    console.log('Holi :3');
+    const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
+    console.log('estoy validando');
+
+    if (invalidControl) {
+      invalidControl.style.borderColor = 'crimson';
+      invalidControl.focus();
+    }
   }
 
   protected onSaveSuccess(): void {
@@ -335,6 +343,7 @@ export class PropertyUpdateComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
     this.errorImage = this.files.length === 0;
   }
+
   public processSave(property: Property): void {
     const fileData = this.files;
     for (let index = 0; index < this.files.length; index++) {
