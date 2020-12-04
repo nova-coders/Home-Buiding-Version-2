@@ -320,13 +320,14 @@
                                         Your JHipster account has been created, please click on the URL below to access it:
                                     </p>
                                     <p>
-                                        <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}"
-                                           th:text="${url}">Login link</a>
+                                        <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}">
+                                            Ir a acceder a la cuenta
+                                        </a>
                                     </p>
                                     <p>
                                         <span th:text="#{email.activation.text2}">Regards, </span>
                                         <br/>
-                                        <em th:text="#{email.signature}">JHipster.</em>
+                                        <em th:text="#{email.signature}">Home Building.</em>
                                     </p>
                                 </div>
                             </td>
