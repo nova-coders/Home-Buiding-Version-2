@@ -19,8 +19,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-4">
-                                    <img *ngIf="property.propertyImages != null" src="{{property!.propertyImages[0]!.url}}" class="img-fluid">
-                                    <img *ngIf="property.propertyImages == null" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid">
+                                    <img *ngIf="property.propertyImages != null" src="{{property!.propertyImages[0]!.url}}" class="img-fluid imagenSubasta">
+                                    <img *ngIf="property.propertyImages == null" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid imagenSubasta">
                                 </div>
                                 <div class="col-6">
                                     <div class="row mb-4">
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
 
-                                    <div *ngIf="property!.documents.length > 0" class="row mb-4 documentRoute" (click)="routetoDocument(property!.documents[0]!.id)">
+                                    <div *ngFor="let documentID of property.documents" class="row mb-4 documentRoute" (click)="routetoDocument(documentID)">
                                         <div class="col-2">
                                             <i class="far fa-file mt-2" style="font-size: 4vh;"></i>
                                         </div>

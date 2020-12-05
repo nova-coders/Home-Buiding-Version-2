@@ -9,6 +9,7 @@ import { CustomOfferService } from 'app/global-services/custom-offer.service';
 import { Offer } from 'app/shared/model/offer.model';
 import { DocumentService } from 'app/entities/document/document.service';
 import { Document, IDocument } from 'app/shared/model/document.model';
+import { CustomDocumentService } from 'app/entities/document/custom-document.service';
 
 @Component({
   selector: 'jhi-listusersales',
@@ -29,6 +30,7 @@ export class ListUserSalesComponent implements OnInit {
     private seeAuctionService: SeeAuctionService,
     private customOfferService: CustomOfferService,
     private documentsService: DocumentService,
+    private customDocumentService: CustomDocumentService,
     private router: Router
   ) {
     this.myProperties = [];
@@ -58,22 +60,22 @@ export class ListUserSalesComponent implements OnInit {
               }
             });
             //In this section we place the documents.
-            this.myProperties[ind].documents! = [];
-            this.documentsService.findByProperty(this.myProperties[ind].id!).subscribe(dataD => {
-              console.log('This is the dataD: ');
-              console.log(dataD);
-              /*var tempDocNumber: IDocument | null;
-              tempDocNumber = dataD.body;
-              if (tempDocNumber != null) {
-                this.tempOffer = new Document();
-                this.tempOffer = tempDocNumber;
-                this.myProperties[ind].documents! = [];
-                this.myProperties[ind].documents!.push(this.tempOffer);
-              }*/
-            });
+            this.myProperties[ind].documents = [];
+            this.customDocumentService
+              .getDocumentIdByUserIdAndPropertyId(this.userAccount?.id, this.myProperties[ind]?.id)
+              .subscribe(dataD => {
+                console.log('This is the dataD: ');
+                console.log(dataD);
+                let tempDocNumber: any;
+                tempDocNumber = dataD.body;
+                if (tempDocNumber != null) {
+                  this.myProperties[ind].documents! = [];
+                  this.myProperties[ind].documents!.push(tempDocNumber);
+                }
+              });
+            console.log('These are the properties after the for loop.');
+            console.log(this.myProperties);
           }
-          console.log('These are the properties after the for loop.');
-          console.log(this.myProperties);
         });
       } else {
         console.log('No user is logged on.');
@@ -85,7 +87,7 @@ export class ListUserSalesComponent implements OnInit {
     this.router.navigate(['/see-auction/', id]);
   }
 
-  routetoDocument(id: number | undefined): void {
+  routetoDocument(id: any): void {
     this.router.navigate(['/document/', id]);
   }
 }
