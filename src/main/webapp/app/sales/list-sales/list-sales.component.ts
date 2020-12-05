@@ -22,6 +22,7 @@ export class ListSalesComponent implements OnInit {
   public currentCantonId: number;
   propertyService: PropertyService;
   public cantonService: CantonService;
+  public initPage: number = 1;
   constructor(
     service: PropertyService,
     private route: ActivatedRoute,
