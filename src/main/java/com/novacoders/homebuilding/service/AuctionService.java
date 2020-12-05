@@ -59,6 +59,10 @@ public class AuctionService {
                     document = this.documentRepository.save(document);
                     this.mailAuctionService.sendAuctionEmailToBuyerUser(document);
                     return "" + document.getId();
+                } else {
+                    property.setState(3);
+                    this.propertyRepository.save(property);
+                    return "-1";
                 }
             }
         }
