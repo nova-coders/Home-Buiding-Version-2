@@ -72,14 +72,26 @@ export class ListSalesComponent implements OnInit {
   filterProperty(): void {
     console.log('Filtering properties by canton!');
     this.propertyList = [];
-    this.propertyService.getPropertiesOnSaleByCantonId(this.currentCantonId).subscribe(res => {
-      this.propertyList = res.body as Array<Property>;
+    if (this.currentCantonId != null) {
+      this.propertyService.getPropertiesOnSaleByCantonId(this.currentCantonId).subscribe(res => {
+        this.propertyList = res.body as Array<Property>;
 
-      for (let ind = 0; ind < this.propertyList.length; ind++) {
-        this.seeAuctionService.getAuctionImgs(this.propertyList[ind].id as number).subscribe(response => {
-          this.propertyList[ind].propertyImages = response;
-        });
-      }
-    });
+        for (let ind = 0; ind < this.propertyList.length; ind++) {
+          this.seeAuctionService.getAuctionImgs(this.propertyList[ind].id as number).subscribe(response => {
+            this.propertyList[ind].propertyImages = response;
+          });
+        }
+      });
+    } else {
+      this.propertyService.getPropertiesOnSale().subscribe(res => {
+        this.propertyList = res.body as Array<Property>;
+
+        for (let ind = 0; ind < this.propertyList.length; ind++) {
+          this.seeAuctionService.getAuctionImgs(this.propertyList[ind].id as number).subscribe(response => {
+            this.propertyList[ind].propertyImages = response;
+          });
+        }
+      });
+    }
   }
 }

@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label class="font-weight-600" for="sltProvincias">Provincia</label>
                 <select [(ngModel)]="this.currentProvinceId" (change)="this.loadCantones()" id="sltProvincias" class="form-control">
-                    <option disabled="disabled" selected>Seleccione la provincia</option>
+                    <option value="" >Seleccione la provincia</option>
                     <option value="{{province.id}}" *ngFor="let province of provinceList" >
                         {{province.name}}
                     </option>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label class="font-weight-600" for="sltCantones">Cantón</label>
                 <select [(ngModel)]="this.currentCantonId" (change)="this.filterProperty()"  id="sltCantones" class="form-control">
-                    <option  selected>Seleccione el cantón</option>
+                    <option value=""  selected>Seleccione el cantón</option>
                     <option value="{{canton.id}}" *ngFor="let canton of cantonList" >
                         {{canton.name}}
                     </option>
@@ -41,10 +41,10 @@
         <div class="col-12 text-center" *ngIf="propertyList.length == 0">No hay subastas disponibles</div>
         <div *ngFor="let property of propertyList" class="col-6 col-sm-6 col-md-3 col-lg-3">
             <a [routerLink]="['/bit-at-auction/', property.id]" class="property-item">
-                <div class="image-banner" *ngIf="property.propertyImages == null"
+                <div class="image-banner" *ngIf="property.propertyImages[0] == null"
                      style="background: url(https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png) center center no-repeat;background-size: cover">
                 </div>
-                <div class="image-banner" *ngIf="property.propertyImages != null"
+                <div class="image-banner" *ngIf="property.propertyImages[0] != null"
                      [style]="'background: url(' + property.propertyImages[0].url + ') center center no-repeat; background-size: cover;'">
                 </div>
                 <div class="title">
