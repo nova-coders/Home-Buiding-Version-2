@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LoginService } from '../../core/login/login.service';
 @Component({
   selector: 'jhi-log-in',
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.scss'],
 })
-export class LogInComponent implements AfterViewInit {
+export class LogInComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
 
@@ -19,8 +19,11 @@ export class LogInComponent implements AfterViewInit {
     password: [''],
     rememberMe: [false],
   });
+  public previousUrl: string = '';
 
   constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder) {}
+
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     if (this.username) {
@@ -52,7 +55,14 @@ export class LogInComponent implements AfterViewInit {
             this.router.url.startsWith('/account/activate') ||
             this.router.url.startsWith('/account/reset/')
           ) {
-            this.router.navigate(['']);
+            this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd | any) => {
+              this.previousUrl = event.url;
+              if (this.previousUrl.startsWith('/see-auction/') || this.previousUrl.startsWith('/document/')) {
+                this.router.navigate([this.previousUrl]);
+              } else {
+                this.router.navigate([this.router.url]);
+              }
+            });
           }
         },
         () => (this.authenticationError = true)

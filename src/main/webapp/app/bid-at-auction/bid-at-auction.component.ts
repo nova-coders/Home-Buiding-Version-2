@@ -80,10 +80,13 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
         if (offer.id != this.offers[0].id) {
           this.offers.unshift(offer);
         }
+        this.maximumBid = offer.amount;
       }
     });
   }
-
+  public setOffer(offer: any) {
+    this.maximumBid = offer;
+  }
   ngOnDestroy(): void {
     this.offerSocketService.disconnect();
   }

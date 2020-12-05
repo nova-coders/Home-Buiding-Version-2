@@ -14,7 +14,7 @@ export class OfferSocketService {
   private stompClient: Stomp.Client | null = null;
   private connectionSubject: ReplaySubject<void> = new ReplaySubject(1);
   private connectionSubscription: Subscription | null = null;
-  private stompSubscription: Stomp.Subscription | null = null;
+  private stompSubscription: Stomp.Subscription | undefined;
   private listenerSubject: Subject<IOffer> = new Subject();
 
   constructor(private authServerProvider: AuthServerProvider, private location: Location) {}
@@ -35,7 +35,6 @@ export class OfferSocketService {
     const headers: Stomp.ConnectionHeaders = {};
     this.stompClient.connect(headers, (frame: Frame | undefined) => {
       this.connectionSubject.next();
-      console.log(frame);
     });
   }
 
@@ -59,10 +58,11 @@ export class OfferSocketService {
     }
     this.connectionSubscription = this.connectionSubject.subscribe(() => {
       if (this.stompClient) {
-        this.stompSubscription = this.stompClient.subscribe('/topic/new-offer', (data: Stomp.Message) => {
-          console.log(data);
-          this.listenerSubject.next(JSON.parse(data.body));
-        });
+        setTimeout(() => {
+          this.stompSubscription = this.stompClient?.subscribe('/topic/new-offer', (data: Stomp.Message) => {
+            this.listenerSubject.next(JSON.parse(data.body));
+          });
+        }, 3000); //wait 3 seconds
       }
     });
   }
