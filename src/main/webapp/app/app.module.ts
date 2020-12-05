@@ -37,6 +37,7 @@ import { ChatComponent } from './chat/chat.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
+import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/modalconfirm.component';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.compon
     MyOffersComponent,
     ListSalesComponent,
     ListUserSalesComponent,
+    ModalconfirmComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

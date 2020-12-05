@@ -37,6 +37,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
     this.userAccount.publishingPackage = {} as UserAccount;
   }
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.loadAll();
     this.servicePaymentService.getUserAccount().subscribe(userAccount => {
       this.userAccount = userAccount.body;
@@ -128,6 +129,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
             if (this.userAccount.publishingPackage?.id != null && this.userAccount.id != null) {
               this.payment = false;
               this.loading = true;
+              window.scroll(0, 0);
               this.servicePaymentService
                 .assignPackageToUser(this.userAccount.publishingPackage.id, this.userAccount.id)
                 .subscribe((response: any) => {
