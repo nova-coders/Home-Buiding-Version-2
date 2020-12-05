@@ -10,7 +10,7 @@
                 <div class="col-12 p-0 box">
                     <div class="card">
                         <div class="card-header" [ngSwitch]="property.state">
-                            <span class="float-right"  data-toggle="tooltip" data-placement="top" title="Modificar subasta"><a [routerLink]="['/property',property.id, 'edit']"><i class="fa fa-pencil-alt" style="font-size: 4vh;"></i></a></span>
+
                             <span *ngSwitchCase="1" class="badge badge-pill badge-success float-right">Disponible</span>
                             <span *ngSwitchCase="0" class="badge badge-pill badge-danger float-right">Eliminado</span>
                             <span *ngSwitchCase="3" class="badge badge-pill badge-info float-right">Cerrado</span>
@@ -39,6 +39,7 @@
                                     <div class="row mb-4">
                                         <div class="col-2">
                                             <i class="far fa-clock" style="font-size: 4vh;"></i>
+                                            <i class="fa fa-pencil-alt" style="font-size: 4vh;"></i>
                                         </div>
                                         <div class="col-3 pl-0 mt-1">
                                             <h6 class="font-weight-bold">Vence en: </h6>
@@ -54,7 +55,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+
             </div>
             <div class="row my-5">
                 <div class="col-12 text-center">
