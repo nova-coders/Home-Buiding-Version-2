@@ -1,7 +1,7 @@
 <div class="container justify-content-center" style="margin-top: 110px;">
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12">
-            <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="propertyForm">
+            <form focusInvalidInput name="editForm" role="form"  focusInvalidInput (ngSubmit)="save()" [formGroup]="propertyForm">
                 <h2 id="jhi-property-heading" class="d-flex justify-content-center" >Registrar un inmueble en subasta</h2>
                 <hr style="border: 0; height:1px;  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
                 <div [class]=" step === 1 ? 'd-block' : 'd-none'">
@@ -53,7 +53,7 @@
                                 </small>
                                 <br>
                             </div>
-                            <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m2</label>
+                            <label class="form-control-label"  for="field_areaSquareMeters">Area de construcción en m<sup>2</sup></label>
                             <input type="number" class="form-control" name="areaSquareMeters" id="field_areaSquareMeters" min="0"  oninput="this.value =!!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" formControlName="areaSquareMeters"/>
                             <div *ngIf="propertyForm.get('areaSquareMeters')!.invalid && (propertyForm.get('areaSquareMeters')!.dirty || propertyForm.get('areaSquareMeters')!.touched)">
                                 <small class="form-text text-danger" *ngIf="propertyForm.get('areaSquareMeters')?.errors?.required">
@@ -72,7 +72,7 @@
                                 <br>
                             </div>
 
-                            <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m2 del inmueble</label>
+                            <label class="form-control-label"  for="field_landSquareMeters">Dimensiones en m<sup>2</sup> del inmueble</label>
                             <input type="number" class="form-control" name="landSquareMeters" id="field_landSquareMeters" min="0" oninput="this.value =!!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" formControlName="landSquareMeters"/>
                             <div *ngIf="propertyForm.get('landSquareMeters')!.invalid && (propertyForm.get('landSquareMeters')!.dirty || propertyForm.get('landSquareMeters')!.touched)">
                                 <small class="form-text text-danger"
@@ -93,7 +93,7 @@
                                 <br>
                             </div>
                             <label class="form-control-label"  for="field_price">Precio</label>
-                            <input type="number" class="form-control" name="price" id="field_price" min="0" formControlName="price" oninput="this.value =!!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+                            <input type="text" class="form-control" name="price" id="field_price"  currencyMask [options]="{align: 'left',prefix:''}" formControlName="price"/>
 
                             <div *ngIf="propertyForm.get('price')!.invalid && (propertyForm.get('price')!.dirty || propertyForm.get('price')!.touched)">
                                 <small class="form-text text-danger"  *ngIf="propertyForm.get('price')?.errors?.required">
@@ -270,7 +270,7 @@
                     <button type="button" class="btn btn-primary" *ngIf="step != 2" (click)="next()">Siguiente</button>
 
 
-                    <button  type="submit" id="save-entity" [disabled]="propertyForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2" (mouseover)="validateForm()">
+                    <button  type="submit" id="save-entity" [disabled]="propertyForm.invalid || isSaving" class="btn btn-primary" *ngIf="step == 2">
                         <fa-icon icon="save"></fa-icon>&nbsp;<span>Enviar</span>
                     </button>
                 </div>
@@ -278,4 +278,3 @@
         </div>
     </div>
 </div>
-

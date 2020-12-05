@@ -10,6 +10,7 @@ import { propertyRoute } from './property.route';
 import { AgmCoreModule } from '@agm/core';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
       libraries: ['places'],
     }),
     NgxDropzoneModule,
+    CurrencyMaskModule,
   ],
   declarations: [PropertyComponent, PropertyDetailComponent, PropertyUpdateComponent, PropertyDeleteDialogComponent],
   entryComponents: [PropertyDeleteDialogComponent],
