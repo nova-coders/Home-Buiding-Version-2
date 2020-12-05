@@ -1,4 +1,3 @@
-
 <div class="btn-group dropleft" *ngIf="notifications.length > 0">
     <button type="button" class="btn btn-primary -border-none dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="fa fa-bell bell" aria-hidden="true">
@@ -34,9 +33,9 @@
                             </b>
                             <br>
                         </p>
-                        <div [innerHTML]="notification?.message"></div>
-                        <div>
-                            <button class="btn btn-outline-primary btn-sm  float-right">Ver</button>
+                        <div [innerHTML]="notification?.message" class="div-message"></div>
+                        <div class="mt-2">
+                           <span *ngIf="isNew(notification.creationDate)" class="badge badge-warning d-inline-block float-right">Nuevo</span>
                         </div>
                     </div>
                 </div>

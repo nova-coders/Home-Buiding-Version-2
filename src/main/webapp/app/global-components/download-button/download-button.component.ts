@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DocumentControllerService } from '../../entities/document/document-controller.service';
+import { CustomDocumentService } from '../../entities/document/custom-document.service';
 import { IDocument } from '../../shared/model/document.model';
 import { HttpResponse } from '@angular/common/http';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ export class DownloadButtonComponent implements OnInit {
   @Input() classes: string;
   iconDownload = faDownload;
   currentDocument?: IDocument;
-  constructor(private service: DocumentControllerService) {
+  constructor(private service: CustomDocumentService) {
     this.propertyId = 0;
     this.fileName = 'contrato.pdf';
     this.classes = 'btn btn-sm btn-icon btn-primary';

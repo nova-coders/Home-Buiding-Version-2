@@ -16,7 +16,7 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
-    List<Offer> findByUserAccount_Id(long id);
+    List<Offer> findByUserAccount_IdOrderByDateDesc(long id);
 
     @Query("SELECT MAX(o.amount) FROM Offer o WHERE o.sale.id = :id")
     Double getMaxOfferBySale_Id(@Param("id") long id);

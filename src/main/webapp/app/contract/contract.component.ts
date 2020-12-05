@@ -6,7 +6,6 @@ import { DocumentService } from 'app/entities/document/document.service';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { CustomSaleService } from 'app/global-services/custom-sale.service';
 import { HttpResponse } from '@angular/common/http';
-import { Offer } from 'app/shared/model/offer.model';
 import { CustomOfferService } from 'app/global-services/custom-offer.service';
 
 @Component({
@@ -27,9 +26,6 @@ export class ContractComponent implements OnInit {
   checkedBuyer: undefined | boolean;
   disabledSeller: boolean;
   disabledBuyer: boolean;
-
-  /* Boolean values that disable or enable the toogles that user needs to sign the document. */
-  public toogleUser = false;
 
   /* Hold the picture of the signature for each user */
   public sellerSignaturePicture: any;
@@ -64,12 +60,9 @@ export class ContractComponent implements OnInit {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
       this.loggedUserAccount = userAccount;
-      console.log('LOGED USER ACCOUNT');
-      console.log(<UserAccount>this.loggedUserAccount);
+
       this.documentService.find(this.contractId).subscribe(data => {
         this.contract = <Document>data.body;
-        console.log('This is the contract data.');
-        console.log(<Document>this.contract);
         this.checkedBuyer = this.contract.buyerState;
         this.checkedSeller = this.contract.sellerState;
         this.disabledBuyer = this.loggedUserAccount.id != this.contract.buyer?.id;
@@ -92,16 +85,8 @@ export class ContractComponent implements OnInit {
           },
           () => (this.error = true)
         );
-        this.putUsersValuesOnContract();
       });
     });
-  }
-
-  putUsersValuesOnContract(): void {
-    if (String(this.contract.seller?.id) === String(this.loggedUserAccount.id)) {
-      this.toogleUser = true;
-    }
-    console.log(this.toogleUser);
   }
 
   checkSellerSignature(): void {
