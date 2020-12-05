@@ -37,6 +37,8 @@ import { ChatComponent } from './chat/chat.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
+import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
+import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
 
 @NgModule({
   imports: [
@@ -79,6 +81,8 @@ import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.compon
     MyOffersComponent,
     ListSalesComponent,
     ListUserSalesComponent,
+    ListProfessionalComponent,
+    ViewProfessionalComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

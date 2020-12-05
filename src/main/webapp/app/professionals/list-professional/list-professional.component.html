@@ -1,0 +1,62 @@
+<section class="page-banner-section">
+    <span class="title">Lista de profesionales</span>
+</section>
+<div class="mt-3 container">
+
+   <div class="row mt-3">
+       <div class="col-6">
+           <h4>Filtrar profesionales</h4>
+           <p style="font-size: 13px;">Puedes filtrar la lista de profesionales en base a sus tipos de profesión y/o buscar por nombre.</p>
+       </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="font-weight-600" for="sltProvincias">Tipo de profesión</label>
+                <select id="sltProvincias" class="form-control">
+                    <option value="" >Seleccione un tipo de profesión</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="font-weight-600" for="sltCantones">Buscar por nombre</label>
+               <input type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-12 text-center" *ngIf="proffesionalList.length == 0">No hay profesionales disponibles</div>
+        <div *ngFor="let proffesional of proffesionalList | paginate: { itemsPerPage: 6, currentPage: initPage }" class="col-6 col-sm-6 col-md-3 col-lg-3">
+            <a [routerLink]="['/professionals/view/', proffesional.id]" class="professional-item">
+                <div class="image-banner" *ngIf="proffesional.profilePicture == null"
+                     style="background: url(https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png) center center no-repeat;background-size: cover">
+                </div>
+                <div class="image-banner" *ngIf="proffesional.profilePicture != null"
+                     [style]="'background: url(' + proffesional.profilePicture + ') center center no-repeat; background-size: cover;'">
+                </div>
+                <div class="title">
+                    {{proffesional.professionalProfileUser.description}}
+                    <p *ngIf="proffesional.professionalProfileUser.pricePerHour == null" class="text-muted description">
+                        N/A
+                    </p>
+                    <p *ngIf="proffesional.professionalProfileUser.pricePerHour != undefined" class="text-muted description">
+                        {{proffesional.professionalProfileUser.pricePerHour}} / hora
+                    </p>
+                </div>
+
+            </a>
+        </div>
+
+    </div>
+    <div class="row my-5">
+        <div class="col-12 text-center">
+            <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="initPage = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
