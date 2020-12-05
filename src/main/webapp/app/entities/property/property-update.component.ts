@@ -27,6 +27,7 @@ import { IImageCategory } from '../../shared/model/image-category.model';
 import { ImageCategoryService } from '../image-category/image-category.service';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
 import { IPropertyImage, PropertyImage } from '../../shared/model/property-image.model';
+import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
@@ -35,6 +36,8 @@ type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyC
   styleUrls: ['./property.scss'],
 })
 export class PropertyUpdateComponent implements OnInit {
+  isUpdate = false;
+  myProperty!: Property;
   step: any = 1;
   isSaving = false;
   isSelected = false;
@@ -99,6 +102,7 @@ export class PropertyUpdateComponent implements OnInit {
     protected propertyCategoryService: PropertyCategoryService,
     protected servicePaymentService: ServicePaymentService,
     protected activatedRoute: ActivatedRoute,
+    protected propertiesImages: SeeAuctionService,
     private fb: FormBuilder,
     private imageService: ImageService,
     private router: Router,
@@ -115,7 +119,22 @@ export class PropertyUpdateComponent implements OnInit {
         property.creationDate = moment().startOf('day');
       }
 
-      this.updateForm(property);
+      if (property != null) {
+        this.myProperty = property;
+        this.propertiesImages.getAuctionImgs(property.id as number).subscribe((response: any) => {
+          property.propertyImages = response;
+        });
+        console.log(this.myProperty);
+        this.lat = Number(property.latitude);
+        this.lng = Number(property.longitude);
+        this.catastralPlan = property.sale.catastralPlan;
+        this.registryStudy = property.sale.registryStudy;
+        this.isUpdate = true;
+        this.setCantonsList(property.canton.province.id);
+        document.getElementById('field_propertyId')?.setAttribute('readonly', 'true');
+        this.setFiles();
+        this.updateForm(property);
+      }
 
       this.saleService
         .query({ filter: 'property-is-null' })
@@ -203,12 +222,15 @@ export class PropertyUpdateComponent implements OnInit {
       longitude: this.lng,
       zoom: this.zoom,
       addressText: property.addressText,
-      creationDate: property.creationDate ? property.creationDate.format(DATE_TIME_FORMAT) : null,
-      state: property.state,
+      propertyId: property.sale?.propertyId,
+      finalDate: moment(property.sale?.finalDate).format(DATE_TIME_FORMAT),
+      cadastralPlan: String(property.sale?.cadastralPlan),
+      registryStudy: String(property.sale?.registryStudy),
       sale: property.sale,
       userAccount: property.userAccount,
       moneyType: property.moneyType,
-      canton: property.canton,
+      canton: property.canton?.id,
+      province: property.canton?.province?.id,
       propertyCategory: property.propertyCategory,
     });
   }
@@ -232,8 +254,11 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   next(): void {
-    this.validatePropertyId();
-    this.validateForm();
+    console.log(this.propertyForm);
+    if (!this.isUpdate) {
+      this.validatePropertyId();
+      this.validateForm();
+    }
     if (!this.isFinalDate() && !this.saleExist) {
       this.step = this.step + 1;
       window.scrollTo(0, 0);
@@ -365,6 +390,13 @@ export class PropertyUpdateComponent implements OnInit {
         }
       );
     }
+  }
+
+  public setFiles() {
+    const file = document.getElementById('urlCadastralPlan');
+    file?.setAttribute('src', this.catastralPlan);
+    const file2 = document.getElementById('urlRegistryStudy');
+    file2?.setAttribute('src', this.registryStudy);
   }
 
   public onFileSelected(event: any, opc: number, labelregistryStudy: HTMLLabelElement): void {
