@@ -66,6 +66,10 @@ input:checked + .slider:before {
 
 .contractText {
   text-align: left;
+
+  label {
+    margin: 0;
+  }
 }
 
 #CheckFirma {

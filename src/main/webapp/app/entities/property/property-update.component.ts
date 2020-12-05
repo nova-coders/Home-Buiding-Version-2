@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -24,7 +23,7 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { ProvinceService } from '../province/province.service';
 import { IProvince, Province } from '../../shared/model/province.model';
 import { ImageService } from '../../global-services/image.service';
-import { IImageCategory, ImageCategory } from '../../shared/model/image-category.model';
+import { IImageCategory } from '../../shared/model/image-category.model';
 import { ImageCategoryService } from '../image-category/image-category.service';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
 import { IPropertyImage, PropertyImage } from '../../shared/model/property-image.model';
@@ -57,6 +56,7 @@ export class PropertyUpdateComponent implements OnInit {
   address!: string;
   errorImage = false;
   errorFiles = false;
+  saleExist = false;
   private geoCoder = new google.maps.Geocoder();
   @ViewChild('placesRef', { static: false }) placesRef!: GooglePlaceDirective;
   options: any = {
@@ -85,7 +85,7 @@ export class PropertyUpdateComponent implements OnInit {
     cadastralPlan: ['', [Validators.required]],
     registryStudy: ['', [Validators.required]],
     imageCategory: ['', [Validators.required]],
-    province: [],
+    province: ['', [Validators.required]],
   });
 
   constructor(
@@ -101,7 +101,8 @@ export class PropertyUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    private el: ElementRef
   ) {
     this.files = [];
     this.fileUrl = '';
@@ -142,7 +143,7 @@ export class PropertyUpdateComponent implements OnInit {
       this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.lstUserAccounts = res.body || []));
 
       this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.lstMoneytypes = res.body || []));
-
+      this.saleService.query().subscribe((response: HttpResponse<ISale[]>) => (this.sales = response.body || []));
       this.propertyCategoryService
         .query()
         .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
@@ -228,11 +229,12 @@ export class PropertyUpdateComponent implements OnInit {
 
   previous(): void {
     this.step = this.step - 1;
-    console.log(this.propertyForm);
   }
 
   next(): void {
-    if (!this.isFinalDate()) {
+    this.validatePropertyId();
+    this.validateForm();
+    if (!this.isFinalDate() && !this.saleExist) {
       this.step = this.step + 1;
       window.scrollTo(0, 0);
     }
@@ -277,8 +279,26 @@ export class PropertyUpdateComponent implements OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IProperty>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
-      error => this.onSaveError(error)
+      () => this.onSaveError()
     );
+  }
+  public validatePropertyId(): void {
+    let count = 0;
+    for (let i = 0; i < this.sales.length; i++) {
+      if (this.sales[i].propertyId === this.propertyForm.get(['propertyId'])!.value) {
+        count++;
+      }
+    }
+    this.saleExist = count > 0;
+  }
+  public validateForm(): void {
+    const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
+    console.log('estoy validando');
+
+    if (invalidControl) {
+      invalidControl.style.borderColor = 'crimson';
+      invalidControl.focus();
+    }
   }
 
   protected onSaveSuccess(): void {
@@ -287,8 +307,7 @@ export class PropertyUpdateComponent implements OnInit {
     //this.previousState();
   }
 
-  protected onSaveError(error: any): void {
-    console.log(error);
+  protected onSaveError(): void {
     this.isSaving = false;
     this.error = true;
   }
@@ -299,7 +318,7 @@ export class PropertyUpdateComponent implements OnInit {
 
   public setCantonsList(provinceIndex: any): void {
     let mypro: Province;
-    mypro = this.lstProvinces[provinceIndex];
+    mypro = this.lstProvinces[provinceIndex - 1];
 
     this.lat = Number(mypro.latitude);
     this.lng = Number(mypro.longitude);
@@ -318,27 +337,13 @@ export class PropertyUpdateComponent implements OnInit {
     this.propertyForm.patchValue({
       propertyImages: 'true',
     });
-    if (this.files.length === 0) {
-      this.errorImage = true;
-    }
   }
 
   public onRemoveImage(event: any): void {
     this.files.splice(this.files.indexOf(event), 1);
-    if (this.files.length === 0) {
-      this.errorImage = true;
-    } else {
-      this.errorImage = false;
-    }
+    this.errorImage = this.files.length === 0;
   }
-  public calDiscount(): void {
-    let price = this.propertyForm.get(['price'])!.value;
-    let discount = this.propertyForm.get(['discount'])!.value;
-    let total = document.getElementById('total');
-    var descuento = Number(price) * (Number(discount) / 100);
-    // @ts-ignore
-    total.innerHTML = ': ' + descuento;
-  }
+
   public processSave(property: Property): void {
     const fileData = this.files;
     for (let index = 0; index < this.files.length; index++) {
@@ -349,9 +354,9 @@ export class PropertyUpdateComponent implements OnInit {
           myproperty.imageCategory = this.propertyForm.get(['imageCategory'])!.value;
           myproperty.url = this.fileUrl;
           this.lstPropertyImages.push(myproperty);
-          if (this.lstPropertyImages.length - 1 === index) {
+          if (this.lstPropertyImages.length === this.files.length) {
+            console.log(this.files.length, this.lstPropertyImages.length);
             property.propertyImages = this.lstPropertyImages;
-            console.log(property);
             this.subscribeToSaveResponse(this.propertyService.create(property));
           }
         },
@@ -382,7 +387,7 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   public getBase64(file: any): any {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: any, reject: any) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);

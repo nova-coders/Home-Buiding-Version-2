@@ -9,8 +9,9 @@ import { CustomOfferService } from 'app/global-services/custom-offer.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { HttpResponse } from '@angular/common/http';
-import { IDocument } from 'app/shared/model/document.model';
+import { Document, IDocument } from 'app/shared/model/document.model';
 import { CustomPropertyService } from 'app/global-services/custom-property.service';
+import { CustomDocumentService } from 'app/entities/document/custom-document.service';
 
 @Component({
   selector: 'jhi-my-offers',
@@ -21,12 +22,15 @@ export class MyOffersComponent implements OnInit {
   myOffers: Offer[] = [];
   userAccount?: UserAccount;
   startPage = 1;
+  hasDocument: boolean;
   constructor(
     private customOfferService: CustomOfferService,
     private servicePaymentService: ServicePaymentService,
-    private customPropertyService: CustomPropertyService
+    private customPropertyService: CustomPropertyService,
+    private customDocumentService: CustomDocumentService
   ) {
     this.myOffers = [];
+    this.hasDocument = false;
   }
 
   ngOnInit(): void {
@@ -41,10 +45,19 @@ export class MyOffersComponent implements OnInit {
             offer.sale!.property = response.body || undefined;
 
             this.customOfferService.getMaxOfferBySaleId(offer.sale!.id!).subscribe((response: HttpResponse<number>) => {
-              offer.sale!.offers = [];
               let maxOffer = new Offer();
               maxOffer.amount = <number>response.body;
-              offer.sale!.offers?.push(maxOffer);
+              offer.sale!.offers = [maxOffer];
+
+              this.customDocumentService.getDocumentIdByUserIdAndPropertyId(this.userAccount?.id, offer.sale?.property?.id).subscribe(
+                (response: HttpResponse<number>) => {
+                  let document = new Document();
+                  document.id = <number>response.body;
+                  offer.sale!.property!.documents = [document];
+                  this.hasDocument = true;
+                },
+                () => (this.hasDocument = false)
+              );
             });
           });
         }

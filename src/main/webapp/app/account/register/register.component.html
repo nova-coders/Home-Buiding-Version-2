@@ -2,6 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
             <h1 jhiTranslate="register.title">Registration</h1>
+            <hr>
         </div>
     </div>
 
@@ -13,9 +14,13 @@
                         <h2 class="card-title" jhiTranslate="register.form.card-title">Personal Data</h2>
                     </div>
                     <div class="card-body">
-                        <div class="row pb-3">
+                        <div class="row">
                             <div class="col-12">
                                 <label>Imagen de su cuenta</label>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-6 col-sm-12">
                                 <ngx-dropzone (change)="onSelectImage($event)" class="m-1" [multiple]="false" [accept]="'image/*'">
                                     <ngx-dropzone-label>Suba una imagen de su perfil</ngx-dropzone-label>
                                     <ngx-dropzone-image-preview

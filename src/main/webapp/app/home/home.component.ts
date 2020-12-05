@@ -29,7 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const header = document.querySelector('header');
+    window.scroll(0, 0);
+    const header = document.getElementById('header');
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
   }
 

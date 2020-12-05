@@ -1,27 +1,29 @@
 <!--Contract, here we decide which of the two types of contracts will display.-->
 <div class="container" style="margin-top: 110px;">
-    <div id="TitleContract" class="border rounded p-5">
+    <div *ngIf="contract != null" id="TitleContract" class="border rounded p-5">
         <h2>HomeBuilding - T&eacute;rminos del contrato</h2>
         <br>
         <div *ngIf="!salesContract">
             <H3 class="contractText">Contrato de alquiler</H3>
-            <p class="contractText"><label class="font-weight-bold">NÚMERO</label> ____: Ante mí ____, Notario Público con oficina en _________, comparecen los señores ____(nombre y apellidos),
-                mayor, ____ (estado civil completo), ____(profesión u oficio), vecino de ____, portador de la cédula de identidad número ____, y ____,
-                (nombre y apellidos) mayor, ____(estado civil completo), ____ (profesión), vecino de ____, portador de la cédula de identidad número ____;
+            <p class="contractText">Comparecen los señores <label class="font-weight-bold" style="font-size: 16px;">{{this.contract.buyer?.user?.firstName}} {{this.contract.buyer?.user?.lastName}}</label>,
+                mayor, portador de la cédula de identidad número <label class="font-weight-bold" style="font-size: 16px;">{{contract.buyer?.identification}}</label>, y
+                <label class="font-weight-bold" style="font-size: 16px;">{{this.contract.seller?.user?.firstName}} {{this.contract.seller?.user?.lastName}}</label>, mayor,
+                portador de la cédula de identidad número <label class="font-weight-bold" style="font-size: 16px;">{{contract.seller?.identification}}</label>
                 y DICEN: Que el primero, en adelante conocido como: El Propietario y el segundo en adelante conocido como: El Inquilino, han convenido en
                 celebrar el presente contrato de arrendamiento que se regirá por la Ley General de Arrendamientos y Urbanos y Suburbanos Número siete mil
                 quinientos veintisiete y por las siguientes cláusulas:</p>
             <p class="contractText">
-                <label class="font-weight-bold">PRIMERA:</label> El propietario es dueño de un inmueble inscrito en el Registro Público de la propiedad, Partido de ____, matrícula de
-                folio real ____, que es terreno ______(naturaleza) situado en ____(distrito, cantón, provincia), mide ____ y tiene los siguientes linderos
-                ____ plano catastrado número ____.
+                <label class="font-weight-bold">PRIMERA:</label> El propietario es dueño de un inmueble inscrito en el Registro Público de la propiedad,
+                situado en <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.canton?.province?.name}}, {{contract.property?.canton?.name}}</label>,
+                mide <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.landSquareMeters}}</label> metros cuadrados y plano catastrado número ____.
             </p>
             <p class="contractText">
                 <label class="font-weight-bold">SEGUNDA:</label> En este acto el propietario da en arrendamiento al INQUILINO, quien acepta, el inmueble antes descrito en los siguientes términos
                 y condiciones.
             </p>
-            <p>
-                <label class="font-weight-bold">TERCERA:</label> EL inmueble que se alquila, tiene un área de ____
+            <p class="contractText">
+                <label class="font-weight-bold">TERCERA:</label> EL inmueble que se alquila, tiene un área de <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.areaSquareMeters}}</label>
+                 metros cuadrados
             </p>
             <p class="contractText">
                 <label class="font-weight-bold">CUARTA</label> El plazo de este contrato es de ____ años a partir del día ____ de ____ de ____. El contrato se prorrogará en
@@ -115,12 +117,10 @@
                 <label class="font-weight-bold">VIGESIMA SEGUNDA:</label> Los honorarios y gastos de este contrato serán cubiertos por mitades, por ambas partes.
             </p>
             <p class="contractText">
-                <label class="font-weight-bold">VIGESIMO TERCERA:</label> Se estima este contrato en la suma de ____ colones. En este acto el INQUILINO
-                hace un depósito por el monto de ____ colones que el propietario recibe de conformidad y del cual podrá deducir cualquiera suma que EL
+                <label class="font-weight-bold">VIGESIMO TERCERA:</label> Se estima este contrato en la suma de <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.price | currency: 'CRC'}}</label> colones. En este acto el INQUILINO
+                hace un depósito por el monto de <label class="font-weight-bold" style="font-size: 16px;">{{contract.property?.rent?.deposit | currency: 'CRC'}}</label> colones que el propietario recibe de conformidad y del cual podrá deducir cualquiera suma que EL
                 INQUILINO le quedare debiendo, al finalizar este contrato. El saldo, junto con los comprobantes respectivos, los reintegrará al INQUILINO
-                ____ días después de que este contrato termine. ES TODO, extiendo un primer testimonio, para el propietario en el que agrego y cancelo
-                las especies fiscales de ley. Leído lo escrito a los comparecientes, lo aprueban y juntos firmamos en la ciudad de ____, a las ____ horas
-                del ____ de ____ de ____ (Firma de las partes y del notario)
+                30 días después de que este contrato termine.
             </p>
         </div>
         <div *ngIf="salesContract">
@@ -150,7 +150,7 @@
             </p>
             <br>
             <p class="contractText">
-                Las PARTES convienen que el precio de la presente operaci&oacute;n ser&aacute; de <label class="font-weight-bold" style="font-size: 16px;">{{bestOffer}}</label> colones.
+                Las PARTES convienen que el precio de la presente operaci&oacute;n ser&aacute; de <label class="font-weight-bold" style="font-size: 16px;">{{bestOffer | currency: 'CRC'}}</label>.
                 Las PARTES se&ntilde;alan que en este mismo acuerdo El COMPRADOR liquida totalmente el precio se&ntilde;alado
             </p>
             <br>

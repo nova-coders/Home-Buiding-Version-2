@@ -294,7 +294,7 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td class="logo" style="text-align: center;">
-                                <h1><a href="#">HomeBuilding</a></h1>
+                                <h1><a th:with="url=(@{|${baseUrl}/})" th:href="${url}">Home Building</a></h1>
                             </td>
                         </tr>
                     </table>
@@ -320,13 +320,14 @@
                                         Your JHipster account has been created, please click on the URL below to access it:
                                     </p>
                                     <p>
-                                        <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}"
-                                           th:text="${url}">Login link</a>
+                                        <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}">
+                                            Ir a acceder a la cuenta
+                                        </a>
                                     </p>
                                     <p>
                                         <span th:text="#{email.activation.text2}">Regards, </span>
                                         <br/>
-                                        <em th:text="#{email.signature}">JHipster.</em>
+                                        <em th:text="#{email.signature}">Home Building.</em>
                                     </p>
                                 </div>
                             </td>
@@ -345,8 +346,8 @@
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
                                         <td style="text-align: left; padding-right: 10px;">
-                                            <h3 class="heading">HomeBuilding</h3>
-                                            <p>HomeBuilding es una organización creada en Costa Rica para la subasta y alquiler de inmuebles en línea.</p>
+                                            <h3 class="heading">Home Building</h3>
+                                            <p>HomeBuilding es una organización creada en Costa Rica para la subasta de inmuebles en línea.</p>
                                         </td>
                                     </tr>
                                 </table>
