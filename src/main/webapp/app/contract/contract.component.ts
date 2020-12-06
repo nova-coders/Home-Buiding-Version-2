@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UserAccount } from 'app/shared/model/user-account.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 import { ActivatedRoute } from '@angular/router';
 import { Document } from 'app/shared/model/document.model';
 import { DocumentService } from 'app/entities/document/document.service';
@@ -7,13 +7,20 @@ import { ServicePaymentService } from 'app/service-payment/service-payment.servi
 import { CustomSaleService } from 'app/global-services/custom-sale.service';
 import { HttpResponse } from '@angular/common/http';
 import { CustomOfferService } from 'app/global-services/custom-offer.service';
+import { NotificationSocketService } from 'app/core/notification/notificationSocket.service';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { Notification } from 'app/shared/model/notification.model';
+import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
+import * as moment from 'moment';
+import { User } from 'app/core/user/user.model';
+import { not } from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'jhi-contract',
   templateUrl: './contract.component.html',
   styleUrls: ['./contract.component.scss'],
 })
-export class ContractComponent implements OnInit {
+export class ContractComponent implements OnInit, OnDestroy {
   salesContract = false;
   contractId: number | null = 0;
 
@@ -41,7 +48,9 @@ export class ContractComponent implements OnInit {
     private documentService: DocumentService,
     private servicePaymentService: ServicePaymentService,
     private customSaleService: CustomSaleService,
-    private customOfferService: CustomOfferService
+    private customOfferService: CustomOfferService,
+    private notificationSocketService: NotificationSocketService,
+    private notificationService: NotificationService
   ) {
     this.checkedBuyer = false;
     this.checkedSeller = false;
@@ -54,7 +63,12 @@ export class ContractComponent implements OnInit {
     this.bestOffer = 0;
   }
 
+  ngOnDestroy(): void {
+    this.notificationSocketService.disconnect();
+  }
+
   ngOnInit(): void {
+    this.notificationSocketService.connect();
     this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
       this.contractId = Number(this.activeRouter.snapshot.paramMap.get('id'));
       let userAccount: UserAccount;
@@ -111,28 +125,58 @@ export class ContractComponent implements OnInit {
     this.errorSignatureEmpty = false;
     this.errorNotAuthorization = false;
 
+    let transmitter: UserAccount | undefined;
+    let receptor: UserAccount | undefined;
+    let checked: boolean | undefined;
+
     if (this.loggedUserAccount.id == this.contract.buyer?.id) {
-      if (this.checkedBuyer) {
-        this.contract.buyerState = this.checkedBuyer;
-        this.documentService.update(this.contract).subscribe(
-          () => (this.success = true),
-          () => (this.error = true)
-        );
-      } else {
-        this.errorSignatureEmpty = true;
-      }
-    } else if (this.loggedUserAccount.id == this.contract.seller?.id) {
-      if (this.checkedSeller) {
-        this.contract.sellerState = this.checkedSeller;
-        this.documentService.update(this.contract).subscribe(
-          () => (this.success = true),
-          () => (this.error = true)
-        );
-      } else {
-        this.errorSignatureEmpty = true;
-      }
+      checked = this.checkedBuyer;
+      transmitter = this.contract.buyer;
+      receptor = this.contract.seller;
+      this.contract.buyerState = checked;
     } else {
-      this.errorNotAuthorization = true;
+      checked = this.checkedSeller;
+      transmitter = this.contract.seller;
+      receptor = this.contract.buyer;
+      this.contract.sellerState = checked;
     }
+
+    if (checked) {
+      this.documentService.update(this.contract).subscribe(
+        () => {
+          let notification = this.buildNotification(transmitter, receptor);
+          this.notificationService.create(notification).subscribe((response: any) => {
+            notification = response.body;
+            this.notificationSocketService.sendNotification('' + notification.id);
+            this.success = true;
+          });
+        },
+        () => (this.error = true)
+      );
+    } else {
+      this.errorSignatureEmpty = true;
+    }
+  }
+
+  buildNotification(transmitter: IUserAccount | undefined, receptor: IUserAccount | undefined): Notification {
+    let notification = new Notification();
+    notification.receptor = receptor;
+    notification.creationDate = moment();
+    notification.state = true;
+    notification.title = '¡Contrato firmado!';
+
+    if (this.salesContract) {
+      notification.type = NotificationType.Subasta;
+      notification.message = "El contrato de la subasta <b class='font-weight-bold'>" + this.contract.property?.title + '</b>';
+      notification.message += " fue firmado por <b class='font-weight-bold'>" + transmitter?.user?.login + '</b> ';
+      notification.message += "<a href='document/" + this.contractId + "'> Ver documento</a>";
+    } else {
+      notification.type = NotificationType.Alquiler;
+      notification.message = "El contrato del alquiler <b class='font-weight-bold'>" + this.contract.property?.title + '</b>';
+      notification.message += " fue firmado por <b class='font-weight-bold'>" + transmitter?.user?.login + '</b> ';
+      notification.message += "<a href='document/" + this.contractId + "'> Ver documento</a>";
+    }
+
+    return notification;
   }
 }
