@@ -8,7 +8,6 @@ import { JhiLanguageService, JhiDataUtils, JhiDateUtils, JhiEventManager, JhiAle
 
 import { MockLanguageService } from './helpers/mock-language.service';
 import { AccountService } from 'app/core/auth/account.service';
-import { MockLoginModalService } from './helpers/mock-login-modal.service';
 import { MockAccountService } from './helpers/mock-account.service';
 import { MockActivatedRoute, MockRouter } from './helpers/mock-route.service';
 import { MockActiveModal } from './helpers/mock-active-modal.service';
@@ -45,10 +44,6 @@ import { LoginService } from '../../../main/webapp/app/core/login/login.service'
     {
       provide: AccountService,
       useClass: MockAccountService,
-    },
-    {
-      provide: LoginService,
-      useClass: MockLoginModalService,
     },
     {
       provide: JhiAlertService,
