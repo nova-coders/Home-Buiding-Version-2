@@ -33,9 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/homeBuilding?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: admin
+    url: jdbc:mysql://orbitasmysql.mysql.database.azure.com:3306/homebuildingProd?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: rootmysqlorbitas@orbitasmysql
+    password: Msak1OlaK32
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -77,6 +77,7 @@ spring:
 ## server:
 ##   port: 443
 ##   ssl:
+
 ##     key-store: classpath:config/tls/keystore.p12
 ##     key-store-password: password
 ##     key-store-type: PKCS12
