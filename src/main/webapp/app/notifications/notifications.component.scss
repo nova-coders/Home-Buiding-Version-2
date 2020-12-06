@@ -60,27 +60,32 @@ img {
 .active_chat {
   background: #ebebeb;
 }
-.active_chat:hover {
-  background: #5e72e4;
-  color: #ffffff;
-  a.link-element {
+.div-message {
+  a {
     color: #ffffff;
+  }
+}
+.active_chat:hover {
+  background: #ffffff;
+  color: #000000;
+  a.link-element {
+    color: #000000;
   }
   p {
-    color: #ffffff;
+    color: #000000;
   }
   div > p {
-    color: #ffffff;
+    color: #000000;
   }
   div > h5,
   div > h5 > span {
-    color: #ffffff;
+    color: #000000;
   }
   .btn {
     background-color: #ffffff;
   }
   .btn:hover {
-    color: #5e72e4;
+    color: #000000;
   }
 }
 

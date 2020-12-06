@@ -5,7 +5,7 @@ import { NotificationSocketService } from 'app/core/notification/notificationSoc
 import { Notification } from 'app/shared/model/notification.model';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
-
+import * as moment from 'moment';
 @Component({
   selector: 'jhi-notifications',
   templateUrl: './notifications.component.html',
@@ -33,8 +33,6 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
       this.userAccount = response.body;
     });
     this.notificationSocketService.receive().subscribe((notification: Notification) => {
-      console.log(this.userAccount.id);
-      console.log(notification);
       if (this.notifications.length > 0) {
         if (this.notifications[0].id != notification.id && this.userAccount.id === notification.receptor?.id) {
           this.notifications.unshift(notification);
@@ -46,6 +44,16 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
       }
     });
   }
+
+  public isNew(creationDate: any): boolean {
+    const currenDate = moment();
+    const diff = currenDate.diff(creationDate, 'days');
+    if (diff < 2) {
+      return true;
+    }
+    return false;
+  }
+
   ngOnDestroy(): void {
     this.notificationSocketService.disconnect();
   }

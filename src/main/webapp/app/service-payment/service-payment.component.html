@@ -1,31 +1,60 @@
-<div style="margin-top: 110px;">
+<div  class="container" style="margin-top: 110px;">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Paga un paquete publicitario</h1>
+            <hr>
+        </div>
+        <div class="col-md-12 text-center mt-5" *ngIf="loading">
+            <div  class="loading">
+                <span class="spanLoader"></span>
+                <span class="spanLoader"></span>
+                <span class="spanLoader"></span>
+                <span class="spanLoader"></span>
+            </div>
+        </div>
+        <div class="col-md-12 text-center mt-5" *ngIf="successPayment">
+            <div class="alert alert-success" role="alert" >
+                El pago del paquete de publicitario {{publishingPackageSelected?.name}} fue exitoso!
+            </div>
+        </div>
+        <div class="col-md-12 text-center mt-5" *ngIf="paymentError">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> Ocurrió un error al querer pagar el paquete.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div *ngIf=" isPayment" class="col-md-12 text-left">
+            <h4>Seleccione el paquete que desea comprar:</h4>
+        </div>
+    </div>
 
-    <div class="col-md-12 text-center">
-        <br>
-        <h1>Paga un paquete publicitario</h1>
-        <br>
-        <hr>
-    </div>
-    <div class="col-md-12 text-left">
-        <h4>Seleccione el paquete que desea comprar:</h4>
-    </div>
-    <div *ngIf="publishingPackages && publishingPackages.length > 0" class="row">
-        <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-3 col-lg-3 col-md-3 col-sm-12">
-            <div class="card text-center m-2 height-1">
-                <div class="card-header" >
-                    Paquete de publicidad
-                </div>
+    <div *ngIf="publishingPackages && publishingPackages.length > 0 && isPayment" class="row">
+        <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="card text-center m-2 height-2"  *ngIf="i < 3 ">
                 <div class="card-body">
-                    <h5 class="card-title">{{ publishingPackage.name }}</h5>
-                    <p class="card-text height-2" >
+
+                    <h5 class="card-title">
+                        {{ publishingPackage.name }}
+                    </h5>
+                    <span class="d-block mb-4">
+                        <i style="color: green" class="fa fa-leaf iconpayment d-block " *ngIf="publishingPackage.type === 0"></i>
+                        <i style="color: #4f40ff" class="far fa-gem iconpayment" *ngIf="publishingPackage.type === 1"></i>
+                        <i style="color: chartreuse" class="fas fa-spa iconpayment" *ngIf="publishingPackage.type === 2"></i>
+                     </span>
+                    <p class="card-text ">
                         Con este paquete publicitario va poder publicar propiedades durante {{ publishingPackage.cantDays }} día y con
-                        capacidad en subidas de {{ publishingPackage.cantPropertySale }} en subasta y en alquiler de {{ publishingPackage.cantPropertyRent }}.
+                        capacidad en publicaciones de {{ publishingPackage.cantPropertySale }} inmuebles en subasta.
                         <span *ngIf="publishingPackage.professional === true">
-                        <br>
-                        También podrá registrar sus servicios como profecional.
-                    </span>
+                            <br>
+                            También podrá registrar sus servicios como profecional.
+                        </span>
                         <br *ngIf="publishingPackage.professional === false">
                     </p>
+                    <i style="font-size: 15px;" class="badge badge-pill badge-primary d-block" *ngIf="publishingPackage.type === 0">
+                        Paquete Gratis
+                    </i>
                 </div>
                 <div class="card-footer text-muted faPager">
                     <div class="form-check">
@@ -33,21 +62,56 @@
                                type="radio"
                                name="service"
                                id="exampleRadios-{{i}}"
-                               checked
+                               checked="{{userAccount?.publishingPackage?.id === publishingPackage.id? 'checked':'' }}"
                                [value]="i"
                                (click)="setServiceIndex(i)">
                         <label class="form-check-label font-italic font-size-1 btn btn-success btn-sm" for="exampleRadios-{{i}}">
-                            ${{publishingPackage.price}}
+                            {{(publishingPackage.price) | currency:'USD':'$':'4.0-0':'en-usd'}}
                         </label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="payment">
+        <div class="col-md-2 col-lg-2 col-ms-12"></div>
+        <div class="col-md-8 col-lg-8 col-ms-12">
+            <table class="table table-striped mb-4">
+                <tbody>
+                <tr>
+                    <th scope="row">Paquete:</th>
+                    <td>{{publishingPackageSelected?.name}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Capacidad de publicaciones para la subasta de inmuebles:</th>
+                    <td>{{publishingPackageSelected?.cantPropertySale}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Capacidad de publicaciones para alquiler de inmuebles:</th>
+                    <td>{{publishingPackageSelected?.cantPropertyRent}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Días totales en publicidad que tendrá la propiedad:</th>
+                    <td>{{publishingPackageSelected?.cantDays}}</td>
+                </tr>
+                <tr *ngIf="publishingPackageSelected?.professional">
+                    <th scope="row">Publicidad:</th>
+                    <td>Puede publicarse como un profesional</td>
+                </tr>
+                <tr>
+                    <th scope="row">Precio</th>
+                    <td>{{publishingPackageSelected?.price| currency:'USD':'$':'4.0-0':'en-usd'}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2 col-lg-2 col-ms-12"></div>
+    </div>
+    <div class="row" *ngIf="payment">
         <div class="col-md-4 col-lg-4 col-ms-4"></div>
         <div class="col-md-4 col-lg-4 col-ms-4">
             <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+            <button style="width: 100%;" class="btn btn-secondary btn-lg mt-3" (click)="cancel()">Cancelar</button>
         </div>
         <div class="col-md-4 col-lg-4 col-ms-4"></div>
     </div>

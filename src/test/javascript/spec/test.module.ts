@@ -13,6 +13,7 @@ import { MockActivatedRoute, MockRouter } from './helpers/mock-route.service';
 import { MockActiveModal } from './helpers/mock-active-modal.service';
 import { MockAlertService } from './helpers/mock-alert.service';
 import { MockEventManager } from './helpers/mock-event-manager.service';
+import { LoginService } from '../../../main/webapp/app/core/login/login.service';
 
 @NgModule({
   providers: [

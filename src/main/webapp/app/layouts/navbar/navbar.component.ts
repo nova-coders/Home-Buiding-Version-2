@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'jhi-navbar',
@@ -37,10 +36,31 @@ export class NavbarComponent implements OnInit {
     private accountService: AccountService,
     private profileService: ProfileService,
     public router: Router,
+    public route: ActivatedRoute,
     private servicePaymentService: ServicePaymentService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
     this.userAccount = new UserAccount();
+    //Navbar automatically fix css
+
+    this.router.events.subscribe((params: Params) => {
+      var css = 'font-size:24px;color:red;';
+      console.log('%cCurrent url: ' + this.router.url, css);
+      console.log(params);
+      const header = document.querySelector('header');
+
+      if (header != null) {
+        if (this.router.url == '/') {
+          console.log('Sticky has been removed!');
+          header.classList.remove('sticky');
+        } else {
+          console.log('Sticky has been added!');
+          header.classList.add('sticky');
+        }
+      } else {
+        console.log('Header is null!');
+      }
+    });
   }
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
@@ -51,7 +71,6 @@ export class NavbarComponent implements OnInit {
         });
       }
     });
-
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
