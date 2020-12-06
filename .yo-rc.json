@@ -41,6 +41,6 @@
     "blueprints": [],
     "herokuDeployType": "git",
     "herokuJavaVersion": "14",
-    "herokuAppName": "homebuildingcr"
+    "herokuAppName": "homebuilding-app-cr"
   }
 }
