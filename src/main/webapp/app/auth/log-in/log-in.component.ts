@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
+
 import { LoginService } from '../../core/login/login.service';
 @Component({
   selector: 'jhi-log-in',
@@ -49,20 +50,20 @@ export class LogInComponent implements OnInit, AfterViewInit {
       .subscribe(
         () => {
           this.authenticationError = false;
+          console.log('URL = ' + this.router.url);
           if (
             this.router.url === '/account/register' ||
             this.router.url === '/auth/login' ||
             this.router.url.startsWith('/account/activate') ||
-            this.router.url.startsWith('/account/reset/')
+            this.router.url.startsWith('/account/reset/') ||
+            this.router.url.startsWith('/see-auction')
           ) {
-            this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd | any) => {
-              this.previousUrl = event.url;
-              if (this.previousUrl.startsWith('/see-auction/') || this.previousUrl.startsWith('/document/')) {
-                this.router.navigate([this.previousUrl]);
-              } else {
-                this.router.navigate([this.router.url]);
-              }
-            });
+            console.log('previousUrl');
+            let previousUrl: string = window.localStorage.getItem('previousUrl') || '/';
+            console.log(previousUrl);
+            this.router.navigate([previousUrl]);
+          } else {
+            console.log('Hola marvin no redirect');
           }
         },
         () => (this.authenticationError = true)

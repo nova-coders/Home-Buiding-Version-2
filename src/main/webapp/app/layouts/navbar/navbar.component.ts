@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
@@ -42,6 +42,15 @@ export class NavbarComponent implements OnInit {
     this.userAccount = new UserAccount();
   }
   ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (
+        event instanceof NavigationStart &&
+        !this.router.url.startsWith('/auth/login') &&
+        !this.router.url.startsWith('/account/register')
+      ) {
+        window.localStorage.setItem('previousUrl', this.router.url);
+      }
+    });
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.isAuthenticated()) {
