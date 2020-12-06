@@ -14,6 +14,7 @@ import { ChatComponent } from 'app/chat/chat.component';
 import { MyOffersComponent } from 'app/my-offers/my-offers.component';
 import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
+import { RegisterProfesionalServiceComponent } from 'app/profesionalService/register-profesional-service/register-profesional-service.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -71,6 +72,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'my-offers',
           component: MyOffersComponent,
+        },
+        {
+          path: 'registerService',
+          component: RegisterProfesionalServiceComponent,
         },
         ...LAYOUT_ROUTES,
       ],
