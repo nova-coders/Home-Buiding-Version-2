@@ -11,16 +11,22 @@
         <div class="col-3">
             <div class="form-group">
                 <label class="font-weight-600" for="sltProvincias">Tipo de profesión</label>
-                <select id="sltProvincias" class="form-control">
-                    <option value="" >Seleccione un tipo de profesión</option>
-
+                <select [(ngModel)]="this.currentProffesionalFilter" (change)="this.filterProfessionType()" id="sltProfessionType" class="form-control">
+                    <option value="-1" selected="selected">Seleccione un tipo de profesión</option>
+                    <option value="1">Abogado</option>
+                     <option value="2">Perito</option>
+                     <option value="3">Mudanza</option>
+                     <option value="4">Servicio de reparación</option>
+                     <option value="5">Electricista</option>
+                     <option value="6">Plomero</option>
+                     <option value="7">Empresa de construcción</option>
                 </select>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group">
                 <label class="font-weight-600" for="sltCantones">Buscar por nombre</label>
-               <input type="text" class="form-control">
+               <input type="text" (keydown.control.shift.enter)="searchByName()" class="form-control">
             </div>
         </div>
 
@@ -30,8 +36,17 @@
     </div>
 </div>
 <div class="container">
-    <div class="row my-4">
-        <div class="col-12 text-center" *ngIf="proffesionalList.length == 0">No hay profesionales disponibles</div>
+    <div class="row" *ngIf="!userFound">
+        <div class="col-12 p-4 text-center mt-4">
+            <div class="spinner-border" style="width:15vh; height:15vh;" role="status">
+              </div>
+        </div>
+    </div>
+    <div class="row my-4" *ngIf="proffesionalList != null">
+
+        <div class="col-12 text-center" *ngIf="proffesionalList.length == 0 && !filteringMode && userFound">No hay profesionales disponibles</div>
+        <div class="col-12 text-center" *ngIf="proffesionalList.length == 0 && filteringMode &&  userFound">No hay profesionales disponibles con este filtro. Intenta nuevamente.</div>
+
         <div *ngFor="let proffesional of proffesionalList | paginate: { itemsPerPage: 8, currentPage: initPage }" class="col-6 col-sm-6 col-md-3 col-lg-3">
             <a [routerLink]="['/viewProfessional/', proffesional!.id]" class="professional-item">
                 <div class="image-banner" *ngIf="proffesional!.profilePicture == null"
