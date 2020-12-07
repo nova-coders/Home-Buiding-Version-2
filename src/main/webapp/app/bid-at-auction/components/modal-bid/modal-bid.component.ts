@@ -54,10 +54,7 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
     let amout = this.offer.amount + ''.replace(',', '');
     amout = this.offer.amount + ''.replace('.', '');
     this.offer.amount = Number.parseInt(amout);
-    console.log(this.offer.amount);
-    console.log(this.maximumBid);
-
-    if (Number.parseInt(this.offer.amount) > Number.parseInt(this.maximumBid)) {
+    if (this.offer.amount > this.maximumBid) {
       this.hasError = false;
       this.successfulOffer = 0;
       this.offer.date = moment();
@@ -67,7 +64,7 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   public processOffer(): void {
-    if (Number.parseInt(this.currenValue) < Number.parseInt(this.offer.amount)) {
+    if (this.currenValue < this.offer.amount) {
       this.servicePaymentService.getUserAccount().subscribe((response: any) => {
         this.offer.userAccount = response.body;
         this.offer.sale = this.sale;

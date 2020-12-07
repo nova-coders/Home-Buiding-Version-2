@@ -53,7 +53,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   loadAll(): void {
     this.publishingPackageService.query().subscribe((res: HttpResponse<IPublishingPackage[]>) => {
       this.publishingPackages = res.body || [];
-      for (let i = 0; 4 < this.publishingPackages.length || i < this.publishingPackages.length; i++) {
+      for (let i = 0; i < this.publishingPackages.length; i++) {
         if (this.publishingPackages[i].state) {
           this.packages.push(this.publishingPackages[i]);
         }
