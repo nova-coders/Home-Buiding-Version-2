@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
 import { filter, pairwise } from 'rxjs/operators';
