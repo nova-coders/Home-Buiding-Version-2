@@ -17,11 +17,9 @@ export class ListProfessionalComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
+      window.scroll(0, 0);
       this.profService.findAll().subscribe(res => {
         this.proffesionalList = res.body as UserAccount[];
-        console.log('************************************');
-        console.log(this.proffesionalList);
-        for (var i = 0; i < this.proffesionalList.length; i++) {}
       });
     });
   }

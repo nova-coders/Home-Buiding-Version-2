@@ -32,8 +32,8 @@
 <div class="container">
     <div class="row my-4">
         <div class="col-12 text-center" *ngIf="proffesionalList.length == 0">No hay profesionales disponibles</div>
-        <div *ngFor="let proffesional of proffesionalList | paginate: { itemsPerPage: 6, currentPage: initPage }" class="col-6 col-sm-6 col-md-3 col-lg-3">
-            <a [routerLink]="['/professionals/view/', proffesional!.id]" class="professional-item">
+        <div *ngFor="let proffesional of proffesionalList | paginate: { itemsPerPage: 8, currentPage: initPage }" class="col-6 col-sm-6 col-md-3 col-lg-3">
+            <a [routerLink]="['/viewProfessional/', proffesional!.id]" class="professional-item">
                 <div class="image-banner" *ngIf="proffesional!.profilePicture == null"
                      style="background: url(https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png) center center no-repeat;background-size: cover">
                 </div>
@@ -47,8 +47,8 @@
                     <p *ngIf="proffesional.professionalProfileUser != null && proffesional.professionalProfileUser.pricePerHour == null" class="text-muted description">
                         N/A
                     </p>
-                    <p *ngIf="proffesional.professionalProfileUser.pricePerHour != null" class="text-muted description">
-                        {{proffesional.professionalProfileUser.pricePerHour}} / hora
+                    <p *ngIf="proffesional.professionalProfileUser.pricePerHour != null" class="description">
+                        {{proffesional.professionalProfileUser.pricePerHour | currency:'₡':'symbol':'4.2-2'}} / hora
                     </p>
                 </div>
 

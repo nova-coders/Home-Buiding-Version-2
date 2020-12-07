@@ -79,7 +79,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: ListProfessionalComponent,
         },
         {
-          path: 'professionals/:id',
+          path: 'viewProfessional/:id',
           component: ViewProfessionalComponent,
         },
         ...LAYOUT_ROUTES,

@@ -26,6 +26,14 @@
                         </span>
                     </a>
                 </li>
+                <li class="nav-item {{router.url === '/professionals'?'active d-none':''}}"  *ngIf="isAuthenticated()">
+                    <a class="nav-link" [routerLink]="['/professionals']">
+                        <span>
+                            <i class="fa fa-user-alt"></i>
+                            <span >Profesionales</span>
+                        </span>
+                    </a>
+                </li>
               <!--  <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Alquileres

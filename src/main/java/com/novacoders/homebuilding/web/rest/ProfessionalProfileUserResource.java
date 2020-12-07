@@ -93,8 +93,16 @@ public class ProfessionalProfileUserResource {
     public List<UserAccount> getAllProfessionalProfileUsers(@RequestParam(required = false) String filter) {
 
         log.debug("REST request to get all ProfessionalProfileUsers");
-     
+
         return professionalProfileUserRepository.findProffesionalWithUserId();
+    }
+
+    @GetMapping("/professional-profile-users/user/{id}")
+    public UserAccount getUserWithProfessionalProfile(@PathVariable Long id) {
+
+        log.debug("REST request to get all ProfessionalProfileUsers");
+
+        return professionalProfileUserRepository.findProffesionalWithUserId(id);
     }
 
     /**

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -19,4 +20,9 @@ public interface ProfessionalProfileUserRepository extends JpaRepository<Profess
     @Query(value = "SELECT u FROM UserAccount u INNER JOIN ProfessionalProfileUser p ON p.id = u.professionalProfileUser.id WHERE u.professionalProfileUser IS NOT NULL ")
     List<UserAccount> findProffesionalWithUserId();
 
+    @Query(value = "SELECT u FROM UserAccount u INNER JOIN ProfessionalProfileUser p ON p.id = u.professionalProfileUser.id WHERE u.professionalProfileUser IS NOT NULL AND u.id = :id")
+    UserAccount findProffesionalWithUserId(@Param("id") Long id);
+
 }
+
+
