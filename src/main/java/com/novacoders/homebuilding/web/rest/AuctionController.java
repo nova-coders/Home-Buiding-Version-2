@@ -35,14 +35,25 @@ public class AuctionController {
         return this.auctionService.getImageAuction(propertyid);
     }
     /**
-     * {@code GET  /by-sale/saleid} : get  userAccount.
+     * {@code GET  /closeauction/{propertyid : get  userAccount.
      *
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the List<Offer>, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the string, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/closeauction/{propertyid}")
     public String closeAuction(@PathVariable int propertyid) {
         String idDocument = this.auctionService.closeAuction(propertyid);
         return idDocument;
+    }
+    /**
+     * {@code GET  /closeauction/{propertyid : get  userAccount.
+     *
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the string, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/deleteauction/{propertyid}")
+    public String deleteAuction(@PathVariable int propertyid) {
+        String status = this.auctionService.deleteAuction(propertyid);
+        return status;
     }
 }

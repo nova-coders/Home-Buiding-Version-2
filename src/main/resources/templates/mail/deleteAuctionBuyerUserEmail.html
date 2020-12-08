@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="x-apple-disable-message-reformatting">
-    <title>Se cerro la subasta</title>
+    <title>Oferta aceptada</title>
     <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
 
@@ -308,40 +308,19 @@
                         <tr>
                             <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
                                 <div class="text">
-                                    <h2>La subasta se cerró con la siguiente oferta aceptada como la oferta más alta</h2>
+                                    <h2> Se cerro la subasta</h2>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: center;">
                                 <div class="text-author">
-                                    <h3 class="name">
-                                        <span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}">
-                                        </span>
-                                    </h3>
                                     <p class="position">
-                                        Hola señor/a
-                                        <span th:text="${document.seller.user.login+' '+document.seller.user.firstName+' '+document.seller.user.lastName}">
-                                        </span>
-                                        , saludos departe del equipo de Home Building.
-                                        <br>La presente es para informale que  se a ha cerrado la subasta
-                                        <span th:text="${document.property.title}".>
-                                        </span>
-                                        de su propiedad con la oferta de
-                                        <span th:text=" ${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}">
-                                        </span>
-                                        como mayor comprador o ofertante.
-                                    </p>
-                                    <img th:src="${document.seller.profilePicture}" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
-                                    <span th:text=" ${document.buyer.user.login+' '+document.buyer.user.firstName+' '+document.buyer.user.lastName}">
-                                    </span>  comprador.
-                                </div>
-                                <div>
-                                    <p>
-                                        A continuación compartimos el enlace del documento para la negociación entre usted y el comprador.
-                                    </p>
-                                    <p>
-                                        <a th:with="url=(@{|${baseUrl}/document/${document.id}|})" th:href="${url}">Ir a ver el documento</a>
+                                        Hola señor/a <span th:text="${user.user.login+' '+user.user.firstName+' '+user.user.lastName}"></span>
+                                        , es un placer saludarlo/a departe de <a th:with="url=(@{|${baseUrl}/})" th:href="${url}" >Home Building</a>.
+                                        <br>La presente es para informar que se ha cerrado la subas del inmueble <span th:text="${property.title + ' en el que dio su participación'}"></span>.
+                                        <br>
+                                        Gracias por la atención dada.
                                     </p>
                                 </div>
                             </td>
@@ -360,8 +339,8 @@
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
                                         <td style="text-align: left; padding-right: 10px;">
-                                            <h3 class="heading">Home Building</h3>
-                                            <p>HomeBuilding es una organización creada en Costa Rica para la subasta de inmuebles en línea.</p>
+                                            <h3 class="heading">HomeBuilding</h3>
+                                            <p>Home Building es una organización creada en Costa Rica para la subasta de inmuebles en línea.</p>
                                         </td>
                                     </tr>
                                 </table>

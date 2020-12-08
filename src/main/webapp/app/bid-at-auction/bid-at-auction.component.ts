@@ -41,14 +41,6 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
     this.userAccount = new UserAccount();
   }
 
-  public updateOffers() {
-    this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
-      this.offers = response;
-      if (this.offers.length > 0) {
-        this.maximumBid = this.offers[0]?.amount;
-      }
-    });
-  }
   ngOnInit(): void {
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();

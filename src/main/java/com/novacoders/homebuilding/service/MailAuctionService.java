@@ -132,10 +132,31 @@ public class MailAuctionService {
         sendEmail(document.getSeller().getUser().getEmail(), subject, content, false, true);
     }
     @Async
+    public void sendEmailFromTemplateByBuyerDelete(UserAccount userAccount, Property property,String templateName, String title) {
+        if (userAccount.getUser().getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", userAccount.getUser().getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(userAccount.getUser().getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER,userAccount);
+        context.setVariable(PROPERTY,property);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = title;
+        sendEmail(userAccount.getUser().getEmail(), subject, content, false, true);
+    }
+    @Async
     public void sendAuctionEmailToBuyerUser(Document document) {
         if(document.getBuyer() != null && document.getSeller() != null){
             sendEmailFromTemplateByBuyer(document, "mail/auctionBuyerUserEmail", "Oferta aceptada de la subasta " + document.getProperty().getTitle());
             sendEmailFromTemplateBySeller(document, "mail/auctionExpireSellerEmail", "Se ha cerrado la subasta " + document.getProperty().getTitle() + "  de su propiedad.");
+        }
+    }
+    @Async
+    public void sendAuctionEmailToBuyerUserDelete(UserAccount userAccount, Property property) {
+        if(userAccount != null && property != null){
+            sendEmailFromTemplateByBuyerDelete(userAccount, property, "mail/deleteAuctionBuyerUserEmail", "Subasta eliminada");
         }
     }
     @Async
