@@ -38,6 +38,7 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/modalconfirm.component';
+import { DeleteAuctionComponent } from './see-auction/components/delete-auction/delete-auction.component';
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/m
     ListSalesComponent,
     ListUserSalesComponent,
     ModalconfirmComponent,
+    DeleteAuctionComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

@@ -130,11 +130,9 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
               notification.creationDate = moment();
               notification.type = NotificationType.Subasta;
               notification.state = true;
-              console.log(notification);
               this.offers.unshift(this.offer);
               this.notificationService.create(notification).subscribe((response: any) => {
                 notification = response.body;
-                console.log(response);
                 return this.notificationSocketService.sendNotification('' + notification.id);
               });
             }
