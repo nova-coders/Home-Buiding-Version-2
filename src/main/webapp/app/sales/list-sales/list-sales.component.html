@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label class="font-weight-600" for="sltProvincias">Provincia</label>
                 <select [(ngModel)]="this.currentProvinceId" (change)="this.loadCantones()" id="sltProvincias" class="form-control">
-                    <option value="" >Seleccione la provincia</option>
+                    <option value="" selected>Seleccione la provincia</option>
                     <option value="{{province.id}}" *ngFor="let province of provinceList" >
                         {{province.name}}
                     </option>
