@@ -37,6 +37,12 @@ export class DocumentService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByProperty(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IDocument>(`${this.resourceUrl}/get-document-by-property/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

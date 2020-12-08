@@ -42,6 +42,7 @@ public class ProfessionalProfileUser implements Serializable {
     @JsonIgnore
     private UserAccount userAccount;
 
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;

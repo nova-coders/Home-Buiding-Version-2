@@ -39,6 +39,8 @@ import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/modalconfirm.component';
 import { DeleteAuctionComponent } from './see-auction/components/delete-auction/delete-auction.component';
+import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
+import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
 
 @NgModule({
   imports: [
@@ -83,6 +85,8 @@ import { DeleteAuctionComponent } from './see-auction/components/delete-auction/
     ListUserSalesComponent,
     ModalconfirmComponent,
     DeleteAuctionComponent,
+    ListProfessionalComponent,
+    ViewProfessionalComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

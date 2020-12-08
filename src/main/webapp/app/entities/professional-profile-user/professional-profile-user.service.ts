@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IProfessionalProfileUser } from 'app/shared/model/professional-profile-user.model';
+import { IUserAccount } from 'app/shared/model/user-account.model';
 
 type EntityResponseType = HttpResponse<IProfessionalProfileUser>;
 type EntityArrayResponseType = HttpResponse<IProfessionalProfileUser[]>;
@@ -34,6 +35,11 @@ export class ProfessionalProfileUserService {
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IProfessionalProfileUser>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+  findAll(): Observable<EntityResponseType> {
+    return this.http
+      .get<IUserAccount>(`${this.resourceUrl}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
