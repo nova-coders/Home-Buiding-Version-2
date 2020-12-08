@@ -34,6 +34,7 @@ export class MyOffersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.servicePaymentService.getUserAccount().subscribe(response => {
       this.userAccount = <UserAccount>response.body;
 
