@@ -38,7 +38,6 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/modalconfirm.component';
-import { RegisterProfesionalServiceComponent } from './profesionalService/register-profesional-service/register-profesional-service.component';
 
 @NgModule({
   imports: [
@@ -82,7 +81,6 @@ import { RegisterProfesionalServiceComponent } from './profesionalService/regist
     ListSalesComponent,
     ListUserSalesComponent,
     ModalconfirmComponent,
-    RegisterProfesionalServiceComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],
