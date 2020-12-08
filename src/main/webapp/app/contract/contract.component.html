@@ -1,6 +1,6 @@
 <!--Contract, here we decide which of the two types of contracts will display.-->
 <div class="container" style="margin-top: 110px;">
-    <div *ngIf="contract != null" id="TitleContract" class="border rounded p-5">
+    <div *ngIf="contract != null" id="TitleContract" class="border rounded p-5" id="contentSale" #contentSale>
         <h2>HomeBuilding - T&eacute;rminos del contrato</h2>
         <br>
         <div *ngIf="!salesContract">
@@ -235,6 +235,7 @@
         <div class="col-12">
             <a [routerLink]="''" class="btn btn-secondary float-right mx-3">Firmar m&aacute;s tarde</a>
             <button class="btn btn-primary float-right" type="submit" (click)="saveSignature()">Guardar</button>
+            <button id="getPDF" class="btn btn-primary" type="submit" (click)="downloadPdf()">Descargar</button>
         </div>
     </div>
 </div>
