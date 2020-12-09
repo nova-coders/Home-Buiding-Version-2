@@ -48,6 +48,14 @@
                             </span>
                         </a>
                     </div>
+                    <div *ngIf="isAuthenticated()">
+                        <a class="footer-link" [routerLink]="['/support-ticket/new']"  >
+                            <span>
+                                <i class="fas fa-question" aria-hidden="true"></i>
+                                <span>Ayuda</span>
+                            </span>
+                        </a>
+                    </div>
                     <!--<div class="link">Contactenos</div>-->
                 </div>
             </div>
