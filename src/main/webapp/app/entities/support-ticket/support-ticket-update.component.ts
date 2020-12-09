@@ -21,6 +21,8 @@ import { User } from '../../core/user/user.model';
 export class SupportTicketUpdateComponent implements OnInit {
   isSaving = false;
   loggedUserAccount = new UserAccount();
+  success = false;
+  error = false;
 
   editForm = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(23)]],
@@ -63,7 +65,9 @@ export class SupportTicketUpdateComponent implements OnInit {
   }
 
   save(): void {
+    this.success = false;
     this.isSaving = true;
+    this.error = false;
     const supportTicket = this.createFromForm();
     if (supportTicket.id !== undefined) {
       this.subscribeToSaveResponse(this.supportTicketService.update(supportTicket));
@@ -92,11 +96,13 @@ export class SupportTicketUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.success = true;
+    setTimeout(() => this.previousState(), 3000);
   }
 
   protected onSaveError(): void {
     this.isSaving = false;
+    this.error = true;
   }
 
   trackById(index: number, item: IUserAccount): any {

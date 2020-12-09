@@ -18,7 +18,6 @@ export class MyOffersComponent implements OnInit {
   myOffers: Offer[] = [];
   userAccount?: UserAccount;
   startPage = 1;
-  hasDocument: boolean;
   constructor(
     private customOfferService: CustomOfferService,
     private servicePaymentService: ServicePaymentService,
@@ -26,7 +25,6 @@ export class MyOffersComponent implements OnInit {
     private customDocumentService: CustomDocumentService
   ) {
     this.myOffers = [];
-    this.hasDocument = false;
   }
 
   ngOnInit(): void {
@@ -45,15 +43,13 @@ export class MyOffersComponent implements OnInit {
               maxOffer.amount = <number>response.body;
               offer.sale!.offers = [maxOffer];
 
-              this.customDocumentService.getDocumentIdByUserIdAndPropertyId(this.userAccount?.id, offer.sale?.property?.id).subscribe(
-                (response: HttpResponse<number>) => {
+              this.customDocumentService
+                .getDocumentIdByUserIdAndPropertyId(this.userAccount?.id, offer.sale?.property?.id)
+                .subscribe((response: HttpResponse<number>) => {
                   let document = new Document();
                   document.id = <number>response.body;
                   offer.sale!.property!.documents = [document];
-                  this.hasDocument = true;
-                },
-                () => (this.hasDocument = false)
-              );
+                });
             });
           });
         }
