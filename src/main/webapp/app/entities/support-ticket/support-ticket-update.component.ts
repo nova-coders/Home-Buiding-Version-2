@@ -23,7 +23,7 @@ export class SupportTicketUpdateComponent implements OnInit {
   loggedUserAccount = new UserAccount();
 
   editForm = this.fb.group({
-    title: ['', [Validators.required, Validators.maxLength(255)]],
+    title: ['', [Validators.required, Validators.maxLength(23)]],
     message: ['', [Validators.required, Validators.maxLength(255)]],
   });
 
@@ -36,6 +36,7 @@ export class SupportTicketUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.servicePaymentService.getUserAccount().subscribe(response => {
       this.loggedUserAccount = <UserAccount>response.body;
 

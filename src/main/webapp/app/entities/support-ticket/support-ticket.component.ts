@@ -3,18 +3,20 @@ import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ISupportTicket } from 'app/shared/model/support-ticket.model';
+import { ISupportTicket, SupportTicket } from 'app/shared/model/support-ticket.model';
 import { SupportTicketService } from './support-ticket.service';
-import { SupportTicketDeleteDialogComponent } from './support-ticket-delete-dialog.component';
 
 @Component({
   selector: 'jhi-support-ticket',
   templateUrl: './support-ticket.component.html',
+  styles: ['.ticketItems:hover{ background: #EAF2F5 }'],
 })
 export class SupportTicketComponent implements OnInit, OnDestroy {
   supportTickets?: ISupportTicket[];
   eventSubscriber?: Subscription;
+  startPage = 1;
+  hasTicket = false;
+  ticketSelected: SupportTicket | undefined;
 
   constructor(
     protected supportTicketService: SupportTicketService,
@@ -27,6 +29,7 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.loadAll();
     this.registerChangeInSupportTickets();
   }
@@ -37,17 +40,12 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: ISupportTicket): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
-  }
-
   registerChangeInSupportTickets(): void {
     this.eventSubscriber = this.eventManager.subscribe('supportTicketListModification', () => this.loadAll());
   }
 
-  delete(supportTicket: ISupportTicket): void {
-    const modalRef = this.modalService.open(SupportTicketDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.supportTicket = supportTicket;
+  showTicket(supportTicket: SupportTicket): void {
+    this.hasTicket = true;
+    this.ticketSelected = supportTicket;
   }
 }

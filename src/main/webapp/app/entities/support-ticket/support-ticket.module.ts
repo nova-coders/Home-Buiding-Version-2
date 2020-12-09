@@ -7,9 +7,10 @@ import { SupportTicketDetailComponent } from './support-ticket-detail.component'
 import { SupportTicketUpdateComponent } from './support-ticket-update.component';
 import { SupportTicketDeleteDialogComponent } from './support-ticket-delete-dialog.component';
 import { supportTicketRoute } from './support-ticket.route';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  imports: [HomeBuildingSharedModule, RouterModule.forChild(supportTicketRoute)],
+  imports: [HomeBuildingSharedModule, RouterModule.forChild(supportTicketRoute), NgxPaginationModule],
   declarations: [SupportTicketComponent, SupportTicketDetailComponent, SupportTicketUpdateComponent, SupportTicketDeleteDialogComponent],
   entryComponents: [SupportTicketDeleteDialogComponent],
 })

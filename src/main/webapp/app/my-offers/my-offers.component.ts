@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IOffer, Offer } from 'app/shared/model/offer.model';
-import { Sale } from 'app/shared/model/sale.model';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import * as moment from 'moment';
-import { IProperty, Property } from 'app/shared/model/property.model';
-import { PropertyImage } from 'app/shared/model/property-image.model';
+import { IProperty } from 'app/shared/model/property.model';
 import { CustomOfferService } from 'app/global-services/custom-offer.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { HttpResponse } from '@angular/common/http';
-import { Document, IDocument } from 'app/shared/model/document.model';
+import { Document } from 'app/shared/model/document.model';
 import { CustomPropertyService } from 'app/global-services/custom-property.service';
 import { CustomDocumentService } from 'app/entities/document/custom-document.service';
 

@@ -48,10 +48,10 @@
                             </span>
                         </a>
                     </div>
-                    <div  *ngIf="!isAuthenticated()" class="{{router.url === '/support-ticket/new'?'active d-none':''}}">
+                    <div *ngIf="isAuthenticated()">
                         <a class="footer-link" [routerLink]="['/support-ticket/new']"  >
                             <span>
-                                <i class="fa fa-sign-in-alt" aria-hidden="true"></i>
+                                <i class="fas fa-question" aria-hidden="true"></i>
                                 <span>Ayuda</span>
                             </span>
                         </a>
