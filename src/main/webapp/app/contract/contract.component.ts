@@ -194,22 +194,22 @@ export class ContractComponent implements OnInit, OnDestroy {
     y = this.addSpacing(y);
     doc.text(
       'Comparecen los señores ' +
-        this.contract.buyer?.user?.firstName +
+        this.contract.seller?.user?.firstName +
         ' ' +
-        this.contract.buyer?.user?.lastName +
+        this.contract.seller?.user?.lastName +
         ', mayor, portador de la cédula de identidad número ' +
-        this.contract.buyer?.identification,
+        this.contract.seller?.identification,
       x,
       y
     );
     y = this.addLineSpacing(y);
     doc.text(
       'y ' +
-        this.contract.seller?.user?.firstName +
+        this.contract.buyer?.user?.firstName +
         ' ' +
-        this.contract.seller?.user?.lastName +
+        this.contract.buyer?.user?.lastName +
         ', mayor, portador de la cédula de identidad número ' +
-        this.contract.seller?.identification +
+        this.contract.buyer?.identification +
         ' y DICEN: Que el',
       x,
       y
