@@ -5,7 +5,7 @@
                 <div class="card mainCard">
 
                     <div class="card-header">
-                        <h2 class="card-title">Datos del servicio profesional</h2>
+                        <h2 class="card-title">Registro de servicio profesional</h2>
                     </div>
 
                     <div class="card-body">
@@ -44,8 +44,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="currency">Moneda</label>
                                     <select class="form-control" id="currency" name="currency" formControlName="currency" #currency>
-                                        <!--<option *ngFor="let c of currencies" value="{{c.name}}}">{{c.name}}</option>-->
-                                        <option value="caca">caca</option>
+                                        <option *ngFor="let c of currencies" value="{{c.name}}}">{{c.name}}</option>
                                     </select>
                                 </div>
 
