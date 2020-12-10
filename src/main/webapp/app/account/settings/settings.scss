@@ -1,6 +1,5 @@
 .profilePicture {
   position: relative;
-  height: 70%;
   padding: 0px;
   margin: 0px;
   max-width: 400px;
@@ -12,11 +11,17 @@
   padding: 15px;
   display: block;
   width: 100%;
-  height: auto;
-  max-width: 400px;
-  min-width: 200px;
 }
 
+/*.image {
+  margin: 0px;
+  padding: 15px;
+  display: block;
+  width: auto;
+  max-height: 350px;
+}
+
+*/
 .overlay {
   padding: 0px;
   margin: 0px;
@@ -29,8 +34,8 @@
   -webkit-transform: scale(0);
   -ms-transform: scale(0);
   transform: scale(0);
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
+  -webkit-transition: 0.23s ease-in-out;
+  transition: 0.2s ease-in-out;
   opacity: 60%;
 }
 
@@ -44,7 +49,7 @@
 
 .text {
   color: white;
-  font-size: 4em;
+  font-size: 28px;
   position: absolute;
   top: 50%;
   left: 50%;
