@@ -16,6 +16,7 @@ import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 import { ListProfessionalComponent } from 'app/professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from 'app/professionals/view-professional/view-professional.component';
+import { PostProfessionalUserComponent } from 'app/professionals/post-professional-user/post-professional-user.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -81,6 +82,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'viewProfessional/:id',
           component: ViewProfessionalComponent,
+        },
+        {
+          path: 'createProfessional',
+          component: PostProfessionalUserComponent,
         },
         ...LAYOUT_ROUTES,
       ],
