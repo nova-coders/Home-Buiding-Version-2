@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { ProfessionalProfileUserService } from 'app/entities/professional-profile-user/professional-profile-user.service';
 import { MoneyTypeService } from 'app/entities/money-type/money-type.service';
 import { IMoneyType } from 'app/shared/model/money-type.model';
+import { now } from 'moment';
 
 @Component({
   selector: 'jhi-post-professional-user',
@@ -59,7 +60,6 @@ export class PostProfessionalUserComponent implements OnInit {
       }
     });
     this.currencyService.query().subscribe(data => {
-      console.log(data.body);
       this.currencies = data.body;
     });
   }
@@ -75,9 +75,10 @@ export class PostProfessionalUserComponent implements OnInit {
     this.professionalProfileUser.currency = this.serviceForm.get(['currency'])!.value;
     this.professionalProfileUser.state = true;
     this.professionalProfileUser.userAccount = this.userAccount;
-    this.professionalProfileUser.creationDate = new Date();
+    //this.professionalProfileUser.creationDate = now();
     console.log(this.professionalProfileUser);
-    this.professionalProfileUser.save(this.professionalProfileUser).subscribe((data: any) => {
+    this.professionalProfileService.create(this.professionalProfileUser).subscribe(data => {
+      console.log(data);
       this.success = true;
     });
   }

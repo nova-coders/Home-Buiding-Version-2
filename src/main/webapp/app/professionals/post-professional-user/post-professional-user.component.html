@@ -11,13 +11,21 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="profilePicture col-6">
-                                <img src="{{this.picture}}" alt="Foto de Perfil"
-                                     class="image rounded img-thumbnail mb-3 profilePicture">
+                            <div class="col-md-6">
+                                <div class="profilePicture">
+                                    <img src="{{this.picture}}" alt="Foto de Perfil"
+                                         class="image rounded img-thumbnail mb-3 profilePicture">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-center" id="textAmount">
+                                    <h2>{{ this.amount | currency }}</h2>
+                                </div>
                             </div>
                         </div>
+
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="form-control-label" for="profesionalType">Tipo de Professional</label>
                                     <select class="form-control" id="profesionalType" name="profesionalType"
@@ -31,32 +39,25 @@
                                         <option value="7">Empresa de construccion</option>
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="form-control-label" for="description">Describe lo que puedes hacer</label>
-                                    <textarea type="text" class="form-control" id="description" name="description"
-                                              formControlName="description" rows="6" placeholder="Describe lo que puedes hacer" #description></textarea>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="currency">Moneda</label>
                                     <select class="form-control" id="currency" name="currency" formControlName="currency" #currency>
                                         <option *ngFor="let c of currencies" value="{{c.name}}}">{{c.name}}</option>
                                     </select>
                                 </div>
-
+                            </div>
+                            <div class="col-md-9">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="pricePerHour">¿Cuanto cobra por hora?</label>
                                     <div>
+                                        <label class="form-control-label" for="pricePerHour">¿Cuanto cobra por hora?</label>
                                         <input (change)="changeAmountOnScreen()" type="number" class="form-control" id="pricePerHour" name="pricePerHour"
                                                formControlName="pricePerHour" #pricePerHour>
-                                        <div class="text-center" id="textAmount">
-                                            <h2>{{ this.amount | currency }}</h2>
-                                        </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="description">Describe lo que puedes hacer</label>
+                                    <textarea type="text" class="form-control" id="description" name="description"
+                                              formControlName="description" rows="6" placeholder="Describe lo que puedes hacer" #description></textarea>
                                 </div>
                             </div>
                         </div>
