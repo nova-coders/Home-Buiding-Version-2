@@ -37,9 +37,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://orbitasmysql.mysql.database.azure.com:3306/homebuildingden?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: rootmysqlorbitas@orbitasmysql
-    password: Msak1OlaK32
+    url: jdbc:mysql://localhost:3306/homeBuilding?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password: admin
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -52,7 +52,7 @@ spring:
     show-sql: true
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
   mail:
     host: smtp.gmail.com
     port: 587

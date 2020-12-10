@@ -1,0 +1,27 @@
+<!-- Button trigger modal -->
+<i class="cursor fas fa-trash-alt" data-toggle="tooltip" data-placement="bottom" title="Eliminar inmueble"  data-toggle="modal" data-target="#deleteAuction" ></i>
+<!-- Modal -->
+<div class="modal fade" id="deleteAuction" tabindex="-1" role="dialog" aria-labelledby="deleteAuctionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAuctionLabel">Eliminar inmueble</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="!isDelete">
+                    ¿Est&aacute; segura/o de eliminar el inmueble?
+                </div>
+                <div class="alert alert-success" role="alert" *ngIf="isDelete">
+                    ¡La propiedad fue eliminada con éxito!
+                </div>
+            </div>
+            <div class="modal-footer" *ngIf="!isDelete">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button (click)="deleteAuction()" type="button" class="btn btn-primary">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
