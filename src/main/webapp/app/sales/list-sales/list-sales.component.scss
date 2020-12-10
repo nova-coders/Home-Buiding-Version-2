@@ -81,10 +81,12 @@
   font-size: 14px;
   color: #000000;
   max-height: 100px;
+  overflow: hidden !important;
   font-family: 'Poppins', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
 }
 .property-item .title .description {
   font-size: 12px;
+  overflow: hidden;
 }
 agm-map {
   width: 100% !important;
