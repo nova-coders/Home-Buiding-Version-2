@@ -46,13 +46,14 @@
                                             <h5>{{property!.sale!.finalDate | date: 'MMM d, y, h:mm a'}}</h5>
                                         </div>
                                     </div>
-
-                                    <div *ngFor="let documentID of property.documents" class="row mb-4 documentRoute" (click)="routetoDocument(documentID)">
-                                        <div class="col-2">
-                                            <i class="far fa-file mt-2" style="font-size: 4vh;"></i>
-                                        </div>
-                                        <div class="col-4 pl-0 mt-1">
-                                            <h6 class="font-weight-bold p-2">Ver contrato</h6>
+                                    <div *ngIf="property.state == 3">
+                                        <div *ngFor="let documentID of property.documents" class="row mb-4 documentRoute" (click)="routetoDocument(documentID)">
+                                            <div class="col-2">
+                                                <i class="far fa-file mt-2" style="font-size: 4vh;"></i>
+                                            </div>
+                                            <div class="col-4 pl-0 mt-1">
+                                                <h6 class="font-weight-bold p-2">Ver contrato</h6>
+                                            </div>
                                         </div>
                                     </div>
 

@@ -41,6 +41,7 @@ import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/m
 import { DeleteAuctionComponent } from './see-auction/components/delete-auction/delete-auction.component';
 import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
+import { PostProfessionalUserComponent } from './professionals/post-professional-user/post-professional-user.component';
 
 @NgModule({
   imports: [
@@ -87,6 +88,7 @@ import { ViewProfessionalComponent } from './professionals/view-professional/vie
     DeleteAuctionComponent,
     ListProfessionalComponent,
     ViewProfessionalComponent,
+    PostProfessionalUserComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],
