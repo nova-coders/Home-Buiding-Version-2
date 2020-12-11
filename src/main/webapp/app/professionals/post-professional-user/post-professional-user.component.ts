@@ -18,6 +18,7 @@ import { now } from 'moment';
 export class PostProfessionalUserComponent implements OnInit {
   public success = false;
   public error = false;
+  public errorMessage = 'Ha ocurrido un error, por favor intentar mas tarde!';
   public amount = 0;
   public professionalProfileUser: any;
   public userAccount: any;
@@ -44,6 +45,7 @@ export class PostProfessionalUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
       let userAccount: UserAccount;
       userAccount = <UserAccount>puserAccount.body;
@@ -62,6 +64,12 @@ export class PostProfessionalUserComponent implements OnInit {
     this.currencyService.query().subscribe(data => {
       this.currencies = data.body;
     });
+    this.serviceForm.patchValue({
+      profesionalType: 0,
+      pricePerHour: 0,
+      description: '',
+      currency: '',
+    });
   }
 
   changeAmountOnScreen(): void {
@@ -69,18 +77,70 @@ export class PostProfessionalUserComponent implements OnInit {
   }
 
   createProfessionalService(): void {
-    this.professionalProfileUser.profesionalType = this.serviceForm.get(['profesionalType'])!.value;
-    this.professionalProfileUser.pricePerHour = this.serviceForm.get(['pricePerHour'])!.value;
-    this.professionalProfileUser.description = this.serviceForm.get(['description'])!.value;
-    this.professionalProfileUser.currency = this.serviceForm.get(['currency'])!.value;
-    this.professionalProfileUser.state = true;
-    this.professionalProfileUser.userAccount = this.userAccount;
-    //this.professionalProfileUser.creationDate = now();
-    console.log(this.professionalProfileUser);
-    this.professionalProfileService.create(this.professionalProfileUser).subscribe(data => {
-      console.log(data);
-      this.success = true;
-    });
+    let check = false;
+    check = this.validateForm();
+    if (check) {
+      this.professionalProfileUser.profesionalType = this.serviceForm.get(['profesionalType'])!.value;
+      this.professionalProfileUser.pricePerHour = this.serviceForm.get(['pricePerHour'])!.value;
+      this.professionalProfileUser.description = this.serviceForm.get(['description'])!.value;
+      this.professionalProfileUser.currency = this.serviceForm.get(['currency'])!.value;
+      this.professionalProfileUser.state = true;
+      this.professionalProfileUser.userAccount = this.userAccount;
+      console.log('Check the user account: ');
+      console.log(this.professionalProfileUser);
+      this.professionalProfileService.create(this.professionalProfileUser).subscribe(data => {
+        console.log(data);
+        this.success = true;
+      });
+      window.scrollTo(0, 0);
+      //Siguiente linea resetea el valor default para los errores.
+      this.errorMessage = 'Ha ocurrido un error, por favor intentar mas tarde!';
+      this.error = false;
+    } else {
+      this.error = true;
+    }
+  }
+
+  validateForm(): boolean {
+    let check = true;
+    let profesionalType = this.serviceForm.get(['profesionalType'])!.value;
+    let pricePerHour = this.serviceForm.get(['pricePerHour'])!.value;
+    let description = this.serviceForm.get(['description'])!.value;
+    let currency = this.serviceForm.get(['currency'])!.value;
+    this.errorMessage = 'Por favor indicar: ';
+    if (profesionalType == null || profesionalType == 0 || profesionalType == null) {
+      if (this.errorMessage == 'Por favor indicar: ') {
+        this.errorMessage = this.errorMessage + ' Tipo de servicio professional';
+      } else {
+        this.errorMessage = this.errorMessage + ', ' + 'Tipo de servicio professional';
+      }
+      check = false;
+    }
+    if (pricePerHour <= 0 || pricePerHour == null) {
+      if (this.errorMessage == 'Por favor indicar: ') {
+        this.errorMessage = this.errorMessage + ' Precio por hora.';
+      } else {
+        this.errorMessage = this.errorMessage + ', ' + 'Precio por hora';
+      }
+      check = false;
+    }
+    if (description == null || description == '') {
+      if (this.errorMessage == 'Por favor indicar: ') {
+        this.errorMessage = this.errorMessage + ' Descripcion';
+      } else {
+        this.errorMessage = this.errorMessage + ', ' + 'Descripcion';
+      }
+      check = false;
+    }
+    if (currency == null || currency == '') {
+      if (this.errorMessage == 'Por favor indicar: ') {
+        this.errorMessage = this.errorMessage + ' Tipo de moneda';
+      } else {
+        this.errorMessage = this.errorMessage + ', ' + 'Tipo de moneda';
+      }
+      check = false;
+    }
+    return check;
   }
 
   CancelGoBack(): void {

@@ -11,21 +11,21 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="profilePicture">
                                     <img src="{{this.picture}}" alt="Foto de Perfil"
                                          class="image rounded img-thumbnail mb-3 profilePicture">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="text-center" id="textAmount">
                                     <h2>{{ this.amount | currency }}</h2>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="pricePerHour">¿Cuanto cobra por hora?</label>
+                                    <input (input)="changeAmountOnScreen()" type="number" class="form-control" id="pricePerHour" name="pricePerHour"
+                                           formControlName="pricePerHour" #pricePerHour>
+                                </div>
                                 <div class="form-group">
                                     <label class="form-control-label" for="profesionalType">Tipo de Professional</label>
                                     <select class="form-control" id="profesionalType" name="profesionalType"
@@ -45,15 +45,6 @@
                                         <option *ngFor="let c of currencies" value="{{c.name}}}">{{c.name}}</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <div>
-                                        <label class="form-control-label" for="pricePerHour">¿Cuanto cobra por hora?</label>
-                                        <input (change)="changeAmountOnScreen()" type="number" class="form-control" id="pricePerHour" name="pricePerHour"
-                                               formControlName="pricePerHour" #pricePerHour>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <label class="form-control-label" for="description">Describe lo que puedes hacer</label>
                                     <textarea type="text" class="form-control" id="description" name="description"
@@ -64,7 +55,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <button (click)="CancelGoBack()" type="submit" class="btn btn-danger">Cancelar</button>
-                        <button (click)="createProfessionalService()" type="submit" class="btn btn-primary">Actualizar</button>
+                        <button (click)="createProfessionalService()" type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </form>
@@ -75,10 +66,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
             <div class="alert alert-success" *ngIf="success">
-                <strong>¡Servicio professional creado!</strong>
+                <p><strong>¡Servicio professional creado!</strong></p>
             </div>
             <div class="alert alert-danger" *ngIf="error">
-                <strong>Ha ocurrido un error, por favor intentar mas tarde!</strong>
+                <strong>{{this.errorMessage}}</strong>
             </div>
         </div>
     </div>
