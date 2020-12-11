@@ -41,6 +41,10 @@ import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/m
 import { DeleteAuctionComponent } from './see-auction/components/delete-auction/delete-auction.component';
 import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
+import { CreatePublishingPackageComponent } from './publishing/create-publishing-package/create-publishing-package.component';
+import { ListPublishingPackegeComponent } from './publishing/list-publishing-packege/list-publishing-packege.component';
+import { UpdatePublishingPackegeComponent } from './publishing/update-publishing-packege/update-publishing-packege.component';
+import { DeletePublishingPackegeComponent } from './publishing/delete-publishing-packege/delete-publishing-packege.component';
 
 @NgModule({
   imports: [
@@ -87,6 +91,10 @@ import { ViewProfessionalComponent } from './professionals/view-professional/vie
     DeleteAuctionComponent,
     ListProfessionalComponent,
     ViewProfessionalComponent,
+    CreatePublishingPackageComponent,
+    ListPublishingPackegeComponent,
+    UpdatePublishingPackegeComponent,
+    DeletePublishingPackegeComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

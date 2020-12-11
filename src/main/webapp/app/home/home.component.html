@@ -50,12 +50,12 @@
                         <h4>Servicios profecionales</h4>
                         <p>Tendrás la posibilidad de darte a conocer como profesional.</p>
                     </div>
-                    <div class=" col-md-12 col-lg-12 col-sm-12 text-center">
+                    <div *ngIf="!isAuthenticated()" class=" col-md-12 col-lg-12 col-sm-12 text-center">
                         <a class="btn btn-secondary btn-lg" [routerLink]="['/account/register']">
-                <span>
-                    <i class="fa fa-address-card"></i>
-                    <span>Regístrate gratis ahora</span>
-                </span>
+                            <span>
+                                <i class="fa fa-address-card"></i>
+                                <span>Regístrate gratis ahora</span>
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -77,24 +77,24 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="slider-img  w-100" src="https://images.unsplash.com/photo-1555636222-cae831e670b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1956&q=80" alt="...">
+                                    <img class="slider-img  w-100" src="https://images.unsplash.com/photo-1526565331177-f84e9890993c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8OTF8fGNhc2F8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="...">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>Información transparente</h5>
-                                        <h6>La subastas que ponemos a su dispociòn cuenta con información que te ayudara a concer mas del inmuble</h6>
+                                        <h5 style="color: #ffffff" >Información transparente</h5>
+                                        <h6  style="color: #ffffff" >La subastas que ponemos a su dispociòn cuenta con información que te ayudara a concer mas del inmuble</h6>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
                                     <img class="slider-img  w-100" src="https://images.unsplash.com/photo-1555636222-cae831e670b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1956&q=80" alt="...">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>Información transparente</h5>
-                                        <h6>La subastas que ponemos a su dispociòn cuenta con información que te ayudara a concer mas del inmuble</h6>
+                                        <h5 style="color: #ffffff" >Información transparente</h5>
+                                        <h6  style="color: #ffffff" >La subastas que ponemos a su dispociòn cuenta con información que te ayudara a concer mas del inmuble</h6>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="slider-img  w-100" src="https://images.unsplash.com/photo-1555636222-cae831e670b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1956&q=80" alt="...">
+                                    <img class="slider-img  w-100" src="https://images.unsplash.com/photo-1576322649811-13dc99a3018d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTA2fHxjYXNhfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="...">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>Información transparente</h5>
-                                        <h6>La subastas que ponemos a su dispociòn cuenta con información que te ayudara a concer mas del inmuble</h6>
+                                        <h5 style="color: #ffffff" >Información transparente</h5>
+                                        <h6 style="color: #ffffff">La subastas que ponemos a su dispociòn cuenta con información que te ayudara a concer mas del inmuble</h6>
                                     </div>
                                 </div>
                             </div>
