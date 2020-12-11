@@ -9,8 +9,10 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ISupportTicket, SupportTicket } from 'app/shared/model/support-ticket.model';
 import { SupportTicketService } from './support-ticket.service';
-import { IUserAccount } from 'app/shared/model/user-account.model';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
+import { ServicePaymentService } from '../../service-payment/service-payment.service';
+import { User } from '../../core/user/user.model';
 
 @Component({
   selector: 'jhi-support-ticket-update',
@@ -18,47 +20,43 @@ import { UserAccountService } from 'app/entities/user-account/user-account.servi
 })
 export class SupportTicketUpdateComponent implements OnInit {
   isSaving = false;
-  useraccounts: IUserAccount[] = [];
+  loggedUserAccount = new UserAccount();
+  success = false;
+  error = false;
 
   editForm = this.fb.group({
-    id: [],
-    title: [],
-    message: [],
-    creationDate: [],
-    state: [],
-    client: [],
-    signOffUser: [],
+    title: ['', [Validators.required, Validators.maxLength(23)]],
+    message: ['', [Validators.required, Validators.maxLength(255)]],
   });
 
   constructor(
     protected supportTicketService: SupportTicketService,
     protected userAccountService: UserAccountService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private servicePaymentService: ServicePaymentService
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ supportTicket }) => {
-      if (!supportTicket.id) {
-        const today = moment().startOf('day');
-        supportTicket.creationDate = today;
-      }
+    window.scroll(0, 0);
+    this.servicePaymentService.getUserAccount().subscribe(response => {
+      this.loggedUserAccount = <UserAccount>response.body;
 
-      this.updateForm(supportTicket);
+      this.activatedRoute.data.subscribe(({ supportTicket }) => {
+        if (!supportTicket.id) {
+          const today = moment().startOf('day');
+          supportTicket.creationDate = today;
+        }
 
-      this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.useraccounts = res.body || []));
+        this.updateForm(supportTicket);
+      });
     });
   }
 
   updateForm(supportTicket: ISupportTicket): void {
     this.editForm.patchValue({
-      id: supportTicket.id,
       title: supportTicket.title,
       message: supportTicket.message,
-      creationDate: supportTicket.creationDate ? supportTicket.creationDate.format(DATE_TIME_FORMAT) : null,
-      state: supportTicket.state,
-      client: supportTicket.client,
-      signOffUser: supportTicket.signOffUser,
     });
   }
 
@@ -67,7 +65,9 @@ export class SupportTicketUpdateComponent implements OnInit {
   }
 
   save(): void {
+    this.success = false;
     this.isSaving = true;
+    this.error = false;
     const supportTicket = this.createFromForm();
     if (supportTicket.id !== undefined) {
       this.subscribeToSaveResponse(this.supportTicketService.update(supportTicket));
@@ -79,15 +79,11 @@ export class SupportTicketUpdateComponent implements OnInit {
   private createFromForm(): ISupportTicket {
     return {
       ...new SupportTicket(),
-      id: this.editForm.get(['id'])!.value,
       title: this.editForm.get(['title'])!.value,
       message: this.editForm.get(['message'])!.value,
-      creationDate: this.editForm.get(['creationDate'])!.value
-        ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      state: this.editForm.get(['state'])!.value,
-      client: this.editForm.get(['client'])!.value,
-      signOffUser: this.editForm.get(['signOffUser'])!.value,
+      creationDate: moment(),
+      state: true,
+      client: this.loggedUserAccount,
     };
   }
 
@@ -100,11 +96,13 @@ export class SupportTicketUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.success = true;
+    setTimeout(() => this.previousState(), 3000);
   }
 
   protected onSaveError(): void {
     this.isSaving = false;
+    this.error = true;
   }
 
   trackById(index: number, item: IUserAccount): any {
