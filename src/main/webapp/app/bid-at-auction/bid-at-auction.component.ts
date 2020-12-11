@@ -42,9 +42,9 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
-
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
