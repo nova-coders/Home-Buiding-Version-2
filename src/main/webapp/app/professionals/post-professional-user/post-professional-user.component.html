@@ -1,0 +1,76 @@
+<div style="margin-top: 110px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form name="form" role="form" [formGroup]="serviceForm" *ngIf="!success">
+                <div class="card mainCard">
+
+                    <div class="card-header">
+                        <h2 class="card-title">Registro de servicio profesional</h2>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profilePicture">
+                                    <img src="{{this.picture}}" alt="Foto de Perfil"
+                                         class="image rounded img-thumbnail mb-3 profilePicture">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="text-center" id="textAmount">
+                                    <h2>{{ this.amount | currency }}</h2>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="pricePerHour">¿Cuanto cobra por hora?</label>
+                                    <input (input)="changeAmountOnScreen()" type="number" class="form-control" id="pricePerHour" name="pricePerHour"
+                                           formControlName="pricePerHour" #pricePerHour>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="profesionalType">Tipo de Professional</label>
+                                    <select class="form-control" id="profesionalType" name="profesionalType"
+                                            formControlName="profesionalType" #profesionalType>
+                                        <option value="1">Abogado</option>
+                                        <option value="2">Perito</option>
+                                        <option value="3">Mudanza</option>
+                                        <option value="4">Servicio de reparacion</option>
+                                        <option value="5">Electricista</option>
+                                        <option value="6">Plomero</option>
+                                        <option value="7">Empresa de construccion</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="currency">Moneda</label>
+                                    <select class="form-control" id="currency" name="currency" formControlName="currency" #currency>
+                                        <option *ngFor="let c of currencies" value="{{c.name}}}">{{c.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="description">Describe lo que puedes hacer</label>
+                                    <textarea type="text" class="form-control" id="description" name="description"
+                                              formControlName="description" rows="6" placeholder="Describe lo que puedes hacer" #description></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button (click)="CancelGoBack()" type="submit" class="btn btn-danger">Cancelar</button>
+                        <button (click)="createProfessionalService()" type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--This section contains the messages that the user will see if there's some error or if the creation of the professional service success.-->
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="alert alert-success" *ngIf="success">
+                <p><strong>¡Servicio professional creado!</strong></p>
+            </div>
+            <div class="alert alert-danger" *ngIf="error">
+                <strong>{{this.errorMessage}}</strong>
+            </div>
+        </div>
+    </div>
+</div>

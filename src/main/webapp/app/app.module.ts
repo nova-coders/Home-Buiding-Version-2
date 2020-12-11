@@ -45,6 +45,7 @@ import { CreatePublishingPackageComponent } from './publishing/create-publishing
 import { ListPublishingPackegeComponent } from './publishing/list-publishing-packege/list-publishing-packege.component';
 import { UpdatePublishingPackegeComponent } from './publishing/update-publishing-packege/update-publishing-packege.component';
 import { DeletePublishingPackegeComponent } from './publishing/delete-publishing-packege/delete-publishing-packege.component';
+import { PostProfessionalUserComponent } from './professionals/post-professional-user/post-professional-user.component';
 
 @NgModule({
   imports: [
@@ -95,6 +96,7 @@ import { DeletePublishingPackegeComponent } from './publishing/delete-publishing
     ListPublishingPackegeComponent,
     UpdatePublishingPackegeComponent,
     DeletePublishingPackegeComponent,
+    PostProfessionalUserComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

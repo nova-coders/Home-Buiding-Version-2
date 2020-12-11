@@ -65,9 +65,11 @@
                                            [routerLink]="['/bit-at-auction/', offer.sale.id]">Reofertar</a>
                                     </div>
                                 </div>
-                                <div *ngIf="offer.sale.property.state == 3 && hasDocument" class="row text-center my-3">
+                                <div *ngIf="offer.sale.property.state == 3" class="row text-center my-3">
                                     <div *ngIf="offer.sale.property.documents != null && offer.sale.property.documents.length > 0" class="col">
-                                        <a class="btn btn-secondary btn-sm" [routerLink]="['/document/', offer.sale.property.documents[0].id]">Ver contrato</a>
+                                        <div *ngIf="offer.sale.offers != null && offer.sale.offers.length > 0">
+                                            <a *ngIf="offer.amount == offer.sale.offers[0].amount" class="btn btn-secondary btn-sm" [routerLink]="['/document/', offer.sale.property.documents[0].id]">Ver contrato</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

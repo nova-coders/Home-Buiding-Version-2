@@ -19,6 +19,7 @@ import { ViewProfessionalComponent } from 'app/professionals/view-professional/v
 import { CreatePublishingPackageComponent } from 'app/publishing/create-publishing-package/create-publishing-package.component';
 import { ListPublishingPackegeComponent } from 'app/publishing/list-publishing-packege/list-publishing-packege.component';
 import { UpdatePublishingPackegeComponent } from 'app/publishing/update-publishing-packege/update-publishing-packege.component';
+import { PostProfessionalUserComponent } from 'app/professionals/post-professional-user/post-professional-user.component';
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -97,6 +98,9 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'updatePublishingPackage/:id',
           component: UpdatePublishingPackegeComponent,
+        },
+          path: 'createProfessional',
+          component: PostProfessionalUserComponent,
         },
         ...LAYOUT_ROUTES,
       ],

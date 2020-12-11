@@ -1,67 +1,75 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-support-ticket-heading" jhiTranslate="homeBuildingApp.supportTicket.home.createOrEditLabel">Create or edit a Support Ticket</h2>
-
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+<div style="margin-top: 110px">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 jhiTranslate="homeBuildingApp.supportTicket.home.createLabel"></h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="alert alert-success" *ngIf="success">
+                El tiquete se ha enviado con &eacute;xito, se atender&aacute; lo m&aacute;s pronto posible.
+            </div>
+            <div class="alert alert-danger" *ngIf="error">
+                Lo sentimos, ocurri&oacute; un error al enviar el tiquete.
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Crear tiquete de soporte</h2>
+                    <p class="card-subtitle">Por favor, ingresa el problema/queja que tiene en el sistema y lo solucionaremos lo antes posible</p>
                 </div>
+                <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                    <div class="card-body">
+                        <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.title" for="field_title">Title</label>
-                    <input type="text" class="form-control" name="title" id="field_title"
-                           formControlName="title"/>
-                </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.title" for="field_title">Title</label>
+                            <input type="text" class="form-control" name="title" id="field_title"
+                                   formControlName="title"/>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.message" for="field_message">Message</label>
-                    <input type="text" class="form-control" name="message" id="field_message"
-                           formControlName="message"/>
-                </div>
+                            <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty!)">
+                                <small class="form-text text-danger"
+                                       *ngIf="editForm.get('title')?.errors?.required">
+                                    El t&iacute;tulo del tiquete es requerido
+                                </small>
+                                <small class="form-text text-danger"
+                                       *ngIf="editForm.get('message')?.errors?.maxlength">
+                                    El t&iacute;tulo del tiquete tiene como m&aacute;ximo 255 caracteres.
+                                </small>
+                            </div>
+                        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.creationDate" for="field_creationDate">Creation Date</label>
-                    <div class="d-flex">
-                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.message" for="field_message">Message</label>
+                            <input type="text" class="form-control" name="message" id="field_message"
+                                   formControlName="message"/>
+
+                            <div *ngIf="editForm.get('message')!.invalid && (editForm.get('message')!.dirty!)">
+                                <small class="form-text text-danger"
+                                       *ngIf="editForm.get('message')?.errors?.required">
+                                    El mensaje del tiquete es requerido
+                                </small>
+
+                                <small class="form-text text-danger"
+                                       *ngIf="editForm.get('message')?.errors?.maxlength">
+                                    El mensaje del tiquete tiene como m&aacute;ximo 255 caracteres.
+                                </small>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.state" for="field_state">State</label>
-                    <input type="checkbox" class="form-control" name="state" id="field_state"
-                           formControlName="state"/>
-                </div>
+                    <div class="card-footer">
+                        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.client" for="field_client">Client</label>
-                    <select class="form-control" id="field_client" name="client" formControlName="client">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userAccountOption.id === editForm.get('client')!.value?.id ? editForm.get('client')!.value : userAccountOption" *ngFor="let userAccountOption of useraccounts; trackBy: trackById">{{ userAccountOption.id }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.signOffUser" for="field_signOffUser">Sign Off User</label>
-                    <select class="form-control" id="field_signOffUser" name="signOffUser" formControlName="signOffUser">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userAccountOption.id === editForm.get('signOffUser')!.value?.id ? editForm.get('signOffUser')!.value : userAccountOption" *ngFor="let userAccountOption of useraccounts; trackBy: trackById">{{ userAccountOption.id }}</option>
-                    </select>
-                </div>
+                        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
-
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
