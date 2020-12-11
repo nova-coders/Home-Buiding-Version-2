@@ -3,10 +3,6 @@
         <span>Tiquetes de soporte</span>
     </h2>
 
-    <jhi-alert-error></jhi-alert-error>
-
-    <jhi-alert></jhi-alert>
-
     <div class="alert alert-warning" id="no-result" *ngIf="supportTickets?.length === 0">
         <span jhiTranslate="homeBuildingApp.supportTicket.home.notFound">No supportTickets found</span>
     </div>
@@ -35,7 +31,9 @@
                         </div>
                     </a>
                     <a class="list-group-item border-left-0 border-right-0">
-                        <pagination-controls class="text-center" nextLabel="" previousLabel="" (pageChange)="startPage = $event"></pagination-controls>
+                        <div class="w-80 pr-5">
+                            <pagination-controls class="text-center" nextLabel="" previousLabel="" (pageChange)="startPage = $event"></pagination-controls>
+                        </div>
                     </a>
                 </div>
             </div>
