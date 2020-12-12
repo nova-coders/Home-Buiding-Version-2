@@ -6,13 +6,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ISupportTicket, SupportTicket } from 'app/shared/model/support-ticket.model';
 import { SupportTicketService } from './support-ticket.service';
 import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
-import { Offer } from '../../shared/model/offer.model';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
 
 @Component({
   selector: 'jhi-support-ticket',
   templateUrl: './support-ticket.component.html',
-  styles: ['.ticketItems:hover{ background: #EAF2F5 }'],
+  styleUrls: ['./support-ticket.component.scss'],
 })
 export class SupportTicketComponent implements OnInit, OnDestroy {
   supportTickets?: ISupportTicket[];
