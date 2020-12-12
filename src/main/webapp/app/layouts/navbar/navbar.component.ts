@@ -72,6 +72,7 @@ export class NavbarComponent implements OnInit {
         !this.router.url.startsWith('/account/reset/finish?') &&
         !this.router.url.startsWith('/account/reset/')
       ) {
+
         window.localStorage.setItem('previousUrl', this.router.url);
       }
     });
