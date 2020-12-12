@@ -93,16 +93,33 @@ public class PropertyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/properties")
-    public ResponseEntity<Property> updateProperty(@RequestBody Property property) throws URISyntaxException {
-        log.debug("REST request to update Property : {}", property);
-        if (property.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        public ResponseEntity<Property> updateProperty(@RequestBody Property property) throws URISyntaxException {
+            log.debug("REST request to save Property : {}", property);
+            if (property.getId() == null) {
+                throw new BadRequestAlertException("Something is bad.There is not id", ENTITY_NAME, "");
+            }
+            Sale mySale=property.getSale();
+            if(mySale == null) {
+                throw new BadRequestAlertException("Null object", ENTITY_NAME, "required");
+            }else {
+                property.setSale(saleRepository.save(mySale));
+            }
+
+            Property result = propertyRepository.save(property);
+            if(property.getPropertyImages()==null){
+                throw new BadRequestAlertException("Null object", ENTITY_NAME, "required");
+            }else{
+                propertyImageRepository.deletePropertyImageByPropertyId(property.getId());
+                List <PropertyImage> mylistImages= new ArrayList(property.getPropertyImages());
+                for(int i=0;i<mylistImages.size();i++) {
+                    mylistImages.get(i).setProperty(result);
+                }
+                propertyImageRepository.saveAll(mylistImages);
+            }
+            return ResponseEntity.created(new URI("/api/properties/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
         }
-        Property result = propertyRepository.save(property);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, property.getId().toString()))
-            .body(result);
-    }
 
     /**
      * {@code GET  /properties} : get all the properties.

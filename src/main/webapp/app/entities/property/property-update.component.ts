@@ -238,7 +238,7 @@ export class PropertyUpdateComponent implements OnInit {
     this.isSaving = true;
     const property = this.createFromForm();
     if (property.id !== undefined) {
-      this.subscribeToSaveResponse(this.propertyService.update(property));
+      this.processUpdate(property);
     } else {
       this.processSave(property);
     }
@@ -386,6 +386,29 @@ export class PropertyUpdateComponent implements OnInit {
             console.log(this.files.length, this.lstPropertyImages.length);
             property.propertyImages = this.lstPropertyImages;
             this.subscribeToSaveResponse(this.propertyService.create(property));
+          }
+        },
+        () => {
+          this.error = true;
+        }
+      );
+    }
+  }
+
+  public processUpdate(property: Property): void {
+    const fileData = this.files;
+    for (let index = 0; index < this.files.length; index++) {
+      this.imageService.uploadImage(fileData[index]).subscribe(
+        response => {
+          this.fileUrl = response.url;
+          let myproperty = new PropertyImage();
+          myproperty.imageCategory = this.propertyForm.get(['imageCategory'])!.value;
+          myproperty.url = this.fileUrl;
+          this.lstPropertyImages.push(myproperty);
+          if (this.lstPropertyImages.length === this.files.length) {
+            console.log(this.files.length, this.lstPropertyImages.length);
+            property.propertyImages = this.lstPropertyImages;
+            this.subscribeToSaveResponse(this.propertyService.update(property));
           }
         },
         () => {
