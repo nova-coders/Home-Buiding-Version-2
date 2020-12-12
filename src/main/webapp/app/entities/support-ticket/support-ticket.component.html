@@ -9,6 +9,47 @@
 
     <div id="entities" *ngIf="supportTickets && supportTickets.length > 0">
         <div class="row">
+            <div class="col-md-12 col-sm-12 p-0">
+                <div class="card">
+                    <div class="card-header">
+                        <label class="card-subtitle">Puede filtrar los tiquetes por un rango de fechas y/o por estado.</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_fecha_inicio">Fecha de inicio</label>
+                                    <input type="date" class="form-control" name="fechaInicio" id="field_fecha_inicio" formControlName="fechaInicio"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_fecha_final">Fecha final</label>
+                                    <input type="date" class="form-control" name="fechaFinal" id="field_fecha_final" formControlName="fechaFinal"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_fecha_inicio">Estado</label>
+                                    <select class="form-control">
+                                        <option value="">Todos</option>
+                                        <option value="1">Abierto</option>
+                                        <option value="0">Cerrado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <button class="btn btn-secondary mt-4">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
             <div class="col-md-4 col-sm-6 p-0 border">
                 <div class="list-group">
                     <a class="list-group-item border-top-0 border-left-0 border-right-0">Lista de tiquetes de soporte</a>
