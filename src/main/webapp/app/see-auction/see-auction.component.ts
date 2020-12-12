@@ -48,6 +48,7 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.servicePaymentService.getUserAccount().subscribe((response: any) => {
       this.userAccount = response.body;
     });
