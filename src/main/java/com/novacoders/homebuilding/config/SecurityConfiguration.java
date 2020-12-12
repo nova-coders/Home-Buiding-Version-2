@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(problemSupport)
         .and()
             .headers()
-            .contentSecurityPolicy("default-src 'self' https://api.cloudinary.com https://www.sandbox.paypal.com; frame-src 'self' https://www.sandbox.paypal.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com  https://www.paypal.com https://www.sandbox.paypal.com https://maps.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://api.cloudinary.com http://res.cloudinary.com https://images.unsplash.com http://homekins.on3-step.com data: maps.gstatic.com *.googleapis.com *.ggpht; font-src 'self' https://fonts.gstatic.com data:")
+            .contentSecurityPolicy("default-src 'self' https://api.cloudinary.com http://api.cloudinary.com http://res.cloudinary.com https://www.sandbox.paypal.com; frame-src 'self' https://www.sandbox.paypal.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com  https://www.paypal.com https://www.sandbox.paypal.com https://maps.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://api.cloudinary.com http://res.cloudinary.com https://images.unsplash.com http://homekins.on3-step.com data: maps.gstatic.com *.googleapis.com *.ggpht; font-src 'self' https://fonts.gstatic.com data:")
         .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
         .and()

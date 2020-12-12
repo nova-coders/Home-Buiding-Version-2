@@ -15,8 +15,11 @@ export class ListProfessionalComponent implements OnInit {
   public proffesionalListFull: UserAccount[] = [];
   public filteringMode: boolean = false;
   public userFound: boolean = false;
+  public currentUserFind: string = '';
   public initPage: number = 1;
   public currentProffesionalFilter: number = -1;
+  public currentFilterSelect: boolean = false;
+  public currentFilterSearch: boolean = false;
   constructor(public profService: ProfessionalProfileUserService, private route: ActivatedRoute, public userService: UserAccountService) {}
 
   ngOnInit(): void {
@@ -31,12 +34,36 @@ export class ListProfessionalComponent implements OnInit {
   }
   searchByName(): void {
     console.log('Calling event, yes sir.');
+    this.filteringMode = true;
+    this.currentFilterSearch = true;
+    if (this.currentUserFind == '' || this.currentUserFind.length == 0) {
+      this.currentFilterSearch = false;
+      this.proffesionalList = this.proffesionalListFull;
+    } else {
+      this.currentProffesionalFilter = -1;
+      var tempList = [];
+      var currentData = this.proffesionalListFull;
+      /*if (this.currentFilterSelect) {
+        currentData = this.proffesionalList;
+      }*/
+      for (var i = 0; i < currentData.length; i++) {
+        if (currentData[i].professionalProfileUser?.description?.toLocaleLowerCase().includes(this.currentUserFind.toLocaleLowerCase())) {
+          tempList.push(currentData[i]);
+        }
+      }
+      console.log('Filtered list');
+      console.log(tempList);
+      this.proffesionalList = tempList;
+    }
   }
   filterProfessionType(): void {
     this.filteringMode = true;
+    this.currentFilterSelect = true;
     if (this.currentProffesionalFilter == -1) {
+      this.currentFilterSelect = false;
       this.proffesionalList = this.proffesionalListFull;
     } else {
+      this.currentUserFind = '';
       var tempList = [];
       for (var i = 0; i < this.proffesionalListFull.length; i++) {
         if (this.proffesionalListFull[i].professionalProfileUser?.profesionalType == this.currentProffesionalFilter) {
