@@ -44,8 +44,8 @@
 
                         <div class="form-group">
                             <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.message" for="field_message">Message</label>
-                            <input type="text" class="form-control" name="message" id="field_message"
-                                   formControlName="message"/>
+                            <textarea type="text" class="form-control" name="message" id="field_message"
+                                   formControlName="message" rows="6"></textarea>
 
                             <div *ngIf="editForm.get('message')!.invalid && (editForm.get('message')!.dirty!)">
                                 <small class="form-text text-danger"
