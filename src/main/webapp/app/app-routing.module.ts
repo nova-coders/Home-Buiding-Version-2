@@ -16,6 +16,13 @@ import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 import { PropertyUpdateComponent } from 'app/entities/property/property-update.component';
 import { PropertyResolve } from 'app/entities/property/property.route';
+import { ListProfessionalComponent } from 'app/professionals/list-professional/list-professional.component';
+import { ViewProfessionalComponent } from 'app/professionals/view-professional/view-professional.component';
+import { CreatePublishingPackageComponent } from 'app/publishing/create-publishing-package/create-publishing-package.component';
+import { ListPublishingPackegeComponent } from 'app/publishing/list-publishing-packege/list-publishing-packege.component';
+import { UpdatePublishingPackegeComponent } from 'app/publishing/update-publishing-packege/update-publishing-packege.component';
+import { PostProfessionalUserComponent } from 'app/professionals/post-professional-user/post-professional-user.component';
+import { UsersReportComponent } from './reports/users-report/users-report.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -85,6 +92,34 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
             pageTitle: 'homeBuildingApp.property.home.title',
           },
           canActivate: [UserRouteAccessService],
+        },
+        {
+          path: 'professionals',
+          component: ListProfessionalComponent,
+        },
+        {
+          path: 'viewProfessional/:id',
+          component: ViewProfessionalComponent,
+        },
+        {
+          path: 'reports/users',
+          component: UsersReportComponent,
+        },
+        {
+          path: 'createPublishingPackage',
+          component: CreatePublishingPackageComponent,
+        },
+        {
+          path: 'listPublishingPackage',
+          component: ListPublishingPackegeComponent,
+        },
+        {
+          path: 'updatePublishingPackage/:id',
+          component: UpdatePublishingPackegeComponent,
+        },
+        {
+          path: 'createProfessional',
+          component: PostProfessionalUserComponent,
         },
         ...LAYOUT_ROUTES,
       ],
