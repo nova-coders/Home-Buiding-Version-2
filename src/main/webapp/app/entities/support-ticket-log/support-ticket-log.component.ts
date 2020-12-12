@@ -15,6 +15,7 @@ import { SupportTicketLogDeleteDialogComponent } from './support-ticket-log-dele
 export class SupportTicketLogComponent implements OnInit, OnDestroy {
   supportTicketLogs?: ISupportTicketLog[];
   eventSubscriber?: Subscription;
+  TicketNumber = 0;
 
   constructor(
     protected supportTicketLogService: SupportTicketLogService,

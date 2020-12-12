@@ -17,6 +17,7 @@ import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.compon
 import { ListProfessionalComponent } from 'app/professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from 'app/professionals/view-professional/view-professional.component';
 import { PostProfessionalUserComponent } from 'app/professionals/post-professional-user/post-professional-user.component';
+import { SupportTicketLogComponent } from 'app/entities/support-ticket-log/support-ticket-log.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -86,6 +87,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'createProfessional',
           component: PostProfessionalUserComponent,
+        },
+        {
+          path: 'ticketDetails',
+          component: SupportTicketLogComponent,
         },
         ...LAYOUT_ROUTES,
       ],
