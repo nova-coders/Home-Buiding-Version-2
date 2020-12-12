@@ -14,6 +14,8 @@ import { ChatComponent } from 'app/chat/chat.component';
 import { MyOffersComponent } from 'app/my-offers/my-offers.component';
 import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
+import { PropertyUpdateComponent } from 'app/entities/property/property-update.component';
+import { PropertyResolve } from 'app/entities/property/property.route';
 import { ListProfessionalComponent } from 'app/professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from 'app/professionals/view-professional/view-professional.component';
 import { CreatePublishingPackageComponent } from 'app/publishing/create-publishing-package/create-publishing-package.component';
@@ -78,6 +80,18 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'my-offers',
           component: MyOffersComponent,
+        },
+        {
+          path: ':id/edit',
+          component: PropertyUpdateComponent,
+          resolve: {
+            property: PropertyResolve,
+          },
+          data: {
+            authorities: [Authority.USER],
+            pageTitle: 'homeBuildingApp.property.home.title',
+          },
+          canActivate: [UserRouteAccessService],
         },
         {
           path: 'professionals',
