@@ -5,6 +5,9 @@ import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ISupportTicket, SupportTicket } from 'app/shared/model/support-ticket.model';
 import { SupportTicketService } from './support-ticket.service';
+import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
+import { Offer } from '../../shared/model/offer.model';
+import { ServicePaymentService } from '../../service-payment/service-payment.service';
 
 @Component({
   selector: 'jhi-support-ticket',
@@ -17,10 +20,12 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   startPage = 1;
   hasTicket = false;
   ticketSelected: SupportTicket | undefined;
+  userAccount: IUserAccount | undefined;
 
   constructor(
     protected supportTicketService: SupportTicketService,
     protected eventManager: JhiEventManager,
+    private servicePaymentService: ServicePaymentService,
     protected modalService: NgbModal
   ) {}
 
@@ -30,6 +35,11 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scroll(0, 0);
+    this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
+      let userAccount: any;
+      userAccount = <UserAccount>puserAccount.body;
+      this.userAccount = userAccount;
+    });
     this.loadAll();
     this.registerChangeInSupportTickets();
   }
@@ -47,5 +57,19 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   showTicket(supportTicket: SupportTicket): void {
     this.hasTicket = true;
     this.ticketSelected = supportTicket;
+  }
+
+  closeTicket(): void {
+    this.ticketSelected!.state = false;
+    this.ticketSelected!.signOffUser = this.userAccount;
+    this.supportTicketService.update(this.ticketSelected!).subscribe(data => {});
+    window.scroll(0, 0);
+  }
+
+  reOpenTicket(): void {
+    this.ticketSelected!.state = true;
+    this.ticketSelected!.signOffUser = this.userAccount;
+    this.supportTicketService.update(this.ticketSelected!).subscribe(data => {});
+    window.scroll(0, 0);
   }
 }

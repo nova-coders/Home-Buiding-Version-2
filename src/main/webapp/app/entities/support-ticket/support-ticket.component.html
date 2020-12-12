@@ -62,7 +62,8 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary">Cerrar</button>
+                        <button *ngIf="ticketSelected!.state == true" (click)="closeTicket()" class="btn btn-primary">Cerrar</button>
+                        <button *ngIf="ticketSelected!.state == false" (click)="reOpenTicket()" class="btn btn-primary">Reabrir</button>
                     </div>
                 </div>
 

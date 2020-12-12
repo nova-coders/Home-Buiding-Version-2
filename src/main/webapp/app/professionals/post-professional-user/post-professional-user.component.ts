@@ -85,6 +85,7 @@ export class PostProfessionalUserComponent implements OnInit {
       this.professionalProfileUser.description = this.serviceForm.get(['description'])!.value;
       this.professionalProfileUser.currency = this.serviceForm.get(['currency'])!.value;
       this.professionalProfileUser.state = true;
+      //this.professionalProfileUser.creationDate = now().toString();
       this.professionalProfileUser.userAccount = this.userAccount;
       console.log('Check the user account: ');
       console.log(this.professionalProfileUser);
