@@ -48,7 +48,7 @@
                             </span>
                         </a>
                     </div>
-                    <div *ngIf="isAuthenticated()">
+                    <div *ngIf="isAuthenticated()" class="{{router.url === '/support-ticket/new'?'active d-none':''}}">
                         <a class="footer-link" [routerLink]="['/support-ticket/new']"  >
                             <span>
                                 <i class="fas fa-question" aria-hidden="true"></i>
