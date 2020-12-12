@@ -38,6 +38,7 @@ export class ListSalesComponent implements OnInit {
     this.cantonService = cService;
   }
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.route.queryParams.subscribe((params: Params) => {
       var mapBlock = document.querySelector('.map-div .col-md-8');
       if (mapBlock != null) {

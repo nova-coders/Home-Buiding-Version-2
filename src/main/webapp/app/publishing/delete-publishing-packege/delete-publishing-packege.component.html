@@ -1,0 +1,29 @@
+<!-- Button trigger modal -->
+<i class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Eliminar paquete"  data-toggle="modal" attr.data-target="#{{idModal}}">
+    Eliminar
+</i>
+<!-- Modal -->
+<div class="modal fade" id="{{idModal}}" tabindex="-1" role="dialog" attr.aria-labelledby="{{idModalLabel}}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{idModalLabel}}">Eliminar paquete de publicidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="!isDelete">
+                    ¿Esta segura/o de eliminar el paquete de publicidad?
+                </div>
+                <div class="alert alert-success" role="alert" *ngIf="isDelete">
+                    ¡El paquete de publicidad fue eliminado con éxito!
+                </div>
+            </div>
+            <div class="modal-footer" *ngIf="!isDelete">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button (click)="deletePackage()" type="button" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
