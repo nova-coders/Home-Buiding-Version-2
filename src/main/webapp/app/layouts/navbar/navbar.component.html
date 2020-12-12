@@ -102,6 +102,11 @@
                         <i class="fa fa-calendar"></i>
                         <span>Citas</span>
                     </a>-->
+
+                    <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/listPublishingPackage']">
+                        <i class="fa fa-object-group"></i>
+                        <span>Paquetes de plublicidad</span>
+                    </a>
                     <a class="dropdown-item"  [routerLink]="['/mySales']">
                         <i class="fa fa-object-group"></i>
                         <span>Mis subastas</span>

@@ -58,12 +58,10 @@ export class LogInComponent implements OnInit, AfterViewInit {
             this.router.url.startsWith('/account/reset/') ||
             this.router.url.startsWith('/see-auction')
           ) {
-            console.log('previousUrl');
             let previousUrl: string = window.localStorage.getItem('previousUrl') || '/';
-            console.log(previousUrl);
             this.router.navigate([previousUrl]);
           } else {
-            console.log('Hola marvin no redirect');
+            console.log('Hola mundo');
           }
         },
         () => (this.authenticationError = true)

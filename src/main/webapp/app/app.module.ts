@@ -42,6 +42,11 @@ import { DeleteAuctionComponent } from './see-auction/components/delete-auction/
 import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
 import { UsersReportComponent } from './reports/users-report/users-report.component';
+import { CreatePublishingPackageComponent } from './publishing/create-publishing-package/create-publishing-package.component';
+import { ListPublishingPackegeComponent } from './publishing/list-publishing-packege/list-publishing-packege.component';
+import { UpdatePublishingPackegeComponent } from './publishing/update-publishing-packege/update-publishing-packege.component';
+import { DeletePublishingPackegeComponent } from './publishing/delete-publishing-packege/delete-publishing-packege.component';
+import { PostProfessionalUserComponent } from './professionals/post-professional-user/post-professional-user.component';
 
 @NgModule({
   imports: [
@@ -89,6 +94,11 @@ import { UsersReportComponent } from './reports/users-report/users-report.compon
     ListProfessionalComponent,
     ViewProfessionalComponent,
     UsersReportComponent,
+    CreatePublishingPackageComponent,
+    ListPublishingPackegeComponent,
+    UpdatePublishingPackegeComponent,
+    DeletePublishingPackegeComponent,
+    PostProfessionalUserComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],
