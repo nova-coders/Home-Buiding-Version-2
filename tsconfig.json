@@ -8,6 +8,5 @@
       "path": "./tsconfig.e2e.json"
     }
   ],
-  "types": ["googlemaps"]
+  "types": ["googlemaps", "require", "process"]
 }
-

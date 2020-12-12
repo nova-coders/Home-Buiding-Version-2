@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angula
 import { FormBuilder } from '@angular/forms';
 import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
 import { filter, pairwise } from 'rxjs/operators';
+import { Account } from 'app/core/user/account.model';
 
 import { LoginService } from '../../core/login/login.service';
 @Component({
@@ -47,10 +48,16 @@ export class LogInComponent implements OnInit, AfterViewInit {
         password: this.loginForm.get('password')!.value,
         rememberMe: this.loginForm.get('rememberMe')!.value,
       })
-      .subscribe(
-        () => {
+      .subscribe(( response) => {
           this.authenticationError = false;
-          console.log('URL = ' + this.router.url);
+          let account: Account;
+          account = <Account>response;
+          for(let i = 0 ; i < account.authorities.length; i++){
+            if(account.authorities[i] === 'ROLE_ADMIN'){
+              this.router.navigate(['homeAdmin']);
+              return ;
+            }
+          }
           if (
             this.router.url === '/account/register' ||
             this.router.url === '/auth/login' ||
