@@ -99,6 +99,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'updatePublishingPackage/:id',
           component: UpdatePublishingPackegeComponent,
         },
+        {
           path: 'createProfessional',
           component: PostProfessionalUserComponent,
         },
