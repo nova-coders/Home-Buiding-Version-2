@@ -29,9 +29,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+    console.log(this.route.url);
+    if (this.isAuthenticated()) {
+      const authoritiesLength = this.account?.authorities.length || 0;
+      for (let i = 0; i < authoritiesLength; i++) {
+        if (this.account?.authorities[i] === 'ROLE_ADMIN') {
+          this.router.navigate(['homeAdmin']);
+          return;
+        }
+      }
+    }
     window.scroll(0, 0);
     const header = document.getElementById('header');
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
   }
 
   addSticky(): void {
