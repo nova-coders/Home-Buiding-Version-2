@@ -36,6 +36,12 @@ export class UserAccountService {
       .get<IUserAccount>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
+
+  findWithProfessionalProfile(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IUserAccount>(`${SERVER_API_URL}/api/professional-profile-users/user/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
   findByUser(): Observable<UserAccount> {
     return this.http.get<UserAccount>(`${SERVER_API_URL}/api/user-accounts-by-Login`);
   }

@@ -1447,8 +1447,12 @@ section {
 .slider-img {
   max-height: 250px;
   min-height: 250px;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
+.slider-img::after {
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
 }
 .carousel-caption {
   color: #ffffff;

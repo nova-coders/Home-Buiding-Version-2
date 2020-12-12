@@ -11,7 +11,8 @@ import { Notification } from 'app/shared/model/notification.model';
 import * as moment from 'moment';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
 import { OfferSocketService } from 'app/core/offer/offer-socket.service';
-
+import { UserAccount } from 'app/shared/model/user-account.model';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 @Component({
   selector: 'jhi-see-auction',
   templateUrl: './see-auction.component.html',
@@ -24,6 +25,9 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   public images: string[];
   public startPage = 1;
   public idDocumen = 0;
+  public userAccount: UserAccount;
+  public price: any;
+  public discount: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -31,15 +35,23 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
     private seeAuctionService: SeeAuctionService,
     private offerSocketService: OfferSocketService,
     private notificationSocketService: NotificationSocketService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private servicePaymentService: ServicePaymentService
   ) {
     this.property = new Property();
     this.idProperty = -1;
     this.offers = [];
     this.images = [];
+    this.userAccount = new UserAccount();
+    this.price = 0;
+    this.discount = 0;
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
+    this.servicePaymentService.getUserAccount().subscribe((response: any) => {
+      this.userAccount = response.body;
+    });
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
     this.notificationSocketService.connect();
@@ -47,6 +59,11 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
         this.property = response.body as Property;
+        this.price = this.property.price;
+        this.discount = this.property.discount;
+        let discount = (this.property.discount || 0) / 100;
+        discount = this.price * discount;
+        this.price = this.price - discount;
         if (this.property.sale != null) {
           this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
             this.offers = response;
@@ -68,20 +85,20 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
     });
   }
   public closeAuction(): void {
-    const opcion = confirm(
-      '¿ Seguro de cerrar la subasta ' + this.property.userAccount?.user?.firstName + ' ' + this.property.userAccount?.user?.lastName + ' ?'
-    );
-    if (opcion === true) {
-      this.setAuctionToCloseState();
-      this.notifyClients();
-    } else {
-    }
+    this.setAuctionToCloseState();
   }
   private setAuctionToCloseState(): void {
     this.seeAuctionService.auctionToCloseState(this.idProperty).subscribe(
       (response: any) => {
         this.property.state = 3;
-        this.goDocument(response);
+        if (response === -1) {
+        } else {
+          this.idDocumen = response;
+          this.notifyClients();
+          setTimeout(() => {
+            this.goDocument(response);
+          }, 3000);
+        }
       },
       error => {
         console.log(error);
@@ -124,5 +141,11 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.offerSocketService.disconnect();
     this.notificationSocketService.disconnect();
+  }
+  public acept($event: any): void {
+    const acept = $event;
+    if (acept === true) {
+      this.closeAuction();
+    }
   }
 }

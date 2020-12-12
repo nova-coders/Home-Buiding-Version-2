@@ -1,34 +1,51 @@
-<div style="margin-top: 110px;">
+<div style="margin-top: 110px;" *ngIf="userAccount.id === property?.userAccount?.id">
     <div class="col-md-12 col-lg-12 text-center">
         <h1>Subasta del inmueble</h1>
         <span *ngIf="offers.length > 0 && property.state != 1" class="badge badge-danger">Subasta cerrada</span>
         <hr class="w-50">
     </div>
     <div class="col-md-12 col-lg-12 text-center">
-        <jhi-image-viewer [images]="images"></jhi-image-viewer>
+        <jhi-image-viewer  [images]="images"></jhi-image-viewer>
     </div>
     <div class="col-md-12 col-lg-12 text-center mt-2">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6 text-center border-right">
                     <h3>{{property.title}}</h3>
-                    <p>Precio inicial:&nbsp;{{property.price | currency:'CRC':'₡':'4.0-0':'en-cr'}}</p>
+                    <div class="text-left">
+                        <p *ngIf="discount > 0">Descuento: {{discount}}%</p>
+                        <p>Precio inicial:&nbsp;{{this.price | currency:'CRC':'₡':'4.0-0':'en-cr'}}</p>
+                    </div>
                     <hr>
                     <h3 *ngIf="offers.length > 0">Última oferta:&nbsp;{{(offers[0].amount) | currency:'CRC':'₡':'4.0-0':'en-cr'}}</h3>
                 </div>
                 <div class="col-md-6 col-lg-6 text-center">
-                    <h4>Descripción de la propiedad</h4>
-                    <p>
-                        {{property.description}}
-                    </p>
+                    <h4>
+                        Descripción de la propiedad
+                        <div class="mt-2 float-right">
+                            <jhi-delete-auction [idProperty]="property?.id || 0"></jhi-delete-auction>
+                        </div>
+                    </h4>
+                    <div class="text-left">
+                        <p>
+                            {{property.description}}
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="row"  *ngIf="offers.length > 0 && property.state === 1">
+            <div class="row"  *ngIf="property.state === 1 && property?.userAccount?.id === userAccount.id">
                 <div class="col-md-12 col-lg-12">
-                    <a class="btn btn-outline-dark float-md-right float-lg-right" href="javascript:void(0);" (click)="closeAuction()">Cerrar subasta</a>
+                    <jhi-modalconfirm
+                        message="¡Al aceptar esta acción, cerrará la subasta!"
+                        (acept)="acept($event)"
+                        title="Confirmar para cerrar la subasta"
+                        btnAceptStyle="btn btn-outline-dark float-md-right float-lg-right"
+                        btnAceptName="Aceptar"
+                        btnName="Cerrar subasta">
+                    </jhi-modalconfirm>
                 </div>
             </div>
-            <div class="row" *ngIf="offers.length > 0 && property.state != 1">
+            <div class="row" *ngIf="property.state != 1">
                 <div class="col-md-12 col-lg-12">
                     <div class="alert  alert-info opacity-8" role="alert mt-2">
                         <h3>Subasta cerrada</h3>
@@ -55,6 +72,15 @@
                 <div class="col-md-12 col-lg-12 text-center mb-2">
                     <h3>Sin ofertas por el momento</h3>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 110px;" class="container" *ngIf="userAccount.id != property?.userAccount?.id">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="alert alert-warning text-center" role="alert">
+                <p>No eres el dueño del inmueble <br> <i style="color:yellow; font-size: 50px" class="fas fa-laugh-beam"></i></p>
             </div>
         </div>
     </div>

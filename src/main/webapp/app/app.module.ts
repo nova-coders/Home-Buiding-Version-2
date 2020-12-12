@@ -37,6 +37,15 @@ import { ChatComponent } from './chat/chat.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
+import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/modalconfirm.component';
+import { DeleteAuctionComponent } from './see-auction/components/delete-auction/delete-auction.component';
+import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
+import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
+import { CreatePublishingPackageComponent } from './publishing/create-publishing-package/create-publishing-package.component';
+import { ListPublishingPackegeComponent } from './publishing/list-publishing-packege/list-publishing-packege.component';
+import { UpdatePublishingPackegeComponent } from './publishing/update-publishing-packege/update-publishing-packege.component';
+import { DeletePublishingPackegeComponent } from './publishing/delete-publishing-packege/delete-publishing-packege.component';
+import { PostProfessionalUserComponent } from './professionals/post-professional-user/post-professional-user.component';
 
 @NgModule({
   imports: [
@@ -79,6 +88,15 @@ import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.compon
     MyOffersComponent,
     ListSalesComponent,
     ListUserSalesComponent,
+    ModalconfirmComponent,
+    DeleteAuctionComponent,
+    ListProfessionalComponent,
+    ViewProfessionalComponent,
+    CreatePublishingPackageComponent,
+    ListPublishingPackegeComponent,
+    UpdatePublishingPackegeComponent,
+    DeletePublishingPackegeComponent,
+    PostProfessionalUserComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

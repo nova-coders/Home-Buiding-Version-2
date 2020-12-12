@@ -1,0 +1,90 @@
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('Poppins Medium'), local('Poppins-Medium'),
+    url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+.row {
+  max-width: 100%;
+}
+.page-banner-section {
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  margin-top: 82px;
+  height: 400px;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%),
+    url(https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=2051&q=80) no-repeat center center !important;
+  text-align: center;
+}
+.page-banner-section .title {
+  font-size: 30px;
+  color: #ffffff;
+  font-weight: 500;
+  margin: 0 auto;
+  font-family: 'Poppins', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+}
+
+.professional-item {
+  box-shadow: 0 12.5px 10px rgba(0, 0, 0, 0.06);
+  max-height: 400px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  transition: all 0.5s ease-in-out;
+  margin-bottom: 25px;
+  margin-left: 15px;
+  margin-right: 15px;
+  width: 98%;
+  display: block;
+}
+.professional-item:hover {
+  transform: scale(1.04);
+  cursor: pointer;
+}
+.image-banner {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.professional-item .title {
+  padding: 25px 0 25px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #000000;
+  max-height: 100px;
+  font-family: 'Poppins', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+}
+.professional-item .title .description {
+  font-size: 16px;
+  color: #2d816b;
+  font-weight: bold;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+}

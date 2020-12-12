@@ -119,6 +119,11 @@ public class PropertyResource {
         log.debug("REST request to get all Properties");
         return propertyRepository.findAllPropertiesOnSale(ZonedDateTime.now());
     }
+    @GetMapping("/properties/getPropertiesOnSale/{cantonId}")
+    public List<Property> getPropertiesOnSale(@PathVariable Long cantonId) {
+        log.debug("REST request to get all Properties");
+        return propertyRepository.findAllPropertiesOnSaleByCanton(ZonedDateTime.now(), cantonId);
+    }
 
     @GetMapping("/properties/sale")
     public List<Property> getAllPropertiesBySale() {

@@ -1,6 +1,7 @@
 package com.novacoders.homebuilding.web.rest;
 
 import com.novacoders.homebuilding.domain.ProfessionalProfileUser;
+import com.novacoders.homebuilding.domain.UserAccount;
 import com.novacoders.homebuilding.repository.ProfessionalProfileUserRepository;
 import com.novacoders.homebuilding.web.rest.errors.BadRequestAlertException;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,16 +90,19 @@ public class ProfessionalProfileUserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of professionalProfileUsers in body.
      */
     @GetMapping("/professional-profile-users")
-    public List<ProfessionalProfileUser> getAllProfessionalProfileUsers(@RequestParam(required = false) String filter) {
-        if ("useraccount-is-null".equals(filter)) {
-            log.debug("REST request to get all ProfessionalProfileUsers where userAccount is null");
-            return StreamSupport
-                .stream(professionalProfileUserRepository.findAll().spliterator(), false)
-                .filter(professionalProfileUser -> professionalProfileUser.getUserAccount() == null)
-                .collect(Collectors.toList());
-        }
+    public List<UserAccount> getAllProfessionalProfileUsers(@RequestParam(required = false) String filter) {
+
         log.debug("REST request to get all ProfessionalProfileUsers");
-        return professionalProfileUserRepository.findAll();
+
+        return professionalProfileUserRepository.findProffesionalWithUserId();
+    }
+
+    @GetMapping("/professional-profile-users/user/{id}")
+    public UserAccount getUserWithProfessionalProfile(@PathVariable Long id) {
+
+        log.debug("REST request to get all ProfessionalProfileUsers");
+
+        return professionalProfileUserRepository.findProffesionalWithUserId(id);
     }
 
     /**

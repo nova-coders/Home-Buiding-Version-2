@@ -23,11 +23,13 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0")
     List<Property> findBySaleNotNull();
 
+
     @Query("SELECT p FROM Property p WHERE p.sale.finalDate <= :expireDateTime AND p.state = 1")
     List<Property> findAllWithCreationDateTimeBefore(@Param("expireDateTime") ZonedDateTime expireDateTime);
 
     Optional<Property> findBySale_Id(long id);
-
 	@Query("SELECT p FROM Property p WHERE p.sale is not null and p.sale.finalDate >=:currentDate")
 	List<Property> findAllPropertiesOnSale(@Param("currentDate") ZonedDateTime currentDate);
+    @Query("SELECT p FROM Property p WHERE p.sale is not null and p.sale.finalDate >=:currentDate and p.canton.id = :cantonId")
+    List<Property> findAllPropertiesOnSaleByCanton(@Param("currentDate") ZonedDateTime currentDate, @Param("cantonId") Long cantonId);
 }

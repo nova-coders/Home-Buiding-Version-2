@@ -1,17 +1,18 @@
 <section class="page-banner-section">
     <span class="title">Lista de subastas</span>
 </section>
-<div class="mt-3">
+<div class="mt-3 container">
     <div class="row">
-        <div class="col-12">
-            <jhi-show-map></jhi-show-map>
+        <div class="col-12 map-div">
+            <jhi-show-map ></jhi-show-map>
         </div>
     </div>
-    <!--<div class="row">
-        <div class="col-3 offset-3">
+   <div class="row mt-3">
+        <div class="col-3 offset-6">
             <div class="form-group">
                 <label class="font-weight-600" for="sltProvincias">Provincia</label>
-                <select id="sltProvincias" class="form-control">
+                <select [(ngModel)]="this.currentProvinceId" (change)="this.loadCantones()" id="sltProvincias" class="form-control">
+                    <option value="" selected>Seleccione la provincia</option>
                     <option value="{{province.id}}" *ngFor="let province of provinceList" >
                         {{province.name}}
                     </option>
@@ -21,33 +22,29 @@
         <div class="col-3">
             <div class="form-group">
                 <label class="font-weight-600" for="sltCantones">Cantón</label>
-                <select id="sltCantones" class="form-control">
-
+                <select [(ngModel)]="this.currentCantonId" (change)="this.filterProperty()"  id="sltCantones" class="form-control">
+                    <option value=""  selected>Seleccione el cantón</option>
+                    <option value="{{canton.id}}" *ngFor="let canton of cantonList" >
+                        {{canton.name}}
+                    </option>
                 </select>
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label class="font-weight-600" for="sltDistritos">Distrito</label>
-                <select id="sltDistritos" class="form-control">
 
-                </select>
-            </div>
-        </div>
         <div class="col-12">
             <hr />
         </div>
-    </div>-->
+    </div>
 </div>
 <div class="container">
     <div class="row my-4">
-        <div class="col-12"></div>
-        <div *ngFor="let property of propertyList" class="col-6 col-sm-6 col-md-3 col-lg-3">
-            <a [routerLink]="['/bit-at-auction/', property.id]" class="property-item">
-                <div class="image-banner" *ngIf="property.propertyImages == null"
+        <div class="col-12 text-center" *ngIf="propertyList.length == 0">No hay subastas disponibles</div>
+        <div *ngFor="let property of propertyList | paginate: { itemsPerPage: 8, currentPage: initPage }" class="col-6 col-sm-6 col-md-3 col-lg-3">
+            <a [routerLink]="['/bit-at-auction/', property.id]" class="property-item" *ngIf="property.propertyImages != null">
+                <div class="image-banner" *ngIf="property.propertyImages[0] == null"
                      style="background: url(https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png) center center no-repeat;background-size: cover">
                 </div>
-                <div class="image-banner" *ngIf="property.propertyImages != null"
+                <div class="image-banner" *ngIf="property.propertyImages[0] != null"
                      [style]="'background: url(' + property.propertyImages[0].url + ') center center no-repeat; background-size: cover;'">
                 </div>
                 <div class="title">
@@ -60,5 +57,10 @@
             </a>
         </div>
 
+    </div>
+    <div class="row my-5">
+        <div class="col-12 text-center">
+            <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="initPage = $event"></pagination-controls>
+        </div>
     </div>
 </div>

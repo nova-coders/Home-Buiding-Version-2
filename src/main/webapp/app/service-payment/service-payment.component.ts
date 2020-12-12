@@ -21,6 +21,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   public account: Account | null = null;
   public eventSubscriber?: Subscription;
   public publishingPackages: IPublishingPackage[] | [] = [];
+  public packages: PublishingPackage[];
   public publishingPackageSelected?: IPublishingPackage | PublishingPackage = new PublishingPackage();
   public userAccount = new UserAccount();
   public isPayment = true;
@@ -35,8 +36,10 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   ) {
     this.publishingPackageSelected = {} as IPublishingPackage;
     this.userAccount.publishingPackage = {} as UserAccount;
+    this.packages = [];
   }
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.loadAll();
     this.servicePaymentService.getUserAccount().subscribe(userAccount => {
       this.userAccount = userAccount.body;
@@ -50,8 +53,10 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
   loadAll(): void {
     this.publishingPackageService.query().subscribe((res: HttpResponse<IPublishingPackage[]>) => {
       this.publishingPackages = res.body || [];
-      for (let i = 0; 4 < this.publishingPackages.length || i < this.publishingPackages.length; i++) {
-        this.publishingPackages.pop();
+      for (let i = 0; i < this.publishingPackages.length; i++) {
+        if (this.publishingPackages[i].state) {
+          this.packages.push(this.publishingPackages[i]);
+        }
       }
     });
   }
@@ -128,6 +133,7 @@ export class ServicePaymentComponent implements OnInit, OnDestroy {
             if (this.userAccount.publishingPackage?.id != null && this.userAccount.id != null) {
               this.payment = false;
               this.loading = true;
+              window.scroll(0, 0);
               this.servicePaymentService
                 .assignPackageToUser(this.userAccount.publishingPackage.id, this.userAccount.id)
                 .subscribe((response: any) => {

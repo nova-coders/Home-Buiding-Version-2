@@ -6,7 +6,7 @@ import { OfferService } from 'app/entities/offer/offer.service';
 import { BidAtAuctionService } from 'app/bid-at-auction/bid-at-auction.service';
 import { OfferSocketService } from 'app/core/offer/offer-socket.service';
 import { Notification } from 'app/shared/model/notification.model';
-import { formatCurrency } from '@angular/common';
+import { formatCurrency, formatNumber } from '@angular/common';
 import { NotificationType } from 'app/shared/model/enumerations/notification-type.model';
 import { NotificationSocketService } from 'app/core/notification/notificationSocket.service';
 import { NotificationService } from 'app/entities/notification/notification.service';
@@ -21,6 +21,7 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() sale: any;
   @Input() property: any;
   @Input() currenValue: any | undefined = 0;
+  @Output() setMaxBid = new EventEmitter<any>();
   public successfulOffer = 0;
   public offer: any;
   public hasError = false;
@@ -37,15 +38,22 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
     this.offer.state = true;
     this.offer.date = moment();
   }
+  public setMaxBidFunction(offer: number): void {
+    this.setMaxBid.emit(offer);
+  }
   ngAfterViewInit(): void {
     this.offer.amount = this.maximumBid;
   }
   ngOnInit(): void {
+    this.offer.amount = this.maximumBid;
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
     this.notificationSocketService.connect();
   }
   public sendOffer(): void {
+    let amout = this.offer.amount + ''.replace(',', '');
+    amout = this.offer.amount + ''.replace('.', '');
+    this.offer.amount = Number.parseInt(amout);
     if (this.offer.amount > this.maximumBid) {
       this.hasError = false;
       this.successfulOffer = 0;
@@ -74,7 +82,10 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
           this.offerSocketService.sendOffer('' + response[0].id);
           if (this.successfulOffer === 1) {
             this.offer = response[0];
+            this.setMaxBidFunction(this.offer.amount);
             if (this.offers.length > 0) {
+              console.log(this.offers);
+              console.log(this.offers[0]?.userAccount?.id != this.offer.userAccount.id);
               if (this.offers[0]?.userAccount?.id != this.offer.userAccount.id) {
                 let notification = new Notification();
                 notification.receptor = this.offers[0].userAccount;
@@ -95,16 +106,13 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
                 notification.creationDate = moment();
                 notification.type = NotificationType.Subasta;
                 notification.state = true;
-                console.log(notification);
-
+                this.offers.unshift(this.offer);
                 this.notificationService.create(notification).subscribe((response: any) => {
                   notification = response.body;
-                  console.log(response);
                   return this.notificationSocketService.sendNotification('' + notification.id);
                 });
               }
             } else {
-              this.offers.unshift(this.offer);
               let notification = new Notification();
               notification.receptor = this.offer.userAccount;
               notification.title = 'Eres mayor postor';
@@ -122,11 +130,9 @@ export class ModalBidComponent implements OnInit, AfterViewInit, OnDestroy {
               notification.creationDate = moment();
               notification.type = NotificationType.Subasta;
               notification.state = true;
-              console.log(notification);
-
+              this.offers.unshift(this.offer);
               this.notificationService.create(notification).subscribe((response: any) => {
                 notification = response.body;
-                console.log(response);
                 return this.notificationSocketService.sendNotification('' + notification.id);
               });
             }

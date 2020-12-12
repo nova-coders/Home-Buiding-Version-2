@@ -7,7 +7,7 @@
                     <h2>Sobre Home Building</h2>
                 </div>
                 <div class="content">
-                    <p>Somos una empresa dedicada a la promoción de subastas y alquileres online, con sede en América Central en Costa Rica.</p>
+                    <p>Somos una empresa dedicada a la promoción de subastas de inmuebles online, con sede en América Central en Costa Rica.</p>
                 </div>
                 <div class="link-call">homebuilding123Su@gmail.com</div>
             </div>
@@ -16,9 +16,46 @@
             <div class="footer-col">
                 <div class="heading">Enlaces</div>
                 <div class="content">
-                    <div class="link">Inicio</div>
-                    <div class="link">Subastas</div>
-                    <div class="link">Alquileres</div>
+                    <div class="{{router.url === '/'?'active d-none':''}}">
+                        <a class="footer-link" [routerLink]="['/']">
+                            <span>
+                               <i class="fa fa-home"></i>
+                                <span >Inicio</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div  *ngIf="isAuthenticated()" class="{{router.url === '/sales/list'?'active d-none':''}}">
+                        <a class="footer-link" [routerLink]="['/sales/list']">
+                            <span>
+                                <i class="fa fa-university"></i>
+                                <span >Subastas</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div  *ngIf="!isAuthenticated()" class="{{router.url === '/account/register'?'active d-none':''}}">
+                        <a class="footer-link" [routerLink]="['/account/register']">
+                            <span>
+                                <i class="fa fa-address-card"></i>
+                                <span >Crear cuenta</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div  *ngIf="!isAuthenticated()" class="{{router.url === '/auth/login'?'active d-none':''}}">
+                        <a class="footer-link" [routerLink]="['/auth/login']"  >
+                            <span>
+                                <i class="fa fa-sign-in-alt" aria-hidden="true"></i>
+                                <span >Iniciar sesi&oacute;n</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div *ngIf="isAuthenticated()">
+                        <a class="footer-link" [routerLink]="['/support-ticket/new']"  >
+                            <span>
+                                <i class="fas fa-question" aria-hidden="true"></i>
+                                <span>Ayuda</span>
+                            </span>
+                        </a>
+                    </div>
                     <!--<div class="link">Contactenos</div>-->
                 </div>
             </div>

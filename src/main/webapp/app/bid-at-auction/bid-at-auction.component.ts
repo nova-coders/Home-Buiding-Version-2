@@ -41,18 +41,10 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
     this.userAccount = new UserAccount();
   }
 
-  public updateOffers() {
-    this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
-      this.offers = response;
-      if (this.offers.length > 0) {
-        this.maximumBid = this.offers[0]?.amount;
-      }
-    });
-  }
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.offerSocketService.connect();
     this.offerSocketService.subscribe();
-
     this.route.params.subscribe((params: Params) => {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
@@ -80,10 +72,13 @@ export class BidAtAuctionComponent implements OnInit, OnDestroy {
         if (offer.id != this.offers[0].id) {
           this.offers.unshift(offer);
         }
+        this.maximumBid = offer.amount;
       }
     });
   }
-
+  public setOffer(offer: any) {
+    this.maximumBid = offer;
+  }
   ngOnDestroy(): void {
     this.offerSocketService.disconnect();
   }

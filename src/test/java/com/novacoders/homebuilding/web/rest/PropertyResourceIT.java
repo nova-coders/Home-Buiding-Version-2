@@ -133,34 +133,6 @@ public class PropertyResourceIT {
 
     @Test
     @Transactional
-    public void createProperty() throws Exception {
-        int databaseSizeBeforeCreate = propertyRepository.findAll().size();
-        // Create the Property
-        restPropertyMockMvc.perform(post("/api/properties")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(property)))
-            .andExpect(status().isCreated());
-
-        // Validate the Property in the database
-        List<Property> propertyList = propertyRepository.findAll();
-        assertThat(propertyList).hasSize(databaseSizeBeforeCreate + 1);
-        Property testProperty = propertyList.get(propertyList.size() - 1);
-        assertThat(testProperty.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testProperty.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testProperty.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testProperty.getDiscount()).isEqualTo(DEFAULT_DISCOUNT);
-        assertThat(testProperty.getLandSquareMeters()).isEqualTo(DEFAULT_LAND_SQUARE_METERS);
-        assertThat(testProperty.getAreaSquareMeters()).isEqualTo(DEFAULT_AREA_SQUARE_METERS);
-        assertThat(testProperty.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
-        assertThat(testProperty.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
-        assertThat(testProperty.getZoom()).isEqualTo(DEFAULT_ZOOM);
-        assertThat(testProperty.getAddressText()).isEqualTo(DEFAULT_ADDRESS_TEXT);
-        assertThat(testProperty.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
-        assertThat(testProperty.getState()).isEqualTo(DEFAULT_STATE);
-    }
-
-    @Test
-    @Transactional
     public void createPropertyWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
 
@@ -203,7 +175,7 @@ public class PropertyResourceIT {
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)));
     }
-    
+
     @Test
     @Transactional
     public void getProperty() throws Exception {

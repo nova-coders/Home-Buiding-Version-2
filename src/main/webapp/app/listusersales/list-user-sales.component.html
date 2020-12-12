@@ -20,8 +20,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-4">
-                                    <img *ngIf="property.propertyImages != null" src="{{property.propertyImages![0].url}}" class="img-fluid">
-                                    <img *ngIf="property.propertyImages == null" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid">
+                                    <img *ngIf="property.propertyImages != null" src="{{property!.propertyImages[0]!.url}}" class="img-fluid imagenSubasta">
+                                    <img *ngIf="property.propertyImages == null" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="img-fluid imagenSubasta">
                                 </div>
                                 <div class="col-6">
                                     <div class="row mb-4">
@@ -32,8 +32,8 @@
                                             <h6 class="font-weight-bold">Mejor oferta: </h6>
                                         </div>
                                         <div class="col-7 pl-0">
-                                            <h5 *ngIf="property.sale!.offers == null">{{ 0 | currency: 'CRC'}}</h5>
-                                            <h5 *ngIf="property.sale!.offers != null">{{ property.sale!.offers![0].amount | currency: 'CRC'}}</h5>
+                                            <h5 *ngIf="property!.sale!.offers == null">{{ 0 | currency: 'CRC'}}</h5>
+                                            <h5 *ngIf="property!.sale!.offers != null">{{ property!.sale!.offers[0]!.amount | currency: 'CRC'}}</h5>
                                         </div>
                                     </div>
                                     <div class="row mb-4">
@@ -44,11 +44,27 @@
                                             <h6 class="font-weight-bold">Vence en: </h6>
                                         </div>
                                         <div class="col-6 pl-0">
-                                            <h5>{{property.sale!.finalDate | date: 'MMM d, y, h:mm a'}}</h5>
+                                            <h5>{{property!.sale!.finalDate | date: 'MMM d, y, h:mm a'}}</h5>
                                         </div>
                                     </div>
-                                    <div class="col-4 text-right">
-                                        <button class="btn btn-primary" (click)="routetoSaleView(property?.sale?.id)"> ver subasta</button>
+                                    <div *ngIf="property.state == 3">
+                                        <div *ngFor="let documentID of property.documents" class="row mb-4 documentRoute" (click)="routetoDocument(documentID)">
+                                            <div class="col-2">
+                                                <i class="far fa-file mt-2" style="font-size: 4vh;"></i>
+                                            </div>
+                                            <div class="col-4 pl-0 mt-1">
+                                                <h6 class="font-weight-bold p-2">Ver contrato</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4 documentRoute"  (click)="routetoSaleView(property!.sale!.id)">
+                                        <div class="col-2">
+                                            <i class="fas fa-house-user mt-2" style="font-size: 4vh;"></i>
+                                        </div>
+                                        <div class="col-4 pl-0 mt-1">
+                                            <h6 class="font-weight-bold p-2">Ver subasta</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

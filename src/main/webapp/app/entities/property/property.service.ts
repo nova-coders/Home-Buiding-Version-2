@@ -58,6 +58,11 @@ export class PropertyService {
       .get<IProperty[]>(this.resourceUrl + '/getPropertiesOnSale', { observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
+  getPropertiesOnSaleByCantonId(cantonId: number): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IProperty[]>(this.resourceUrl + '/getPropertiesOnSale/' + cantonId, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
