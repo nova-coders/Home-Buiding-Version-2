@@ -22,6 +22,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.novacoders.homebuilding.domain.Property}.
@@ -134,6 +135,7 @@ public class PropertyResource {
     public ResponseEntity<Property> getProperty(@PathVariable Long id) {
         log.debug("REST request to get Property : {}", id);
         Optional<Property> property = propertyRepository.findById(id);
+        property.get().setPropertyImages(propertyImageRepository.findAllById(id));
         return ResponseUtil.wrapOrNotFound(property);
     }
 

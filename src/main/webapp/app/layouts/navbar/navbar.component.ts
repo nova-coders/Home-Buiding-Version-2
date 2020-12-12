@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
 import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 import { UserAccount } from 'app/shared/model/user-account.model';
+import { Property } from 'app/shared/model/property.model';
+import { CustomPropertyService } from 'app/global-services/custom-property.service';
 
 @Component({
   selector: 'jhi-navbar',
@@ -19,6 +21,7 @@ import { UserAccount } from 'app/shared/model/user-account.model';
   styleUrls: ['navbar.scss'],
 })
 export class NavbarComponent implements OnInit {
+  myProperties: Property[] = [];
   authSubscription?: Subscription;
   inProduction?: boolean;
   isNavbarCollapsed = true;
@@ -28,9 +31,10 @@ export class NavbarComponent implements OnInit {
   header: null;
   account: Account | null = null;
   userAccount: UserAccount;
-
+  isInvalid = '';
   constructor(
     private loginService: LoginService,
+    private customPropertyService: CustomPropertyService,
     private languageService: JhiLanguageService,
     private sessionStorage: SessionStorageService,
     private accountService: AccountService,
@@ -42,20 +46,25 @@ export class NavbarComponent implements OnInit {
     this.userAccount = new UserAccount();
   }
   ngOnInit(): void {
+    let idAcount: any;
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.isAuthenticated()) {
         this.servicePaymentService.getUserAccount().subscribe(response => {
           this.userAccount = <UserAccount>response.body;
+          idAcount = this.userAccount.id;
+          this.customPropertyService.getPropertiesInSaleByUserId(idAcount).subscribe(data => {
+            this.myProperties = data;
+          });
         });
       }
     });
+
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
   }
-
   changeLanguage(languageKey: string): void {
     this.sessionStorage.store('locale', languageKey);
     this.languageService.changeLanguage(languageKey);
@@ -85,5 +94,14 @@ export class NavbarComponent implements OnInit {
 
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
+  }
+  public validatePackage(): void {
+    console.log(this.userAccount.publishingPackage, this.myProperties);
+    if (this.userAccount.publishingPackage?.cantPropertySale! >= this.myProperties.length) {
+      this.isInvalid = '';
+      this.router.navigate(['/property/new']);
+    } else {
+      this.isInvalid = 'exampleModalCenter';
+    }
   }
 }

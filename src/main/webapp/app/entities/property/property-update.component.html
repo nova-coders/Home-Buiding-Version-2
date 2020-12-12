@@ -123,8 +123,6 @@
                                 <br>
                             </div>
                             <br>
-
-
                         </div>
                     </div>
                     <div class="row">
@@ -172,7 +170,6 @@
                     <hr style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
 
                     <div class="row">
-
                         <div class="col-md-4 col-lg-4 col-sm-4">
                             <div>
                             <label class="form-control-label" for="field_Category_Image">Seleccione un tipo de imagen</label>
@@ -219,7 +216,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <div *ngIf="isSelected==true || provinceIndex">
+                            <div *ngIf="isSelected==true">
                             <label class="form-control-label"  for="field_canton" >Cantón</label>
                             <select class="form-control" id="field_canton" name="canton" formControlName="canton">
                                 <option [ngValue]="" selected disabled>Seleccione una opción</option>
