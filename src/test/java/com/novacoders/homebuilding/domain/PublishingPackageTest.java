@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class PublishingPackageTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(PublishingPackage.class);
         PublishingPackage publishingPackage1 = new PublishingPackage();

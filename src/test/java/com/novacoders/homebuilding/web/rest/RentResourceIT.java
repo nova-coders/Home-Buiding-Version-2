@@ -71,7 +71,7 @@ public class RentResourceIT {
         rent = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createRent() throws Exception {
         int databaseSizeBeforeCreate = rentRepository.findAll().size();
@@ -88,7 +88,7 @@ public class RentResourceIT {
         assertThat(testRent.getDeposit()).isEqualTo(DEFAULT_DEPOSIT);
     }
 
-    @Test
+
     @Transactional
     public void createRentWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = rentRepository.findAll().size();
@@ -108,7 +108,7 @@ public class RentResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllRents() throws Exception {
         // Initialize the database
@@ -121,8 +121,8 @@ public class RentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(rent.getId().intValue())))
             .andExpect(jsonPath("$.[*].deposit").value(hasItem(DEFAULT_DEPOSIT)));
     }
-    
-    @Test
+
+
     @Transactional
     public void getRent() throws Exception {
         // Initialize the database
@@ -135,7 +135,7 @@ public class RentResourceIT {
             .andExpect(jsonPath("$.id").value(rent.getId().intValue()))
             .andExpect(jsonPath("$.deposit").value(DEFAULT_DEPOSIT));
     }
-    @Test
+
     @Transactional
     public void getNonExistingRent() throws Exception {
         // Get the rent
@@ -143,7 +143,7 @@ public class RentResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateRent() throws Exception {
         // Initialize the database
@@ -170,7 +170,7 @@ public class RentResourceIT {
         assertThat(testRent.getDeposit()).isEqualTo(UPDATED_DEPOSIT);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingRent() throws Exception {
         int databaseSizeBeforeUpdate = rentRepository.findAll().size();
@@ -186,7 +186,7 @@ public class RentResourceIT {
         assertThat(rentList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteRent() throws Exception {
         // Initialize the database

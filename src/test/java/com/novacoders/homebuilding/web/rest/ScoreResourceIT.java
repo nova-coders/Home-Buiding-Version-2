@@ -91,7 +91,7 @@ public class ScoreResourceIT {
         score = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createScore() throws Exception {
         int databaseSizeBeforeCreate = scoreRepository.findAll().size();
@@ -111,7 +111,7 @@ public class ScoreResourceIT {
         assertThat(testScore.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createScoreWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = scoreRepository.findAll().size();
@@ -131,7 +131,7 @@ public class ScoreResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllScores() throws Exception {
         // Initialize the database
@@ -147,8 +147,8 @@ public class ScoreResourceIT {
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getScore() throws Exception {
         // Initialize the database
@@ -164,7 +164,7 @@ public class ScoreResourceIT {
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingScore() throws Exception {
         // Get the score
@@ -172,7 +172,7 @@ public class ScoreResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateScore() throws Exception {
         // Initialize the database
@@ -205,7 +205,7 @@ public class ScoreResourceIT {
         assertThat(testScore.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingScore() throws Exception {
         int databaseSizeBeforeUpdate = scoreRepository.findAll().size();
@@ -221,7 +221,7 @@ public class ScoreResourceIT {
         assertThat(scoreList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteScore() throws Exception {
         // Initialize the database

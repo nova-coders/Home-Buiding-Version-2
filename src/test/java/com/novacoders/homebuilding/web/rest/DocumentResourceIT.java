@@ -97,7 +97,7 @@ public class DocumentResourceIT {
         document = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createDocument() throws Exception {
         int databaseSizeBeforeCreate = documentRepository.findAll().size();
@@ -118,7 +118,7 @@ public class DocumentResourceIT {
         assertThat(testDocument.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void createDocumentWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = documentRepository.findAll().size();
@@ -138,7 +138,7 @@ public class DocumentResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllDocuments() throws Exception {
         // Initialize the database
@@ -155,8 +155,8 @@ public class DocumentResourceIT {
             .andExpect(jsonPath("$.[*].sellerState").value(hasItem(DEFAULT_SELLER_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
-    
-    @Test
+
+
     @Transactional
     public void getDocument() throws Exception {
         // Initialize the database
@@ -173,7 +173,7 @@ public class DocumentResourceIT {
             .andExpect(jsonPath("$.sellerState").value(DEFAULT_SELLER_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
-    @Test
+
     @Transactional
     public void getNonExistingDocument() throws Exception {
         // Get the document
@@ -181,7 +181,7 @@ public class DocumentResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateDocument() throws Exception {
         // Initialize the database
@@ -216,7 +216,7 @@ public class DocumentResourceIT {
         assertThat(testDocument.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingDocument() throws Exception {
         int databaseSizeBeforeUpdate = documentRepository.findAll().size();
@@ -232,7 +232,7 @@ public class DocumentResourceIT {
         assertThat(documentList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteDocument() throws Exception {
         // Initialize the database

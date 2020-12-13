@@ -53,7 +53,7 @@ public class AuditEventServiceIT {
         auditEventNew.setAuditEventType("test-type");
     }
 
-    @Test
+
     @Transactional
     public void verifyOldAuditEventsAreDeleted() {
         persistenceAuditEventRepository.deleteAll();

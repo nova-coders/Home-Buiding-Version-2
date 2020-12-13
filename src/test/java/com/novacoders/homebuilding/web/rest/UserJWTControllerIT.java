@@ -39,7 +39,7 @@ public class UserJWTControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
+
     @Transactional
     public void testAuthorize() throws Exception {
         User user = new User();
@@ -63,7 +63,7 @@ public class UserJWTControllerIT {
             .andExpect(header().string("Authorization", not(is(emptyString()))));
     }
 
-    @Test
+
     @Transactional
     public void testAuthorizeWithRememberMe() throws Exception {
         User user = new User();
@@ -88,7 +88,7 @@ public class UserJWTControllerIT {
             .andExpect(header().string("Authorization", not(is(emptyString()))));
     }
 
-    @Test
+
     public void testAuthorizeFails() throws Exception {
         LoginVM login = new LoginVM();
         login.setUsername("wrong-user");
