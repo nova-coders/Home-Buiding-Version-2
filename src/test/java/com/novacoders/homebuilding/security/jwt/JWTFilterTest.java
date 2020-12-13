@@ -39,7 +39,7 @@ public class JWTFilterTest {
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 
-    @Test
+
     public void testJWTFilter() throws Exception {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             "test-user",
@@ -58,7 +58,7 @@ public class JWTFilterTest {
         assertThat(SecurityContextHolder.getContext().getAuthentication().getCredentials().toString()).isEqualTo(jwt);
     }
 
-    @Test
+
     public void testJWTFilterInvalidToken() throws Exception {
         String jwt = "wrong_jwt";
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -71,7 +71,7 @@ public class JWTFilterTest {
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
-    @Test
+
     public void testJWTFilterMissingAuthorization() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRequestURI("/api/test");
@@ -82,7 +82,7 @@ public class JWTFilterTest {
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
-    @Test
+
     public void testJWTFilterMissingToken() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer ");
@@ -94,7 +94,7 @@ public class JWTFilterTest {
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
-    @Test
+
     public void testJWTFilterWrongScheme() throws Exception {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             "test-user",

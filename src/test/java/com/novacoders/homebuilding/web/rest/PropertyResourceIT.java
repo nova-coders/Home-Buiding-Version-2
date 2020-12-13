@@ -131,7 +131,7 @@ public class PropertyResourceIT {
         property = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createPropertyWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
@@ -151,7 +151,7 @@ public class PropertyResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllProperties() throws Exception {
         // Initialize the database
@@ -176,7 +176,7 @@ public class PropertyResourceIT {
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)));
     }
 
-    @Test
+
     @Transactional
     public void getProperty() throws Exception {
         // Initialize the database
@@ -200,7 +200,7 @@ public class PropertyResourceIT {
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE));
     }
-    @Test
+
     @Transactional
     public void getNonExistingProperty() throws Exception {
         // Get the property
@@ -208,7 +208,7 @@ public class PropertyResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateProperty() throws Exception {
         // Initialize the database
@@ -257,7 +257,7 @@ public class PropertyResourceIT {
         assertThat(testProperty.getState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingProperty() throws Exception {
         int databaseSizeBeforeUpdate = propertyRepository.findAll().size();
@@ -273,7 +273,7 @@ public class PropertyResourceIT {
         assertThat(propertyList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteProperty() throws Exception {
         // Initialize the database

@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class PropertyCategoryTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(PropertyCategory.class);
         PropertyCategory propertyCategory1 = new PropertyCategory();

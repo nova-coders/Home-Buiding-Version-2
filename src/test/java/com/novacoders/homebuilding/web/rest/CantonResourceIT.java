@@ -86,7 +86,7 @@ public class CantonResourceIT {
         canton = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createCanton() throws Exception {
         int databaseSizeBeforeCreate = cantonRepository.findAll().size();
@@ -105,7 +105,7 @@ public class CantonResourceIT {
         assertThat(testCanton.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void createCantonWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = cantonRepository.findAll().size();
@@ -125,7 +125,7 @@ public class CantonResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllCantons() throws Exception {
         // Initialize the database
@@ -140,8 +140,8 @@ public class CantonResourceIT {
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
-    
-    @Test
+
+
     @Transactional
     public void getCanton() throws Exception {
         // Initialize the database
@@ -156,7 +156,7 @@ public class CantonResourceIT {
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
-    @Test
+
     @Transactional
     public void getNonExistingCanton() throws Exception {
         // Get the canton
@@ -164,7 +164,7 @@ public class CantonResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateCanton() throws Exception {
         // Initialize the database
@@ -195,7 +195,7 @@ public class CantonResourceIT {
         assertThat(testCanton.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingCanton() throws Exception {
         int databaseSizeBeforeUpdate = cantonRepository.findAll().size();
@@ -211,7 +211,7 @@ public class CantonResourceIT {
         assertThat(cantonList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteCanton() throws Exception {
         // Initialize the database

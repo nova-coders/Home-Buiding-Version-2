@@ -96,7 +96,7 @@ public class ProfessionalProfileUserResourceIT {
         professionalProfileUser = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createProfessionalProfileUser() throws Exception {
         int databaseSizeBeforeCreate = professionalProfileUserRepository.findAll().size();
@@ -117,7 +117,7 @@ public class ProfessionalProfileUserResourceIT {
         assertThat(testProfessionalProfileUser.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createProfessionalProfileUserWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = professionalProfileUserRepository.findAll().size();
@@ -137,7 +137,7 @@ public class ProfessionalProfileUserResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllProfessionalProfileUsers() throws Exception {
         // Initialize the database
@@ -154,8 +154,8 @@ public class ProfessionalProfileUserResourceIT {
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getProfessionalProfileUser() throws Exception {
         // Initialize the database
@@ -172,7 +172,7 @@ public class ProfessionalProfileUserResourceIT {
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingProfessionalProfileUser() throws Exception {
         // Get the professionalProfileUser
@@ -180,7 +180,7 @@ public class ProfessionalProfileUserResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateProfessionalProfileUser() throws Exception {
         // Initialize the database
@@ -215,7 +215,7 @@ public class ProfessionalProfileUserResourceIT {
         assertThat(testProfessionalProfileUser.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingProfessionalProfileUser() throws Exception {
         int databaseSizeBeforeUpdate = professionalProfileUserRepository.findAll().size();
@@ -231,7 +231,7 @@ public class ProfessionalProfileUserResourceIT {
         assertThat(professionalProfileUserList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteProfessionalProfileUser() throws Exception {
         // Initialize the database

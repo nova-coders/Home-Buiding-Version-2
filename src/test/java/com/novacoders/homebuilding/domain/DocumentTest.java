@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class DocumentTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Document.class);
         Document document1 = new Document();

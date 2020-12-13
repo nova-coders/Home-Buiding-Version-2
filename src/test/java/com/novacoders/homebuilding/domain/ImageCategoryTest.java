@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class ImageCategoryTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(ImageCategory.class);
         ImageCategory imageCategory1 = new ImageCategory();

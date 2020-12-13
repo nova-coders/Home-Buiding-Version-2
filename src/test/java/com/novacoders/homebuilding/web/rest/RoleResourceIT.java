@@ -91,7 +91,7 @@ public class RoleResourceIT {
         role = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createRole() throws Exception {
         int databaseSizeBeforeCreate = roleRepository.findAll().size();
@@ -111,7 +111,7 @@ public class RoleResourceIT {
         assertThat(testRole.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void createRoleWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = roleRepository.findAll().size();
@@ -131,7 +131,7 @@ public class RoleResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllRoles() throws Exception {
         // Initialize the database
@@ -147,8 +147,8 @@ public class RoleResourceIT {
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
-    
-    @Test
+
+
     @Transactional
     public void getRole() throws Exception {
         // Initialize the database
@@ -164,7 +164,7 @@ public class RoleResourceIT {
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
-    @Test
+
     @Transactional
     public void getNonExistingRole() throws Exception {
         // Get the role
@@ -172,7 +172,7 @@ public class RoleResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateRole() throws Exception {
         // Initialize the database
@@ -205,7 +205,7 @@ public class RoleResourceIT {
         assertThat(testRole.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
@@ -221,7 +221,7 @@ public class RoleResourceIT {
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteRole() throws Exception {
         // Initialize the database

@@ -52,7 +52,7 @@ public class WebConfigurerTest {
         webConfigurer = new WebConfigurer(env, props);
     }
 
-    @Test
+
     public void testStartUpProdServletContext() throws ServletException {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
         webConfigurer.onStartup(servletContext);
@@ -60,7 +60,7 @@ public class WebConfigurerTest {
 
     }
 
-    @Test
+
     public void testStartUpDevServletContext() throws ServletException {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT);
         webConfigurer.onStartup(servletContext);
@@ -68,7 +68,7 @@ public class WebConfigurerTest {
 
     }
 
-    @Test
+
     public void testCustomizeServletContainer() {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
         UndertowServletWebServerFactory container = new UndertowServletWebServerFactory();
@@ -81,7 +81,7 @@ public class WebConfigurerTest {
         }
     }
 
-    @Test
+
     public void testCorsFilterOnApiPath() throws Exception {
         props.getCors().setAllowedOrigins(Collections.singletonList("*"));
         props.getCors().setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
@@ -111,7 +111,7 @@ public class WebConfigurerTest {
             .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "other.domain.com"));
     }
 
-    @Test
+
     public void testCorsFilterOnOtherPath() throws Exception {
         props.getCors().setAllowedOrigins(Collections.singletonList("*"));
         props.getCors().setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
@@ -130,7 +130,7 @@ public class WebConfigurerTest {
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
     }
 
-    @Test
+
     public void testCorsFilterDeactivated() throws Exception {
         props.getCors().setAllowedOrigins(null);
 
@@ -145,7 +145,7 @@ public class WebConfigurerTest {
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
     }
 
-    @Test
+
     public void testCorsFilterDeactivated2() throws Exception {
         props.getCors().setAllowedOrigins(new ArrayList<>());
 

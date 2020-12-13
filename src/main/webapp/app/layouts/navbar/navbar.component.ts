@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
@@ -55,11 +55,10 @@ export class NavbarComponent implements OnInit {
         !this.router.url.startsWith('/account/reset/finish?') &&
         !this.router.url.startsWith('/account/reset/')
       ) {
-
         window.localStorage.setItem('previousUrl', this.router.url);
       }
     });
-    
+
     let idAcount: any;
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;

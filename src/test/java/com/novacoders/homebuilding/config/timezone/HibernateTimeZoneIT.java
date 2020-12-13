@@ -60,7 +60,7 @@ public class HibernateTimeZoneIT {
             .ofPattern("yyyy-MM-dd");
     }
 
-    @Test
+
     @Transactional
     public void storeInstantWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
@@ -72,7 +72,7 @@ public class HibernateTimeZoneIT {
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
 
-    @Test
+
     @Transactional
     public void storeLocalDateTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
@@ -87,7 +87,7 @@ public class HibernateTimeZoneIT {
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
 
-    @Test
+
     @Transactional
     public void storeOffsetDateTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
@@ -101,7 +101,7 @@ public class HibernateTimeZoneIT {
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
 
-    @Test
+
     @Transactional
     public void storeZoneDateTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
@@ -115,7 +115,7 @@ public class HibernateTimeZoneIT {
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
 
-    @Test
+
     @Transactional
     public void storeLocalTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZoneAccordingToHis1stJan1970Value() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
@@ -131,7 +131,7 @@ public class HibernateTimeZoneIT {
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
 
-    @Test
+
     @Transactional
     public void storeOffsetTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZoneAccordingToHis1stJan1970Value() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
@@ -148,7 +148,7 @@ public class HibernateTimeZoneIT {
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
 
-    @Test
+
     @Transactional
     public void storeLocalDateWithZoneIdConfigShouldBeStoredWithoutTransformation() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);

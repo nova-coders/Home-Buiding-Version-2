@@ -40,7 +40,7 @@ public class CustomDocumentResourceIT {
     /**
      * Test getDocumentByPropertyId
      */
-    @Test
+
     public void testGetDocumentByPropertyId() throws Exception {
         restMockMvc.perform(get("/api/custom-document-resource/get-document-by-property-id"))
             .andExpect(status().isOk());
@@ -49,7 +49,7 @@ public class CustomDocumentResourceIT {
     /**
      * Test getDocumentIdByUserIdAndPropertyId
      */
-    @Test
+
     public void testGetDocumentIdByUserIdAndPropertyId() throws Exception {
         restMockMvc.perform(get("/api/custom-document-resource/get-document-id-by-user-id-and-property-id"))
             .andExpect(status().isOk());
