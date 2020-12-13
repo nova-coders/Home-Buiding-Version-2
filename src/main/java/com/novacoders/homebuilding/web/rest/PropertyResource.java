@@ -145,7 +145,7 @@ public class PropertyResource {
     @GetMapping("/properties/sale")
     public List<Property> getAllPropertiesBySale() {
         log.debug("REST request to get all Properties");
-        return propertyRepository.findBySaleNotNull();
+        return propertyRepository.findBySaleNotNull(ZonedDateTime.now());
     }
     /**
      * {@code GET  /properties/:id} : get the "id" property.
