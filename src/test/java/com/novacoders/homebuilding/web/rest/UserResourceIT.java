@@ -111,7 +111,7 @@ public class UserResourceIT {
         user.setEmail(DEFAULT_EMAIL);
     }
 
-    @Test
+
     @Transactional
     public void createUser() throws Exception {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
@@ -146,7 +146,7 @@ public class UserResourceIT {
         });
     }
 
-    @Test
+
     @Transactional
     public void createUserWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
@@ -173,7 +173,7 @@ public class UserResourceIT {
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
-    @Test
+
     @Transactional
     public void createUserWithExistingLogin() throws Exception {
         // Initialize the database
@@ -201,7 +201,7 @@ public class UserResourceIT {
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
-    @Test
+
     @Transactional
     public void createUserWithExistingEmail() throws Exception {
         // Initialize the database
@@ -229,7 +229,7 @@ public class UserResourceIT {
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeCreate));
     }
 
-    @Test
+
     @Transactional
     public void getAllUsers() throws Exception {
         // Initialize the database
@@ -248,7 +248,7 @@ public class UserResourceIT {
             .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
     }
 
-    @Test
+
     @Transactional
     void getAllUsersSortedByParameters() throws Exception {
         // Initialize the database
@@ -260,7 +260,7 @@ public class UserResourceIT {
             restUserMockMvc.perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
-    @Test
+
     @Transactional
     public void getUser() throws Exception {
         // Initialize the database
@@ -282,14 +282,14 @@ public class UserResourceIT {
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNotNull();
     }
 
-    @Test
+
     @Transactional
     public void getNonExistingUser() throws Exception {
         restUserMockMvc.perform(get("/api/users/unknown"))
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateUser() throws Exception {
         // Initialize the database
@@ -332,7 +332,7 @@ public class UserResourceIT {
         });
     }
 
-    @Test
+
     @Transactional
     public void updateUserLogin() throws Exception {
         // Initialize the database
@@ -376,7 +376,7 @@ public class UserResourceIT {
         });
     }
 
-    @Test
+
     @Transactional
     public void updateUserExistingEmail() throws Exception {
         // Initialize the database with 2 users
@@ -418,7 +418,7 @@ public class UserResourceIT {
             .andExpect(status().isBadRequest());
     }
 
-    @Test
+
     @Transactional
     public void updateUserExistingLogin() throws Exception {
         // Initialize the database
@@ -460,7 +460,7 @@ public class UserResourceIT {
             .andExpect(status().isBadRequest());
     }
 
-    @Test
+
     @Transactional
     public void deleteUser() throws Exception {
         // Initialize the database
@@ -478,7 +478,7 @@ public class UserResourceIT {
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
     }
 
-    @Test
+
     @Transactional
     public void getAllAuthorities() throws Exception {
         restUserMockMvc.perform(get("/api/users/authorities")
@@ -490,7 +490,7 @@ public class UserResourceIT {
             .andExpect(jsonPath("$").value(hasItems(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)));
     }
 
-    @Test
+
     public void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(User.class);
         User user1 = new User();
@@ -504,7 +504,7 @@ public class UserResourceIT {
         assertThat(user1).isNotEqualTo(user2);
     }
 
-    @Test
+
     public void testUserDTOtoUser() {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(DEFAULT_ID);
@@ -535,7 +535,7 @@ public class UserResourceIT {
         assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.USER);
     }
 
-    @Test
+
     public void testUserToUserDTO() {
         user.setId(DEFAULT_ID);
         user.setCreatedBy(DEFAULT_LOGIN);
@@ -566,7 +566,7 @@ public class UserResourceIT {
         assertThat(userDTO.toString()).isNotNull();
     }
 
-    @Test
+
     public void testAuthorityEquals() {
         Authority authorityA = new Authority();
         assertThat(authorityA).isEqualTo(authorityA);

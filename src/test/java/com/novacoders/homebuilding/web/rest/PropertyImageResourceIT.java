@@ -86,7 +86,7 @@ public class PropertyImageResourceIT {
         propertyImage = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createPropertyImage() throws Exception {
         int databaseSizeBeforeCreate = propertyImageRepository.findAll().size();
@@ -105,7 +105,7 @@ public class PropertyImageResourceIT {
         assertThat(testPropertyImage.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createPropertyImageWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = propertyImageRepository.findAll().size();
@@ -125,7 +125,7 @@ public class PropertyImageResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllPropertyImages() throws Exception {
         // Initialize the database
@@ -140,8 +140,8 @@ public class PropertyImageResourceIT {
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getPropertyImage() throws Exception {
         // Initialize the database
@@ -156,7 +156,7 @@ public class PropertyImageResourceIT {
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingPropertyImage() throws Exception {
         // Get the propertyImage
@@ -164,7 +164,7 @@ public class PropertyImageResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updatePropertyImage() throws Exception {
         // Initialize the database
@@ -195,7 +195,7 @@ public class PropertyImageResourceIT {
         assertThat(testPropertyImage.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingPropertyImage() throws Exception {
         int databaseSizeBeforeUpdate = propertyImageRepository.findAll().size();
@@ -211,7 +211,7 @@ public class PropertyImageResourceIT {
         assertThat(propertyImageList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deletePropertyImage() throws Exception {
         // Initialize the database

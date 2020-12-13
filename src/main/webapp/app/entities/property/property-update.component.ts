@@ -237,7 +237,9 @@ export class PropertyUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const property = this.createFromForm();
-    if (property.id !== undefined) {
+    console.log(property);
+
+    if (property.id != undefined) {
       this.processUpdate(property);
     } else {
       this.processSave(property);

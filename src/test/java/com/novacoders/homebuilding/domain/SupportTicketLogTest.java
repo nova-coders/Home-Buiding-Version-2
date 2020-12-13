@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class SupportTicketLogTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(SupportTicketLog.class);
         SupportTicketLog supportTicketLog1 = new SupportTicketLog();

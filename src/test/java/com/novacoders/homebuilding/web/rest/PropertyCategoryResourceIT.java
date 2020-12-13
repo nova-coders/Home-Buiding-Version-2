@@ -81,7 +81,7 @@ public class PropertyCategoryResourceIT {
         propertyCategory = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createPropertyCategory() throws Exception {
         int databaseSizeBeforeCreate = propertyCategoryRepository.findAll().size();
@@ -100,7 +100,7 @@ public class PropertyCategoryResourceIT {
         assertThat(testPropertyCategory.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createPropertyCategoryWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = propertyCategoryRepository.findAll().size();
@@ -120,7 +120,7 @@ public class PropertyCategoryResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllPropertyCategories() throws Exception {
         // Initialize the database
@@ -135,8 +135,8 @@ public class PropertyCategoryResourceIT {
             .andExpect(jsonPath("$.[*].propertyType").value(hasItem(DEFAULT_PROPERTY_TYPE)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getPropertyCategory() throws Exception {
         // Initialize the database
@@ -151,7 +151,7 @@ public class PropertyCategoryResourceIT {
             .andExpect(jsonPath("$.propertyType").value(DEFAULT_PROPERTY_TYPE))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingPropertyCategory() throws Exception {
         // Get the propertyCategory
@@ -159,7 +159,7 @@ public class PropertyCategoryResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updatePropertyCategory() throws Exception {
         // Initialize the database
@@ -190,7 +190,7 @@ public class PropertyCategoryResourceIT {
         assertThat(testPropertyCategory.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingPropertyCategory() throws Exception {
         int databaseSizeBeforeUpdate = propertyCategoryRepository.findAll().size();
@@ -206,7 +206,7 @@ public class PropertyCategoryResourceIT {
         assertThat(propertyCategoryList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deletePropertyCategory() throws Exception {
         // Initialize the database

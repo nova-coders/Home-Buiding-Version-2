@@ -78,7 +78,7 @@ public class UserServiceIT {
         auditingHandler.setDateTimeProvider(dateTimeProvider);
     }
 
-    @Test
+
     @Transactional
     public void assertThatUserMustExistToResetPassword() {
         userRepository.saveAndFlush(user);
@@ -92,7 +92,7 @@ public class UserServiceIT {
         assertThat(maybeUser.orElse(null).getResetKey()).isNotNull();
     }
 
-    @Test
+
     @Transactional
     public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
         user.setActivated(false);
@@ -103,7 +103,7 @@ public class UserServiceIT {
         userRepository.delete(user);
     }
 
-    @Test
+
     @Transactional
     public void assertThatResetKeyMustNotBeOlderThan24Hours() {
         Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
@@ -118,7 +118,7 @@ public class UserServiceIT {
         userRepository.delete(user);
     }
 
-    @Test
+
     @Transactional
     public void assertThatResetKeyMustBeValid() {
         Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
@@ -132,7 +132,7 @@ public class UserServiceIT {
         userRepository.delete(user);
     }
 
-    @Test
+
     @Transactional
     public void assertThatUserCanResetPassword() {
         String oldPassword = user.getPassword();
@@ -152,7 +152,7 @@ public class UserServiceIT {
         userRepository.delete(user);
     }
 
-    @Test
+
     @Transactional
     public void assertThatNotActivatedUsersWithNotNullActivationKeyCreatedBefore3DaysAreDeleted() {
         Instant now = Instant.now();
@@ -170,7 +170,7 @@ public class UserServiceIT {
         assertThat(users).isEmpty();
     }
 
-    @Test
+
     @Transactional
     public void assertThatNotActivatedUsersWithNullActivationKeyCreatedBefore3DaysAreNotDeleted() {
         Instant now = Instant.now();
@@ -187,7 +187,7 @@ public class UserServiceIT {
         assertThat(maybeDbUser).contains(dbUser);
     }
 
-    @Test
+
     @Transactional
     public void assertThatAnonymousUserIsNotGet() {
         user.setLogin(Constants.ANONYMOUS_USER);
