@@ -41,7 +41,7 @@
     "blueprints": [],
     "herokuDeployType": "git",
     "herokuJavaVersion": "14",
-    "herokuAppName": "home-building-v-1-0-1",
+    "herokuAppName": "home-building",
     "aws": {
       "applicationName": "home-building",
       "environmentName": "home-building-env",
