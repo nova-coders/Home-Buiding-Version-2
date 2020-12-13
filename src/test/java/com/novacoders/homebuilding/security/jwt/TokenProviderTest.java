@@ -38,14 +38,14 @@ public class TokenProviderTest {
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", ONE_MINUTE);
     }
 
-    @Test
+
     public void testReturnFalseWhenJWThasInvalidSignature() {
         boolean isTokenValid = tokenProvider.validateToken(createTokenWithDifferentSignature());
 
         assertThat(isTokenValid).isEqualTo(false);
     }
 
-    @Test
+
     public void testReturnFalseWhenJWTisMalformed() {
         Authentication authentication = createAuthentication();
         String token = tokenProvider.createToken(authentication, false);
@@ -55,7 +55,7 @@ public class TokenProviderTest {
         assertThat(isTokenValid).isEqualTo(false);
     }
 
-    @Test
+
     public void testReturnFalseWhenJWTisExpired() {
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -ONE_MINUTE);
 
@@ -67,7 +67,7 @@ public class TokenProviderTest {
         assertThat(isTokenValid).isEqualTo(false);
     }
 
-    @Test
+
     public void testReturnFalseWhenJWTisUnsupported() {
         String unsupportedToken = createUnsupportedToken();
 
@@ -76,7 +76,7 @@ public class TokenProviderTest {
         assertThat(isTokenValid).isEqualTo(false);
     }
 
-    @Test
+
     public void testReturnFalseWhenJWTisInvalid() {
         boolean isTokenValid = tokenProvider.validateToken("");
 

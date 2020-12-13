@@ -97,7 +97,7 @@ public class NotificationResourceIT {
         notification = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createNotification() throws Exception {
         int databaseSizeBeforeCreate = notificationRepository.findAll().size();
@@ -118,7 +118,7 @@ public class NotificationResourceIT {
         assertThat(testNotification.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void createNotificationWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = notificationRepository.findAll().size();
@@ -138,7 +138,7 @@ public class NotificationResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllNotifications() throws Exception {
         // Initialize the database
@@ -155,8 +155,8 @@ public class NotificationResourceIT {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
-    
-    @Test
+
+
     @Transactional
     public void getNotification() throws Exception {
         // Initialize the database
@@ -173,7 +173,7 @@ public class NotificationResourceIT {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
-    @Test
+
     @Transactional
     public void getNonExistingNotification() throws Exception {
         // Get the notification
@@ -181,7 +181,7 @@ public class NotificationResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateNotification() throws Exception {
         // Initialize the database
@@ -216,7 +216,7 @@ public class NotificationResourceIT {
         assertThat(testNotification.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingNotification() throws Exception {
         int databaseSizeBeforeUpdate = notificationRepository.findAll().size();
@@ -232,7 +232,7 @@ public class NotificationResourceIT {
         assertThat(notificationList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteNotification() throws Exception {
         // Initialize the database

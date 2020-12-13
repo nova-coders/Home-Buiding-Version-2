@@ -91,7 +91,7 @@ public class OfferResourceIT {
         offer = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createOffer() throws Exception {
         int databaseSizeBeforeCreate = offerRepository.findAll().size();
@@ -111,7 +111,7 @@ public class OfferResourceIT {
         assertThat(testOffer.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createOfferWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = offerRepository.findAll().size();
@@ -131,7 +131,7 @@ public class OfferResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllOffers() throws Exception {
         // Initialize the database
@@ -147,8 +147,8 @@ public class OfferResourceIT {
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getOffer() throws Exception {
         // Initialize the database
@@ -164,7 +164,7 @@ public class OfferResourceIT {
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingOffer() throws Exception {
         // Get the offer
@@ -172,7 +172,7 @@ public class OfferResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateOffer() throws Exception {
         // Initialize the database
@@ -205,7 +205,7 @@ public class OfferResourceIT {
         assertThat(testOffer.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingOffer() throws Exception {
         int databaseSizeBeforeUpdate = offerRepository.findAll().size();
@@ -221,7 +221,7 @@ public class OfferResourceIT {
         assertThat(offerList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteOffer() throws Exception {
         // Initialize the database

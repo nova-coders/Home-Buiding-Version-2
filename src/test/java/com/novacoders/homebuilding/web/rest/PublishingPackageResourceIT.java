@@ -116,7 +116,7 @@ public class PublishingPackageResourceIT {
         publishingPackage = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createPublishingPackage() throws Exception {
         int databaseSizeBeforeCreate = publishingPackageRepository.findAll().size();
@@ -141,7 +141,7 @@ public class PublishingPackageResourceIT {
         assertThat(testPublishingPackage.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createPublishingPackageWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = publishingPackageRepository.findAll().size();
@@ -161,7 +161,7 @@ public class PublishingPackageResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllPublishingPackages() throws Exception {
         // Initialize the database
@@ -182,8 +182,8 @@ public class PublishingPackageResourceIT {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getPublishingPackage() throws Exception {
         // Initialize the database
@@ -204,7 +204,7 @@ public class PublishingPackageResourceIT {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingPublishingPackage() throws Exception {
         // Get the publishingPackage
@@ -212,7 +212,7 @@ public class PublishingPackageResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updatePublishingPackage() throws Exception {
         // Initialize the database
@@ -255,7 +255,7 @@ public class PublishingPackageResourceIT {
         assertThat(testPublishingPackage.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingPublishingPackage() throws Exception {
         int databaseSizeBeforeUpdate = publishingPackageRepository.findAll().size();
@@ -271,7 +271,7 @@ public class PublishingPackageResourceIT {
         assertThat(publishingPackageList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deletePublishingPackage() throws Exception {
         // Initialize the database

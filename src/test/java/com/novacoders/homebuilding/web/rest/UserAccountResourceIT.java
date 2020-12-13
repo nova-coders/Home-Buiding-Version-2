@@ -118,7 +118,7 @@ public class UserAccountResourceIT {
         userAccount = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createUserAccount() throws Exception {
         int databaseSizeBeforeCreate = userAccountRepository.findAll().size();
@@ -143,7 +143,7 @@ public class UserAccountResourceIT {
         assertThat(testUserAccount.getIdentificationType()).isEqualTo(DEFAULT_IDENTIFICATION_TYPE);
     }
 
-    @Test
+
     @Transactional
     public void createUserAccountWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = userAccountRepository.findAll().size();
@@ -163,7 +163,7 @@ public class UserAccountResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllUserAccounts() throws Exception {
         // Initialize the database
@@ -184,8 +184,8 @@ public class UserAccountResourceIT {
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
             .andExpect(jsonPath("$.[*].identificationType").value(hasItem(DEFAULT_IDENTIFICATION_TYPE.toString())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getUserAccount() throws Exception {
         // Initialize the database
@@ -206,7 +206,7 @@ public class UserAccountResourceIT {
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
             .andExpect(jsonPath("$.identificationType").value(DEFAULT_IDENTIFICATION_TYPE.toString()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingUserAccount() throws Exception {
         // Get the userAccount
@@ -214,7 +214,7 @@ public class UserAccountResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateUserAccount() throws Exception {
         // Initialize the database
@@ -257,7 +257,7 @@ public class UserAccountResourceIT {
         assertThat(testUserAccount.getIdentificationType()).isEqualTo(UPDATED_IDENTIFICATION_TYPE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingUserAccount() throws Exception {
         int databaseSizeBeforeUpdate = userAccountRepository.findAll().size();
@@ -273,7 +273,7 @@ public class UserAccountResourceIT {
         assertThat(userAccountList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteUserAccount() throws Exception {
         // Initialize the database

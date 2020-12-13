@@ -91,7 +91,7 @@ public class SupportTicketResourceIT {
         supportTicket = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createSupportTicket() throws Exception {
         int databaseSizeBeforeCreate = supportTicketRepository.findAll().size();
@@ -111,7 +111,7 @@ public class SupportTicketResourceIT {
         assertThat(testSupportTicket.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createSupportTicketWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = supportTicketRepository.findAll().size();
@@ -131,7 +131,7 @@ public class SupportTicketResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllSupportTickets() throws Exception {
         // Initialize the database
@@ -147,8 +147,8 @@ public class SupportTicketResourceIT {
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getSupportTicket() throws Exception {
         // Initialize the database
@@ -164,7 +164,7 @@ public class SupportTicketResourceIT {
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingSupportTicket() throws Exception {
         // Get the supportTicket
@@ -172,7 +172,7 @@ public class SupportTicketResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateSupportTicket() throws Exception {
         // Initialize the database
@@ -205,7 +205,7 @@ public class SupportTicketResourceIT {
         assertThat(testSupportTicket.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingSupportTicket() throws Exception {
         int databaseSizeBeforeUpdate = supportTicketRepository.findAll().size();
@@ -221,7 +221,7 @@ public class SupportTicketResourceIT {
         assertThat(supportTicketList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteSupportTicket() throws Exception {
         // Initialize the database

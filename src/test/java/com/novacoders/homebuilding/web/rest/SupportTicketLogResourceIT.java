@@ -86,7 +86,7 @@ public class SupportTicketLogResourceIT {
         supportTicketLog = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createSupportTicketLog() throws Exception {
         int databaseSizeBeforeCreate = supportTicketLogRepository.findAll().size();
@@ -105,7 +105,7 @@ public class SupportTicketLogResourceIT {
         assertThat(testSupportTicketLog.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void createSupportTicketLogWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = supportTicketLogRepository.findAll().size();
@@ -125,7 +125,7 @@ public class SupportTicketLogResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllSupportTicketLogs() throws Exception {
         // Initialize the database
@@ -140,8 +140,8 @@ public class SupportTicketLogResourceIT {
             .andExpect(jsonPath("$.[*].nextStepCommentary").value(hasItem(DEFAULT_NEXT_STEP_COMMENTARY)))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
-    
-    @Test
+
+
     @Transactional
     public void getSupportTicketLog() throws Exception {
         // Initialize the database
@@ -156,7 +156,7 @@ public class SupportTicketLogResourceIT {
             .andExpect(jsonPath("$.nextStepCommentary").value(DEFAULT_NEXT_STEP_COMMENTARY))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
-    @Test
+
     @Transactional
     public void getNonExistingSupportTicketLog() throws Exception {
         // Get the supportTicketLog
@@ -164,7 +164,7 @@ public class SupportTicketLogResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateSupportTicketLog() throws Exception {
         // Initialize the database
@@ -195,7 +195,7 @@ public class SupportTicketLogResourceIT {
         assertThat(testSupportTicketLog.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingSupportTicketLog() throws Exception {
         int databaseSizeBeforeUpdate = supportTicketLogRepository.findAll().size();
@@ -211,7 +211,7 @@ public class SupportTicketLogResourceIT {
         assertThat(supportTicketLogList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteSupportTicketLog() throws Exception {
         // Initialize the database
