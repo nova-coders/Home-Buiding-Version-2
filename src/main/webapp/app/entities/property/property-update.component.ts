@@ -1,6 +1,7 @@
-import { Component, Directive, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { HttpResponse, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -23,10 +24,11 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { ProvinceService } from '../province/province.service';
 import { IProvince, Province } from '../../shared/model/province.model';
 import { ImageService } from '../../global-services/image.service';
-import { IImageCategory } from '../../shared/model/image-category.model';
+import { IImageCategory, ImageCategory } from '../../shared/model/image-category.model';
 import { ImageCategoryService } from '../image-category/image-category.service';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
 import { IPropertyImage, PropertyImage } from '../../shared/model/property-image.model';
+import { SeeAuctionService } from 'app/see-auction/see-auction.service';
 type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyCategory;
 
 @Component({
@@ -35,6 +37,8 @@ type SelectableEntity = ISale | IUserAccount | IMoneyType | ICanton | IPropertyC
   styleUrls: ['./property.scss'],
 })
 export class PropertyUpdateComponent implements OnInit {
+  isUpdate = false;
+  myProperty!: Property;
   step: any = 1;
   isSaving = false;
   isSelected = false;
@@ -67,7 +71,7 @@ export class PropertyUpdateComponent implements OnInit {
   fileUrl: string;
   error = false;
   public userAccount = new UserAccount();
-
+  trustedDashboardUrl!: SafeUrl;
   propertyForm = this.fb.group({
     id: [],
     title: ['', [Validators.required]],
@@ -99,24 +103,22 @@ export class PropertyUpdateComponent implements OnInit {
     protected propertyCategoryService: PropertyCategoryService,
     protected servicePaymentService: ServicePaymentService,
     protected activatedRoute: ActivatedRoute,
+    protected propertiesImages: SeeAuctionService,
     private fb: FormBuilder,
     private imageService: ImageService,
     private router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private domSanitizer: DomSanitizer,
+    private http: HttpClient
   ) {
     this.files = [];
     this.fileUrl = '';
     this.userAccount.publishingPackage = {} as UserAccount;
+    this.myProperty = new Property();
   }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ property }) => {
-      if (!property.id) {
-        property.creationDate = moment().startOf('day');
-      }
-
-      this.updateForm(property);
-
       this.saleService
         .query({ filter: 'property-is-null' })
         .pipe(
@@ -141,18 +143,23 @@ export class PropertyUpdateComponent implements OnInit {
       this.imageCategoryService.query().subscribe((res: HttpResponse<IImageCategory[]>) => (this.lstImageCategory = res.body || []));
       this.provinceService.query().subscribe((res: HttpResponse<IProvince[]>) => (this.lstProvinces = res.body || []));
       this.userAccountService.query().subscribe((res: HttpResponse<IUserAccount[]>) => (this.lstUserAccounts = res.body || []));
-
       this.moneyTypeService.query().subscribe((res: HttpResponse<IMoneyType[]>) => (this.lstMoneytypes = res.body || []));
       this.saleService.query().subscribe((response: HttpResponse<ISale[]>) => (this.sales = response.body || []));
       this.propertyCategoryService
         .query()
         .subscribe((res: HttpResponse<IPropertyCategory[]>) => (this.lstPropertyCategories = res.body || []));
+      this.servicePaymentService.getUserAccount().subscribe(userAccount => {
+        this.userAccount = userAccount.body;
+      });
+      this.myProperty = property;
+      if (!!this.myProperty.id) {
+        this.myProperty = property;
+        this.setData();
+        this.updateForm(property);
+      } else {
+        this.setCurrentLocation();
+      }
     });
-    this.servicePaymentService.getUserAccount().subscribe(userAccount => {
-      this.userAccount = userAccount.body;
-    });
-
-    this.setCurrentLocation();
   }
 
   public handleAddressChange(address: any): void {
@@ -192,27 +199,37 @@ export class PropertyUpdateComponent implements OnInit {
   }
   updateForm(property: IProperty): void {
     this.propertyForm.patchValue({
-      id: property.id,
-      title: property.title,
-      description: property.description,
-      price: property.price,
-      discount: property.discount,
-      landSquareMeters: property.landSquareMeters,
-      areaSquareMeters: property.areaSquareMeters,
+      id: this.myProperty.id,
+      title: this.myProperty.title,
+      description: this.myProperty.description,
+      price: this.myProperty.price,
+      discount: this.myProperty.discount,
+      finalDate: moment(this.myProperty.sale?.finalDate).format(DATE_TIME_FORMAT),
+      landSquareMeters: this.myProperty.landSquareMeters,
+      areaSquareMeters: this.myProperty.areaSquareMeters,
+      addressText: this.myProperty.addressText,
+      canton: this.myProperty.canton,
+      moneyType: this.myProperty.moneyType,
+      propertyId: this.myProperty.sale?.propertyId,
+      propertyCategory: this.myProperty.propertyCategory,
+      cadastralPlan: String(this.myProperty.sale?.cadastralPlan),
+      registryStudy: String(this.myProperty.sale?.registryStudy),
+      imageCategory: this.obtainIdImage(),
+      province: this.myProperty.canton?.province?.id,
       latitude: this.lat,
       longitude: this.lng,
       zoom: this.zoom,
-      addressText: property.addressText,
-      creationDate: property.creationDate ? property.creationDate.format(DATE_TIME_FORMAT) : null,
-      state: property.state,
-      sale: property.sale,
-      userAccount: property.userAccount,
-      moneyType: property.moneyType,
-      canton: property.canton,
-      propertyCategory: property.propertyCategory,
+      sale: this.myProperty.sale,
+      userAccount: this.myProperty.userAccount,
     });
   }
-
+  public obtainIdImage(): IImageCategory | undefined {
+    let imageCategory: IImageCategory | undefined;
+    if (this.myProperty.propertyImages) {
+      imageCategory = this.myProperty.propertyImages[0].imageCategory;
+    }
+    return imageCategory;
+  }
   previousState(): void {
     window.history.back();
   }
@@ -221,7 +238,7 @@ export class PropertyUpdateComponent implements OnInit {
     this.isSaving = true;
     const property = this.createFromForm();
     if (property.id !== undefined) {
-      this.subscribeToSaveResponse(this.propertyService.update(property));
+      this.processUpdate(property);
     } else {
       this.processSave(property);
     }
@@ -232,8 +249,11 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   next(): void {
-    this.validatePropertyId();
-    this.validateForm();
+    console.log(this.propertyForm);
+    if (!this.isUpdate) {
+      this.validatePropertyId();
+      this.validateForm();
+    }
     if (!this.isFinalDate() && !this.saleExist) {
       this.step = this.step + 1;
       window.scrollTo(0, 0);
@@ -256,6 +276,7 @@ export class PropertyUpdateComponent implements OnInit {
     mySale.finalDate = moment(this.propertyForm.get(['finalDate'])!.value, DATE_TIME_FORMAT);
     return {
       ...new Property(),
+      id: this.propertyForm.get(['id'])!.value,
       title: this.propertyForm.get(['title'])!.value,
       description: this.propertyForm.get(['description'])!.value,
       price: this.propertyForm.get(['price'])!.value,
@@ -319,20 +340,27 @@ export class PropertyUpdateComponent implements OnInit {
   public setCantonsList(provinceIndex: any): void {
     let mypro: Province;
     mypro = this.lstProvinces[provinceIndex - 1];
-
-    this.lat = Number(mypro.latitude);
-    this.lng = Number(mypro.longitude);
-    this.getAddress();
-    this.cantonService
-      .findByProvince(provinceIndex)
-      .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
-    this.isSelected = true;
+    if (mypro != null) {
+      this.lat = Number(mypro.latitude);
+      this.lng = Number(mypro.longitude);
+      this.getAddress();
+      this.cantonService
+        .findByProvince(provinceIndex)
+        .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+      this.isSelected = true;
+    } else {
+      this.cantonService
+        .findByProvince(provinceIndex)
+        .subscribe((response: HttpResponse<ICanton[]>) => (this.lstCantons = response.body || []));
+      this.isSelected = true;
+    }
   }
 
   public onSelectImage(event: any): void {
     if (this.files && this.files.length >= 5) {
       this.onRemoveImage(this.files[0]);
     }
+    console.log(event);
     this.files.push(...event.addedFiles);
     this.propertyForm.patchValue({
       propertyImages: 'true',
@@ -367,6 +395,36 @@ export class PropertyUpdateComponent implements OnInit {
     }
   }
 
+  public processUpdate(property: Property): void {
+    const fileData = this.files;
+    for (let index = 0; index < this.files.length; index++) {
+      this.imageService.uploadImage(fileData[index]).subscribe(
+        response => {
+          this.fileUrl = response.url;
+          let myproperty = new PropertyImage();
+          myproperty.imageCategory = this.propertyForm.get(['imageCategory'])!.value;
+          myproperty.url = this.fileUrl;
+          this.lstPropertyImages.push(myproperty);
+          if (this.lstPropertyImages.length === this.files.length) {
+            console.log(this.files.length, this.lstPropertyImages.length);
+            property.propertyImages = this.lstPropertyImages;
+            this.subscribeToSaveResponse(this.propertyService.update(property));
+          }
+        },
+        () => {
+          this.error = true;
+        }
+      );
+    }
+  }
+
+  public setFiles() {
+    const file = document.getElementById('urlCadastralPlan');
+    file?.setAttribute('src', this.catastralPlan);
+    const file2 = document.getElementById('urlRegistryStudy');
+    file2?.setAttribute('src', this.registryStudy);
+  }
+
   public onFileSelected(event: any, opc: number, labelregistryStudy: HTMLLabelElement): void {
     if (event.target.files[0].type != 'application/pdf') {
       alert('solo se permiten archivo PDF');
@@ -393,5 +451,33 @@ export class PropertyUpdateComponent implements OnInit {
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
     });
+  }
+
+  public setImages(): void {
+    let mypropertyImages = this.myProperty.propertyImages;
+    if (this.myProperty.propertyImages) {
+      mypropertyImages?.forEach(item => {
+        let f: File;
+        f = new File([''], String(item.url));
+        this.http.get(String(item.url), { responseType: 'blob' }).subscribe(res => {
+          console.log(res);
+          let file = new File([res], 'name', { type: res.type });
+          this.files.push(file);
+        });
+      });
+    }
+  }
+
+  private setData() {
+    console.log(this.myProperty);
+    this.lat = Number(this.myProperty.latitude);
+    this.lng = Number(this.myProperty.longitude);
+    this.catastralPlan = this.myProperty?.sale?.cadastralPlan;
+    this.registryStudy = this.myProperty?.sale?.registryStudy;
+    this.isUpdate = true;
+    this.setCantonsList(this.myProperty?.canton?.province?.id);
+    document.getElementById('field_propertyId')?.setAttribute('readonly', 'true');
+    this.setImages();
+    this.setFiles();
   }
 }

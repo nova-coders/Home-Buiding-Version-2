@@ -1,0 +1,52 @@
+<div class="container">
+    <div style="margin-top: 100px;">
+        <div class="row">
+            <div class="col-12">
+                <h4>Reporte de usuarios</h4>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover" style="font-size:13px">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Rol</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+
+                      <tr *ngFor="let user of userList | paginate: { itemsPerPage: 8, currentPage: initPage }">
+                        <td  *ngIf="user.user != null">
+                            <span  *ngIf="user.user.firstName != null">{{user.user.firstName}}</span>
+                        </td>
+                        <td  *ngIf="user.user == null">
+                            <span  >N/A</span>
+                        </td>
+
+                        <td>{{user.identification}}</td>
+                        <td>
+                            <span *ngIf="user.state">Activo</span>
+                            <span *ngIf="!user.state">Inactivo</span>
+                            </td>
+                        <td>N/A (Jhipster Default)</td>
+
+                      </tr>
+
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+
+        <div class="row my-5" style="font-size:13px">
+            <div class="col-12 text-center">
+                <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="initPage = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+</div>
