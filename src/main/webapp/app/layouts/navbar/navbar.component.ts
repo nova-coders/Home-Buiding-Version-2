@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   header: null;
   account: Account | null = null;
   userAccount: UserAccount;
+  professionalRegister: boolean | undefined;
 
   constructor(
     private loginService: LoginService,
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit {
     public route: ActivatedRoute,
     private servicePaymentService: ServicePaymentService
   ) {
+    this.professionalRegister = false;
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
     this.userAccount = new UserAccount();
     //Navbar automatically fix css
@@ -80,6 +82,9 @@ export class NavbarComponent implements OnInit {
       if (this.isAuthenticated()) {
         this.servicePaymentService.getUserAccount().subscribe(response => {
           this.userAccount = <UserAccount>response.body;
+          if (this.userAccount.publishingPackage != null) {
+            this.professionalRegister = this.userAccount.publishingPackage.professional;
+          }
         });
       }
     });
