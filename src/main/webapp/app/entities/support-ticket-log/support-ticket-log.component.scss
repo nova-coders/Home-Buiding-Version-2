@@ -9,8 +9,15 @@
   transition: 0.3s;
 }
 
-.imagenSoporte {
+.cropped {
+  width: 100%; /* width of container */
+  height: 300px; /* height of container */
   overflow: hidden;
+}
+
+.cropped img {
+  margin: 0px 0px 0px 0px;
+  opacity: 0.7;
 }
 
 .defaultCard {

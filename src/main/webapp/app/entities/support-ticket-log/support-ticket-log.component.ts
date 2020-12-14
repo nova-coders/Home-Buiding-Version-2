@@ -28,6 +28,8 @@ export class SupportTicketLogComponent implements OnInit, OnDestroy {
   client: User;
   ticketResolved = false;
   userAccount: IUserAccount | undefined;
+  clientPhone = '';
+  profilePicture = '';
 
   annotationsForm = this.fb.group({
     troubleshooting_commentary: [],
@@ -64,6 +66,8 @@ export class SupportTicketLogComponent implements OnInit, OnDestroy {
         this.ticketSelected = data.body;
         this.ticketResolved = this.ticketSelected.state;
         this.client = this.ticketSelected.client.user;
+        this.clientPhone = this.ticketSelected.client.phone;
+        this.profilePicture = this.ticketSelected.client.profilePicture;
         this.supportTicketLogService.findByTicketID(this.ticketNumber).subscribe(data => {
           this.supportTicketLogs = data.body || [];
         });
