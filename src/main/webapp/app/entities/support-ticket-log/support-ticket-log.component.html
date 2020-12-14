@@ -29,14 +29,30 @@
                                 <span *ngSwitchCase="true" class="badge badge-pill badge-success float-right">Abierto</span>
                                 <span *ngSwitchCase="false" class="badge badge-pill badge-danger float-right">Cerrado</span>
                             </div>
-                            <div class="col-md-3">
-                                <h5 class="card-title">Name: {{this.client.name}}</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
                             <div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">{{this.ticketSelected.title}}</li>
-                                    <li class="list-group-item">{{this.ticketSelected.message}}</li>
+                                    <li class="list-group-item">
+
+                                        <div class="card mb-6 defaultCard" style="max-width: 600px;">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-4">
+                                                    <img src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" class="card-img" alt="...">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Datos del cliente</h5>
+                                                        <h6><strong>Telefono: </strong>85433860</h6>
+                                                        <h6><strong>Correo: </strong>dgranadosl@ucenfotec.ac.cr</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    <li class="list-group-item">
+                                        <h5>{{this.ticketSelected.title}}</h5>
+                                        <p class="overflow-auto">{{this.ticketSelected.message}}</p>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -49,57 +65,38 @@
             </div>
 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <h3>Historial: </h3>
-                <!--<div *ngFor="let property of supportTicketLogs| paginate: { itemsPerPage: 3, currentPage: startPage }">-->
-                <div>
-                    <div class="card logCard">
+                <h3>Historial de soporte</h3>
+                <div *ngFor="let log of supportTicketLogs| paginate: { itemsPerPage: 3, currentPage: startPage }">
+                    <div class="card defaultCard mt-3">
                         <div class="card-header">
-                            <label>Log: </label>
+                            <label>Anotaciones del {{log.creationDate | date}}</label>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body overflow-auto">
                             <div>
                                 <ul class="list-group list-group-flush">
                                     <div>
                                         <h5>Comentarios:</h5>
-                                        <li class="list-group-item">Comentarios</li>
+                                        <li class="list-group-item">{{log.troubleshootingCommentary}}</li>
                                     </div>
                                     <div>
                                         <h5>Siguientes pasos:</h5>
-                                        <li class="list-group-item">Siguientes pasos</li>
+                                        <li class="list-group-item">{{log.nextStepCommentary}}</li>
                                     </div>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="card logCard">
-                        <div class="card-header">
-                            <label>Log: </label>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                <ul class="list-group list-group-flush">
-                                    <div>
-                                        <h5>Comentarios:</h5>
-                                        <li class="list-group-item">Comentarios</li>
-                                    </div>
-                                    <div>
-                                        <h5>Siguientes pasos:</h5>
-                                        <li class="list-group-item">Siguientes pasos</li>
-                                    </div>
-                                </ul>
-                            </div>
-                        </div>
+                </div>
+                <div class="row my-5">
+                    <div class="col-12 text-center">
+                        <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="startPage = $event"></pagination-controls>
                     </div>
-
-
                 </div>
             </div>
 
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <form name="form" role="form" [formGroup]="annotationsForm">
-                    <h3>Anotaciones: </h3>
+                    <h3>Nueva anotacion</h3>
                     <div>
                         <label class="form-control-label" for="troubleshooting_commentary">Comentarios: </label>
                         <textarea type="text" rows="10" class="form-control" id="troubleshooting_commentary" name="troubleshooting_commentary"

@@ -19,13 +19,13 @@ import { ServicePaymentService } from 'app/service-payment/service-payment.servi
   styleUrls: ['./support-ticket-log.component.scss'],
 })
 export class SupportTicketLogComponent implements OnInit, OnDestroy {
-  supportTicketLogs?: ISupportTicketLog[];
+  supportTicketLogs: ISupportTicketLog[] | [];
   startPage = 1;
   supportTicketLog: any;
   eventSubscriber?: Subscription;
   ticketNumber = -1;
   ticketSelected: any;
-  client: any;
+  client: User;
   ticketResolved = false;
   userAccount: IUserAccount | undefined;
 
@@ -48,6 +48,7 @@ export class SupportTicketLogComponent implements OnInit, OnDestroy {
     this.ticketSelected = new SupportTicket();
     this.client = new User();
     this.supportTicketLog = new SupportTicketLog();
+    this.supportTicketLogs = [];
   }
 
   ngOnInit(): void {
@@ -63,7 +64,9 @@ export class SupportTicketLogComponent implements OnInit, OnDestroy {
         this.ticketSelected = data.body;
         this.ticketResolved = this.ticketSelected.state;
         this.client = this.ticketSelected.client.user;
-        console.log(this.client);
+        this.supportTicketLogService.findByTicketID(this.ticketNumber).subscribe(data => {
+          this.supportTicketLogs = data.body || [];
+        });
       });
     });
     this.annotationsForm.patchValue({
@@ -81,10 +84,14 @@ export class SupportTicketLogComponent implements OnInit, OnDestroy {
   registerLog(): void {
     this.supportTicketLog.creationDate = moment();
     this.supportTicketLog.troubleshooting_commentary = this.annotationsForm.get(['troubleshooting_commentary'])!.value;
-    this.supportTicketLog.troubleshooting_commentary = this.annotationsForm.get(['next_step_commentary'])!.value;
-    console.log(this.supportTicketLog);
+    this.supportTicketLog.troubleshootingCommentary = this.annotationsForm.get(['troubleshooting_commentary'])!.value;
+    this.supportTicketLog.next_step_commentary = this.annotationsForm.get(['next_step_commentary'])!.value;
+    this.supportTicketLog.nextStepCommentary = this.annotationsForm.get(['next_step_commentary'])!.value;
+    this.supportTicketLog.supportTicket = this.ticketSelected;
     this.supportTicketLogService.create(this.supportTicketLog).subscribe(data => {
-      console.log(data);
+      this.supportTicketLogService.findByTicketID(this.ticketNumber).subscribe(data2 => {
+        this.supportTicketLogs = data2.body || [];
+      });
     });
   }
 
