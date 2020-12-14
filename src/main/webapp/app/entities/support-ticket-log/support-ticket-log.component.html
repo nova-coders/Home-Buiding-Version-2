@@ -44,20 +44,23 @@
                 <h3>Historial: </h3>
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div>
+                <form name="form" role="form" [formGroup]="annotationsForm">
                     <h3>Anotaciones: </h3>
                     <div>
-                        <label class="form-control-label" for="email1">Comentarios: </label>
-                        <textarea type="text" class="form-control" id="email1" name="email1" placeholder="This is a placeholder" rows="8"></textarea>
+                        <label class="form-control-label" for="troubleshooting_commentary">Comentarios: </label>
+                        <textarea type="text" rows="10" class="form-control" id="troubleshooting_commentary" name="troubleshooting_commentary"
+                                  placeholder="Aqui puedes agregar datos pertinentes al progreso del ticket."
+                                  formControlName="troubleshooting_commentary" #troubleshooting_commentary></textarea>
                     </div>
-                    <div>
-                        <label class="form-control-label" for="email2">Siguientes pasos: </label>
-                        <textarea type="text" class="form-control" id="email2" name="email2" placeholder="This is a placeholder" rows="8"></textarea>
+                    <div class="pt-2">
+                        <label class="form-control-label" for="next_step_commentary">Siguientes pasos: </label>
+                        <textarea type="text" class="form-control" id="next_step_commentary" name="next_step_commentary" placeholder="Aqui puedes anotar tus siguientes pasos"
+                                  rows="10" formControlName="next_step_commentary" #next_step_commentary></textarea>
                     </div>
                     <div class="pt-3">
-                        <button class="btn btn-primary">Guardar</button>
+                        <button (click)="registerLog()" class="btn btn-primary">Guardar</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
