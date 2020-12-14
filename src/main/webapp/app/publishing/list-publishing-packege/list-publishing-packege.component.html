@@ -20,15 +20,15 @@ tor<div class="container" style="margin-top: 110px;">
                             <h3>{{package.name}}</h3>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">Cracteristicas:</h5>
+                            <h5 class="card-title">Características:</h5>
                             <p class="card-text">Precio del paquete : {{package.price | currency: 'USD':'$':'0.0-0':'en-usd'}}</p>
                             <p class="card-text">Capacidad de propiedades en subasta: {{package.cantPropertySale}}</p>
-                            <p class="card-text">Cantidad de dias de duracion en subasta: {{package.cantDays}}</p>
-                            <p *ngIf="package.professional" class="card-text">Sí permitir al usuario registrarse como profecional</p>
-                            <p *ngIf="!package.professional" class="card-text">No permitir al usuario registrarse como profecional</p>
-                            <p *ngIf="package.type === 0" >Paquete tipo Gratis</p>
-                            <p *ngIf="package.type === 1">Paquete tipo Plata</p>
-                            <p *ngIf="package.type === 2">Paquete tipo Oro</p>
+                            <p class="card-text">Cantidad de días de duracion en subasta: {{package.cantDays}}</p>
+                            <p *ngIf="package.professional" class="card-text">Sí permitir al usuario registrarse como profesional</p>
+                            <p *ngIf="!package.professional" class="card-text">No permitir al usuario registrarse como profesional</p>
+                            <p *ngIf="package.type === 0" >Tipo de paquete: Gratis</p>
+                            <p *ngIf="package.type === 1">Tipo de paquete: Plata</p>
+                            <p *ngIf="package.type === 2">Tipo de paquete: Oro</p>
                             <a [routerLink]="['/updatePublishingPackage/',package.id]"  title="Actulializar paquete" class="btn btn-primary">Actualizar</a>
                             <jhi-delete-publishing-packege [idModalLabel]="'modalLabel'+package.id" [idModal]="'modal'+package.id" [publishingPackage]="package"></jhi-delete-publishing-packege>
                         </div>
