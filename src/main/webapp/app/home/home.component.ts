@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
-    console.log(this.route.url);
     if (this.isAuthenticated()) {
       const authoritiesLength = this.account?.authorities.length || 0;
       for (let i = 0; i < authoritiesLength; i++) {

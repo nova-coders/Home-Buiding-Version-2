@@ -163,4 +163,8 @@ export class UpdatePublishingPackegeComponent implements OnInit {
       }
     }
   }
+
+  public goBack() {
+    window.history.back();
+  }
 }
