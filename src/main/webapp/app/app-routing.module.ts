@@ -109,7 +109,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: PostProfessionalUserComponent,
         },
         {
-          path: 'ticketDetails',
+          path: 'ticketDetails/:id',
           component: SupportTicketLogComponent,
         },
         ...LAYOUT_ROUTES,

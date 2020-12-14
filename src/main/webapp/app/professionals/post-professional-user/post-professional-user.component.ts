@@ -8,7 +8,8 @@ import { Location } from '@angular/common';
 import { ProfessionalProfileUserService } from 'app/entities/professional-profile-user/professional-profile-user.service';
 import { MoneyTypeService } from 'app/entities/money-type/money-type.service';
 import { IMoneyType } from 'app/shared/model/money-type.model';
-import { now } from 'moment';
+import * as moment from 'moment/moment';
+import { UserAccountService } from 'app/entities/user-account/user-account.service';
 
 @Component({
   selector: 'jhi-post-professional-user',
@@ -34,6 +35,7 @@ export class PostProfessionalUserComponent implements OnInit {
 
   constructor(
     private servicePaymentService: ServicePaymentService,
+    private userAccountService: UserAccountService,
     private professionalProfileService: ProfessionalProfileUserService,
     private currencyService: MoneyTypeService,
     private location: Location,
@@ -73,7 +75,11 @@ export class PostProfessionalUserComponent implements OnInit {
   }
 
   changeAmountOnScreen(): void {
-    this.amount = this.serviceForm.get(['pricePerHour'])!.value;
+    if (this.serviceForm.get(['pricePerHour'])!.value == null || this.serviceForm.get(['pricePerHour'])!.value == undefined) {
+      this.amount = 0;
+    } else {
+      this.amount = this.serviceForm.get(['pricePerHour'])!.value;
+    }
   }
 
   createProfessionalService(): void {
@@ -85,12 +91,18 @@ export class PostProfessionalUserComponent implements OnInit {
       this.professionalProfileUser.description = this.serviceForm.get(['description'])!.value;
       this.professionalProfileUser.currency = this.serviceForm.get(['currency'])!.value;
       this.professionalProfileUser.state = true;
-      //this.professionalProfileUser.creationDate = now().toString();
+      this.professionalProfileUser.creationDate = moment();
       this.professionalProfileUser.userAccount = this.userAccount;
-      console.log('Check the user account: ');
-      console.log(this.professionalProfileUser);
       this.professionalProfileService.create(this.professionalProfileUser).subscribe(data => {
         console.log(data);
+        this.userAccount.professionalProfileUser = data.body;
+        console.log('This is the user Account updated, before going to POST: ');
+        console.log(this.userAccount);
+        this.userAccount.birthdate = moment(this.userAccount.birthdate);
+        this.userAccountService.update(this.userAccount).subscribe(data2 => {
+          console.log('This is the updated on BD, user Account: ');
+          console.log(data2);
+        });
         this.success = true;
       });
       window.scrollTo(0, 0);

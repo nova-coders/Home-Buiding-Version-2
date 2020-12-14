@@ -1,78 +1,65 @@
-<!--<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="homeBuildingApp.supportTicketLog.home.title">Support Ticket Logs</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-support-ticket-log" [routerLink]="['/support-ticket-log/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="homeBuildingApp.supportTicketLog.home.createLabel">
-            Create a new Support Ticket Log
-            </span>
-        </button>
-    </h2>
-
-    <jhi-alert-error></jhi-alert-error>
-
-    <jhi-alert></jhi-alert>
-
-    <div class="alert alert-warning" id="no-result" *ngIf="supportTicketLogs?.length === 0">
-        <span jhiTranslate="homeBuildingApp.supportTicketLog.home.notFound">No supportTicketLogs found</span>
-    </div>
-
-    <div class="table-responsive" id="entities" *ngIf="supportTicketLogs && supportTicketLogs.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.troubleshootingCommentary">Troubleshooting Commentary</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.nextStepCommentary">Next Step Commentary</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.creationDate">Creation Date</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicketLog.supportTicket">Support Ticket</span></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let supportTicketLog of supportTicketLogs ;trackBy: trackId">
-                    <td><a [routerLink]="['/support-ticket-log', supportTicketLog.id, 'view']">{{ supportTicketLog.id }}</a></td>
-                    <td>{{ supportTicketLog.troubleshootingCommentary }}</td>
-                    <td>{{ supportTicketLog.nextStepCommentary }}</td>
-                    <td>{{ supportTicketLog.creationDate | date:'medium' }}</td>
-                    <td>
-                        <div *ngIf="supportTicketLog.supportTicket">
-                            <a [routerLink]="['/support-ticket', supportTicketLog.supportTicket?.id, 'view']" >{{ supportTicketLog.supportTicket?.id }}</a>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/support-ticket-log', supportTicketLog.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/support-ticket-log', supportTicketLog.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(supportTicketLog)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>-->
-
 <div class="container" style="margin-top: 110px;">
     <div style="margin-top: 110px;" class="col-12 text-center">
-        <h1>Tiquete #{{TicketNumber}}</h1>
+        <h1>Ticket de soporte #{{ticketNumber}}</h1>
         <hr>
     </div>
+    <div id="mainCard">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                   aria-controls="pills-home" aria-selected="true">Estado</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                   aria-controls="pills-profile" aria-selected="false">Historial</a>
+            </li>
+            <li *ngIf="this.ticketResolved" class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+                   aria-controls="pills-contact" aria-selected="false">Ingresar Notas</a>
+            </li>
+        </ul>
+        <div class="tab-content pt-2 pl-1" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="card">
+                    <img class="card-img-top imagenSoporte" src="https://challengesworldwide.com/wp-content/uploads/2016/08/AdobeStock_101492468-1024x449-1160x665.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="col-md-12" [ngSwitch]="this.ticketResolved">
+                                <span *ngSwitchCase="true" class="badge badge-pill badge-success float-right">Abierto</span>
+                                <span *ngSwitchCase="false" class="badge badge-pill badge-danger float-right">Cerrado</span>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title">Name: {{this.client.name}}</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{this.ticketSelected.title}}</li>
+                        <li class="list-group-item">{{this.ticketSelected.message}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h3>Historial: </h3>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div>
+                    <h3>Anotaciones: </h3>
+                    <div>
+                        <label class="form-control-label" for="email1">Comentarios: </label>
+                        <textarea type="text" class="form-control" id="email1" name="email1" placeholder="This is a placeholder" rows="8"></textarea>
+                    </div>
+                    <div>
+                        <label class="form-control-label" for="email2">Siguientes pasos: </label>
+                        <textarea type="text" class="form-control" id="email2" name="email2" placeholder="This is a placeholder" rows="8"></textarea>
+                    </div>
+                    <div class="pt-3">
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

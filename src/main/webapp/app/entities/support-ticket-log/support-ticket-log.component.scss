@@ -1,0 +1,15 @@
+#mainCard {
+  box-shadow: 0 0 0px rgba(33, 33, 33, 0.2);
+  transition: 0.3s;
+  padding: 20px;
+}
+
+#mainCard:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  transition: 0.3s;
+}
+
+.imagenSoporte {
+  //max-height:100px;
+  overflow: hidden;
+}
