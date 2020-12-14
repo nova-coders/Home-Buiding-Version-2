@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
+import { Account } from 'app/core/user/account.model';
+
 import { LoginService } from '../../core/login/login.service';
 @Component({
   selector: 'jhi-log-in',
@@ -47,22 +49,27 @@ export class LogInComponent implements OnInit, AfterViewInit {
         rememberMe: this.loginForm.get('rememberMe')!.value,
       })
       .subscribe(
-        () => {
+        response => {
           this.authenticationError = false;
+          let account: Account;
+          account = <Account>response;
+          for (let i = 0; i < account.authorities.length; i++) {
+            if (account.authorities[i] === 'ROLE_ADMIN') {
+              this.router.navigate(['homeAdmin']);
+              return;
+            }
+          }
           if (
             this.router.url === '/account/register' ||
             this.router.url === '/auth/login' ||
             this.router.url.startsWith('/account/activate') ||
-            this.router.url.startsWith('/account/reset/')
+            this.router.url.startsWith('/account/reset/') ||
+            this.router.url.startsWith('/see-auction')
           ) {
-            this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd | any) => {
-              this.previousUrl = event.url;
-              if (this.previousUrl.startsWith('/see-auction/') || this.previousUrl.startsWith('/document/')) {
-                this.router.navigate([this.previousUrl]);
-              } else {
-                this.router.navigate([this.router.url]);
-              }
-            });
+            let previousUrl: string = window.localStorage.getItem('previousUrl') || '/';
+            this.router.navigate([previousUrl]);
+          } else {
+            console.log('Hola mundo');
           }
         },
         () => (this.authenticationError = true)

@@ -26,6 +26,8 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
   public startPage = 1;
   public idDocumen = 0;
   public userAccount: UserAccount;
+  public price: any;
+  public discount: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -41,9 +43,12 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
     this.offers = [];
     this.images = [];
     this.userAccount = new UserAccount();
+    this.price = 0;
+    this.discount = 0;
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.servicePaymentService.getUserAccount().subscribe((response: any) => {
       this.userAccount = response.body;
     });
@@ -54,6 +59,11 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
       this.idProperty = params['id'];
       this.propertyService.find(this.idProperty).subscribe(response => {
         this.property = response.body as Property;
+        this.price = this.property.price;
+        this.discount = this.property.discount;
+        let discount = (this.property.discount || 0) / 100;
+        discount = this.price * discount;
+        this.price = this.price - discount;
         if (this.property.sale != null) {
           this.seeAuctionService.geByOffersBySale(this.property.sale?.id as number).subscribe(response => {
             this.offers = response;
@@ -83,8 +93,11 @@ export class SeeAuctionComponent implements OnInit, OnDestroy {
         this.property.state = 3;
         if (response === -1) {
         } else {
+          this.idDocumen = response;
           this.notifyClients();
-          this.goDocument(response);
+          setTimeout(() => {
+            this.goDocument(response);
+          }, 3000);
         }
       },
       error => {

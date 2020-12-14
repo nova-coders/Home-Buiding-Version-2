@@ -4,8 +4,14 @@
         <span *ngIf="offers.length > 0 && property.state != 1" class="badge badge-danger">Subasta cerrada</span>
         <hr class="w-50">
     </div>
-    <div class="col-md-12 col-lg-12 text-center">
-        <jhi-image-viewer [images]="images"></jhi-image-viewer>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="row">
+            <div class="col-md-1 col-lg-1 col-sm-12"></div>
+            <div class="col-md-10 col-lg-10 col-sm-12">
+                <jhi-image-viewer [images]="images"></jhi-image-viewer>
+            </div>
+            <div class="col-md-1 col-lg-1 col-sm-12"></div>
+        </div>
     </div>
     <div class="col-md-12 col-lg-12 text-center mt-2">
         <div class="container">
@@ -48,7 +54,7 @@
                         <h2 *ngIf="offers.length > 0">Oferta más alta: {{ this.maximumBid | currency:'CRC':'₡':'4.0-0':'en-cr'}}</h2>
                         <hr>
                         <div *ngIf="userAccount.id != property?.userAccount?.id && property.state === 1">
-                            <jhi-modal-bid (setMaxBid)="setOffer($event)" [property]="property" currenValue="{{property.discount === 0 ?property.price: (property.price) - (property.price*property.discount/100)}}" [sale]="property?.sale"  [offers]="offers"  [maximumBid]="maximumBid"></jhi-modal-bid>
+                            <jhi-modal-bid (setMaxBid)="setOffer($event)" [property]="property" currenValue="{{(property.price) - (property.price * property.discount/100)}}" [sale]="property?.sale"  [offers]="offers"  [maximumBid]="maximumBid"></jhi-modal-bid>
                         </div>
                         <div  *ngIf="userAccount.id === property?.userAccount?.id && property.state === 1" class="alert alert-info" role="alert">
                             {{userAccount?.user?.firstName+' '+userAccount?.user?.lastName+' '}} eres el propietario de la subasta, por lo que no puedes ofertar.

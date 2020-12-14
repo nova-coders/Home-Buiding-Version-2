@@ -27,6 +27,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AngularImageViewerModule } from 'angular-x-image-viewer';
 import { ImageViewerComponent } from './see-auction/components/image-viewer/image-viewer.component';
 import { ContractComponent } from './contract/contract.component';
+import { ChartsModule } from 'ng2-charts';
 /* eslint-disable */
 import { ShowMapComponent } from './global-components/show-map/show-map.component';
 import { BidAtAuctionComponent } from './bid-at-auction/bid-at-auction.component';
@@ -38,6 +39,19 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
 import { ListSalesComponent } from './sales/list-sales/list-sales.component';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
 import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/modalconfirm.component';
+import { DeleteAuctionComponent } from './see-auction/components/delete-auction/delete-auction.component';
+import { ListProfessionalComponent } from './professionals/list-professional/list-professional.component';
+import { ViewProfessionalComponent } from './professionals/view-professional/view-professional.component';
+import { UsersReportComponent } from './reports/users-report/users-report.component';
+import { CreatePublishingPackageComponent } from './publishing/create-publishing-package/create-publishing-package.component';
+import { ListPublishingPackegeComponent } from './publishing/list-publishing-packege/list-publishing-packege.component';
+import { UpdatePublishingPackegeComponent } from './publishing/update-publishing-packege/update-publishing-packege.component';
+import { DeletePublishingPackegeComponent } from './publishing/delete-publishing-packege/delete-publishing-packege.component';
+import { PostProfessionalUserComponent } from './professionals/post-professional-user/post-professional-user.component';
+import { HomeAdminComponent } from './home-admin/home-admin.component';
+import { ReportAuctionComponent } from './report-auction/report-auction.component';
+import { PieChartAuctionComponent } from './report-auction/components/pie-chart-auction/pie-chart-auction.component';
+import { BarChartAuctionComponent } from './report-auction/components/bar-chart-auction/bar-chart-auction.component';
 
 @NgModule({
   imports: [
@@ -57,6 +71,7 @@ import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/m
     NgxPayPalModule,
     NgxPaginationModule,
     AngularImageViewerModule,
+    ChartsModule,
   ],
   declarations: [
     MainComponent,
@@ -81,6 +96,19 @@ import { ModalconfirmComponent } from 'app/see-auction/components/modalconfirm/m
     ListSalesComponent,
     ListUserSalesComponent,
     ModalconfirmComponent,
+    DeleteAuctionComponent,
+    ListProfessionalComponent,
+    ViewProfessionalComponent,
+    UsersReportComponent,
+    CreatePublishingPackageComponent,
+    ListPublishingPackegeComponent,
+    UpdatePublishingPackegeComponent,
+    DeletePublishingPackegeComponent,
+    PostProfessionalUserComponent,
+    HomeAdminComponent,
+    ReportAuctionComponent,
+    PieChartAuctionComponent,
+    BarChartAuctionComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],

@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <div class="chart">
+            <canvas baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieChartType"
+                    [options]="pieChartOptions"
+                    [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
+            </canvas>
+        </div>
+    </div>
+</div>
+<div>
+    <button class="btn-sm btn btn-outline-primary mt-1" mat-button mat-raised-button color="primary" (click)="pieChartLegend=!pieChartLegend">Alternar label</button>
+    <button class="btn-sm btn btn-outline-primary mt-1" mat-button mat-raised-button color="primary" (click)="changeLegendPosition()">Posición del label</button>
+</div>

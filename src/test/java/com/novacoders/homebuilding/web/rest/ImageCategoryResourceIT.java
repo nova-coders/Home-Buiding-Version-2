@@ -71,7 +71,7 @@ public class ImageCategoryResourceIT {
         imageCategory = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createImageCategory() throws Exception {
         int databaseSizeBeforeCreate = imageCategoryRepository.findAll().size();
@@ -88,7 +88,7 @@ public class ImageCategoryResourceIT {
         assertThat(testImageCategory.getName()).isEqualTo(DEFAULT_NAME);
     }
 
-    @Test
+
     @Transactional
     public void createImageCategoryWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = imageCategoryRepository.findAll().size();
@@ -108,7 +108,7 @@ public class ImageCategoryResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllImageCategories() throws Exception {
         // Initialize the database
@@ -121,8 +121,8 @@ public class ImageCategoryResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(imageCategory.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
-    
-    @Test
+
+
     @Transactional
     public void getImageCategory() throws Exception {
         // Initialize the database
@@ -135,7 +135,7 @@ public class ImageCategoryResourceIT {
             .andExpect(jsonPath("$.id").value(imageCategory.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
-    @Test
+
     @Transactional
     public void getNonExistingImageCategory() throws Exception {
         // Get the imageCategory
@@ -143,7 +143,7 @@ public class ImageCategoryResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateImageCategory() throws Exception {
         // Initialize the database
@@ -170,7 +170,7 @@ public class ImageCategoryResourceIT {
         assertThat(testImageCategory.getName()).isEqualTo(UPDATED_NAME);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingImageCategory() throws Exception {
         int databaseSizeBeforeUpdate = imageCategoryRepository.findAll().size();
@@ -186,7 +186,7 @@ public class ImageCategoryResourceIT {
         assertThat(imageCategoryList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteImageCategory() throws Exception {
         // Initialize the database

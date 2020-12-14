@@ -65,7 +65,7 @@ public class CustomAuditEventRepositoryIT {
         testOtherUserEvent.setAuditEventDate(oneHourAgo);
     }
 
-    @Test
+
     public void addAuditEvent() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", "test-value");
@@ -82,7 +82,7 @@ public class CustomAuditEventRepositoryIT {
             .isEqualTo(event.getTimestamp().truncatedTo(ChronoUnit.MILLIS));
     }
 
-    @Test
+
     public void addAuditEventTruncateLargeData() {
         Map<String, Object> data = new HashMap<>();
         StringBuilder largeData = new StringBuilder();
@@ -105,7 +105,7 @@ public class CustomAuditEventRepositoryIT {
             .isEqualTo(event.getTimestamp().truncatedTo(ChronoUnit.MILLIS));
     }
 
-    @Test
+
     public void testAddEventWithWebAuthenticationDetails() {
         HttpSession session = new MockHttpSession(null, "test-session-id");
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -123,7 +123,7 @@ public class CustomAuditEventRepositoryIT {
         assertThat(persistentAuditEvent.getData().get("sessionId")).isEqualTo("test-session-id");
     }
 
-    @Test
+
     public void testAddEventWithNullData() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", null);
@@ -135,7 +135,7 @@ public class CustomAuditEventRepositoryIT {
         assertThat(persistentAuditEvent.getData().get("test-key")).isEqualTo("null");
     }
 
-    @Test
+
     public void addAuditEventWithAnonymousUser() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", "test-value");
@@ -145,7 +145,7 @@ public class CustomAuditEventRepositoryIT {
         assertThat(persistentAuditEvents).hasSize(0);
     }
 
-    @Test
+
     public void addAuditEventWithAuthorizationFailureType() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", "test-value");

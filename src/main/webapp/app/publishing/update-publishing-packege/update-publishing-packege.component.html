@@ -1,0 +1,107 @@
+<div style="margin-top: 110px;" class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 text-center">
+            <h1>Actualizar paquete publicitario</h1>
+            <hr class="w-50">
+        </div>
+        <div *ngIf="successSave" class="col-md-12 col-lg-12 text-center">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                ¡La actualización del paquete publicitario fue exitosa!
+                <button type="button" class="close"  (click)="setSuccessSave()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="!successSave"  class="col-md-6 col-lg-6 col-sm-12">
+            <div class="form-group">
+                <label for="name">Ingrese el nombre del paquete:</label>
+                <input (ngModelChange)="validateFunction(0)" (blur)="validateFunction(0)" type="text" name="name" class="form-control" id="name" [(ngModel)]="publishingPackage.name">
+                <p class="text-danger" *ngIf="!validate[0].valid">Debe ingresar un nombre mayor a 5 letras</p>
+            </div>
+            <div class="form-group">
+                <label for="price">Ingrese el precio que valdrá el paquete en dólares ($):</label>
+                <input  (change)="validateFunction(4)" (blur)="validateFunction(4)" type="number" name="price" class="form-control w-50 d-inline-block" id="price" [(ngModel)]="publishingPackage.price">
+                <span class="d-inline-block ml-1 h4">{{publishingPackage.price | currency: 'USD':'$':'0.0-0':'en-usd'}}</span>
+                <p class="text-danger" *ngIf="!validate[1].valid && !errorFree">¡Debe ingresar un precio mayor a cero dólares!</p>
+                <p class="text-danger" *ngIf="errorFree">¡Si el paquete es gratis debe tener un precio de cero dólares!</p>
+            </div>
+            <div class="form-group">
+                <label for="cantPropertySale">Indique la cantidad de propiedades que un usuario que compra este paquete puede publicar para subasta:</label>
+                <input (change)="validateFunction(2)" (blur)="validateFunction(2)" type="number" name="cantPropertySale" class="form-control w-50 d-inline-block" id="cantPropertySale" [(ngModel)]="publishingPackage.cantPropertySale">
+                <span class="d-inline-block ml-1 h4">{{publishingPackage.cantPropertySale }} {{publishingPackage.cantPropertySale === 0 ||publishingPackage.cantPropertySale === 1 ? 'inmueble': 'inmuebles'}}</span>
+                <p class="text-danger" *ngIf="!validate[2].valid">¡Debe ingresar la cantidad de propiedades mayor a cero!</p>
+            </div>
+            <div class="form-group">
+                <label for="cantDays">Indique el número de días que una publicación durará en la subasta:</label>
+                <input (change)="validateFunction(3)" (blur)="validateFunction(3)" type="number" name="cantDays" class="form-control w-50 d-inline-block" id="cantDays" [(ngModel)]="publishingPackage.cantDays">
+                <span class="d-inline-block ml-1 h4">{{publishingPackage.cantDays }} {{publishingPackage.cantDays === 0 ||publishingPackage.cantDays === 1 ? 'día': 'días'}} </span>
+                <p class="text-danger" *ngIf="!validate[3].valid">¡Debe ingresar el numero de días mayor a cero!</p>
+            </div>
+        </div>
+        <div *ngIf="!successSave"  class="col-md-6 col-lg-6 col-sm-12">
+            <div class="form-group mt-2">
+                <label class="form-check-label" for="professional1">
+                    ¿ Este paquete permite a un usuario registrarse como profesional?
+                </label>
+                <div class="form-check mt-2">
+                    <input class="form-check-input pointer" type="radio" name="professional"  id="professional1" [checked]="true"  [(ngModel)]="publishingPackage.professional" [value]="true">
+                    <label class="form-check-label pointer" for="professional1">
+                        Sí
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input pointer" type="radio" name="professional" id="professional2" [(ngModel)]="publishingPackage.professional" [value]="false">
+                    <label class="form-check-label pointer" for="professional2">
+                        No
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <label class="form-check-label mb-2">
+                        Seleccione el tipo de paquete:
+                    </label>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-6 mt-1 text-center" >
+                    <div>
+                        <label for="icon1">
+                            <i style="font-size: 30px; color: #ffffff;" class="pointer p-2 bg-primary  fa fa-leaf"></i>
+                        </label>
+                    </div>
+                    <div class="text-center">
+                        <label for="icon1" class="d-block pointer">Gratis</label>
+                        <input (change)="validateFunction(4)" class="pointer" type="radio" name="icono" id="icon1" [checked]="true" [(ngModel)]="publishingPackage.type" [value]="0">
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-6 mt-1 text-center" >
+                    <div>
+                        <label for="icon2">
+                            <i style="font-size: 30px; color: #ffffff;" class="pointer p-2 bg-primary  far fa-gem"></i>
+                        </label>
+                    </div>
+                    <div class="text-center">
+                        <label for="icon2" class="d-block pointer">Plata</label>
+                        <input (change)="validateFunction(4)" class="pointer" type="radio" name="icono" id="icon2" [(ngModel)]="publishingPackage.type" [value]="1">
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-6 mt-1 text-center" >
+                    <div>
+                        <label for="icon3">
+                            <i style="font-size: 30px; color: #ffffff;" class="pointer p-2 bg-primary  fas fa-spa"></i>
+                        </label>
+                    </div>
+                    <div class="text-center">
+                        <label for="icon3" class="d-block pointer">Oro</label>
+                        <input (change)="validateFunction(4)" class="pointer" type="radio" name="icono" id="icon3" [(ngModel)]="publishingPackage.type" [value]="2">
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 mt-5 ">
+                    <br>
+                    <br>
+                    <button class="btn btn-primary float-right" (click)="savePackage()">Actualizar paquete</button>
+                    <a class="btn btn-secondary float-right mr-3" (click)="goBack()" >Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

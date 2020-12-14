@@ -30,8 +30,8 @@
         </div>
     </div>
 
-    <div *ngIf="publishingPackages && publishingPackages.length > 0 && isPayment" class="row">
-        <div *ngFor="let publishingPackage of publishingPackages; index as i ;trackBy: trackId" class="col-md-4 col-lg-4 col-md-4 col-sm-12">
+    <div *ngIf="publishingPackages && packages.length > 0 && isPayment" class="row">
+        <div *ngFor="let publishingPackage of packages; index as i ;trackBy: trackId" class="col-md-4 col-lg-4 col-md-4 col-sm-12">
             <div class="card text-center m-2 height-2"  *ngIf="i < 3 ">
                 <div class="card-body">
 

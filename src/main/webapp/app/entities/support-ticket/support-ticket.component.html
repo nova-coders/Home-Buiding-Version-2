@@ -1,79 +1,124 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="homeBuildingApp.supportTicket.home.title">Support Tickets</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-support-ticket" [routerLink]="['/support-ticket/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="homeBuildingApp.supportTicket.home.createLabel">
-            Create a new Support Ticket
-            </span>
-        </button>
-    </h2>
-
-    <jhi-alert-error></jhi-alert-error>
-
-    <jhi-alert></jhi-alert>
-
-    <div class="alert alert-warning" id="no-result" *ngIf="supportTickets?.length === 0">
-        <span jhiTranslate="homeBuildingApp.supportTicket.home.notFound">No supportTickets found</span>
+<div class="container" style="margin-top: 110px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1>Tiquetes de soporte</h1>
+            <hr>
+        </div>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="supportTickets && supportTickets.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.title">Title</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.message">Message</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.creationDate">Creation Date</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.state">State</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.client">Client</span></th>
-                    <th scope="col" ><span jhiTranslate="homeBuildingApp.supportTicket.signOffUser">Sign Off User</span></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let supportTicket of supportTickets ;trackBy: trackId">
-                    <td><a [routerLink]="['/support-ticket', supportTicket.id, 'view']">{{ supportTicket.id }}</a></td>
-                    <td>{{ supportTicket.title }}</td>
-                    <td>{{ supportTicket.message }}</td>
-                    <td>{{ supportTicket.creationDate | date:'medium' }}</td>
-                    <td>{{ supportTicket.state }}</td>
-                    <td>
-                        <div *ngIf="supportTicket.client">
-                            <a [routerLink]="['/user-account', supportTicket.client?.id, 'view']" >{{ supportTicket.client?.id }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="supportTicket.signOffUser">
-                            <a [routerLink]="['/user-account', supportTicket.signOffUser?.id, 'view']" >{{ supportTicket.signOffUser?.id }}</a>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/support-ticket', supportTicket.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-warning" id="no-result" *ngIf="supportTickets?.length === 0">
+                <span>No se encontraron tiquetes de soporte</span>
+            </div>
+        </div>
+    </div>
 
-                            <button type="submit"
-                                    [routerLink]="['/support-ticket', supportTicket.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(supportTicket)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                            </button>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 p-0">
+            <div class="card">
+                <div class="card-header">
+                    <label class="card-subtitle">Puede filtrar los tiquetes por un rango de fechas y/o por estado.</label>
+                </div>
+                <div class="card-body">
+                    <form name="searchForm" role="form" novalidate (ngSubmit)="search()" [formGroup]="searchForm">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="startDate">Fecha de inicio</label>
+                                    <input type="date" class="form-control" name="startDate" id="startDate" formControlName="startDate"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="finalDate">Fecha final</label>
+                                    <input type="date" class="form-control" name="finalDate" id="finalDate" formControlName="finalDate"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="state">Estado</label>
+                                    <select class="form-control" name="state" id="state" formControlName="state">
+                                        <option value="">Todos</option>
+                                        <option value="1">Abierto</option>
+                                        <option value="0">Cerrado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info" style="margin-top: 30px;"/>
+                                </div>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div id="entities" *ngIf="supportTickets && supportTickets.length > 0">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 p-0 border">
+                <div class="list-group">
+                    <a class="list-group-item border-top-0 border-left-0 border-right-0">Lista de tiquetes de soporte</a>
+
+                    <a (click)="showTicket(ticket)" class="list-group-item ticketItems border-left-0 border-right-0" *ngFor="let ticket of supportTickets | paginate: { itemsPerPage: 5, currentPage: startPage }; index as ind">
+                        <div class="row">
+                            <div *ngIf="ticket.client?.profilePicture != null" class="col-3">
+                                <img class="avatar mt-2" [src]="ticket.client?.profilePicture" alt="Avatar">
+                            </div>
+                            <div *ngIf="ticket.client?.profilePicture == null" class="col-3">
+                                <img class="avatar mt-2" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" alt="Avatar">
+                            </div>
+                            <div class="col-9">
+                                <span *ngIf="ticket.state" class="badge badge-success float-right">Abierto</span>
+                                <span *ngIf="!ticket.state" class="badge badge-danger float-right">Cerrado</span>
+
+                                <h4 class="list-group-heading" style="font-size: 14px;">{{ticket.title}}</h4>
+                                <p class="list-group-content m-0" style="font-size: 12px;">{{ticket.creationDate | date: 'MMM d \'del \'y \'a las\' h:mm a'}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item border-left-0 border-right-0">
+                        <div class="w-80 pr-5">
+                            <pagination-controls class="text-center" nextLabel="" previousLabel="" (pageChange)="startPage = $event"></pagination-controls>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-6 border-top border-bottom border-right p-0" style="min-height: 582px;">
+                <div *ngIf="hasTicket" class="card h-100">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-2" *ngIf="ticketSelected?.client?.profilePicture != null">
+                                <img class="avatar ml-3 mt-2" [src]="ticketSelected?.client?.profilePicture" alt="Avatar">
+                            </div>
+                            <div class="col-md-2" *ngIf="ticketSelected?.client?.profilePicture == null">
+                                <img class="avatar ml-3 mt-2" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" alt="Avatar">
+                            </div>
+                            <div class="col-md-10">
+                                <p class="m-0 font-weight-bold">{{ticketSelected?.client?.user?.firstName}} {{ticketSelected?.client?.user?.lastName}} <label style="font-size: 14px;"> ({{ticketSelected?.client?.user?.email}})</label></p>
+                                <p class="m-0">{{ticketSelected?.creationDate | date: 'MMM d \'del \'y \'a las\' h:mm a'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4>{{ticketSelected?.title}}</h4>
+                        <p>
+                            {{ticketSelected?.message}}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary">Cerrar</button>
+                    </div>
+                </div>
+
+                <div *ngIf="!hasTicket" class="text-center my-5">
+                    No ha seleccionado ning&uacute;n tiquete de soporte.
+                </div>
+            </div>
+        </div>
     </div>
 </div>

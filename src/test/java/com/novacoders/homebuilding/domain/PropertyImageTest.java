@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class PropertyImageTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(PropertyImage.class);
         PropertyImage propertyImage1 = new PropertyImage();

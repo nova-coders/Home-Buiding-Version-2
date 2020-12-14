@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class RentTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Rent.class);
         Rent rent1 = new Rent();

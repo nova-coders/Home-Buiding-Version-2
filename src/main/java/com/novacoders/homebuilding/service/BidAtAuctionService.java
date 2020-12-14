@@ -48,7 +48,8 @@ public class BidAtAuctionService {
                 Optional <Property> property = this.propertyService.findPropertyBySale(offer.getSale().getId());
                 if(property.isPresent()) {
                     if(property.get().getState() == 1) {
-                        if(property.get().getPrice() < offer.getAmount()) {
+                        double price = (property.get().getPrice()) - (property.get().getPrice() * property.get().getDiscount()/100);
+                        if(price < offer.getAmount()) {
                             offer = this.bidAtAuctionRepository.save(offer);
                             listObject.add(offer);
                             status = 1;

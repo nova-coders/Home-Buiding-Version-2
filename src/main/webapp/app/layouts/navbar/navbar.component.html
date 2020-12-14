@@ -10,7 +10,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item  {{router.url === '/'?'active d-none':''}}">
+                <li class="nav-item  {{router.url === '/' || router.url === '/homeAdmin'?'active d-none':''}}">
                     <a class="nav-link" [routerLink]="['/']">
                         <span>
                            <i class="fa fa-home"></i>
@@ -23,6 +23,14 @@
                         <span>
                             <i class="fa fa-university"></i>
                             <span >Subastas</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{router.url === '/professionals'?'active d-none':''}}"  *ngIf="isAuthenticated()">
+                    <a class="nav-link" [routerLink]="['/professionals']">
+                        <span>
+                            <i class="fa fa-user-alt"></i>
+                            <span >Profesionales</span>
                         </span>
                     </a>
                 </li>
@@ -82,7 +90,7 @@
                         <i style="color: chartreuse" class="fas fa-spa float-right" *ngIf="userAccount?.publishingPackage?.type === 2"
                            data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: {{userAccount?.publishingPackage?.name}}"></i>
                     </a>
-                    <a class="dropdown-item" [routerLink]="['/property/new']">
+                    <a (click)="validatePackage()" data-toggle="modal" [attr.data-target]="'#'+isInvalid" class="dropdown-item">
                         <i class="fa fa-building"></i>
                         <span>Registrar subasta</span>
                     </a>
@@ -94,6 +102,11 @@
                         <i class="fa fa-calendar"></i>
                         <span>Citas</span>
                     </a>-->
+
+                    <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/listPublishingPackage']">
+                        <i class="fa fa-object-group"></i>
+                        <span>Paquetes de plublicidad</span>
+                    </a>
                     <a class="dropdown-item"  [routerLink]="['/mySales']">
                         <i class="fa fa-object-group"></i>
                         <span>Mis subastas</span>
@@ -124,4 +137,24 @@
         </div>
     </nav>
 </header>
+<div class="modal"  id="exampleModalCenter" tabindex="-1" role="dialog" #content>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Mensaje informativo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Lo sentimos ,pero no puedes registrar mas subastas debido al paquete de publicidad.
+                    <br><br> Para adquirir otro paquete y tener mas posibilidades de subastar más inmuebles. Haz click en <a class>Comprar otro paquete</a> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a routerLink="/servicepayment" type="button" class="btn btn-primary" data-dismiss="modal">Comprar otro paquete</a>
+            </div>
+        </div>
+    </div>
+</div>
 

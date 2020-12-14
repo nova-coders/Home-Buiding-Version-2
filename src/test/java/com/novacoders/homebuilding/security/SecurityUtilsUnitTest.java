@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SecurityUtilsUnitTest {
 
-    @Test
+
     public void testGetCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
@@ -27,7 +27,7 @@ public class SecurityUtilsUnitTest {
         assertThat(login).contains("admin");
     }
 
-    @Test
+
     public void testgetCurrentUserJWT() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "token"));
@@ -36,7 +36,7 @@ public class SecurityUtilsUnitTest {
         assertThat(jwt).contains("token");
     }
 
-    @Test
+
     public void testIsAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
@@ -45,7 +45,7 @@ public class SecurityUtilsUnitTest {
         assertThat(isAuthenticated).isTrue();
     }
 
-    @Test
+
     public void testAnonymousIsNotAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -56,7 +56,7 @@ public class SecurityUtilsUnitTest {
         assertThat(isAuthenticated).isFalse();
     }
 
-    @Test
+
     public void testIsCurrentUserInRole() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();

@@ -3,7 +3,7 @@
     "supportTicket": {
       "home": {
         "title": "Support Tickets",
-        "createLabel": "Crear nuevo Support Ticket",
+        "createLabel": "Crear tiquete de soporte",
         "createOrEditLabel": "Crear o editar Support Ticket",
         "notFound": "Ningún Support Tickets encontrado"
       },
@@ -16,8 +16,8 @@
       "detail": {
         "title": "Support Ticket"
       },
-      "title": "Title",
-      "message": "Message",
+      "title": "Título",
+      "message": "Mensaje",
       "creationDate": "Creation Date",
       "state": "State",
       "supportTicketLog": "Support Ticket Log",

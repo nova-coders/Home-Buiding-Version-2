@@ -68,6 +68,27 @@ public class AuctionService {
         }
         throw new ResourceException("Action Invalid Data");
     }
+    public String deleteAuction(long propertyId) {
+        Optional<Property> oProperty = this.propertyRepository.findById(propertyId);
+        Optional<User> user = SecurityUtils.getCurrentUserLogin().flatMap( userRepository::findOneByLogin);
+        if (user.isPresent()) {
+            if (oProperty.isPresent()) {
+                Property property = oProperty.get();
+                List<Offer> offerList = this.findOfferBySale(property.getSale().getId());
+                if (offerList.size() > 0) {
+                    property.setState(0);
+                    this.propertyRepository.save(property);
+                    this.mailAuctionService.sendAuctionEmailToBuyerUserDelete(offerList.get(0).getUserAccount(),property);
+                    return "1";
+                } else {
+                    property.setState(0);
+                    this.propertyRepository.save(property);
+                    return "1";
+                }
+            }
+        }
+        throw new ResourceException("Action Invalid Data");
+    }
     public String closeAuctionExpire(long propertyId) {
         Optional<Property> oProperty = this.propertyRepository.findById(propertyId);
         if (oProperty.isPresent()) {
