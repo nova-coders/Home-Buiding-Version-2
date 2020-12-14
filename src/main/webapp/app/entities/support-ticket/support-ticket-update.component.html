@@ -6,10 +6,13 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-8" *ngIf="success">
             <div class="alert alert-success" *ngIf="success">
                 El tiquete se ha enviado con &eacute;xito, se atender&aacute; lo m&aacute;s pronto posible.
+                <a (click)="previousState()" class="font-weight-bold">Volver a la p&aacute;gina anterior.</a>
             </div>
+        </div>
+        <div class="col-8" *ngIf="!success">
             <div class="alert alert-danger" *ngIf="error">
                 Lo sentimos, ocurri&oacute; un error al enviar el tiquete.
             </div>
@@ -41,8 +44,8 @@
 
                         <div class="form-group">
                             <label class="form-control-label" jhiTranslate="homeBuildingApp.supportTicket.message" for="field_message">Message</label>
-                            <input type="text" class="form-control" name="message" id="field_message"
-                                   formControlName="message"/>
+                            <textarea type="text" class="form-control" name="message" id="field_message"
+                                   formControlName="message" rows="6"></textarea>
 
                             <div *ngIf="editForm.get('message')!.invalid && (editForm.get('message')!.dirty!)">
                                 <small class="form-text text-danger"
@@ -69,7 +72,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

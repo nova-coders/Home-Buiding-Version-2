@@ -118,6 +118,7 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.activatedRoute.data.subscribe(({ property }) => {
       this.saleService
         .query({ filter: 'property-is-null' })

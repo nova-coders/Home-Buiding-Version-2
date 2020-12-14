@@ -36,6 +36,7 @@ export class PieChartAuctionComponent implements OnInit {
       backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)'],
     },
   ];
+
   public propertyList: Property[];
   constructor(private propertyService: PropertyService) {
     this.propertyList = [];
