@@ -1,37 +1,44 @@
 <div class="container" style="margin-top: 110px;">
-    <h2 id="page-heading">
-        <span>Tiquetes de soporte</span>
-    </h2>
-
-    <div class="alert alert-warning" id="no-result" *ngIf="supportTickets?.length === 0">
-        <span jhiTranslate="homeBuildingApp.supportTicket.home.notFound">No supportTickets found</span>
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1>Tiquetes de soporte</h1>
+            <hr>
+        </div>
     </div>
 
-    <div id="entities" *ngIf="supportTickets && supportTickets.length > 0">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 p-0">
-                <div class="card">
-                    <div class="card-header">
-                        <label class="card-subtitle">Puede filtrar los tiquetes por un rango de fechas y/o por estado.</label>
-                    </div>
-                    <div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-warning" id="no-result" *ngIf="supportTickets?.length === 0">
+                <span>No se encontraron tiquetes de soporte</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 p-0">
+            <div class="card">
+                <div class="card-header">
+                    <label class="card-subtitle">Puede filtrar los tiquetes por un rango de fechas y/o por estado.</label>
+                </div>
+                <div class="card-body">
+                    <form name="searchForm" role="form" novalidate (ngSubmit)="search()" [formGroup]="searchForm">
                         <div class="row">
                             <div class="col-md-3 col-sm-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="field_fecha_inicio">Fecha de inicio</label>
-                                    <input type="date" class="form-control" name="fechaInicio" id="field_fecha_inicio" formControlName="fechaInicio"/>
+                                    <label class="form-control-label" for="startDate">Fecha de inicio</label>
+                                    <input type="date" class="form-control" name="startDate" id="startDate" formControlName="startDate"/>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="field_fecha_final">Fecha final</label>
-                                    <input type="date" class="form-control" name="fechaFinal" id="field_fecha_final" formControlName="fechaFinal"/>
+                                    <label class="form-control-label" for="finalDate">Fecha final</label>
+                                    <input type="date" class="form-control" name="finalDate" id="finalDate" formControlName="finalDate"/>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="field_fecha_inicio">Estado</label>
-                                    <select class="form-control">
+                                    <label class="form-control-label" for="state">Estado</label>
+                                    <select class="form-control" name="state" id="state" formControlName="state">
                                         <option value="">Todos</option>
                                         <option value="1">Abierto</option>
                                         <option value="0">Cerrado</option>
@@ -39,16 +46,19 @@
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <button class="btn btn-secondary mt-4">Buscar</button>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info" style="margin-top: 30px;"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+    <hr>
 
-        <hr>
-
+    <div id="entities" *ngIf="supportTickets && supportTickets.length > 0">
         <div class="row">
             <div class="col-md-4 col-sm-6 p-0 border">
                 <div class="list-group">
@@ -63,8 +73,8 @@
                                 <img class="avatar mt-2" src="https://res.cloudinary.com/dsx9svdes/image/upload/v1606008693/default_ucc0ug.png" alt="Avatar">
                             </div>
                             <div class="col-9">
-                                <span *ngIf="ticket.state" class="badge badge-info float-right">Abierto</span>
-                                <span *ngIf="!ticket.state" class="badge badge-info float-right">Cerrado</span>
+                                <span *ngIf="ticket.state" class="badge badge-success float-right">Abierto</span>
+                                <span *ngIf="!ticket.state" class="badge badge-danger float-right">Cerrado</span>
 
                                 <h4 class="list-group-heading" style="font-size: 14px;">{{ticket.title}}</h4>
                                 <p class="list-group-content m-0" style="font-size: 12px;">{{ticket.creationDate | date: 'MMM d \'del \'y \'a las\' h:mm a'}}</p>
