@@ -7,9 +7,10 @@ import { SupportTicketLogDetailComponent } from './support-ticket-log-detail.com
 import { SupportTicketLogUpdateComponent } from './support-ticket-log-update.component';
 import { SupportTicketLogDeleteDialogComponent } from './support-ticket-log-delete-dialog.component';
 import { supportTicketLogRoute } from './support-ticket-log.route';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  imports: [HomeBuildingSharedModule, RouterModule.forChild(supportTicketLogRoute)],
+  imports: [HomeBuildingSharedModule, RouterModule.forChild(supportTicketLogRoute), NgxPaginationModule],
   declarations: [
     SupportTicketLogComponent,
     SupportTicketLogDetailComponent,

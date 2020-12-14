@@ -19,6 +19,7 @@
             </li>
         </ul>
         <div class="tab-content pt-2 pl-1" id="pills-tabContent">
+
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="card">
                     <img class="card-img-top imagenSoporte" src="https://challengesworldwide.com/wp-content/uploads/2016/08/AdobeStock_101492468-1024x449-1160x665.jpeg" alt="Card image cap">
@@ -32,17 +33,70 @@
                                 <h5 class="card-title">Name: {{this.client.name}}</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
+                            <div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{this.ticketSelected.title}}</li>
+                                    <li class="list-group-item">{{this.ticketSelected.message}}</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">{{this.ticketSelected.title}}</li>
-                        <li class="list-group-item">{{this.ticketSelected.message}}</li>
-                    </ul>
+                    <div class="card-footer">
+                        <button (click)="closeTicket()" *ngIf="this.ticketSelected.state" class="btn btn-danger">Cerrar</button>
+                        <button (click)="reOpenTicket()" *ngIf="!this.ticketSelected.state" class="btn btn-primary">Reabrir</button>
+                    </div>
                 </div>
             </div>
+
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <h3>Historial: </h3>
+                <!--<div *ngFor="let property of supportTicketLogs| paginate: { itemsPerPage: 3, currentPage: startPage }">-->
+                <div>
+                    <div class="card logCard">
+                        <div class="card-header">
+                            <label>Log: </label>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <ul class="list-group list-group-flush">
+                                    <div>
+                                        <h5>Comentarios:</h5>
+                                        <li class="list-group-item">Comentarios</li>
+                                    </div>
+                                    <div>
+                                        <h5>Siguientes pasos:</h5>
+                                        <li class="list-group-item">Siguientes pasos</li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card logCard">
+                        <div class="card-header">
+                            <label>Log: </label>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <ul class="list-group list-group-flush">
+                                    <div>
+                                        <h5>Comentarios:</h5>
+                                        <li class="list-group-item">Comentarios</li>
+                                    </div>
+                                    <div>
+                                        <h5>Siguientes pasos:</h5>
+                                        <li class="list-group-item">Siguientes pasos</li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
+
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <form name="form" role="form" [formGroup]="annotationsForm">
                     <h3>Anotaciones: </h3>
@@ -62,6 +116,7 @@
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
