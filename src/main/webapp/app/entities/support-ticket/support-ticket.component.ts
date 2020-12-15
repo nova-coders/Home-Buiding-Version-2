@@ -7,6 +7,9 @@ import { SupportTicketService } from './support-ticket.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
+import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
+import { ServicePaymentService } from '../../service-payment/service-payment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-support-ticket',
@@ -19,6 +22,8 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   startPage = 1;
   hasTicket = false;
   ticketSelected: SupportTicket | undefined;
+  userAccount: IUserAccount | undefined;
+  ticketResolved = false;
 
   searchForm = this.formBuilder.group({
     startDate: [''],
@@ -29,6 +34,8 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   constructor(
     protected supportTicketService: SupportTicketService,
     protected eventManager: JhiEventManager,
+    private servicePaymentService: ServicePaymentService,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {}
 
@@ -38,6 +45,11 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scroll(0, 0);
+    this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
+      let userAccount: any;
+      userAccount = <UserAccount>puserAccount.body;
+      this.userAccount = userAccount;
+    });
     this.loadAll();
     this.registerChangeInSupportTickets();
   }
@@ -53,8 +65,27 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   }
 
   showTicket(supportTicket: SupportTicket): void {
+    this.ticketResolved = supportTicket.state || false;
     this.hasTicket = true;
     this.ticketSelected = supportTicket;
+  }
+
+  viewSupportTicket(): void {
+    this.router.navigate(['ticketDetails', this.ticketSelected!.id]);
+  }
+
+  closeTicket(): void {
+    this.ticketResolved = false;
+    this.ticketSelected!.state = false;
+    this.ticketSelected!.signOffUser = this.userAccount;
+    this.supportTicketService.update(this.ticketSelected!).subscribe(data => {});
+  }
+
+  reOpenTicket(): void {
+    this.ticketResolved = true;
+    this.ticketSelected!.state = true;
+    this.ticketSelected!.signOffUser = this.userAccount;
+    this.supportTicketService.update(this.ticketSelected!).subscribe(data => {});
   }
 
   search(): void {

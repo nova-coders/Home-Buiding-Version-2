@@ -111,7 +111,9 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary">Cerrar</button>
+                        <button *ngIf="this.ticketResolved" (click)="closeTicket()" class="btn btn-primary">Cerrar</button>
+                        <button *ngIf="!this.ticketResolved" (click)="reOpenTicket()" class="btn btn-primary">Reabrir</button>
+                        <button (click)="viewSupportTicket()" class="btn">Ver ticket</button>
                     </div>
                 </div>
 
