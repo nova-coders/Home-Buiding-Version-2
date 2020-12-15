@@ -1,7 +1,9 @@
 package com.novacoders.homebuilding.web.rest;
 
 import com.novacoders.homebuilding.domain.SupportTicket;
+import com.novacoders.homebuilding.domain.UserAccount;
 import com.novacoders.homebuilding.repository.SupportTicketRepository;
+import com.novacoders.homebuilding.service.ServicePaymentService;
 import com.novacoders.homebuilding.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -34,9 +36,11 @@ public class SupportTicketResource {
     private String applicationName;
 
     private final SupportTicketRepository supportTicketRepository;
+    private final ServicePaymentService servicePaymentService;
 
-    public SupportTicketResource(SupportTicketRepository supportTicketRepository) {
+    public SupportTicketResource(SupportTicketRepository supportTicketRepository, ServicePaymentService servicePaymentService) {
         this.supportTicketRepository = supportTicketRepository;
+        this.servicePaymentService = servicePaymentService;
     }
 
     /**
@@ -88,6 +92,13 @@ public class SupportTicketResource {
     public List<SupportTicket> getAllSupportTickets() {
         log.debug("REST request to get all SupportTickets");
         return supportTicketRepository.findAll();
+    }
+
+    @GetMapping("/support-tickets-by-client")
+    public List<SupportTicket> getAllSupportTicketsByClient() {
+        log.debug("REST request to get all SupportTickets for a specific client.");
+        UserAccount userAccount = servicePaymentService.findByUser();
+        return supportTicketRepository.findTicketsByClientID(userAccount.getId());
     }
 
     /**

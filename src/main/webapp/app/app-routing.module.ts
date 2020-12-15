@@ -25,6 +25,7 @@ import { PostProfessionalUserComponent } from 'app/professionals/post-profession
 import { SupportTicketLogComponent } from 'app/entities/support-ticket-log/support-ticket-log.component';
 import { HomeAdminComponent } from 'app/home-admin/home-admin.component';
 import { UsersReportComponent } from './reports/users-report/users-report.component';
+import { SupportTicketLogClientComponent } from 'app/support-ticket-log-client/support-ticket-log-client.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -130,6 +131,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'homeAdmin',
           component: HomeAdminComponent,
+        },
+        {
+          path: 'myTickets',
+          component: SupportTicketLogClientComponent,
         },
         ...LAYOUT_ROUTES,
       ],
