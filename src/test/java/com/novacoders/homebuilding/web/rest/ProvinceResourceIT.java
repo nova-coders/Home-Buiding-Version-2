@@ -96,7 +96,7 @@ public class ProvinceResourceIT {
         province = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createProvince() throws Exception {
         int databaseSizeBeforeCreate = provinceRepository.findAll().size();
@@ -117,7 +117,7 @@ public class ProvinceResourceIT {
         assertThat(testProvince.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void createProvinceWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = provinceRepository.findAll().size();
@@ -137,7 +137,7 @@ public class ProvinceResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllProvinces() throws Exception {
         // Initialize the database
@@ -154,8 +154,8 @@ public class ProvinceResourceIT {
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(sameInstant(DEFAULT_CREATION_DATE))));
     }
-    
-    @Test
+
+
     @Transactional
     public void getProvince() throws Exception {
         // Initialize the database
@@ -172,7 +172,7 @@ public class ProvinceResourceIT {
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()))
             .andExpect(jsonPath("$.creationDate").value(sameInstant(DEFAULT_CREATION_DATE)));
     }
-    @Test
+
     @Transactional
     public void getNonExistingProvince() throws Exception {
         // Get the province
@@ -180,7 +180,7 @@ public class ProvinceResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateProvince() throws Exception {
         // Initialize the database
@@ -215,7 +215,7 @@ public class ProvinceResourceIT {
         assertThat(testProvince.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingProvince() throws Exception {
         int databaseSizeBeforeUpdate = provinceRepository.findAll().size();
@@ -231,7 +231,7 @@ public class ProvinceResourceIT {
         assertThat(provinceList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteProvince() throws Exception {
         // Initialize the database

@@ -92,7 +92,7 @@ public class SaleResourceIT {
         sale = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createSale() throws Exception {
         int databaseSizeBeforeCreate = saleRepository.findAll().size();
@@ -112,7 +112,7 @@ public class SaleResourceIT {
         assertThat(testSale.getPropertyId()).isEqualTo(DEFAULT_PROPERTY_ID);
     }
 
-    @Test
+
     @Transactional
     public void createSaleWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = saleRepository.findAll().size();
@@ -132,7 +132,7 @@ public class SaleResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllSales() throws Exception {
         // Initialize the database
@@ -148,8 +148,8 @@ public class SaleResourceIT {
             .andExpect(jsonPath("$.[*].registryStudy").value(hasItem(DEFAULT_REGISTRY_STUDY.toString())))
             .andExpect(jsonPath("$.[*].propertyId").value(hasItem(DEFAULT_PROPERTY_ID)));
     }
-    
-    @Test
+
+
     @Transactional
     public void getSale() throws Exception {
         // Initialize the database
@@ -165,7 +165,7 @@ public class SaleResourceIT {
             .andExpect(jsonPath("$.registryStudy").value(DEFAULT_REGISTRY_STUDY.toString()))
             .andExpect(jsonPath("$.propertyId").value(DEFAULT_PROPERTY_ID));
     }
-    @Test
+
     @Transactional
     public void getNonExistingSale() throws Exception {
         // Get the sale
@@ -173,7 +173,7 @@ public class SaleResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateSale() throws Exception {
         // Initialize the database
@@ -206,7 +206,7 @@ public class SaleResourceIT {
         assertThat(testSale.getPropertyId()).isEqualTo(UPDATED_PROPERTY_ID);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingSale() throws Exception {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
@@ -222,7 +222,7 @@ public class SaleResourceIT {
         assertThat(saleList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteSale() throws Exception {
         // Initialize the database

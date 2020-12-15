@@ -167,4 +167,7 @@ export class CreatePublishingPackageComponent implements OnInit {
       }
     }
   }
+  public goBack() {
+    window.history.back();
+  }
 }

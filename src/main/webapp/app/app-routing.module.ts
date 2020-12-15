@@ -14,6 +14,8 @@ import { ChatComponent } from 'app/chat/chat.component';
 import { MyOffersComponent } from 'app/my-offers/my-offers.component';
 import { ListSalesComponent } from 'app/sales/list-sales/list-sales.component.ts';
 import { ListUserSalesComponent } from 'app/listusersales/list-user-sales.component';
+import { PropertyUpdateComponent } from 'app/entities/property/property-update.component';
+import { PropertyResolve } from 'app/entities/property/property.route';
 import { ListProfessionalComponent } from 'app/professionals/list-professional/list-professional.component';
 import { ViewProfessionalComponent } from 'app/professionals/view-professional/view-professional.component';
 import { CreatePublishingPackageComponent } from 'app/publishing/create-publishing-package/create-publishing-package.component';
@@ -21,6 +23,7 @@ import { ListPublishingPackegeComponent } from 'app/publishing/list-publishing-p
 import { UpdatePublishingPackegeComponent } from 'app/publishing/update-publishing-packege/update-publishing-packege.component';
 import { PostProfessionalUserComponent } from 'app/professionals/post-professional-user/post-professional-user.component';
 import { SupportTicketLogComponent } from 'app/entities/support-ticket-log/support-ticket-log.component';
+import { HomeAdminComponent } from 'app/home-admin/home-admin.component';
 import { UsersReportComponent } from './reports/users-report/users-report.component';
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -81,6 +84,18 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           component: MyOffersComponent,
         },
         {
+          path: ':id/edit',
+          component: PropertyUpdateComponent,
+          resolve: {
+            property: PropertyResolve,
+          },
+          data: {
+            authorities: [Authority.USER],
+            pageTitle: 'homeBuildingApp.property.home.title',
+          },
+          canActivate: [UserRouteAccessService],
+        },
+        {
           path: 'professionals',
           component: ListProfessionalComponent,
         },
@@ -111,6 +126,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'ticketDetails/:id',
           component: SupportTicketLogComponent,
+        },
+        {
+          path: 'homeAdmin',
+          component: HomeAdminComponent,
         },
         ...LAYOUT_ROUTES,
       ],

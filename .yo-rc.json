@@ -39,8 +39,14 @@
     "nativeLanguage": "es",
     "languages": ["es"],
     "blueprints": [],
-    "herokuDeployType": "git",
-    "herokuJavaVersion": "14",
-    "herokuAppName": "home-building-v-1-0-1"
+    "aws": {
+      "applicationName": "home-building",
+      "environmentName": "home-building-env",
+      "bucketName": "home-building",
+      "instanceType": "t2.micro",
+      "awsRegion": "us-east-2",
+      "dbName": "homeBuilding",
+      "dbInstanceClass": "db.t2.micro"
+    }
   }
 }

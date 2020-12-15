@@ -1,0 +1,6 @@
+<div style="display: block">
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+</div>
+<button  class="btn-sm btn btn-outline-primary mt-1"  mat-button mat-raised-button color="primary" (click)="randomize()">Cambiar gráfico</button>

@@ -6,7 +6,7 @@
         </div>
         <div *ngIf="successSave" class="col-md-12 col-lg-12 text-center">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                !La creación del paquete publicitario fue exitosa¡
+                ¡La creación del paquete publicitario fue exitosa!
                 <button type="button" class="close"  (click)="setSuccessSave()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -109,7 +109,7 @@
                     <br>
                     <br>
                     <button class="btn btn-primary float-right" (click)="savePackage()">Crear paquete</button>
-                    <a class="btn btn-secondary float-right mr-3" routerLink="/" >Cancelar</a>
+                    <a class="btn btn-secondary float-right mr-3" (click)="goBack()" >Cancelar</a>
 
                 </div>
             </div>

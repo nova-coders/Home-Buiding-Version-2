@@ -32,6 +32,14 @@
                             </span>
                         </a>
                     </div>
+                    <div  *ngIf="isAuthenticated()" class="{{router.url === '/professionals'?'active d-none':''}}">
+                        <a class="footer-link" [routerLink]="['/professionals']">
+                           <span>
+                                <i class="fa fa-user-alt"></i>
+                                <span >Profesionales</span>
+                            </span>
+                        </a>
+                    </div>
                     <div  *ngIf="!isAuthenticated()" class="{{router.url === '/account/register'?'active d-none':''}}">
                         <a class="footer-link" [routerLink]="['/account/register']">
                             <span>
@@ -48,7 +56,7 @@
                             </span>
                         </a>
                     </div>
-                    <div *ngIf="isAuthenticated()">
+                    <div *ngIf="isAuthenticated()" class="{{router.url === '/support-ticket/new'?'active d-none':''}}">
                         <a class="footer-link" [routerLink]="['/support-ticket/new']"  >
                             <span>
                                 <i class="fas fa-question" aria-hidden="true"></i>

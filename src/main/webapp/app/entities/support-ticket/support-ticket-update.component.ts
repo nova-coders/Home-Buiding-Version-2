@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ISupportTicket, SupportTicket } from 'app/shared/model/support-ticket.model';
 import { SupportTicketService } from './support-ticket.service';
 import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/user-account.service';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
-import { User } from '../../core/user/user.model';
 
 @Component({
   selector: 'jhi-support-ticket-update',
@@ -97,7 +94,6 @@ export class SupportTicketUpdateComponent implements OnInit {
   protected onSaveSuccess(): void {
     this.isSaving = false;
     this.success = true;
-    setTimeout(() => this.previousState(), 3000);
   }
 
   protected onSaveError(): void {

@@ -20,8 +20,8 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0 and p.userAccount.id = :id")
     List<Property> findSalesByUserId(@Param("id") long id);
 
-    @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0")
-    List<Property> findBySaleNotNull();
+    @Query(value = "SELECT p FROM Property p WHERE p.sale is not null and p.state > 0 and p.sale.finalDate >=:currentDate")
+    List<Property> findBySaleNotNull(@Param("currentDate") ZonedDateTime currentDate);
 
 
     @Query("SELECT p FROM Property p WHERE p.sale.finalDate <= :expireDateTime AND p.state = 1")

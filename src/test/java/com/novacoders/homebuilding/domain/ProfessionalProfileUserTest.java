@@ -6,7 +6,7 @@ import com.novacoders.homebuilding.web.rest.TestUtil;
 
 public class ProfessionalProfileUserTest {
 
-    @Test
+
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(ProfessionalProfileUser.class);
         ProfessionalProfileUser professionalProfileUser1 = new ProfessionalProfileUser();

@@ -26,7 +26,7 @@ public class ExceptionTranslatorIT {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
+
     public void testConcurrencyFailure() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/concurrency-failure"))
             .andExpect(status().isConflict())
@@ -34,7 +34,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_CONCURRENCY_FAILURE));
     }
 
-    @Test
+
     public void testMethodArgumentNotValid() throws Exception {
          mockMvc.perform(post("/api/exception-translator-test/method-argument").content("{}").contentType(MediaType.APPLICATION_JSON))
              .andExpect(status().isBadRequest())
@@ -45,7 +45,7 @@ public class ExceptionTranslatorIT {
              .andExpect(jsonPath("$.fieldErrors.[0].message").value("NotNull"));
     }
 
-    @Test
+
     public void testMissingServletRequestPartException() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/missing-servlet-request-part"))
             .andExpect(status().isBadRequest())
@@ -53,7 +53,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.message").value("error.http.400"));
     }
 
-    @Test
+
     public void testMissingServletRequestParameterException() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/missing-servlet-request-parameter"))
             .andExpect(status().isBadRequest())
@@ -61,7 +61,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.message").value("error.http.400"));
     }
 
-    @Test
+
     public void testAccessDenied() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/access-denied"))
             .andExpect(status().isForbidden())
@@ -70,7 +70,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.detail").value("test access denied!"));
     }
 
-    @Test
+
     public void testUnauthorized() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/unauthorized"))
             .andExpect(status().isUnauthorized())
@@ -80,7 +80,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.detail").value("test authentication failed!"));
     }
 
-    @Test
+
     public void testMethodNotSupported() throws Exception {
         mockMvc.perform(post("/api/exception-translator-test/access-denied"))
             .andExpect(status().isMethodNotAllowed())
@@ -89,7 +89,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.detail").value("Request method 'POST' not supported"));
     }
 
-    @Test
+
     public void testExceptionWithResponseStatus() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/response-status"))
             .andExpect(status().isBadRequest())
@@ -98,7 +98,7 @@ public class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.title").value("test response status"));
     }
 
-    @Test
+
     public void testInternalServerError() throws Exception {
         mockMvc.perform(get("/api/exception-translator-test/internal-server-error"))
             .andExpect(status().isInternalServerError())

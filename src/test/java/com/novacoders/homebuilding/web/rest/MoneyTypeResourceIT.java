@@ -81,7 +81,7 @@ public class MoneyTypeResourceIT {
         moneyType = createEntity(em);
     }
 
-    @Test
+
     @Transactional
     public void createMoneyType() throws Exception {
         int databaseSizeBeforeCreate = moneyTypeRepository.findAll().size();
@@ -100,7 +100,7 @@ public class MoneyTypeResourceIT {
         assertThat(testMoneyType.isState()).isEqualTo(DEFAULT_STATE);
     }
 
-    @Test
+
     @Transactional
     public void createMoneyTypeWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = moneyTypeRepository.findAll().size();
@@ -120,7 +120,7 @@ public class MoneyTypeResourceIT {
     }
 
 
-    @Test
+
     @Transactional
     public void getAllMoneyTypes() throws Exception {
         // Initialize the database
@@ -135,8 +135,8 @@ public class MoneyTypeResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.booleanValue())));
     }
-    
-    @Test
+
+
     @Transactional
     public void getMoneyType() throws Exception {
         // Initialize the database
@@ -151,7 +151,7 @@ public class MoneyTypeResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.booleanValue()));
     }
-    @Test
+
     @Transactional
     public void getNonExistingMoneyType() throws Exception {
         // Get the moneyType
@@ -159,7 +159,7 @@ public class MoneyTypeResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
+
     @Transactional
     public void updateMoneyType() throws Exception {
         // Initialize the database
@@ -190,7 +190,7 @@ public class MoneyTypeResourceIT {
         assertThat(testMoneyType.isState()).isEqualTo(UPDATED_STATE);
     }
 
-    @Test
+
     @Transactional
     public void updateNonExistingMoneyType() throws Exception {
         int databaseSizeBeforeUpdate = moneyTypeRepository.findAll().size();
@@ -206,7 +206,7 @@ public class MoneyTypeResourceIT {
         assertThat(moneyTypeList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
+
     @Transactional
     public void deleteMoneyType() throws Exception {
         // Initialize the database

@@ -32,8 +32,11 @@
                         <span class="element-title">Nombre completo:</span>
                     </div>
                     <div class="col-6 text-right p-0" *ngIf="this.userAccount.user != null">
-                        <span *ngIf="this.userAccount.user.firstName">
+                        <span *ngIf="this.userAccount.user.firstName != null">
                             {{this.userAccount.user.firstName}}
+                        </span>
+                        <span *ngIf="this.userAccount.user.lastName != null">
+                            {{this.userAccount.user.lastName}}
                         </span>
                     </div>
                 </div>
