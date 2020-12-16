@@ -48,14 +48,15 @@ export class LogInComponent implements OnInit, AfterViewInit {
         password: this.loginForm.get('password')!.value,
         rememberMe: this.loginForm.get('rememberMe')!.value,
       })
-      .subscribe(( response) => {
+      .subscribe(
+        response => {
           this.authenticationError = false;
           let account: Account;
           account = <Account>response;
-          for(let i = 0 ; i < account.authorities.length; i++){
-            if(account.authorities[i] === 'ROLE_ADMIN'){
+          for (let i = 0; i < account.authorities.length; i++) {
+            if (account.authorities[i] === 'ROLE_ADMIN') {
               this.router.navigate(['homeAdmin']);
-              return ;
+              return;
             }
           }
           if (

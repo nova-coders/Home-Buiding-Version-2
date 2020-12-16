@@ -19,6 +19,7 @@ export class BarChartAuctionComponent implements OnInit {
   public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
+
   public barChartData: ChartDataSets[] = [{ data: [], label: 'Ofertas' }];
   public propertyList: Property[];
   public cantOferrs = 0;
@@ -73,6 +74,7 @@ export class BarChartAuctionComponent implements OnInit {
     });
     return map;
   }
+
   // events
   public chartClicked({ event, active }: { event?: MouseEvent; active?: {}[] }): void {
     console.log(event, active);
