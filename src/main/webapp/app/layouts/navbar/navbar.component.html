@@ -34,17 +34,6 @@
                         </span>
                     </a>
                 </li>
-              <!--  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Alquileres
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>-->
             </ul>
             <div class="form-inline">
                 <div  *ngIf="isAuthenticated()"  class="nav-item active ml-2 mr-2 mt-1 ">
@@ -90,19 +79,14 @@
                         <i style="color: chartreuse" class="fas fa-spa float-right" *ngIf="userAccount?.publishingPackage?.type === 2"
                            data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: {{userAccount?.publishingPackage?.name}}"></i>
                     </a>
+                    <a  *ngIf="userAccount?.publishingPackage?.professional" routerLink="/createProfessional" class="dropdown-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Registro profesional</span>
+                    </a>
                     <a (click)="validatePackage()" data-toggle="modal" [attr.data-target]="'#'+isInvalid" class="dropdown-item">
                         <i class="fa fa-building"></i>
                         <span>Registrar subasta</span>
                     </a>
-   <!--                 <a href="javascript:;" class="dropdown-item">
-                        <i class="fa fa-truck-loading"></i>
-                        <span>Registrar alquiler</span>
-                    </a>-->
-<!--                    <a href="javascript:;" class="dropdown-item">
-                        <i class="fa fa-calendar"></i>
-                        <span>Citas</span>
-                    </a>-->
-
                     <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/listPublishingPackage']">
                         <i class="fa fa-object-group"></i>
                         <span>Paquetes de plublicidad</span>
@@ -115,10 +99,10 @@
                         <i class="fa fa-exclamation-circle"></i>
                         <span>Mis ofertas</span>
                     </a>
-<!--                    <a href="javascript:;" class="dropdown-item">
-                        <i class="fa fa-hotel"></i>
-                        <span>Mis alquileres</span>
-                    </a>-->
+                    <a  routerLink="/createProfessional" class="dropdown-item">
+                        <i class="fab fa-black-tie"></i>
+                        <span>Registro profesional</span>
+                    </a>
                     <a routerLink="/servicepayment" class="dropdown-item">
                         <i class="fa fa-comment-dollar"></i>
                         <span>Comprar servicio</span>
