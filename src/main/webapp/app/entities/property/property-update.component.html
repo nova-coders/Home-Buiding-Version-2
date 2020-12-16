@@ -37,12 +37,10 @@
                                 </small>
                                 <br>
                             </div>
-                            <label class="form-control-label"  for="field_discount">Descuento</label>
-                            <div class="range range-primary">
-                                <input type="range"  name="discount" id="field_discount"  formControlName="discount" min="0" max="100" value="50" onchange="rangePrimary.value=value+'%'">
-                                <output id="rangePrimary">50</output>
-                            </div>
-
+                            <label class="form-control-label"  for="field_discount">Descuento</label> <br>
+                                <input type="tex" class="form-control w-50 d-inline-block" name="discount" id="field_discount"  formControlName="discount" [min]="0"  [max]="100" [maxlength]="3" placeholder="0" digitOnly >
+                                <output class="ml-2  d-inline-block">{{propertyForm.get('discount')?.value}}%</output>
+<br>
                             <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
                             <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
                                 <option [ngValue]="null" selected disabled></option>
@@ -94,7 +92,7 @@
                                 <br>
                             </div>
                             <label class="form-control-label"  for="field_price">Precio</label>
-                            <input type="text" class="form-control" name="price" id="field_price"  currencyMask [options]="{align: 'left',prefix:''}" formControlName="price"/>
+                            <input type="text" class="form-control" name="price" id="field_price"  currencyMask [options]="{align: 'left',prefix:'',decimal:''}" formControlName="price"/>
 
                             <div *ngIf="propertyForm.get('price')!.invalid && (propertyForm.get('price')!.dirty || propertyForm.get('price')!.touched)">
                                 <small class="form-text text-danger"  *ngIf="propertyForm.get('price')?.errors?.required">

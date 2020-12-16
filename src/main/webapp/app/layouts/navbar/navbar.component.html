@@ -34,17 +34,6 @@
                         </span>
                     </a>
                 </li>
-              <!--  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Alquileres
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>-->
             </ul>
             <div class="form-inline">
                 <div  *ngIf="isAuthenticated()"  class="nav-item active ml-2 mr-2 mt-1 ">
@@ -90,22 +79,37 @@
                         <i style="color: chartreuse" class="fas fa-spa float-right" *ngIf="userAccount?.publishingPackage?.type === 2"
                            data-toggle="tooltip" data-placement="left" title="Cuentas con un paquete: {{userAccount?.publishingPackage?.name}}"></i>
                     </a>
+                    <a  *ngIf="userAccount?.publishingPackage?.professional" routerLink="/createProfessional" class="dropdown-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Registro profesional</span>
+                    </a>
                     <a (click)="validatePackage()" data-toggle="modal" [attr.data-target]="'#'+isInvalid" class="dropdown-item">
                         <i class="fa fa-building"></i>
                         <span>Registrar subasta</span>
                     </a>
-   <!--                 <a href="javascript:;" class="dropdown-item">
-                        <i class="fa fa-truck-loading"></i>
-                        <span>Registrar alquiler</span>
-                    </a>-->
+                    <a *ngIf="this.professionalRegister == true" class="dropdown-item" [routerLink]="['/createProfessional']">
+                        <i class="fa fa-briefcase"></i>
+                        <span>Registrar S.Profesional</span>
+                    </a>
+                                           <!--<a href="javascript:;" class="dropdown-item">
+                                               <i class="fa fa-truck-loading"></i>
+                                               <span>Registrar alquiler</span>
+                                           </a>-->
 <!--                    <a href="javascript:;" class="dropdown-item">
                         <i class="fa fa-calendar"></i>
                         <span>Citas</span>
                     </a>-->
-
                     <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/listPublishingPackage']">
                         <i class="fa fa-object-group"></i>
-                        <span>Paquetes de plublicidad</span>
+                        <span>Paquetes de publicidad</span>
+                    </a>
+                    <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/support-ticket']">
+                        <i class="fa fa-headset"></i>
+                        <span>Soporte</span>
+                    </a>
+                    <a *jhiHasAnyAuthority="'ROLE_USER'" class="dropdown-item"  [routerLink]="['/myTickets']">
+                        <i class="fa fa-headset"></i>
+                        <span>Mis tickets</span>
                     </a>
                     <a class="dropdown-item"  [routerLink]="['/mySales']">
                         <i class="fa fa-object-group"></i>
@@ -115,10 +119,10 @@
                         <i class="fa fa-exclamation-circle"></i>
                         <span>Mis ofertas</span>
                     </a>
-<!--                    <a href="javascript:;" class="dropdown-item">
-                        <i class="fa fa-hotel"></i>
-                        <span>Mis alquileres</span>
-                    </a>-->
+                    <a  routerLink="/createProfessional" class="dropdown-item">
+                        <i class="fab fa-black-tie"></i>
+                        <span>Registro profesional</span>
+                    </a>
                     <a routerLink="/servicepayment" class="dropdown-item">
                         <i class="fa fa-comment-dollar"></i>
                         <span>Comprar servicio</span>
@@ -147,8 +151,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Lo sentimos ,pero no puedes registrar mas subastas debido al paquete de publicidad.
-                    <br><br> Para adquirir otro paquete y tener mas posibilidades de subastar más inmuebles. Haz click en <a class>Comprar otro paquete</a> </p>
+                <p>El paquete publicitario que posee tu cuenta no permite mas registros de inmuebles.
+                    <br><br>Para ampliar tus capacidades dentro de Home Building puedes cambiar tu paquete de usuario.
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

@@ -1,0 +1,21 @@
+.table-body {
+  min-height: 250px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.table-body::-webkit-scrollbar {
+  display: none;
+}
+.table-body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.table-body::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+.table-body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}

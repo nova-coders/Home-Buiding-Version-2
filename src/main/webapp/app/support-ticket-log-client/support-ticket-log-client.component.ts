@@ -1,24 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { Component, OnInit } from '@angular/core';
 import { ISupportTicket, SupportTicket } from 'app/shared/model/support-ticket.model';
-import { SupportTicketService } from './support-ticket.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { SupportTicketService } from 'app/entities/support-ticket/support-ticket.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { FormBuilder } from '@angular/forms';
+import { HttpResponse } from '@angular/common/http';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
-import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
-import { ServicePaymentService } from '../../service-payment/service-payment.service';
-import { Router } from '@angular/router';
-import { ISupportTicketLog } from '../../shared/model/support-ticket-log.model';
-import { SupportTicketLogService } from '../support-ticket-log/support-ticket-log.service';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { ISupportTicketLog } from 'app/shared/model/support-ticket-log.model';
+import { SupportTicketLogService } from 'app/entities/support-ticket-log/support-ticket-log.service';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 
 @Component({
-  selector: 'jhi-support-ticket',
-  templateUrl: './support-ticket.component.html',
-  styleUrls: ['./support-ticket.component.scss'],
+  selector: 'jhi-support-ticket-log-client',
+  templateUrl: './support-ticket-log-client.component.html',
+  styleUrls: ['./support-ticket-log-client.component.scss'],
 })
-export class SupportTicketComponent implements OnInit, OnDestroy {
+export class SupportTicketLogClientComponent implements OnInit {
   supportTicketLogs: ISupportTicketLog[] | [];
   supportTickets?: ISupportTicket[];
   eventSubscriber?: Subscription;
@@ -26,8 +25,8 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   startPage2 = 1;
   hasTicket = false;
   ticketSelected: SupportTicket | undefined;
-  userAccount: IUserAccount | undefined;
   ticketResolved = false;
+  userAccount: IUserAccount | undefined;
 
   searchForm = this.formBuilder.group({
     startDate: [''],
@@ -38,16 +37,17 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   constructor(
     protected supportTicketLogService: SupportTicketLogService,
     protected supportTicketService: SupportTicketService,
-    protected eventManager: JhiEventManager,
     private servicePaymentService: ServicePaymentService,
-    private router: Router,
+    protected eventManager: JhiEventManager,
     private formBuilder: FormBuilder
   ) {
     this.supportTicketLogs = [];
   }
 
   loadAll(): void {
-    this.supportTicketService.query().subscribe((res: HttpResponse<ISupportTicket[]>) => (this.supportTickets = res.body || []));
+    this.supportTicketService
+      .findClientTickets()
+      .subscribe((res: HttpResponse<ISupportTicket[]>) => (this.supportTickets = res.body || []));
   }
 
   ngOnInit(): void {
@@ -81,10 +81,6 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
     });
   }
 
-  viewSupportTicket(): void {
-    this.router.navigate(['ticketDetails', this.ticketSelected!.id]);
-  }
-
   closeTicket(): void {
     this.ticketResolved = false;
     this.ticketSelected!.state = false;
@@ -100,7 +96,7 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   }
 
   search(): void {
-    this.supportTicketService.query().subscribe((res: HttpResponse<ISupportTicket[]>) => {
+    this.supportTicketService.findClientTickets().subscribe((res: HttpResponse<ISupportTicket[]>) => {
       this.supportTickets = res.body || [];
 
       if (this.supportTickets != null) {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { Property } from 'app/shared/model/property.model';
-import { PropertyService } from 'app/entities/property/property.service';
-import { SeeAuctionService } from 'app/see-auction/see-auction.service';
+import { Property } from '../../../shared/model/property.model';
+import { PropertyService } from '../../../entities/property/property.service';
+import { SeeAuctionService } from '../../../see-auction/see-auction.service';
 
 @Component({
   selector: 'jhi-bar-chart-auction',
