@@ -94,10 +94,14 @@
                         <i class="fa fa-building"></i>
                         <span>Registrar subasta</span>
                     </a>
-   <!--                 <a href="javascript:;" class="dropdown-item">
-                        <i class="fa fa-truck-loading"></i>
-                        <span>Registrar alquiler</span>
-                    </a>-->
+                    <a *ngIf="this.professionalRegister == true" class="dropdown-item" [routerLink]="['/createProfessional']">
+                        <i class="fa fa-briefcase"></i>
+                        <span>Registrar S.Profesional</span>
+                    </a>
+                                           <!--<a href="javascript:;" class="dropdown-item">
+                                               <i class="fa fa-truck-loading"></i>
+                                               <span>Registrar alquiler</span>
+                                           </a>-->
 <!--                    <a href="javascript:;" class="dropdown-item">
                         <i class="fa fa-calendar"></i>
                         <span>Citas</span>
@@ -105,7 +109,15 @@
 
                     <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/listPublishingPackage']">
                         <i class="fa fa-object-group"></i>
-                        <span>Paquetes de plublicidad</span>
+                        <span>Paquetes de publicidad</span>
+                    </a>
+                    <a *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item"  [routerLink]="['/support-ticket']">
+                        <i class="fa fa-headset"></i>
+                        <span>Soporte</span>
+                    </a>
+                    <a *jhiHasAnyAuthority="'ROLE_USER'" class="dropdown-item"  [routerLink]="['/myTickets']">
+                        <i class="fa fa-headset"></i>
+                        <span>Mis tickets</span>
                     </a>
                     <a class="dropdown-item"  [routerLink]="['/mySales']">
                         <i class="fa fa-object-group"></i>

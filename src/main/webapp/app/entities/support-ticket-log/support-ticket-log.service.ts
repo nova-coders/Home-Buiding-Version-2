@@ -44,6 +44,12 @@ export class SupportTicketLogService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  findByTicketID(id: number): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<ISupportTicketLog[]>(this.resourceUrl + '/byTicketID/' + id, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

@@ -90,6 +90,12 @@ public class SupportTicketLogResource {
         return supportTicketLogRepository.findAll();
     }
 
+    @GetMapping("/support-ticket-logs/byTicketID/{id}")
+    public List<SupportTicketLog> getAllSupportTicketLogsByTicketID(@PathVariable Long id) {
+        log.debug("REST request to get all SupportTicketLogs");
+        return supportTicketLogRepository.findLogsByTicketId(id);
+    }
+
     /**
      * {@code GET  /support-ticket-logs/:id} : get the "id" supportTicketLog.
      *

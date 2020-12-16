@@ -52,6 +52,7 @@ import { HomeAdminComponent } from './home-admin/home-admin.component';
 import { ReportAuctionComponent } from './report-auction/report-auction.component';
 import { PieChartAuctionComponent } from './report-auction/components/pie-chart-auction/pie-chart-auction.component';
 import { BarChartAuctionComponent } from './report-auction/components/bar-chart-auction/bar-chart-auction.component';
+import { SupportTicketLogClientComponent } from './support-ticket-log-client/support-ticket-log-client.component';
 
 @NgModule({
   imports: [
@@ -109,6 +110,7 @@ import { BarChartAuctionComponent } from './report-auction/components/bar-chart-
     ReportAuctionComponent,
     PieChartAuctionComponent,
     BarChartAuctionComponent,
+    SupportTicketLogClientComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],
