@@ -1,0 +1,44 @@
+
+<div class="card">
+    <div  class="card-body">
+        <h5 class="card-title">Reporte de ofertas en subasta</h5>
+        <div class="table-responsive">
+            <div class="float-right mb-2 mt-2">
+                <jhi-search-auction criterio="title" (datefilter)="filterData($event)" [date]="propertyList" ></jhi-search-auction>
+            </div>
+            <table style="border-bottom: none;" class="table table-hover">
+                <thead  class="text-center">
+                <tr>
+                    <th scope="col">Subasta</th>
+                    <th scope="col">Dueño</th>
+                    <th scope="col">Comprador</th>
+                    <th scope="col">Oferta</th>
+                    <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="table-body">
+                <table style="border-top: none;" class="table table-hover " *ngFor="let property of propertyListFilter | paginate: { itemsPerPage: 1, currentPage: startPage}">
+                    <tbody class="text-center table-body">
+                        <tr *ngFor="let offer of property?.sale?.offers">
+                            <td>{{property.title}}</td>
+                            <td>{{property?.userAccount?.user?.firstName + ' ' +property.userAccount?.user?.lastName }}</td>
+                            <td>{{offer?.userAccount?.user?.firstName + ' ' + offer?.userAccount?.user?.lastName }}</td>
+                            <td>{{ offer.amount | currency:'CRC':'₡':'4.0-0':'en-cr'}}</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" [routerLink]="['/auctionDetails',property.id,offer.id]">Detalles</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="propertyList.length > 1">
+            <pagination-controls nextLabel="Siguiente subasta" previousLabel="Anterior subasta" (pageChange)="startPage = $event"></pagination-controls>
+        </div>
+
+    </div>
+</div>
+
+
+

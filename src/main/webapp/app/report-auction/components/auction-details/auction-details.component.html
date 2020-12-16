@@ -1,0 +1,62 @@
+<div style="margin-top: 110px;" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+    <div class="col-md-12 col-lg-12 text-center">
+        <h2>{{property?.title}}</h2>
+        <span *ngIf="property?.state != 1" class="badge badge-danger">Subasta cerrada</span>
+        <span *ngIf="property?.state === 1" class="badge badge-success">Subasta abierta</span>
+        <hr class="w-50">
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="row">
+            <div class="col-md-1 col-lg-1 col-sm-12"></div>
+            <div class="col-md-10 col-lg-10 col-sm-12">
+                <jhi-image-viewer [images]="images"></jhi-image-viewer>
+            </div>
+            <div class="col-md-1 col-lg-1 col-sm-12"></div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 text-center mt-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 text-center border-right">
+                    <div class="text-left">
+                        <h5>Información del dueño</h5>
+                        <img src="{{property?.userAccount?.profilePicture}}" alt="Avatar" class="avatar">
+                        <h6>Nombre: {{property?.userAccount?.user?.firstName+'  '+property?.userAccount?.user?.lastName}}</h6>
+                        <h6>Correo Electrónico:&nbsp;{{property?.userAccount?.user?.email}}</h6>
+                        <h6>Teléfono:&nbsp;{{property?.userAccount?.phone}}</h6>
+                    </div>
+                    <hr>
+                    <div class="text-left">
+                        <h5>Información del comprador</h5>
+                        <img src="{{offer?.userAccount?.profilePicture}}" alt="Avatar" class="avatar">
+                        <h6>Nombre: {{offer?.userAccount?.user?.firstName+'  '+property?.userAccount?.user?.lastName}}</h6>
+                        <h6>Correo electrónico:&nbsp;{{offer?.userAccount?.user?.email}}</h6>
+                        <h6>Teléfono:&nbsp;{{offer?.userAccount?.phone}}</h6>
+                        <h4>Oferta realizada:&nbsp;{{(offer?.amount) | currency:'CRC':'₡':'4.0-0':'en-cr'}}</h4>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 text-center">
+                    <div class="text-left">
+                        <h5>Información del inmueble</h5>
+                        <h6>Titulo: {{property?.title}}</h6>
+                        <h6>Dirección:&nbsp;{{property?.addressText}}</h6>
+                        <h6 *ngIf="discount > 0">Descuento: {{discount}}%</h6>
+                        <h6>Superficie total de la propiedad: &nbsp;{{property?.landSquareMeters}} m<sup>2</sup></h6>
+                        <h6>Superficie total construida: &nbsp;{{property?.areaSquareMeters}} m<sup>2</sup></h6>
+                        <h6>Precio inicial:&nbsp;{{this.price | currency:'CRC':'₡':'4.0-0':'en-cr'}}</h6>
+                        <h6 *ngIf="property?.creationDate != null ">Fecha creación: {{property?.creationDate | date}}</h6>
+                        <h6>Estado:</h6>
+                        <span *ngIf="property?.state != 1" class="badge badge-danger">Subasta cerrada</span>
+                        <span *ngIf="property?.state === 1" class="badge badge-success">Subasta abierta</span>
+                        <br>
+                        <jhi-modal-document idmodal="modal1"  btnName="Ver plano" baseg4File="{{property?.sale?.cadastralPlan}}" title="Plano de la propiedad"></jhi-modal-document>
+                        <jhi-modal-document idmodal="modal2" btnName="Ver estudio registral" baseg4File="{{property?.sale?.registryStudy}}" title="Estudio registral de la propiedad"></jhi-modal-document>
+                        <h6>Descripción de la propiedad:</h6>
+                        <textarea disabled="true" class="form-control" name="comment" style="width: 100%;" rows="5">{{property?.description}}</textarea
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-secondary float-right mr-3" (click)="goBack()" >Regresar</a>
+    </div>
+</div>

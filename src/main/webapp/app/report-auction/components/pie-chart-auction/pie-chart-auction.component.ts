@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { PropertyService } from 'app/entities/property/property.service';
-import { Property } from 'app/shared/model/property.model';
+import { PropertyService } from '../../../entities/property/property.service';
+import { Property } from '../../../shared/model/property.model';
 
 @Component({
   selector: 'jhi-pie-chart-auction',
