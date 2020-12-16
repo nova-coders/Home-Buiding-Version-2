@@ -31,7 +31,9 @@ export class NavbarComponent implements OnInit {
   header: null;
   account: Account | null = null;
   userAccount: UserAccount;
+  professionalRegister: boolean | undefined;
   isInvalid = '';
+
   constructor(
     private loginService: LoginService,
     private customPropertyService: CustomPropertyService,
@@ -42,6 +44,7 @@ export class NavbarComponent implements OnInit {
     public router: Router,
     private servicePaymentService: ServicePaymentService
   ) {
+    this.professionalRegister = false;
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
     this.userAccount = new UserAccount();
   }
@@ -65,6 +68,9 @@ export class NavbarComponent implements OnInit {
       if (this.isAuthenticated()) {
         this.servicePaymentService.getUserAccount().subscribe(response => {
           this.userAccount = <UserAccount>response.body;
+          if (this.userAccount.publishingPackage != null) {
+            this.professionalRegister = this.userAccount.publishingPackage.professional;
+          }
           idAcount = this.userAccount.id;
           this.customPropertyService.getPropertiesInSaleByUserId(idAcount).subscribe(data => {
             this.myProperties = data;

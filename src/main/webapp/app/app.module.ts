@@ -55,6 +55,7 @@ import { BarChartAuctionComponent } from './report-auction/components/bar-chart-
 import { ReportTableComponent } from './report-auction/components/report-table/report-table.component';
 import { SearchAuctionComponent } from './report-auction/components/search-auction/search-auction.component';
 import { AuctionDetailsComponent } from './report-auction/components/auction-details/auction-details.component';
+import { SupportTicketLogClientComponent } from './support-ticket-log-client/support-ticket-log-client.component';
 
 @NgModule({
   imports: [
@@ -115,6 +116,7 @@ import { AuctionDetailsComponent } from './report-auction/components/auction-det
     ReportTableComponent,
     SearchAuctionComponent,
     AuctionDetailsComponent,
+    SupportTicketLogClientComponent,
   ],
   bootstrap: [MainComponent],
   exports: [ChatComponent],
