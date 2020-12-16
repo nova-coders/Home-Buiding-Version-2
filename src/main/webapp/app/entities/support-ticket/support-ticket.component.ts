@@ -10,13 +10,16 @@ import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
 import { IUserAccount, UserAccount } from '../../shared/model/user-account.model';
 import { ServicePaymentService } from '../../service-payment/service-payment.service';
 import { Router } from '@angular/router';
+import { ISupportTicketLog } from '../../shared/model/support-ticket-log.model';
+import { SupportTicketLogService } from '../support-ticket-log/support-ticket-log.service';
 
 @Component({
   selector: 'jhi-support-ticket',
   templateUrl: './support-ticket.component.html',
-  styles: ['.ticketItems:hover{ background: #EAF2F5 }'],
+  styleUrls: ['./support-ticket.component.scss'],
 })
 export class SupportTicketComponent implements OnInit, OnDestroy {
+  supportTicketLogs: ISupportTicketLog[] | [];
   supportTickets?: ISupportTicket[];
   eventSubscriber?: Subscription;
   startPage = 1;
@@ -32,12 +35,15 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   });
 
   constructor(
+    protected supportTicketLogService: SupportTicketLogService,
     protected supportTicketService: SupportTicketService,
     protected eventManager: JhiEventManager,
     private servicePaymentService: ServicePaymentService,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.supportTicketLogs = [];
+  }
 
   loadAll(): void {
     this.supportTicketService.query().subscribe((res: HttpResponse<ISupportTicket[]>) => (this.supportTickets = res.body || []));
@@ -68,6 +74,10 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
     this.ticketResolved = supportTicket.state || false;
     this.hasTicket = true;
     this.ticketSelected = supportTicket;
+    this.supportTicketLogService.findByTicketID(this.ticketSelected.id!).subscribe(data => {
+      this.supportTicketLogs = data.body || [];
+      console.log(this.supportTicketLogs);
+    });
   }
 
   viewSupportTicket(): void {

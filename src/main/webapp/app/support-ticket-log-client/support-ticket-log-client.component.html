@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="col-md-8 col-sm-6 border-top border-bottom border-right p-0" style="min-height: 582px;">
-                <div *ngIf="hasTicket" class="card h-100">
+                <div *ngIf="hasTicket" class="card h-100 ticketDetails">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-2" *ngIf="ticketSelected?.client?.profilePicture != null">
@@ -135,11 +135,15 @@
                                             <ul class="list-group list-group-flush">
                                                 <div>
                                                     <h5>Comentarios:</h5>
-                                                    <li class="list-group-item">{{log.troubleshootingCommentary}}</li>
+                                                    <li class="list-group-item">
+                                                        <textarea rows="3" class="w-100 p-2" disabled>{{log.troubleshootingCommentary}}</textarea>
+                                                    </li>
                                                 </div>
                                                 <div>
                                                     <h5>Siguientes pasos:</h5>
-                                                    <li class="list-group-item">{{log.nextStepCommentary}}</li>
+                                                    <li class="list-group-item">
+                                                        <textarea rows="3" class="w-100 p-2" disabled>{{log.nextStepCommentary}}</textarea>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>

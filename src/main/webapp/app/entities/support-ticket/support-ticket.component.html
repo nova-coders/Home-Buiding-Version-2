@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="col-md-8 col-sm-6 border-top border-bottom border-right p-0" style="min-height: 582px;">
-                <div *ngIf="hasTicket" class="card h-100">
+                <div *ngIf="hasTicket" class="card h-100 ticketDetails">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-2" *ngIf="ticketSelected?.client?.profilePicture != null">
@@ -104,12 +104,53 @@
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="card-body">
                         <h4>{{ticketSelected?.title}}</h4>
                         <p>
                             {{ticketSelected?.message}}
                         </p>
+                        <div class="ticketLogs overflow-auto">
+                            <div
+                                *ngFor="let log of supportTicketLogs| paginate: { itemsPerPage: 3, currentPage: startPage }">
+                                <div class="card defaultCard mt-3">
+                                    <div class="card-header">
+                                        <label>Anotaciones del {{log.creationDate | date}}</label>
+                                    </div>
+                                    <div class="card-body overflow-auto">
+                                        <div>
+                                            <ul class="list-group list-group-flush">
+                                                <div>
+                                                    <h5>Comentarios:</h5>
+                                                    <li class="list-group-item">
+                                                        <textarea rows="3" class="w-100 p-2" disabled>{{log.troubleshootingCommentary}}</textarea>
+                                                    </li>
+                                                </div>
+                                                <div>
+                                                    <h5>Siguientes pasos:</h5>
+                                                    <li class="list-group-item">
+                                                        <textarea rows="3" class="w-100 p-2" disabled>{{log.nextStepCommentary}}</textarea>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                                <div *ngIf="this.supportTicketLogs.length >= 3" class="col-12 text-center">
+                                    <pagination-controls nextLabel="Siguiente" previousLabel="Anterior"
+                                                         (pageChange)="startPage = $event"></pagination-controls>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
+
+
                     <div class="card-footer">
                         <button *ngIf="this.ticketResolved" (click)="closeTicket()" class="btn btn-primary">Cerrar</button>
                         <button *ngIf="!this.ticketResolved" (click)="reOpenTicket()" class="btn btn-primary">Reabrir</button>
