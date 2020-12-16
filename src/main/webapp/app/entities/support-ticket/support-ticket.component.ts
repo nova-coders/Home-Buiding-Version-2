@@ -23,6 +23,7 @@ export class SupportTicketComponent implements OnInit, OnDestroy {
   supportTickets?: ISupportTicket[];
   eventSubscriber?: Subscription;
   startPage = 1;
+  startPage2 = 1;
   hasTicket = false;
   ticketSelected: SupportTicket | undefined;
   userAccount: IUserAccount | undefined;

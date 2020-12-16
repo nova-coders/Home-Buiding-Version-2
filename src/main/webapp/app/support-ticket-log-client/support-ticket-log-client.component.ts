@@ -9,6 +9,8 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ISupportTicketLog } from 'app/shared/model/support-ticket-log.model';
 import { SupportTicketLogService } from 'app/entities/support-ticket-log/support-ticket-log.service';
+import { IUserAccount, UserAccount } from 'app/shared/model/user-account.model';
+import { ServicePaymentService } from 'app/service-payment/service-payment.service';
 
 @Component({
   selector: 'jhi-support-ticket-log-client',
@@ -20,8 +22,11 @@ export class SupportTicketLogClientComponent implements OnInit {
   supportTickets?: ISupportTicket[];
   eventSubscriber?: Subscription;
   startPage = 1;
+  startPage2 = 1;
   hasTicket = false;
   ticketSelected: SupportTicket | undefined;
+  ticketResolved = false;
+  userAccount: IUserAccount | undefined;
 
   searchForm = this.formBuilder.group({
     startDate: [''],
@@ -32,6 +37,7 @@ export class SupportTicketLogClientComponent implements OnInit {
   constructor(
     protected supportTicketLogService: SupportTicketLogService,
     protected supportTicketService: SupportTicketService,
+    private servicePaymentService: ServicePaymentService,
     protected eventManager: JhiEventManager,
     private formBuilder: FormBuilder
   ) {
@@ -46,6 +52,11 @@ export class SupportTicketLogClientComponent implements OnInit {
 
   ngOnInit(): void {
     window.scroll(0, 0);
+    this.servicePaymentService.getUserAccount().subscribe(puserAccount => {
+      let userAccount: any;
+      userAccount = <UserAccount>puserAccount.body;
+      this.userAccount = userAccount;
+    });
     this.loadAll();
     this.registerChangeInSupportTickets();
   }
@@ -61,12 +72,27 @@ export class SupportTicketLogClientComponent implements OnInit {
   }
 
   showTicket(supportTicket: SupportTicket): void {
+    this.ticketResolved = supportTicket.state || false;
     this.hasTicket = true;
     this.ticketSelected = supportTicket;
     this.supportTicketLogService.findByTicketID(this.ticketSelected.id!).subscribe(data => {
       this.supportTicketLogs = data.body || [];
       console.log(this.supportTicketLogs);
     });
+  }
+
+  closeTicket(): void {
+    this.ticketResolved = false;
+    this.ticketSelected!.state = false;
+    this.ticketSelected!.signOffUser = this.userAccount;
+    this.supportTicketService.update(this.ticketSelected!).subscribe(data => {});
+  }
+
+  reOpenTicket(): void {
+    this.ticketResolved = true;
+    this.ticketSelected!.state = true;
+    this.ticketSelected!.signOffUser = this.userAccount;
+    this.supportTicketService.update(this.ticketSelected!).subscribe(data => {});
   }
 
   search(): void {

@@ -104,9 +104,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                     <div class="card-body">
                         <h4>{{ticketSelected?.title}}</h4>
                         <p>
@@ -114,7 +111,8 @@
                         </p>
                         <div class="ticketLogs overflow-auto">
                             <div
-                                *ngFor="let log of supportTicketLogs| paginate: { itemsPerPage: 3, currentPage: startPage }">
+                                *ngFor="let log of supportTicketLogs">
+                                <!--*ngFor="let log of supportTicketLogs| paginate: { itemsPerPage: 3, currentPage: startPage2 }">-->
                                 <div class="card defaultCard mt-3">
                                     <div class="card-header">
                                         <label>Anotaciones del {{log.creationDate | date}}</label>
@@ -139,18 +137,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row my-5">
+                            <!--<div class="row my-5">
                                 <div *ngIf="this.supportTicketLogs.length >= 3" class="col-12 text-center">
                                     <pagination-controls nextLabel="Siguiente" previousLabel="Anterior"
-                                                         (pageChange)="startPage = $event"></pagination-controls>
+                                                         (pageChange)="startPage2 = $event"></pagination-controls>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
-
-
-
-
                     <div class="card-footer">
                         <button *ngIf="this.ticketResolved" (click)="closeTicket()" class="btn btn-primary">Cerrar</button>
                         <button *ngIf="!this.ticketResolved" (click)="reOpenTicket()" class="btn btn-primary">Reabrir</button>
