@@ -7,6 +7,8 @@ import { FormBuilder } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { ISupportTicketLog } from 'app/shared/model/support-ticket-log.model';
+import { SupportTicketLogService } from 'app/entities/support-ticket-log/support-ticket-log.service';
 
 @Component({
   selector: 'jhi-support-ticket-log-client',
@@ -14,6 +16,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
   styleUrls: ['./support-ticket-log-client.component.scss'],
 })
 export class SupportTicketLogClientComponent implements OnInit {
+  supportTicketLogs: ISupportTicketLog[] | [];
   supportTickets?: ISupportTicket[];
   eventSubscriber?: Subscription;
   startPage = 1;
@@ -27,10 +30,13 @@ export class SupportTicketLogClientComponent implements OnInit {
   });
 
   constructor(
+    protected supportTicketLogService: SupportTicketLogService,
     protected supportTicketService: SupportTicketService,
     protected eventManager: JhiEventManager,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.supportTicketLogs = [];
+  }
 
   loadAll(): void {
     this.supportTicketService
@@ -57,10 +63,14 @@ export class SupportTicketLogClientComponent implements OnInit {
   showTicket(supportTicket: SupportTicket): void {
     this.hasTicket = true;
     this.ticketSelected = supportTicket;
+    this.supportTicketLogService.findByTicketID(this.ticketSelected.id!).subscribe(data => {
+      this.supportTicketLogs = data.body || [];
+      console.log(this.supportTicketLogs);
+    });
   }
 
   search(): void {
-    this.supportTicketService.query().subscribe((res: HttpResponse<ISupportTicket[]>) => {
+    this.supportTicketService.findClientTickets().subscribe((res: HttpResponse<ISupportTicket[]>) => {
       this.supportTickets = res.body || [];
 
       if (this.supportTickets != null) {

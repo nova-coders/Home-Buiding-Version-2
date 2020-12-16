@@ -1,0 +1,18 @@
+.ticketLogs {
+  height: 100%;
+}
+
+.defaultCard {
+  box-shadow: 0 0 0px rgba(33, 33, 33, 0.2);
+  transition: 0.3s;
+  padding: 20px;
+}
+
+.defaultCard:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  transition: 0.3s;
+}
+
+.ticketItems:hover {
+  background: #eaf2f5;
+}
