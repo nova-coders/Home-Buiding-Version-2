@@ -72,7 +72,7 @@ export class PropertyUpdateComponent implements OnInit {
   error = false;
   public userAccount = new UserAccount();
   trustedDashboardUrl!: SafeUrl;
-  @Input() percent: any = 0;
+  @Input() percent: any;
   propertyForm = this.fb.group({
     id: [],
     title: ['', [Validators.required]],
@@ -251,6 +251,8 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   next(): void {
+    console.log(this.propertyForm);
+
     if (!this.isUpdate) {
       this.validatePropertyId();
       this.validateForm();

@@ -25,6 +25,7 @@
     "@ngx-translate/core": "12.1.2",
     "@ngx-translate/http-loader": "5.0.0",
     "@types/googlemaps": "^3.40.3",
+    "@uiowa/digit-only": "^2.2.1",
     "angular-datatables": "^10.0.0",
     "angular-x-image-viewer": "^2.0.1",
     "bootstrap": "4.5.0",

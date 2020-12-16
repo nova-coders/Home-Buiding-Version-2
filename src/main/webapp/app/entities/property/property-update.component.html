@@ -38,11 +38,9 @@
                                 <br>
                             </div>
                             <label class="form-control-label"  for="field_discount">Descuento</label> <br>
-                                <input type="number" class="form-control w-50 d-inline-block" name="discount" id="field_discount"  formControlName="discount" min="0"  max="100" maxlength="3"  [(ngModel)]="percent"  (keyup) = "percent < 0 ? percent = 0 : percent; percent > 100 ? percent = 0 : percent;">
-                                <output class="ml-2 mt-4 d-inline-block">{{propertyForm.get('discount')?.value}}%</output>
-
-
-
+                                <input type="tex" class="form-control w-50 d-inline-block" name="discount" id="field_discount"  formControlName="discount" [min]="0"  [max]="100" [maxlength]="3" placeholder="0" digitOnly >
+                                <output class="ml-2  d-inline-block">{{propertyForm.get('discount')?.value}}%</output>
+<br>
                             <label class="form-control-label"  for="field_propertyCategory">Categoría del inmueble</label>
                             <select class="form-control" id="field_propertyCategory" name="propertyCategory" formControlName="propertyCategory">
                                 <option [ngValue]="null" selected disabled></option>

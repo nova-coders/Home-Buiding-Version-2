@@ -11,6 +11,7 @@ import { AgmCoreModule } from '@agm/core';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     }),
     NgxDropzoneModule,
     CurrencyMaskModule,
+    DigitOnlyModule,
   ],
   declarations: [PropertyComponent, PropertyDetailComponent, PropertyUpdateComponent, PropertyDeleteDialogComponent],
   entryComponents: [PropertyDeleteDialogComponent],
