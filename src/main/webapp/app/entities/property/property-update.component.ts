@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -72,6 +72,7 @@ export class PropertyUpdateComponent implements OnInit {
   error = false;
   public userAccount = new UserAccount();
   trustedDashboardUrl!: SafeUrl;
+  @Input() percent: any = 0;
   propertyForm = this.fb.group({
     id: [],
     title: ['', [Validators.required]],
@@ -238,8 +239,6 @@ export class PropertyUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const property = this.createFromForm();
-    console.log(property);
-
     if (property.id != undefined) {
       this.processUpdate(property);
     } else {
@@ -252,7 +251,6 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   next(): void {
-    console.log(this.propertyForm);
     if (!this.isUpdate) {
       this.validatePropertyId();
       this.validateForm();
@@ -317,7 +315,6 @@ export class PropertyUpdateComponent implements OnInit {
   }
   public validateForm(): void {
     const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
-    console.log('estoy validando');
 
     if (invalidControl) {
       invalidControl.style.borderColor = 'crimson';
@@ -363,7 +360,6 @@ export class PropertyUpdateComponent implements OnInit {
     if (this.files && this.files.length >= 5) {
       this.onRemoveImage(this.files[0]);
     }
-    console.log(event);
     this.files.push(...event.addedFiles);
     this.propertyForm.patchValue({
       propertyImages: 'true',
@@ -386,7 +382,6 @@ export class PropertyUpdateComponent implements OnInit {
           myproperty.url = this.fileUrl;
           this.lstPropertyImages.push(myproperty);
           if (this.lstPropertyImages.length === this.files.length) {
-            console.log(this.files.length, this.lstPropertyImages.length);
             property.propertyImages = this.lstPropertyImages;
             this.subscribeToSaveResponse(this.propertyService.create(property));
           }
@@ -409,7 +404,6 @@ export class PropertyUpdateComponent implements OnInit {
           myproperty.url = this.fileUrl;
           this.lstPropertyImages.push(myproperty);
           if (this.lstPropertyImages.length === this.files.length) {
-            console.log(this.files.length, this.lstPropertyImages.length);
             property.propertyImages = this.lstPropertyImages;
             this.subscribeToSaveResponse(this.propertyService.update(property));
           }
@@ -463,7 +457,6 @@ export class PropertyUpdateComponent implements OnInit {
         let f: File;
         f = new File([''], String(item.url));
         this.http.get(String(item.url), { responseType: 'blob' }).subscribe(res => {
-          console.log(res);
           let file = new File([res], 'name', { type: res.type });
           this.files.push(file);
         });
@@ -472,7 +465,6 @@ export class PropertyUpdateComponent implements OnInit {
   }
 
   private setData() {
-    console.log(this.myProperty);
     this.lat = Number(this.myProperty.latitude);
     this.lng = Number(this.myProperty.longitude);
     this.catastralPlan = this.myProperty?.sale?.cadastralPlan;
