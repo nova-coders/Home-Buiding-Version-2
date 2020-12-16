@@ -24,6 +24,8 @@ import { UpdatePublishingPackegeComponent } from 'app/publishing/update-publishi
 import { PostProfessionalUserComponent } from 'app/professionals/post-professional-user/post-professional-user.component';
 import { HomeAdminComponent } from 'app/home-admin/home-admin.component';
 import { UsersReportComponent } from './reports/users-report/users-report.component';
+import { AuctionDetailsComponent } from 'app/report-auction/components/auction-details/auction-details.component';
+
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
 @NgModule({
@@ -125,6 +127,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'homeAdmin',
           component: HomeAdminComponent,
+        },
+        {
+          path: 'auctionDetails/:idProperty/:idOffer',
+          component: AuctionDetailsComponent,
         },
         ...LAYOUT_ROUTES,
       ],
